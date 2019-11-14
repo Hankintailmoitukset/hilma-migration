@@ -4,12 +4,12 @@
         <name>Hilma.Domain</name>
     </assembly>
     <members>
-        <member name="T:Hilma.Domain.Attributes.TedAttribute">
+        <member name="T:Hilma.Domain.Attributes.CorrigendumLabelAttribute">
             <summary>
             Attributes related TED -forms
             </summary>
         </member>
-        <member name="M:Hilma.Domain.Attributes.TedAttribute.#ctor(System.String,System.String)">
+        <member name="M:Hilma.Domain.Attributes.CorrigendumLabelAttribute.#ctor(System.String,System.String)">
             <summary>
             Constructor
             </summary>
@@ -185,6 +185,18 @@
         <member name="F:Hilma.Domain.DataContracts.AwardCriterionType.EconomicallyAdvantageous">
             <summary>
                 Economically most advantageous, for defense ex-ante notices
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.DataContracts.AwardCriterionType.AwardCriteriaInDocs">
+            <summary>
+            the criteria stated in the procurement documents
+            Used in concessions
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.DataContracts.AwardCriterionType.AwardCriteriaDescrBelow">
+            <summary>
+            the criteria described below
+            Used in concessions
             </summary>
         </member>
         <member name="T:Hilma.Domain.DataContracts.AwardCriterionTypeDefence">
@@ -660,7 +672,7 @@
             <summary>
             Create EtsNoticeContract from Notice dbo
             </summary>
-            <param name="dto"></param>
+            <param name="dbo"></param>
         </member>
         <member name="P:Hilma.Domain.DataContracts.EtsContracts.EtsNoticeContract.LegalBasis">
             <summary>
@@ -1301,6 +1313,11 @@
                 VII.2) Other additional information for why the corrigendum was made.
             </summary>
         </member>
+        <member name="P:Hilma.Domain.DataContracts.NoticeContract.CorrigendumPreviousNoticeNumber">
+            <summary>
+            Notice number (no doc ext) of the previous notice for corrigendum
+            </summary>
+        </member>
         <member name="P:Hilma.Domain.DataContracts.NoticeContract.CreatorId">
             <summary>
                 Creator Id for user-created (as opposed to Ets API created) notices.
@@ -1466,6 +1483,11 @@
             If notice is a corrigendum
             </summary>
         </member>
+        <member name="P:Hilma.Domain.DataContracts.NoticeContract.IsMigrated">
+            <summary>
+            Set to true if notice is migrated from previous Hilma
+            </summary>
+        </member>
         <member name="P:Hilma.Domain.DataContracts.NoticeContract.IsCancelled">
             <summary>
             If national notice has been cancelled
@@ -1542,6 +1564,46 @@
         <member name="P:Hilma.Domain.DataContracts.NoticeImportContract.SubscriptionName">
             <summary>
             Migration api subscription name
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.DataContracts.NoticeTypes">
+            <summary>
+            Extension class for notice types
+            </summary>
+        </member>
+        <member name="P:Hilma.Domain.DataContracts.NoticeTypes.NationalNotices">
+            <summary>
+            National notices
+            </summary>
+        </member>
+        <member name="P:Hilma.Domain.DataContracts.NoticeTypes.PriorInformationNotices">
+            <summary>
+            Prior information notice types
+            </summary>
+        </member>
+        <member name="P:Hilma.Domain.DataContracts.NoticeTypes.ContractNotices">
+            <summary>
+            Contract notice types
+            </summary>
+        </member>
+        <member name="P:Hilma.Domain.DataContracts.NoticeTypes.ContractAwardNotices">
+            <summary>
+            Contract Award notice types
+            </summary>
+        </member>
+        <member name="P:Hilma.Domain.DataContracts.NoticeTypes.UtilitiesNotices">
+            <summary>
+            Utilities notice types
+            </summary>
+        </member>
+        <member name="P:Hilma.Domain.DataContracts.NoticeTypes.SocialNotices">
+            <summary>
+            Social notice types
+            </summary>
+        </member>
+        <member name="P:Hilma.Domain.DataContracts.NoticeTypes.DefenceNotices">
+            <summary>
+            Defence notices
             </summary>
         </member>
         <member name="T:Hilma.Domain.DataContracts.NumberOfTenders">
@@ -2398,794 +2460,6 @@
                 Watchers saved by the user.
             </summary>
         </member>
-        <member name="T:Hilma.Domain.Enums.NoticeTypes">
-            <summary>
-            Extension class for notice types
-            </summary>
-        </member>
-        <member name="P:Hilma.Domain.Enums.NoticeTypes.NationalNotices">
-            <summary>
-            National notices
-            </summary>
-        </member>
-        <member name="P:Hilma.Domain.Enums.NoticeTypes.PriorInformationNotices">
-            <summary>
-            Prior information notice types
-            </summary>
-        </member>
-        <member name="P:Hilma.Domain.Enums.NoticeTypes.ContractNotices">
-            <summary>
-            Contract notice types
-            </summary>
-        </member>
-        <member name="P:Hilma.Domain.Enums.NoticeTypes.ContractAwardNotices">
-            <summary>
-            Contract Award notice types
-            </summary>
-        </member>
-        <member name="P:Hilma.Domain.Enums.NoticeTypes.UtilitiesNotices">
-            <summary>
-            Utilities notice types
-            </summary>
-        </member>
-        <member name="P:Hilma.Domain.Enums.NoticeTypes.SocialNotices">
-            <summary>
-            Social notice types
-            </summary>
-        </member>
-        <member name="P:Hilma.Domain.Enums.NoticeTypes.DefenceNotices">
-            <summary>
-            Defence notices
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.AdditionalInformationAvailability">
-            <summary>
-                Defines where additional information about a notice can be gotten from.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.AdditionalInformationAvailability.Undefined">
-            <summary>
-                Default value, error state.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.AdditionalInformationAvailability.AddressToAbove">
-            <summary>
-                "Internet Address" given in "Contracting authority" section.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.AdditionalInformationAvailability.AddressAnother">
-            <summary>
-                New address in a separate field specific to this information.
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.AdvantageousPurchaseReason">
-            <summary>
-                Specifies type of advantageous purchase.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.AdvantageousPurchaseReason.Undefined">
-            <summary>
-                Uninitialized
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.AdvantageousPurchaseReason.DFromWindingSupplier">
-            <summary>
-                From a supplier which is definitely winding up its business activities
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.AdvantageousPurchaseReason.DFromReceivers">
-            <summary>
-                from the liquidator in an insolvency procedure, an arrangement with creditors or a
-                similar procedure under national laws and regulations
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.AgricultureWorks">
-            <summary>
-            works used in national agriculture contract notices
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.AnnexProcedureType">
-            <summary>
-            Procedure type for Annex D1.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.AnnexProcedureType.Undefined">
-            <summary>
-            Uninitialized.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.AnnexProcedureType.DProcOpen">
-            <summary>
-            Procedure in question was open procedure.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.AnnexProcedureType.DProcRestricted">
-            <summary>
-            Procedure in question was restricted procedure.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.AnnexProcedureType.DProcNegotiatedPriorCallCompetition">
-            <summary>
-            negotiated procedure with prior publication of a contract notice
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.AnnexProcedureType.DProcCompetitiveDialogue">
-            <summary>
-            competitive dialogue
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ContestType.Open">
-            <summary>
-            Open
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ContestType.TypeRestricted">
-            <summary>
-            Restricted procedure
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.ContractAwarded">
-            <summary>
-                Is a contract awarded.
-            </summary>
-            <remarks>
-                Boolean would be better for storing the value, but we want a radio
-                group for UX reasons, since both options open some new fields.
-            </remarks>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ContractAwarded.Undefined">
-            <summary>
-                Default value, error state.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ContractAwarded.AwardedContract">
-            <summary>
-                Contract has been awarded / true
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ContractAwarded.NoAwardedContract">
-            <summary>
-                Contract has not been awarded / false
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.ContractValueType">
-            <summary>
-                Determines if value is set to exact value or range.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ContractValueType.Undefined">
-            <summary>
-            Not selected
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ContractValueType.Exact">
-            <summary>
-            Exact value
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ContractValueType.Range">
-            <summary>
-            Value given from with range from lowest to highest value
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.FileStatus">
-            <summary>
-                State of a tracked file.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.FileStatus.Undefined">
-            <summary>
-                Default value, error state
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.FileStatus.Staged">
-            <summary>
-                User has requested file upload permission
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.FileStatus.Published">
-            <summary>
-                File is published.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.FileStatus.Removed">
-            <summary>
-                File is removed by the user.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.FileStatus.Scanned">
-            <summary>
-                File has been virus checked.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.FileStatus.Error">
-            <summary>
-                An error has occurred for this file.
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.LanguageType">
-            <summary>
-            Directive 2009/81/EC (Defence contracts)
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.LanguageType.Undefined">
-            <summary>
-                Default value, error state.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.LanguageType.AnyOfficialEu">
-            <summary>
-                Any official EU language.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.LanguageType.SelectedEu">
-            <summary>
-                Any official EU language.
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.LotsSubmittedFor">
-            <summary>
-                Describes limitations on how many lots a tender can be for.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.LotsSubmittedFor.Undefined">
-            <summary>
-                Default value, error state.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.LotsSubmittedFor.LotsAll">
-            <summary>
-                No limitation.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.LotsSubmittedFor.LotOneOnly">
-            <summary>
-                Only one lot.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.LotsSubmittedFor.LotsMax">
-            <summary>
-                Max number of lots defined by <see cref="T:Hilma.Domain.Entities.LotsInfo"/>.LotsSubmittedForQuantity
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivGeneral">
-            <summary>
-            General public services
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivDefence">
-            <summary>
-            Defence
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivSafety">
-            <summary>
-            Public order and safety
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivEnvironment">
-            <summary>
-            Environment
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivEconomic">
-            <summary>
-            Economic and financial affairs
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivHealth">
-            <summary>
-            Health
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivHousing">
-            <summary>
-            Housing and community amenities
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivSocial">
-            <summary>
-            Social protection
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivCulture">
-            <summary>
-            Recreation, culture and religion
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivEducation">
-            <summary>
-            Education
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivity.OtherActivity">
-            <summary>
-            Other activity
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivGasProduct">
-            <summary>
-            Production, transport and distribution of gas and heat
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivElectricity">
-            <summary>
-            Electricity
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivGasExplor">
-            <summary>
-            Extraction of gas and oil
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivCoal">
-            <summary>
-            Exploration and extraction of coal and other solid fuels
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivWater">
-            <summary>
-            Water
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivPostal">
-            <summary>
-            Postal services
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivRailway">
-            <summary>
-            Railway services
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivBus">
-            <summary>
-            Urban railway, tramway, trolleybus or bus services
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivPort">
-            <summary>
-            Port-related activities
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivAirportrelated">
-            <summary>
-            Airport-related activities
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.OtherActivity">
-            <summary>
-            Other activity
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NationalDirectPurchaseType.Undefined">
-            <summary>
-            Uninitialized
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NationalDirectPurchaseType.JustifiableDirectPurchase">
-            <summary>
-            Direct purchase that needs to be justified
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NationalDirectPurchaseType.OutsideOfScope">
-            <summary>
-            Purchase
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.NoticeDeliveryMethod">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeDeliveryMethod.Undefined">
-            <summary>
-                Default value, error state.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeDeliveryMethod.IcarEnotices">
-            <summary>
-                The notice was delivered with enotice.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeDeliveryMethod.IcarEsender">
-            <summary>
-                The notice was delivered with esender.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeDeliveryMethod.OtherMeans">
-            <summary>
-                The notice was delivered by other means specified in NonAward.OriginalNoticeSentViaOther.
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.NoticeType">
-            <summary>
-            Notice types are numbered based on form number so that the first one or two numbers are for form number and the last two number is special type within the form. 
-            i.e Form 01 -> 100, Form 01 reduce time limints -> 101 
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.PriorInformation">
-            <summary>
-            F01_2014
-            Prior information notice
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.PriorInformationReduceTimeLimits">
-            <summary>
-            F01_2014
-            Prior information notice for reducing time limits
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.Contract">
-            <summary>
-            F02_2014
-            Contract notice
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.ContractAward">
-            <summary>
-            F03_2014
-            Contract award notice
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.PeriodicIndicativeUtilities">
-            <summary>
-            F04_2014
-            Periodic indicative notice - utilities
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.PeriodicIndicativeUtilitiesReduceTimeLimits">
-            <summary>
-            F04_2014
-            Periodic indicative notice - utilities
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.ContractUtilities">
-            <summary>
-            F05_2014
-            Contract notice - utilities
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.ContractAwardUtilities">
-            <summary>
-            F06_2014
-            Contract award notice - utilities
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.QualificationSystemUtilities">
-            <summary>
-            F07_2014
-            Qualification system - utilities
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.BuyerProfile">
-            <summary>
-            F08_2014
-            Notice on a buyer profile
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.DefenceSimplifiedContract">
-            <summary>
-            F09_SIMPLIFIED_CONTRACT
-            R2.0.8.S04
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.DefenceConcession">
-            <summary>
-            F10_CONCESSION
-            R2.0.8.S04
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.DefenceContractConcessionnaire">
-            <summary>
-            F11_CONTRACT_CONCESSIONNAIRE
-            R2.0.8.S04
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.DesignContest">
-            <summary>
-            F12_2014
-            Design contest notice
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.DesignContestResults">
-            <summary>
-            F13_2014
-            Results of design contest
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.ExAnte">
-            
-             F14_2014
-             Corrigendum notices are sent and saved with the original notice type and <example>notice.IsCorrigendum</example> flag is set true on corrigendum notice.
-            
-            <summary>
-            F15_2014
-            Voluntary ex ante transparency notice
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.DefencePriorInformation">
-            <summary>
-            F16_PRIOR_INFORMATION_DEFENCE
-            R2.0.8.S04
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.DefenceContract">
-            <summary>
-            F17_CONTRACT_DEFENCE
-            R2.0.8.S04
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.DefenceContractAward">
-            <summary>
-            F18_CONTRACT_AWARD_DEFENCE
-            R2.0.8.S04
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.DefenceContractSub">
-            <summary>
-            F19_CONTRACT_SUB_DEFENCE
-            R2.0.8.S04
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.Modification">
-            <summary>
-            F20_2014
-            Modification notice
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.SocialContract">
-            <summary>
-            F21_2014
-            Social and other specific services - public contracts  
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.SocialPriorInformation">
-            <summary>
-            F21_2014
-            Social and other specific services - public contracts  
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.SocialContractAward">
-            <summary>
-            F21_2014
-            Social and other specific services - public contracts  
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.SocialUtilities">
-            <summary>
-            F22_2014
-            Social and other specific services - utilities
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.SocialUtilitiesPriorInformation">
-            <summary>
-            F22_2014
-            Prior information notice for Social and other specific services - utilities
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.SocialConcessions">
-            <summary>
-            F23_2014
-            Social and other specific services - concessions  
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.Concession">
-            <summary>
-            F24_2014
-            Concession notice
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.ConcessionAward">
-            <summary>
-            F25_2014
-            Concession award notice
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.NationalPriorInformation">
-            <summary>
-            National prior information notice
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.NationalContract">
-            <summary>
-            National contract notice
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.NationalAgricultureContract">
-            <summary>
-            National contract notice for agriculture
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.NationalExAnte">
-            <summary>
-            National contract notice for agriculture
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.NationalDirectAward">
-            <summary>
-            National direct contract award
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.NationalDesignContest">
-            <summary>
-            National design contest
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.NationalDefencePriorInformation">
-            <summary>
-            National defence prior information
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.NoticeType.NationalDefenceContract">
-            <summary>
-            National defence contract
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.PreviousContractType">
-            <summary>
-            Directive 2009/81/EC (Defence contracts only!)
-            IV.3.2) Previous publication(s) concerning the same contract 
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.PreviousContractType.PriorInformation">
-            <summary>
-            F01_2014
-            Prior information notice
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.PreviousContractType.BuyerProfile">
-            <summary>
-            F08_2014
-            Notice on a buyer profile
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.ProcurementCategory">
-            <summary>
-                Defined the domain of the procurement, used to select
-                correct form type and directive, when creating notices
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.ProcurementDocumentAvailability">
-            <summary>
-                Where the documents relating the procurement can be gotten from.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ProcurementDocumentAvailability.Undefined">
-            <summary>
-                Default value, error state.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ProcurementDocumentAvailability.AddressObtainDocs">
-            <summary>
-                The procurement documents are available for unrestricted
-                and full direct access, free of charge
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ProcurementDocumentAvailability.DocsRestricted">
-            <summary>
-                Access to the procurement documents is restricted. 
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ProcurementDocumentAvailability.OrganisationAddress">
-            <summary>
-                For national notices
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ProcurementDocumentAvailability.OtherAddress">
-            <summary>
-                For national notices
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.ProcurementFailureReason">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ProcurementFailureReason.Undefined">
-            <summary>
-                Default value, error state.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ProcurementFailureReason.AwardNoTenders">
-            <summary>
-                Received no tenders or all tenders were rejected.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ProcurementFailureReason.AwardDiscontinued">
-            <summary>
-                The procurement was discontinued.
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.ReasonForNoCompetition">
-            <summary>
-                Reasons why there was no competition for the target of the procurement.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ReasonForNoCompetition.Undefined">
-            <summary>
-                Uninitialized
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ReasonForNoCompetition.DTechnical">
-            <summary>
-                Absence of competition for technical reasons.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ReasonForNoCompetition.DArtistic">
-            <summary>
-                Procurement aiming at the creation or acquisition of a unique work of art or artistic performance.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ReasonForNoCompetition.DExistenceExclusive">
-            <summary>
-                Existence of exclusive right.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.ReasonForNoCompetition.DProtectRights">
-            <summary>
-                Protection of exclusive rights, including intellectual property rights.
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.SpecificationsAndAdditionalDocuments">
-            <summary>
-                Directive 2009/81/EC
-                I.1) Name, addresses and contact point(s)
-                Specifications and additional documents can be obtained from 
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.SpecificationsAndAdditionalDocuments.Undefined">
-            <summary>
-                Default value, error state.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.SpecificationsAndAdditionalDocuments.AddressToAbove">
-            <summary>
-                The above mentioned contact point(s)
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.SpecificationsAndAdditionalDocuments.AddressAnother">
-            <summary>
-                Other (please complete Annex A.II)
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.Supplies">
-            <summary>
-            Directive 2009/81/EC (Defence contract)
-            When ContractType = Supplies
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.TenderSendOptions">
-            <summary>
-                Defines options for where to send tenders to.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.TenderSendOptions.Undefined">
-            <summary>
-                Default value, error state.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.TenderSendOptions.AddressSendTenders">
-            <summary>
-                Send tenders to a electronic address defined separately.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.TenderSendOptions.AddressOrganisation">
-            <summary>
-                Send tenders to a physical address given for the organisation earlier.
-            </summary>
-        </member>
-        <member name="F:Hilma.Domain.Enums.TenderSendOptions.AddressFollowing">
-            <summary>
-                Send tenders to physical address defined separately.
-            </summary>
-        </member>
-        <member name="T:Hilma.Domain.Enums.Works">
-            <summary>
-            Directive 2009/81/EC (Defence contract)
-            When ContractType = Works
-            </summary>
-        </member>
         <member name="T:Hilma.Domain.Entities.PostalAddress">
             <summary>
                 Represents an address.
@@ -3699,6 +2973,11 @@
                 Additional information can be obtained from -> another address
             </summary>
         </member>
+        <member name="P:Hilma.Domain.Entities.CommunicationInformation.OtherAddressForProcurementDocuments">
+            <summary>
+            Documents available from an other address
+            </summary>
+        </member>
         <member name="P:Hilma.Domain.Entities.CommunicationInformation.SendTendersOption">
             <summary>
                 How are tenders to be sent.
@@ -4146,6 +3425,11 @@
             <summary>
             Certifications and other reports, on which suitability is assessed
             Todistukset ja selvitykset, joiden perusteella soveltuvuuden täyttyminen arvioidaan  
+            </summary>
+        </member>
+        <member name="P:Hilma.Domain.Entities.ConditionsInformationNational.AdditionalInformation">
+            <summary>
+            Additional information
             </summary>
         </member>
         <member name="P:Hilma.Domain.Entities.ConditionsInformationNational.ValidationState">
@@ -5979,6 +5263,35 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Hilma.Domain.Integrations.General.F24Factory">
+            <summary>
+            TED F02 Concession Factory - Generates TED integration XML
+            </summary>
+        </member>
+        <member name="M:Hilma.Domain.Integrations.General.F24Factory.#ctor(Hilma.Domain.DataContracts.NoticeContract,System.String,System.String,System.String)">
+            <summary>
+            F02 Contract Notice factory constructor.
+            </summary>
+            <param name="notice">The notice</param>
+            <param name="eSenderLogin">The TED esender login</param>
+            <param name="tedESenderOrganisation">Organisation that sends notices to eSender api</param>
+            <param name="tedContactEmail">Contact email for technical</param>
+        </member>
+        <member name="M:Hilma.Domain.Integrations.General.F24Factory.CreateForm">
+            <summary>
+            Creates the XML document that is sent to TED.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hilma.Domain.Integrations.General.F24Factory.NoticeBody">
+            <summary>
+            #  XSD name : F02_2014
+            #  RELEASE : "R2.0.9.S03"
+            #  Intermediate release number 007-20181030
+            #  Last update : 30/10/2018
+            #  Form : Contract notice
+            </summary>
+        </member>
         <member name="T:Hilma.Domain.Integrations.General.NoticeChangesFactory">
             <summary>
             Factory for generating changes -node for Corrigendum notice
@@ -5991,6 +5304,14 @@
             <param name="notice">The notice</param>
             <param name="parent">The parent notice, if applicable</param>
             <returns>A list of XElements with the changes.</returns>
+        </member>
+        <member name="M:Hilma.Domain.Integrations.General.NoticeChangesFactory.Project(Hilma.Domain.DataContracts.NoticeContract,Hilma.Domain.DataContracts.NoticeContract,System.Collections.Generic.List{System.Xml.Linq.XElement})">
+            <summary>
+            Changes to project, only in agriculture notices
+            </summary>
+            <param name="notice"></param>
+            <param name="parent"></param>
+            <param name="changes"></param>
         </member>
         <member name="M:Hilma.Domain.Integrations.General.NoticeChangesFactory.ContractingAuthority(Hilma.Domain.DataContracts.NoticeContract,Hilma.Domain.DataContracts.NoticeContract,System.Collections.Generic.List{System.Xml.Linq.XElement})">
             <summary>
@@ -7243,6 +6564,759 @@
             <param name="remoteEndpoint">Endpoint to get the translations from.</param>
             <param name="token">Cancellation token.</param>
             <returns>Translations in a <see cref="T:Newtonsoft.Json.Linq.JObject">JObject</see></returns>
+        </member>
+        <member name="T:Hilma.Domain.Enums.AdditionalInformationAvailability">
+            <summary>
+                Defines where additional information about a notice can be gotten from.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.AdditionalInformationAvailability.Undefined">
+            <summary>
+                Default value, error state.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.AdditionalInformationAvailability.AddressToAbove">
+            <summary>
+                "Internet Address" given in "Contracting authority" section.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.AdditionalInformationAvailability.AddressAnother">
+            <summary>
+                New address in a separate field specific to this information.
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.AdvantageousPurchaseReason">
+            <summary>
+                Specifies type of advantageous purchase.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.AdvantageousPurchaseReason.Undefined">
+            <summary>
+                Uninitialized
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.AdvantageousPurchaseReason.DFromWindingSupplier">
+            <summary>
+                From a supplier which is definitely winding up its business activities
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.AdvantageousPurchaseReason.DFromReceivers">
+            <summary>
+                from the liquidator in an insolvency procedure, an arrangement with creditors or a
+                similar procedure under national laws and regulations
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.AgricultureWorks">
+            <summary>
+            works used in national agriculture contract notices
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.AnnexProcedureType">
+            <summary>
+            Procedure type for Annex D1.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.AnnexProcedureType.Undefined">
+            <summary>
+            Uninitialized.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.AnnexProcedureType.DProcOpen">
+            <summary>
+            Procedure in question was open procedure.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.AnnexProcedureType.DProcRestricted">
+            <summary>
+            Procedure in question was restricted procedure.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.AnnexProcedureType.DProcNegotiatedPriorCallCompetition">
+            <summary>
+            negotiated procedure with prior publication of a contract notice
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.AnnexProcedureType.DProcCompetitiveDialogue">
+            <summary>
+            competitive dialogue
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ContestType.Open">
+            <summary>
+            Open
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ContestType.TypeRestricted">
+            <summary>
+            Restricted procedure
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.ContractAwarded">
+            <summary>
+                Is a contract awarded.
+            </summary>
+            <remarks>
+                Boolean would be better for storing the value, but we want a radio
+                group for UX reasons, since both options open some new fields.
+            </remarks>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ContractAwarded.Undefined">
+            <summary>
+                Default value, error state.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ContractAwarded.AwardedContract">
+            <summary>
+                Contract has been awarded / true
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ContractAwarded.NoAwardedContract">
+            <summary>
+                Contract has not been awarded / false
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.ContractValueType">
+            <summary>
+                Determines if value is set to exact value or range.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ContractValueType.Undefined">
+            <summary>
+            Not selected
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ContractValueType.Exact">
+            <summary>
+            Exact value
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ContractValueType.Range">
+            <summary>
+            Value given from with range from lowest to highest value
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.FileStatus">
+            <summary>
+                State of a tracked file.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.FileStatus.Undefined">
+            <summary>
+                Default value, error state
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.FileStatus.Staged">
+            <summary>
+                User has requested file upload permission
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.FileStatus.Published">
+            <summary>
+                File is published.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.FileStatus.Removed">
+            <summary>
+                File is removed by the user.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.FileStatus.Scanned">
+            <summary>
+                File has been virus checked.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.FileStatus.Error">
+            <summary>
+                An error has occurred for this file.
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.LanguageType">
+            <summary>
+            Directive 2009/81/EC (Defence contracts)
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.LanguageType.Undefined">
+            <summary>
+                Default value, error state.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.LanguageType.AnyOfficialEu">
+            <summary>
+                Any official EU language.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.LanguageType.SelectedEu">
+            <summary>
+                Any official EU language.
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.LotsSubmittedFor">
+            <summary>
+                Describes limitations on how many lots a tender can be for.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.LotsSubmittedFor.Undefined">
+            <summary>
+                Default value, error state.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.LotsSubmittedFor.LotsAll">
+            <summary>
+                No limitation.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.LotsSubmittedFor.LotOneOnly">
+            <summary>
+                Only one lot.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.LotsSubmittedFor.LotsMax">
+            <summary>
+                Max number of lots defined by <see cref="T:Hilma.Domain.Entities.LotsInfo"/>.LotsSubmittedForQuantity
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivGeneral">
+            <summary>
+            General public services
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivDefence">
+            <summary>
+            Defence
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivSafety">
+            <summary>
+            Public order and safety
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivEnvironment">
+            <summary>
+            Environment
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivEconomic">
+            <summary>
+            Economic and financial affairs
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivHealth">
+            <summary>
+            Health
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivHousing">
+            <summary>
+            Housing and community amenities
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivSocial">
+            <summary>
+            Social protection
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivCulture">
+            <summary>
+            Recreation, culture and religion
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivity.MainactivEducation">
+            <summary>
+            Education
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivity.OtherActivity">
+            <summary>
+            Other activity
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivGasProduct">
+            <summary>
+            Production, transport and distribution of gas and heat
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivElectricity">
+            <summary>
+            Electricity
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivGasExplor">
+            <summary>
+            Extraction of gas and oil
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivCoal">
+            <summary>
+            Exploration and extraction of coal and other solid fuels
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivWater">
+            <summary>
+            Water
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivPostal">
+            <summary>
+            Postal services
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivRailway">
+            <summary>
+            Railway services
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivBus">
+            <summary>
+            Urban railway, tramway, trolleybus or bus services
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivPort">
+            <summary>
+            Port-related activities
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.MainactivAirportrelated">
+            <summary>
+            Airport-related activities
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.MainActivityUtilities.OtherActivity">
+            <summary>
+            Other activity
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NationalDirectPurchaseType.Undefined">
+            <summary>
+            Uninitialized
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NationalDirectPurchaseType.JustifiableDirectPurchase">
+            <summary>
+            Direct purchase that needs to be justified
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NationalDirectPurchaseType.OutsideOfScope">
+            <summary>
+            Purchase
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.NoticeDeliveryMethod">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeDeliveryMethod.Undefined">
+            <summary>
+                Default value, error state.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeDeliveryMethod.IcarEnotices">
+            <summary>
+                The notice was delivered with enotice.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeDeliveryMethod.IcarEsender">
+            <summary>
+                The notice was delivered with esender.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeDeliveryMethod.OtherMeans">
+            <summary>
+                The notice was delivered by other means specified in NonAward.OriginalNoticeSentViaOther.
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.NoticeType">
+            <summary>
+            Notice types are numbered based on form number so that the first one or two numbers are for form number and the last two number is special type within the form. 
+            i.e Form 01 -> 100, Form 01 reduce time limints -> 101 
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.PriorInformation">
+            <summary>
+            F01_2014
+            Prior information notice
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.PriorInformationReduceTimeLimits">
+            <summary>
+            F01_2014
+            Prior information notice for reducing time limits
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.Contract">
+            <summary>
+            F02_2014
+            Contract notice
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.ContractAward">
+            <summary>
+            F03_2014
+            Contract award notice
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.PeriodicIndicativeUtilities">
+            <summary>
+            F04_2014
+            Periodic indicative notice - utilities
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.PeriodicIndicativeUtilitiesReduceTimeLimits">
+            <summary>
+            F04_2014
+            Periodic indicative notice - utilities
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.ContractUtilities">
+            <summary>
+            F05_2014
+            Contract notice - utilities
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.ContractAwardUtilities">
+            <summary>
+            F06_2014
+            Contract award notice - utilities
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.QualificationSystemUtilities">
+            <summary>
+            F07_2014
+            Qualification system - utilities
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.BuyerProfile">
+            <summary>
+            F08_2014
+            Notice on a buyer profile
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.DefenceSimplifiedContract">
+            <summary>
+            F09_SIMPLIFIED_CONTRACT
+            R2.0.8.S04
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.DefenceConcession">
+            <summary>
+            F10_CONCESSION
+            R2.0.8.S04
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.DefenceContractConcessionnaire">
+            <summary>
+            F11_CONTRACT_CONCESSIONNAIRE
+            R2.0.8.S04
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.DesignContest">
+            <summary>
+            F12_2014
+            Design contest notice
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.DesignContestResults">
+            <summary>
+            F13_2014
+            Results of design contest
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.ExAnte">
+            
+             F14_2014
+             Corrigendum notices are sent and saved with the original notice type and <example>notice.IsCorrigendum</example> flag is set true on corrigendum notice.
+            
+            <summary>
+            F15_2014
+            Voluntary ex ante transparency notice
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.DefencePriorInformation">
+            <summary>
+            F16_PRIOR_INFORMATION_DEFENCE
+            R2.0.8.S04
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.DefenceContract">
+            <summary>
+            F17_CONTRACT_DEFENCE
+            R2.0.8.S04
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.DefenceContractAward">
+            <summary>
+            F18_CONTRACT_AWARD_DEFENCE
+            R2.0.8.S04
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.DefenceContractSub">
+            <summary>
+            F19_CONTRACT_SUB_DEFENCE
+            R2.0.8.S04
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.Modification">
+            <summary>
+            F20_2014
+            Modification notice
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.SocialContract">
+            <summary>
+            F21_2014
+            Social and other specific services - public contracts  
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.SocialPriorInformation">
+            <summary>
+            F21_2014
+            Social and other specific services - public contracts  
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.SocialContractAward">
+            <summary>
+            F21_2014
+            Social and other specific services - public contracts  
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.SocialUtilities">
+            <summary>
+            F22_2014
+            Social and other specific services - utilities
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.SocialUtilitiesPriorInformation">
+            <summary>
+            F22_2014
+            Prior information notice for Social and other specific services - utilities
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.SocialConcessions">
+            <summary>
+            F23_2014
+            Social and other specific services - concessions  
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.Concession">
+            <summary>
+            F24_2014
+            Concession notice
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.ConcessionAward">
+            <summary>
+            F25_2014
+            Concession award notice
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.NationalPriorInformation">
+            <summary>
+            National prior information notice
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.NationalContract">
+            <summary>
+            National contract notice
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.NationalAgricultureContract">
+            <summary>
+            National contract notice for agriculture
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.NationalExAnte">
+            <summary>
+            National contract notice for agriculture
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.NationalDirectAward">
+            <summary>
+            National direct contract award
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.NationalDesignContest">
+            <summary>
+            National design contest
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.NationalDefencePriorInformation">
+            <summary>
+            National defence prior information
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.NoticeType.NationalDefenceContract">
+            <summary>
+            National defence contract
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.PreviousContractType">
+            <summary>
+            Directive 2009/81/EC (Defence contracts only!)
+            IV.3.2) Previous publication(s) concerning the same contract 
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.PreviousContractType.PriorInformation">
+            <summary>
+            F01_2014
+            Prior information notice
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.PreviousContractType.BuyerProfile">
+            <summary>
+            F08_2014
+            Notice on a buyer profile
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.ProcurementCategory">
+            <summary>
+                Defined the domain of the procurement, used to select
+                correct form type and directive, when creating notices
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.ProcurementDocumentAvailability">
+            <summary>
+                Where the documents relating the procurement can be gotten from.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ProcurementDocumentAvailability.Undefined">
+            <summary>
+                Default value, error state.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ProcurementDocumentAvailability.AddressObtainDocs">
+            <summary>
+                The procurement documents are available for unrestricted
+                and full direct access, free of charge
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ProcurementDocumentAvailability.DocsRestricted">
+            <summary>
+                Access to the procurement documents is restricted. 
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ProcurementDocumentAvailability.OrganisationAddress">
+            <summary>
+                For national notices
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ProcurementDocumentAvailability.OtherAddress">
+            <summary>
+                For national notices
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.ProcurementFailureReason">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ProcurementFailureReason.Undefined">
+            <summary>
+                Default value, error state.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ProcurementFailureReason.AwardNoTenders">
+            <summary>
+                Received no tenders or all tenders were rejected.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ProcurementFailureReason.AwardDiscontinued">
+            <summary>
+                The procurement was discontinued.
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.ReasonForNoCompetition">
+            <summary>
+                Reasons why there was no competition for the target of the procurement.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ReasonForNoCompetition.Undefined">
+            <summary>
+                Uninitialized
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ReasonForNoCompetition.DTechnical">
+            <summary>
+                Absence of competition for technical reasons.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ReasonForNoCompetition.DArtistic">
+            <summary>
+                Procurement aiming at the creation or acquisition of a unique work of art or artistic performance.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ReasonForNoCompetition.DExistenceExclusive">
+            <summary>
+                Existence of exclusive right.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.ReasonForNoCompetition.DProtectRights">
+            <summary>
+                Protection of exclusive rights, including intellectual property rights.
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.SpecificationsAndAdditionalDocuments">
+            <summary>
+                Directive 2009/81/EC
+                I.1) Name, addresses and contact point(s)
+                Specifications and additional documents can be obtained from 
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.SpecificationsAndAdditionalDocuments.Undefined">
+            <summary>
+                Default value, error state.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.SpecificationsAndAdditionalDocuments.AddressToAbove">
+            <summary>
+                The above mentioned contact point(s)
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.SpecificationsAndAdditionalDocuments.AddressAnother">
+            <summary>
+                Other (please complete Annex A.II)
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.Supplies">
+            <summary>
+            Directive 2009/81/EC (Defence contract)
+            When ContractType = Supplies
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.TenderSendOptions">
+            <summary>
+                Defines options for where to send tenders to.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.TenderSendOptions.Undefined">
+            <summary>
+                Default value, error state.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.TenderSendOptions.AddressSendTenders">
+            <summary>
+                Send tenders to a electronic address defined separately.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.TenderSendOptions.AddressOrganisation">
+            <summary>
+                Send tenders to a physical address given for the organisation earlier.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.TenderSendOptions.AddressFollowing">
+            <summary>
+                Send tenders to physical address defined separately.
+            </summary>
+        </member>
+        <member name="F:Hilma.Domain.Enums.TenderSendOptions.EmailSendTenders">
+            <summary>
+            Send tenders to given email address. Only for national notices
+            </summary>
+        </member>
+        <member name="T:Hilma.Domain.Enums.Works">
+            <summary>
+            Directive 2009/81/EC (Defence contract)
+            When ContractType = Works
+            </summary>
         </member>
         <member name="P:Hilma.Domain.SearchContracts.NoticeSearchContract.Type">
             <summary>

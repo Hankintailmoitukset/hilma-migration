@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projects\\Hansel\\Hilma\\Hilma.MigrationExample\\Hilma.MigrationExample.csproj": {}
+    "C:\\Projects\\Hansel\\Hilma share\\cleanup\\Hilma.MigrationExample\\Hilma.MigrationExample.csproj": {}
   },
   "projects": {
-    "C:\\Projects\\Hansel\\Hilma\\Hilma.Domain\\Hilma.Domain.csproj": {
+    "C:\\Projects\\Hansel\\Hilma share\\cleanup\\Hilma.Domain\\Hilma.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projects\\Hansel\\Hilma\\Hilma.Domain\\Hilma.Domain.csproj",
+        "projectUniqueName": "C:\\Projects\\Hansel\\Hilma share\\cleanup\\Hilma.Domain\\Hilma.Domain.csproj",
         "projectName": "Hilma.Domain",
-        "projectPath": "C:\\Projects\\Hansel\\Hilma\\Hilma.Domain\\Hilma.Domain.csproj",
+        "projectPath": "C:\\Projects\\Hansel\\Hilma share\\cleanup\\Hilma.Domain\\Hilma.Domain.csproj",
         "packagesPath": "C:\\Users\\tuomas.tolvanen\\.nuget\\packages\\",
-        "outputPath": "C:\\Projects\\Hansel\\Hilma\\Hilma.Domain\\obj\\",
+        "outputPath": "C:\\Projects\\Hansel\\Hilma share\\cleanup\\Hilma.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -61,6 +61,14 @@
               "target": "Package",
               "version": "[10.0.1, )"
             },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "target": "Package",
+              "version": "[2.2.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[2.2.6, )"
+            },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",
@@ -69,21 +77,27 @@
             }
           },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Projects\\Hansel\\Hilma\\Hilma.MigrationExample\\Hilma.MigrationExample.csproj": {
+    "C:\\Projects\\Hansel\\Hilma share\\cleanup\\Hilma.MigrationExample\\Hilma.MigrationExample.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projects\\Hansel\\Hilma\\Hilma.MigrationExample\\Hilma.MigrationExample.csproj",
+        "projectUniqueName": "C:\\Projects\\Hansel\\Hilma share\\cleanup\\Hilma.MigrationExample\\Hilma.MigrationExample.csproj",
         "projectName": "Hilma.MigrationExample",
-        "projectPath": "C:\\Projects\\Hansel\\Hilma\\Hilma.MigrationExample\\Hilma.MigrationExample.csproj",
+        "projectPath": "C:\\Projects\\Hansel\\Hilma share\\cleanup\\Hilma.MigrationExample\\Hilma.MigrationExample.csproj",
         "packagesPath": "C:\\Users\\tuomas.tolvanen\\.nuget\\packages\\",
-        "outputPath": "C:\\Projects\\Hansel\\Hilma\\Hilma.MigrationExample\\obj\\",
+        "outputPath": "C:\\Projects\\Hansel\\Hilma share\\cleanup\\Hilma.MigrationExample\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -102,8 +116,8 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "C:\\Projects\\Hansel\\Hilma\\Hilma.Domain\\Hilma.Domain.csproj": {
-                "projectPath": "C:\\Projects\\Hansel\\Hilma\\Hilma.Domain\\Hilma.Domain.csproj"
+              "C:\\Projects\\Hansel\\Hilma share\\cleanup\\Hilma.Domain\\Hilma.Domain.csproj": {
+                "projectPath": "C:\\Projects\\Hansel\\Hilma share\\cleanup\\Hilma.Domain\\Hilma.Domain.csproj"
               }
             }
           }
@@ -129,10 +143,16 @@
             }
           },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
