@@ -16,17 +16,18 @@ namespace Hilma.Domain.Integrations.Extensions
     /// </summary>
     public static class ListExtensions
     {
-        /// <summary>
-        /// Adds an XElement to the list, if there is a change.
-        /// </summary>
-        /// <param name="list">The list</param>
-        /// <param name="originalValue">Original value</param>
-        /// <param name="newValue">New value</param>
-        /// <param name="type">Type</param>
-        /// <param name="property">Property</param>
-        /// <param name="lotNum">Lot number</param>
-        /// <param name="section">Overload for section</param>
-        public static void Add(this List<XElement> list, string originalValue, string newValue, Type type, string property, int? lotNum = null, string section = null, string translationKey = null)
+    /// <summary>
+    /// Adds an XElement to the list, if there is a change.
+    /// </summary>
+    /// <param name="list">The list</param>
+    /// <param name="originalValue">Original value</param>
+    /// <param name="newValue">New value</param>
+    /// <param name="type">Type</param>
+    /// <param name="property">Property</param>
+    /// <param name="lotNum">Lot number</param>
+    /// <param name="section">Overload for section</param>
+    /// <param name="translationKey">Translation key for the element</param>
+    public static void Add(this List<XElement> list, string originalValue, string newValue, Type type, string property, int? lotNum = null, string section = null, string translationKey = null)
         {
             if (originalValue == newValue || (string.IsNullOrEmpty(originalValue) && string.IsNullOrEmpty(newValue)))
             {
@@ -85,16 +86,17 @@ namespace Hilma.Domain.Integrations.Extensions
                             string.IsNullOrEmpty(newTranslated) ? new XElement(TedHelpers.Xmlns + "NOTHING") : PElement("TEXT", newTranslated))));
         }
 
-        /// <summary>
-        /// Adds an XElement to the list, if there is a change.
-        /// </summary>
-        /// <param name="list">The list</param>
-        /// <param name="originalValue">Original value</param>
-        /// <param name="newValue">New value</param>
-        /// <param name="type">Type</param>
-        /// <param name="property">Property</param>
-        /// <param name="lotNum">Lot number</param>
-        public static void AddDate(this List<XElement> list, DateTime? originalValue, DateTime? newValue, Type type, string property, int? lotNum = null, string section = null)
+    /// <summary>
+    /// Adds an XElement to the list, if there is a change.
+    /// </summary>
+    /// <param name="list">The list</param>
+    /// <param name="originalValue">Original value</param>
+    /// <param name="newValue">New value</param>
+    /// <param name="type">Type</param>
+    /// <param name="property">Property</param>
+    /// <param name="lotNum">Lot number</param>
+    /// <param name="section">Section overload</param>
+    public static void AddDate(this List<XElement> list, DateTime? originalValue, DateTime? newValue, Type type, string property, int? lotNum = null, string section = null)
         {
             if (originalValue.GetValueOrDefault().Date == newValue.GetValueOrDefault().Date
                 && originalValue.GetValueOrDefault().Hour == newValue.GetValueOrDefault().Hour
@@ -135,11 +137,10 @@ namespace Hilma.Domain.Integrations.Extensions
         /// <param name="list"></param>
         /// <param name="oldValue"></param>
         /// <param name="newValue"></param>
-        /// <param name="type"></param>
-        /// <param name="property"></param>
         /// <param name="notNum"></param>
         /// <param name="section"></param>
         /// <param name="translationKey"></param>
+        /// <param name="translateValues">Translation value for the field</param>
         public static void AddRaw(this List<XElement> list, string[] oldValue, string[] newValue, int? notNum = null, string section = null, string translationKey = null, bool translateValues = false)
         {
             var dictionary = TedNoticeFactory.Translations[TedNoticeFactory.NoticeLanguage?.ToLongLang()];
