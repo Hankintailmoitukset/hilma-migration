@@ -1,0 +1,525 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>Hilma.Domain.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Validators\TedSchema\208Defence\common.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\common_move.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\countries.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\cpv_codes.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\cpv_supplementary_codes.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F01_PRIOR_INFORMATION.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F02_CONTRACT.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F03_CONTRACT_AWARD.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F04_PERIODIC_INDICATIVE_UTILITIES.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F05_CONTRACT_UTILITIES.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F06_CONTRACT_AWARD_UTILITIES.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F07_QUALIFICATION_SYSTEM_UTILITIES.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F08_BUYER_PROFILE.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F09_SIMPLIFIED_CONTRACT.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F10_CONCESSION.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F11_CONTRACT_CONCESSIONAIRE.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F12_DESIGN_CONTEST.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F13_RESULT_DESIGN_CONTEST.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F14_ADDITIONAL_INFORMATION_CORRIGENDUM.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F15_VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F16_PRIOR_INFORMATION_DEFENCE.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F17_CONTRACT_DEFENCE.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F18_CONTRACT_AWARD_DEFENCE.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\F19_CONTRACT_SUB_DEFENCE.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\nuts_codes_2016.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\T01_PRIOR_INFORMATION_MOVE.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\T02_CONTRACT_MOVE.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\TED_ESENDERS.xd" />
+    <None Remove="Validators\TedSchema\208Defence\TED_ESENDERS.xsd" />
+    <None Remove="Validators\TedSchema\209General\code_lists\t_currency_PublicProcurement.xsd" />
+    <None Remove="Validators\TedSchema\209General\code_lists\t_legal-basis_PublicProcurement.xsd" />
+    <None Remove="Validators\TedSchema\209General\common_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\countries.xsd" />
+    <None Remove="Validators\TedSchema\209General\cpv_codes.xsd" />
+    <None Remove="Validators\TedSchema\209General\cpv_supplementary_codes.xsd" />
+    <None Remove="Validators\TedSchema\209General\DEVCO.xsd" />
+    <None Remove="Validators\TedSchema\209General\F01_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F02_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F03_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F04_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F05_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F06_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F07_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F08_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F12_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F13_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F14_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F15_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F20_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F21_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F22_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F23_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F24_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\F25_2014.xsd" />
+    <None Remove="Validators\TedSchema\209General\languages.xsd" />
+    <None Remove="Validators\TedSchema\209General\MOVE.xsd" />
+    <None Remove="Validators\TedSchema\209General\nuts_codes_2016.xsd" />
+    <None Remove="Validators\TedSchema\209General\TED_ESENDERS.xsd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\common.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\common_move.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\countries.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\cpv_codes.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\cpv_supplementary_codes.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F01_PRIOR_INFORMATION.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F02_CONTRACT.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F03_CONTRACT_AWARD.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F04_PERIODIC_INDICATIVE_UTILITIES.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F05_CONTRACT_UTILITIES.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F06_CONTRACT_AWARD_UTILITIES.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F07_QUALIFICATION_SYSTEM_UTILITIES.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F08_BUYER_PROFILE.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F09_SIMPLIFIED_CONTRACT.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F10_CONCESSION.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F11_CONTRACT_CONCESSIONAIRE.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F12_DESIGN_CONTEST.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F13_RESULT_DESIGN_CONTEST.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F14_ADDITIONAL_INFORMATION_CORRIGENDUM.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F15_VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F16_PRIOR_INFORMATION_DEFENCE.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F17_CONTRACT_DEFENCE.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F18_CONTRACT_AWARD_DEFENCE.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\F19_CONTRACT_SUB_DEFENCE.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\nuts_codes_2016.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\T01_PRIOR_INFORMATION_MOVE.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\T02_CONTRACT_MOVE.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\TED_ESENDERS.xd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\TED_ESENDERS.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\code_lists\t_currency_PublicProcurement.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\code_lists\t_legal-basis_PublicProcurement.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\common_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\countries.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\cpv_codes.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\cpv_supplementary_codes.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\DEVCO.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F01_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F02_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F03_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F04_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F05_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F06_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F07_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F08_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F12_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F13_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F14_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F15_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F20_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F21_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F22_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F23_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F24_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\F25_2014.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\languages.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\MOVE.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\nuts_codes_2016.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validators\TedSchema\209General\TED_ESENDERS.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="AutoMapper.Attributes" Version="6.0.1" />
+    <PackageReference Include="Innofactor.EfCoreJsonValueConverter" Version="1.29.0" />
+    <PackageReference Include="Innofactor.EfCoreJsonValueConverter.Attributes" Version="1.23.0" />
+    <PackageReference Include="Microsoft.Azure.Search" Version="10.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Hilma.Domain.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Integrations\Configuration\Annex.Configuration.cs">
+      <CustomToolNamespace>Entities\Annex.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\AnnexD1.Configuration.cs">
+      <CustomToolNamespace>Entities\Annexes\AnnexD1.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\AnnexD2.Configuration.cs">
+      <CustomToolNamespace>Entities\Annexes\AnnexD2.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\AnnexD3.Configuration.cs">
+      <CustomToolNamespace>Entities\Annexes\AnnexD3.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\AnnexD4.Configuration.cs">
+      <CustomToolNamespace>Entities\Annexes\AnnexD4.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\AnnexNational.Configuration.cs">
+      <CustomToolNamespace>Entities\Annexes\AnnexNational.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ApplicationHandlingContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\ApplicationHandlingContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\AttachmentInformation.Configuration.cs">
+      <CustomToolNamespace>Entities\AttachmentInformation.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\AuthenticationConfigContract.Configuration.cs">
+      <CustomToolNamespace>Configuration\AuthenticationConfigContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\Award.Configuration.cs">
+      <CustomToolNamespace>DataContracts\Award.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\AwardCriteria.Configuration.cs">
+      <CustomToolNamespace>DataContracts\AwardCriteria.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\AwardCriteriaDefence.Configuration.cs">
+      <CustomToolNamespace>DataContracts\AwardCriteriaDefence.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\AwardCriterionDefinition.Configuration.cs">
+      <CustomToolNamespace>DataContracts\AwardCriterionDefinition.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\CandidateNumberRestrictions.Configuration.cs">
+      <CustomToolNamespace>DataContracts\CandidateNumberRestrictions.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\Change.Configuration.cs">
+      <CustomToolNamespace>Entities\Change.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\CollaboratorContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\CollaboratorContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\CommunicationInformation.Configuration.cs">
+      <CustomToolNamespace>Entities\CommunicationInformation.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ComplementaryInformation.Configuration.cs">
+      <CustomToolNamespace>Entities\ComplementaryInformation.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ComplementaryInformationDefence.Configuration.cs">
+      <CustomToolNamespace>Entities\ComplementaryInformationDefence.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ConditionsInformation - Copy.Configuration.cs">
+      <CustomToolNamespace>Entities\ConditionsInformation - Copy.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ConditionsInformation.Configuration.cs">
+      <CustomToolNamespace>Entities\ConditionsInformation.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ConditionsInformationDefence.Configuration.cs">
+      <CustomToolNamespace>Entities\ConditionsInformationDefence.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ConditionsInformationNational.Configuration.cs">
+      <CustomToolNamespace>Entities\ConditionsInformationNational.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ContactPerson.Configuration.cs">
+      <CustomToolNamespace>Entities\ContactPerson.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ContractAwardDefence.Configuration.cs">
+      <CustomToolNamespace>DataContracts\ContractAwardDefence.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ContractAward.Configuration.cs">
+      <CustomToolNamespace>DataContracts\ContractAward.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ContractAwardNotPublicFields.Configuration.cs">
+      <CustomToolNamespace>DataContracts\ContractAwardNotPublicFields.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ContractBodyContactInformation.Configuration.cs">
+      <CustomToolNamespace>Entities\ContractBodyContactInformation.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ContractorContactInformation.Configuration.cs">
+      <CustomToolNamespace>Entities\ContractorContactInformation.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\CpvCode.Configuration.cs">
+      <CustomToolNamespace>Entities\CpvCode.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\DefenceAdministrativeInformation.Configuration.cs">
+      <CustomToolNamespace>DataContracts\DefenceAdministrativeInformation.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\DefenceCategory.Configuration.cs">
+      <CustomToolNamespace>Entities\DefenceCategory.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\DefenceDefenceProcurementObject.Configuration.cs">
+      <CustomToolNamespace>DataContracts\DefenceDefenceProcurementObject.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\DefenceProcurementObject.Configuration.cs">
+      <CustomToolNamespace>DataContracts\DefenceProcurementObject.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\DefenceRenewals.Configuration.cs">
+      <CustomToolNamespace>DataContracts\DefenceRenewals.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\Esender.Configuration.cs">
+      <CustomToolNamespace>DataContracts\Esender.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\EuFunds.Configuration.cs">
+      <CustomToolNamespace>DataContracts\EuFunds.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ExAnteSubcontracting.Configuration.cs">
+      <CustomToolNamespace>DataContracts\ExAnteSubcontracting.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\FileConfigurationContract.Configuration.cs">
+      <CustomToolNamespace>Configuration\FileConfigurationContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\FileEditorContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\FileEditorContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\FrameworkAgreementInformation.Configuration.cs">
+      <CustomToolNamespace>Entities\FrameworkAgreementInformation.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\HandlerContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\HandlerContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\HilmaStatistics.Configuration.cs">
+      <CustomToolNamespace>DataContracts\HilmaStatistics.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\Link.Configuration.cs">
+      <CustomToolNamespace>Entities\Link.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\LotsInfo.Configuration.cs">
+      <CustomToolNamespace>Entities\LotsInfo.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\MembershipsContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\MembershipsContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\Modifications.Configuration.cs">
+      <CustomToolNamespace>Entities\Modifications.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\NonAward.Configuration.cs">
+      <CustomToolNamespace>DataContracts\NonAward.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\NoticeContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\NoticeContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\NumberOfTenders.Configuration.cs">
+      <CustomToolNamespace>DataContracts\NumberOfTenders.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\NutsCode - Copy.Configuration.cs">
+      <CustomToolNamespace>Entities\NutsCode - Copy.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\NutsCode.Configuration.cs">
+      <CustomToolNamespace>Entities\NutsCode.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ObjectDescription.Configuration.cs">
+      <CustomToolNamespace>DataContracts\ObjectDescription.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\OjsNumber.Configuration.cs">
+      <CustomToolNamespace>DataContracts\OjsNumber.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\OptionsAndVariants.Configuration.cs">
+      <CustomToolNamespace>DataContracts\OptionsAndVariants.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\OrganisationContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\OrganisationContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\OrganisationMembershipApplication.Configuration.cs">
+      <CustomToolNamespace>DataContracts\OrganisationMembershipApplication.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\PostalAddress.Configuration.cs">
+      <CustomToolNamespace>DataContracts\PostalAddress.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ProcedureInformation.Configuration.cs">
+      <CustomToolNamespace>DataContracts\ProcedureInformation.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ProcedureInformationDefence.Configuration.cs">
+      <CustomToolNamespace>DataContracts\ProcedureInformationDefence.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ProcedureInformationNational.Configuration.cs">
+      <CustomToolNamespace>DataContracts\ProcedureInformationNational.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ProceduresForReviewInformation.Configuration.cs">
+      <CustomToolNamespace>Entities\ProceduresForReviewInformation.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ProcurementObject.Configuration.cs">
+      <CustomToolNamespace>Entities\ProcurementObject.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ProcurementObjectDefence.Configuration.cs">
+      <CustomToolNamespace>Entities\ProcurementObjectDefence.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ProcurementProjectContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\ProcurementProjectContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\RemoveUserContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\RemoveUserContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ReviewBodyConfigurationContract.Configuration.cs">
+      <CustomToolNamespace>Configuration\ReviewBodyConfigurationContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\RewardsAndJury.Configuration.cs">
+      <CustomToolNamespace>Entities\RewardsAndJury.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\SerilogConfigurationContract.Configuration.cs">
+      <CustomToolNamespace>Configuration\SerilogConfigurationContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\SubcontractingInformation.Configuration.cs">
+      <CustomToolNamespace>Entities\SubcontractingInformation.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\TedLinks.Configuration.cs">
+      <CustomToolNamespace>DataContracts\TedLinks.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\TedPublicationInfo.Configuration.cs">
+      <CustomToolNamespace>DataContracts\TedPublicationInfo.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\TedValidationItem.Configuration.cs">
+      <CustomToolNamespace>DataContracts\TedValidationItem.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\TedValidationReport.Configuration.cs">
+      <CustomToolNamespace>DataContracts\TedValidationReport.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\TenderingInformation.Configuration.cs">
+      <CustomToolNamespace>Entities\TenderingInformation.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\TenderOpeningConditions.Configuration.cs">
+      <CustomToolNamespace>Entities\TenderOpeningConditions.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\TimeFrame.Configuration.cs">
+      <CustomToolNamespace>DataContracts\TimeFrame.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\TimeFrame_BASE_28616.Configuration.cs">
+      <CustomToolNamespace>DataContracts\TimeFrame_BASE_28616.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\TranslationsConfigurationContract.Configuration.cs">
+      <CustomToolNamespace>Configuration\TranslationsConfigurationContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\UserContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\UserContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ValueContract.Configuration.cs">
+      <CustomToolNamespace>Entities\ValueContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ValueRangeContract.Configuration.cs">
+      <CustomToolNamespace>Entities\ValueRangeContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\VocCode.Configuration.cs">
+      <CustomToolNamespace>Entities\VocCode.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\Watcher.Configuration.cs">
+      <CustomToolNamespace>Entities\Watcher.cs</CustomToolNamespace>
+    </Compile>
+  </ItemGroup>
+
+</Project>

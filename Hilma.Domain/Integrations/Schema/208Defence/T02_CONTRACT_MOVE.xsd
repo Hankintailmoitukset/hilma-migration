@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+####################################################################################
+#  XSD name : T02_CONTRACT_MOVE
+#  RELEASE : "R2.0.8.S04"
+#  Intermediate release number 003-20180515
+#  Last update :10/11/2016
+####################################################################################
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+	<xs:include schemaLocation="common_move.xsd"/>
+	<xs:complexType name="complementary_information_contract_move">
+		<xs:annotation>
+			<xs:documentation>SECTION VI: COMPLEMENTARY INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+			<xs:element ref="PROCEDURES_FOR_APPEAL" minOccurs="0"/>
+			<xs:element ref="NOTICE_DISPATCH_DATE"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="award_contract_move">
+		<xs:annotation>
+			<xs:documentation>Section V: AWARD OF CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CONTRACT_AWARD_DATE" type="date">
+				<xs:annotation>
+					<xs:documentation>SECTION V.1: DATE OF CONTRACT AWARD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ECONOMIC_OPERATOR_NAME_ADDRESS">
+				<xs:annotation>
+					<xs:documentation>SECTION V.2: NAME AND ADDRESS OF THE SELECTED OPERATOR</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="INC_05"/>
+						<xs:element ref="ADDITIONAL_INFORMATION">
+							<xs:annotation>
+								<xs:documentation>Indication about owership relations with selected operator</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PARTY_NAME_ADDRESS" minOccurs="0" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation>SECTION V.3: NAME AND ADDRESS OF THE PARTY OR PARTIES EXERCISING LEGAL CONTROL OVER THE SELECTED OPERATOR</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="INC_05"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="CONTRACT_VALUE_INFORMATION" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>SECTION V.4: INFORMATION ON VALUE OF CONTRACT</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MORE_INFORMATION_TO_SUB_CONTRACTED_MOVE" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>SECTION V.5: INFORMATION ABOUT SUBCONTRACTING</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="CONTRACT_LIKELY_SUB_CONTRACTED_MOVE">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:choice>
+										<xs:element ref="EXCLUDING_VAT_VALUE"/>
+										<xs:sequence>
+											<xs:element ref="MIN_PERCENTAGE"/>
+											<xs:element ref="MAX_PERCENTAGE" minOccurs="0"/>
+										</xs:sequence>
+										<xs:element ref="MAX_PERCENTAGE"/>
+										<xs:element ref="UNKNOWN_VALUE"/>
+									</xs:choice>
+									<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element ref="NO_CONTRACT_LIKELY_SUB_CONTRACTED"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="procedure_contract_move">
+		<xs:annotation>
+			<xs:documentation>Section IV: PROCEDURE</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>Section IV.1: TYPE OF PROCEDURE</xs:documentation>
+				</xs:annotation>
+				<xs:element ref="PT_OPEN"/>
+				<xs:element ref="PT_DA_INTERNAL_OPERATOR"/>
+				<xs:element ref="PT_DA_SMALL_CONTRACT"/>
+				<xs:element ref="PT_DA_MEDIUM_ENTERPRISE"/>
+				<xs:element ref="PT_DA_EMERGENCY_MEASURE"/>
+				<xs:element ref="PT_DA_RAILWAY_TRANSPORT"/>
+			</xs:choice>
+			<xs:element ref="FILE_REFERENCE_NUMBER" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Section IV.2: ADMINISTRATIVE INFORMATION</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="conditions_relating_contract_move">
+		<xs:annotation>
+			<xs:documentation>SECTION III.1: CONDITIONS RELATING TO THE CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="COST_PARAMETERS"/>
+			<xs:choice>
+				<xs:element ref="EXCLUSIVE_RIGHTS_GRANTED"/>
+				<xs:element ref="NO_EXCLUSIVE_RIGHTS_GRANTED"/>
+			</xs:choice>
+			<xs:element ref="PERCENTAGE_ALLOCATED_OPERATOR"/>
+			<xs:element ref="SOCIAL_STANDARDS"/>
+			<xs:element ref="PUBLIC_SERVICE_OBLIGATIONS"/>
+			<xs:choice>
+				<xs:element ref="EXISTENCE_OTHER_PARTICULAR_CONDITIONS"/>
+				<xs:element ref="NO_EXISTENCE_OTHER_PARTICULAR_CONDITIONS"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="lefti_contract_move">
+		<xs:annotation>
+			<xs:documentation>Section III: LEGAL, ECONOMIC, FINANCIAL AND TECHNICAL INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CONDITIONS_RELATING_CONTRACT" type="conditions_relating_contract_move"/>
+			<xs:element ref="QUALITY_TARGETS"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SIGNIFICANCE_ASSET" type="btx"/>
+	<xs:element name="PREDOMINANCE_USE_ASSET" type="btx"/>
+	<xs:element name="LIST_ASSETS" type="btx"/>
+	<xs:element name="EXTENDED_CONTRACT_DURATION">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_EXTENDED_CONTRACT_DURATION">
+		<xs:complexType/>
+	</xs:element>
+	<xs:complexType name="essential_assets">
+		<xs:annotation>
+			<xs:documentation>Section II.4: ESSENTIAL ASSETS</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element ref="EXTENDED_CONTRACT_DURATION"/>
+				<xs:element ref="NO_EXTENDED_CONTRACT_DURATION"/>
+			</xs:choice>
+			<xs:element ref="LIST_ASSETS" minOccurs="0"/>
+			<xs:element ref="SIGNIFICANCE_ASSET" minOccurs="0"/>
+			<xs:element ref="PREDOMINANCE_USE_ASSET" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="description_contract_move">
+		<xs:annotation>
+			<xs:documentation>Section II.1: DESCRIPTION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="TITLE_CONTRACT"/>
+			<xs:element ref="SERVICE_CATEGORY_MOVE" maxOccurs="9"/>
+			<xs:element name="LOCATION_NUTS" type="location_nuts_move"/>
+			<xs:element ref="SHORT_CONTRACT_DESCRIPTION"/>
+			<xs:group ref="INC_10"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="object_contract_move">
+		<xs:annotation>
+			<xs:documentation>Section II: OBJECT OF THE CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DESCRIPTION_CONTRACT_MOVE" type="description_contract_move"/>
+			<xs:element ref="QUANTITY_SCOPE_MOVE" minOccurs="0"/>
+			<xs:element ref="PERIOD_MOVE_DATE_STARTING"/>
+			<xs:element name="ESSENTIAL_ASSETS" type="essential_assets" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- fd_contract_move declaration -->
+	<xs:complexType name="fd_contract_move">
+		<xs:sequence>
+			<xs:element name="AUTHORITY_CONTRACT_MOVE" type="authority_move"/>
+			<xs:element name="OBJECT_CONTRACT_MOVE" type="object_contract_move"/>
+			<xs:element name="LEFTI_CONTRACT_MOVE" type="lefti_contract_move"/>
+			<xs:element name="PROCEDURE_CONTRACT_MOVE" type="procedure_contract_move"/>
+			<xs:element name="AWARD_CONTRACT_MOVE" type="award_contract_move"/>
+			<xs:element name="COMPLEMENTARY_INFORMATION_CONTRACTI_MOVE" type="complementary_information_contract_move"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- prior_information_move declaration -->
+	<xs:complexType name="contract_move">
+		<xs:sequence>
+			<xs:element name="FD_CONTRACT_MOVE" type="fd_contract_move"/>
+		</xs:sequence>
+		<xs:attribute name="LG" type="languages" use="required"/>
+		<xs:attribute name="CATEGORY" type="category" use="required"/>
+		<xs:attribute name="FORM" use="required" fixed="T02"/>
+		<xs:attribute name="VERSION" use="required" fixed="R2.0.8.S04"/>
+	</xs:complexType>
+	<!-- ROOT element -->
+	<xs:element name="CONTRACT_MOVE" type="contract_move">
+		<xs:annotation>
+			<xs:documentation>T02 root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

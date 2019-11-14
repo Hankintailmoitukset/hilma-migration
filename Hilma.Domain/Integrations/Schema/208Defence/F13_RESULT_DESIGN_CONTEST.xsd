@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+####################################################################################
+#  XSD name : F13_RESULT_DESIGN_CONTEST
+#  RELEASE : "R2.0.8.S04"
+#  Intermediate release number 003-20180515
+#  Last update :20/02/2012
+####################################################################################
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+	<xs:include schemaLocation="common.xsd"/>
+	<!-- result_contest declaration  -->
+	<xs:complexType name="result_contest">
+		<xs:sequence>
+			<xs:element name="CONTEST_NUMBER" type="xs:integer" minOccurs="0"/>
+			<xs:element name="CONTEST_TITLE" type="btx" minOccurs="0"/>
+			<xs:element name="AWARD_PRIZES">
+				<xs:annotation>
+					<xs:documentation>Section V.1: RESULTS OF CONTEST</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PARTICIPANTS_NUMBER" type="xs:integer" minOccurs="0"/>
+						<xs:element name="FOREIGN_PARTICIPANTS_NUMBER" type="xs:integer" minOccurs="0"/>
+						<xs:element name="NAME_ADDRESS_WINNER" minOccurs="0">
+							<xs:complexType>
+								<xs:group ref="INC_05"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PRIZE_VALUE" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Section V.2: RESULTS OF CONTEST</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="cost">
+							<xs:attribute name="CURRENCY" type="currencies" use="required"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ITEM" type="xs:integer"/>
+	</xs:complexType>
+	<!-- results_contest_result_design_contest declaration -->
+	<xs:complexType name="results_contest_result_design_contest">
+		<xs:annotation>
+			<xs:documentation>Section V: RESULTS OF CONTEST</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RESULT_CONTEST" type="result_contest" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- procedures_result_design_contest declaration -->
+	<xs:complexType name="procedures_result_design_contest">
+		<xs:annotation>
+			<xs:documentation>Section IV: PROCEDURES</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="FILE_REFERENCE_NUMBER" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element ref="NO_PREVIOUS_PUBLICATION">
+					<xs:annotation>
+						<xs:documentation>Section IV.1: File reference Number attributed by the contracting authority</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="PREVIOUS_PUBLICATION_OJ"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- object_result_design_contest declaration -->
+	<xs:complexType name="object_result_design_contest">
+		<xs:annotation>
+			<xs:documentation>Section II: OBJECT OF THE DESIGN CONTEST/ DESCRIPTION OF PROJECT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TITLE_RESULT_DESIGN_CONTEST" type="btx" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Section II.1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="DESCRIPTION"/>
+			<xs:group ref="INC_10"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- contracting_entity_result_design_contest declaration -->
+	<xs:complexType name="internet_addresses_result_design_contest">
+		<xs:sequence>
+			<xs:element ref="URL_GENERAL" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="contracting_entity_result_design_contest">
+		<xs:annotation>
+			<xs:documentation>Section I: CONTRACTING ENTITY</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NAME_ADDRESSES_CONTACT_RESULT_DESIGN_CONTEST">
+				<xs:annotation>
+					<xs:documentation>Section I.1: NAME, ADDRESSES AND CONTACT POINT(S)</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="INC_01"/>
+						<xs:element name="INTERNET_ADDRESSES_RESULT_DESIGN_CONTEST" type="internet_addresses_result_design_contest" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="TYPE_AND_ACTIVITIES_OR_CONTRACTING_ENTITY_AND_PURCHASING_ON_BEHALF" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- fd_result_design_contest declaration -->
+	<xs:complexType name="fd_result_design_contest">
+		<xs:sequence>
+			<xs:element ref="NOTICE_COVERED"/>
+			<xs:element name="CONTRACTING_ENTITY_RESULT_DESIGN_CONTEST" type="contracting_entity_result_design_contest"/>
+			<xs:element name="OBJECT_RESULT_DESIGN_CONTEST" type="object_result_design_contest"/>
+			<xs:element name="PROCEDURES_RESULT_DESIGN_CONTEST" type="procedures_result_design_contest"/>
+			<xs:element name="RESULTS_CONTEST_RESULT_DESIGN_CONTEST" type="results_contest_result_design_contest"/>
+			<xs:element ref="COMPLEMENTARY_INFORMATION_RESULT_DESIGN_CONTEST"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- result_design_contest declaration -->
+	<xs:complexType name="result_design_contest">
+		<xs:sequence>
+			<xs:element name="FD_RESULT_DESIGN_CONTEST" type="fd_result_design_contest"/>
+		</xs:sequence>
+		<xs:attribute name="LG" type="languages" use="required"/>
+		<xs:attribute name="CATEGORY" type="category" use="required"/>
+		<xs:attribute name="FORM" use="required" fixed="13"/>
+		<xs:attribute name="VERSION" use="required" fixed="R2.0.8.S04"/>
+	</xs:complexType>
+	<!-- ROOT element -->
+	<xs:element name="RESULT_DESIGN_CONTEST" type="result_design_contest">
+		<xs:annotation>
+			<xs:documentation>F13 root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

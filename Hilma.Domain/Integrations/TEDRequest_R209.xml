@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TED_ESENDERS xmlns:n2016="http://publications.europa.eu/resource/schema/ted/2016/nuts" xmlns="http://publications.europa.eu/resource/schema/ted/R2.0.9/reception" VERSION="R2.0.9.S03" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
+  <SENDER>
+    <IDENTIFICATION>
+      <ESENDER_LOGIN>TEDE0MUT</ESENDER_LOGIN>
+      <NO_DOC_EXT>2019-007617</NO_DOC_EXT>
+    </IDENTIFICATION>
+    <CONTACT>
+      <ORGANISATION>Hansel Oy</ORGANISATION>
+      <COUNTRY VALUE="FI"/>
+      <E_MAIL>ari.nurkkala@innofactor.com</E_MAIL>
+    </CONTACT>
+  </SENDER>
+
+  <FORM_SECTION>
+    <F01_2014 LG="FI" CATEGORY="ORIGINAL" FORM="F01">
+      <LEGAL_BASIS VALUE="32014L0024"/>
+      <NOTICE TYPE="PRI_ONLY"/>
+      <CONTRACTING_BODY>
+        <ADDRESS_CONTRACTING_BODY>
+          <OFFICIALNAME>Rahoitusvakausvirasto</OFFICIALNAME>
+          <NATIONALID>2683902-3</NATIONALID>
+          <ADDRESS>Työpajankatu 13, PL 70</ADDRESS>
+          <TOWN>Helsinki</TOWN>
+          <POSTAL_CODE>00581</POSTAL_CODE>
+          <COUNTRY VALUE="FI"/>
+          <CONTACT_POINT>Anne Sores</CONTACT_POINT>
+          <E_MAIL>anne.sores@hansel.fi</E_MAIL>
+          <n2016:NUTS CODE="FI"/>
+          <URL_GENERAL>https://rvv.fi</URL_GENERAL>
+        </ADDRESS_CONTRACTING_BODY>
+        <ADDRESS_FURTHER_INFO_IDEM/>
+        <CA_TYPE VALUE="NATIONAL_AGENCY"/>
+        <CA_ACTIVITY VALUE="ECONOMIC_AND_FINANCIAL_AFFAIRS"/>
+      </CONTRACTING_BODY>
+      <OBJECT_CONTRACT ITEM="1">
+        <TITLE>
+          <P>Rahoitusvakausviraston tietopyyntö suunnitteilla olevaan arvonmäärityspalveluiden hankintaan liittyen</P>
+        </TITLE>
+        <REFERENCE_NUMBER>RVV 1/00.03.01/2019</REFERENCE_NUMBER>
+        <CPV_MAIN>
+          <CPV_CODE CODE="66000000"/>
+        </CPV_MAIN>
+        <TYPE_CONTRACT CTYPE="SERVICES"/>
+        <SHORT_DESCR>
+          <P>
+            Tämän tietopyynnön ja markkinakartoituksen tarkoituksena on kerätä tietoa arvonmäärityspalveluiden tarjoamisesta kiinnostuneista yrityksistä, tarjolla olevista oheispalveluista sekä yritysten asiantuntijuudesta ja osaamisesta. Tavoitteena on varmistaa, että Rahoitusvakausviraston tuleva arvonmäärityspalveluita koskeva tarjouskilpailu ja hankinta onnistuu mahdollisimman hyvin.
+
+            Tämän tietopyynnön kysymykset ja niihin esitetyt vastaukset toimivat tulevan markkinavuoropuhelun perustana. Tietopyynnön kysymykset ja lisämateriaali hankittavasta palvelukokonaisuudesta toimitetaan kiinnostuneille tarjoajille sähköpostitse. Vuoropuhelut käydään kiinnostuksensa ilmaisseiden toimijoiden kanssa.
+
+            Kilpailutuksesta kiinnostuneet tarjoajat voivat ilmoittaa yhteystietonsa sähköpostitse osoitteeseen anne.sores@hansel.fi. Kiinnostuksensa ilmoittaneille tarjoajille tullaan lähettämään tietopyynnön materiaalia kommenteille. Vastaukset tietopyyntöön pyydetään toimittamaan 26.4.2019.
+          </P>
+        </SHORT_DESCR>
+        <NO_LOT_DIVISION/>
+        <OBJECT_DESCR ITEM="1">
+          <n2016:NUTS CODE="FI"/>
+          <SHORT_DESCR>
+            <P>
+              Hankittava palvelukokonaisuus: Valuaatio-/arvonmäärityspalvelu
+
+              Rahoitusvakausviraston on viranomaisena varauduttava teettämään tarvittaessa nopea ulkopuolinen selvitys pankin taloudellisesta tilanteesta ja vaadittavista toimenpiteistä ennen kriisinratkaisutoimenpiteisiin ryhtymistä. Selvityksessä määritellään pankin varat ja velat sekä mikä on niiden mahdollinen markkina-arvo. Selvitykseen sisältyy myös arvio siitä, mihin kriisinratkaisutoimenpiteisiin olisi ryhdyttävä.
+            </P>
+          </SHORT_DESCR>
+          <INFO_ADD>
+            <P>
+              Tietopyyntöön vastaaminen ei sido markkinakartoitukseen osallistuvia toimijoita tarjouksen jättämiseen tarjouskilpailussa eikä toisaalta tilaisuuksiin osallistumatta jättäminen estä tarjouksen jättämistä tarjouskilpailussa.
+
+              Hankintayksikkö ei sitoudu toteuttamaan hankintaa. Päätökset mahdollisen hankintaprosessin käynnistämisestä tehdään markkinakartoituksen jälkeen.
+            </P>
+          </INFO_ADD>
+        </OBJECT_DESCR>
+        <DATE_PUBLICATION_NOTICE>2019-09-30</DATE_PUBLICATION_NOTICE>
+      </OBJECT_CONTRACT>
+      <PROCEDURE>
+        <CONTRACT_COVERED_GPA/>
+      </PROCEDURE>
+      <COMPLEMENTARY_INFO>
+        <INFO_ADD>
+          <P>
+            Tämä ei ole hankintailmoitus tai tarjouspyyntö vaan tarkentava markkinakartoitus eli tietopyyntö, joka on hankintalain (1397/2016) 65 §:n mukainen tarkentava osa hankinnan valmistelua.
+
+            Tässä ilmoituksessa ja sen liitteissä esitetyt kuvaukset sekä tarjouspyynnön arvioitu julkaisuajankohta ovat alustavia ja suuntaa antavia ennakkotietoja, jotka eivät sido hankintayksikköä.
+
+            Hankinnan alustava aikataulusuunnitelma (muutokset mahdollisia):
+
+            Tietopyynnön julkaisu Hilmassa 5.4.2019
+            Tietopyyntövastausten toimitus 26.4.2019 mennessä
+            Markkinavuoropuhelut 20. - 29.5.2019 Hansel Oy:n tiloissa yrityskohtaiset vuoropuhelut (kesto 1 - 2 tuntia)
+            Kilpailutus Syksy 2019
+            Hankintapäätös V. 2019 loppuun mennessä
+            Sopimuskausi käynnistyy V. 2020 alussa
+
+            Hansel Oy toimii kilpailutuksessa konsultatiivisessa roolissa.
+          </P>
+        </INFO_ADD>
+        <DATE_DISPATCH_NOTICE>2019-04-09</DATE_DISPATCH_NOTICE>
+      </COMPLEMENTARY_INFO>
+    </F01_2014>
+  </FORM_SECTION>
+</TED_ESENDERS>

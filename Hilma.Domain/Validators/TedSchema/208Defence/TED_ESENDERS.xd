@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+####################################################################################
+#  XSD name : TED_ESENDERS  (.xd)                                              
+#  RELEASE : "R2.0.8.S04"                                                      
+#  Intermediate release number 003-20180515                                       
+#  Last update : 26/05/2016                                                       
+####################################################################################
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+	<!-- *********************************** -->
+	<!-- include schemas                    -->
+	<!-- *********************************** -->
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:include schemaLocation="F01_PRIOR_INFORMATION.xsd"/>
+	<xs:include schemaLocation="F02_CONTRACT.xsd"/>
+	<xs:include schemaLocation="F03_CONTRACT_AWARD.xsd"/>
+	<xs:include schemaLocation="F04_PERIODIC_INDICATIVE_UTILITIES.xsd"/>
+	<xs:include schemaLocation="F05_CONTRACT_UTILITIES.xsd"/>
+	<xs:include schemaLocation="F06_CONTRACT_AWARD_UTILITIES.xsd"/>
+	<xs:include schemaLocation="F07_QUALIFICATION_SYSTEM_UTILITIES.xsd"/>
+	<xs:include schemaLocation="F08_BUYER_PROFILE.xsd"/>
+	<xs:include schemaLocation="F09_SIMPLIFIED_CONTRACT.xsd"/>
+	<xs:include schemaLocation="F10_CONCESSION.xsd"/>
+	<xs:include schemaLocation="F11_CONTRACT_CONCESSIONAIRE.xsd"/>
+	<xs:include schemaLocation="F12_DESIGN_CONTEST.xsd"/>
+	<xs:include schemaLocation="F13_RESULT_DESIGN_CONTEST.xsd"/>
+	<xs:include schemaLocation="F14_ADDITIONAL_INFORMATION_CORRIGENDUM.xsd"/>
+	<xs:include schemaLocation="F15_VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE.xsd"/>
+	<xs:include schemaLocation="F16_PRIOR_INFORMATION_DEFENCE.xsd"/>
+	<xs:include schemaLocation="F17_CONTRACT_DEFENCE.xsd"/>
+	<xs:include schemaLocation="F18_CONTRACT_AWARD_DEFENCE.xsd"/>
+	<xs:include schemaLocation="F19_CONTRACT_SUB_DEFENCE.xsd"/>
+	<xs:include schemaLocation="T01_PRIOR_INFORMATION_MOVE.xsd"/>
+	<xs:include schemaLocation="T02_CONTRACT_MOVE.xsd"/>
+	<xs:complexType name="ted_esenders">
+		<xs:sequence>
+			<xs:element ref="SENDER"/>
+			<xs:element name="FORM_SECTION">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element ref="PRIOR_INFORMATION" maxOccurs="unbounded"/>
+						<xs:element ref="CONTRACT" maxOccurs="unbounded"/>
+						<xs:element ref="CONTRACT_AWARD" maxOccurs="unbounded"/>
+						<xs:element ref="PERIODIC_INDICATIVE_UTILITIES" maxOccurs="unbounded"/>
+						<xs:element ref="CONTRACT_UTILITIES" maxOccurs="unbounded"/>
+						<xs:element ref="CONTRACT_AWARD_UTILITIES" maxOccurs="unbounded"/>
+						<xs:element ref="QUALIFICATION_SYSTEM_UTILITIES" maxOccurs="unbounded"/>
+						<xs:element ref="BUYER_PROFILE" maxOccurs="unbounded"/>
+						<xs:element ref="SIMPLIFIED_CONTRACT" maxOccurs="unbounded"/>
+						<xs:element ref="CONCESSION" maxOccurs="unbounded"/>
+						<xs:element ref="CONTRACT_CONCESSIONAIRE" maxOccurs="unbounded"/>
+						<xs:element ref="DESIGN_CONTEST" maxOccurs="unbounded"/>
+						<xs:element ref="RESULT_DESIGN_CONTEST" maxOccurs="unbounded"/>
+						<xs:element ref="ADDITIONAL_INFORMATION_CORRIGENDUM" maxOccurs="unbounded"/>
+						<xs:element ref="VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE" maxOccurs="unbounded"/>
+						<xs:element ref="PRIOR_INFORMATION_DEFENCE" maxOccurs="unbounded"/>
+						<xs:element ref="CONTRACT_DEFENCE" maxOccurs="unbounded"/>
+						<xs:element ref="CONTRACT_AWARD_DEFENCE" maxOccurs="unbounded"/>
+						<xs:element ref="CONTRACT_CONCESSIONAIRE_DEFENCE" maxOccurs="unbounded"/>
+						<xs:element ref="PRIOR_INFORMATION_MOVE" maxOccurs="unbounded"/>
+						<xs:element ref="CONTRACT_MOVE" maxOccurs="unbounded"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TED_ESENDERS" type="ted_esenders">
+		<xs:annotation>
+			<xs:documentation>Root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

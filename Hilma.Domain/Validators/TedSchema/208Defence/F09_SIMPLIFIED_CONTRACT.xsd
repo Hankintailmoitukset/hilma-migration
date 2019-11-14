@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+####################################################################################
+#  XSD name : F09_SIMPLIFIED_CONTRACT
+#  RELEASE : "R2.0.8.S04"
+#  Intermediate release number 003-20180515
+#  Last update :20/02/2012
+####################################################################################
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+	<xs:include schemaLocation="common.xsd"/>
+	<!-- complementary_information_simplified_contract declaration -->
+	<xs:complexType name="complementary_information_simplified_contract">
+		<xs:annotation>
+			<xs:documentation>Section VI: COMPLEMENTARY INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+			<xs:element ref="NOTICE_DISPATCH_DATE"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- procedures_simplified_contract_notice declaration -->
+	<xs:complexType name="procedures_simplified_contract_notice">
+		<xs:annotation>
+			<xs:documentation>Section IV: PROCEDURES</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="F09_TYPE_PROCEDURE_OPEN" minOccurs="0"/>
+			<xs:element ref="IS_ELECTRONIC_AUCTION_USABLE" minOccurs="0"/>
+			<xs:element name="ADMINISTRATIVE_INFORMATION_SIMPLIFIED_CONTRACT">
+				<xs:annotation>
+					<xs:documentation>Section IV.2: ADMINISTRATIVE INFORMATION</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="REFERENCE_NUMBER_ATTRIBUTED" minOccurs="0"/>
+						<xs:element ref="PREVIOUS_PUBLICATION_OJ" minOccurs="0"/>
+						<xs:element ref="TIME_LIMIT_CHP"/>
+						<xs:element ref="LANGUAGE" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- object_simplified_contract_notice declaration -->
+	<xs:complexType name="object_simplified_contract_notice">
+		<xs:annotation>
+			<xs:documentation>Section II: OBJECT OF THE CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="TITLE_CONTRACT" minOccurs="0"/>
+			<xs:element ref="TYPE_CONTRACT"/>
+			<xs:element ref="SHORT_DESCRIPTION_CONTRACT"/>
+			<xs:group ref="INC_10"/>
+			<xs:element ref="NATURE_QUANTITY_SCOPE" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- authority_entity_simplified_contract_notice declaration  -->
+	<xs:complexType name="authority_entity_simplified_contract_notice">
+		<xs:annotation>
+			<xs:documentation>Section I: AUTHORITY_ENTITY_SIMPLIFIED_CONTRACT_NOTICE</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NAME_ADDRESSES_CONTACT_SIMPLIFIED_CONTRACT">
+				<xs:annotation>
+					<xs:documentation>NAME, ADDRESSES AND CONTACT POINT(S)</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="INC_01"/>
+						<xs:element name="INTERNET_ADDRESSES_SIMPLIFIED_CONTRACT" type="internet_addresses" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="TYPE_AND_ACTIVITIES_OR_CONTRACTING_ENTITY_AND_PURCHASING_ON_BEHALF" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- fd_simplified_contract declaration -->
+	<xs:complexType name="fd_simplified_contract">
+		<xs:sequence>
+			<xs:element ref="NOTICE_COVERED"/>
+			<xs:element name="AUTHORITY_ENTITY_SIMPLIFIED_CONTRACT_NOTICE" type="authority_entity_simplified_contract_notice"/>
+			<xs:element name="OBJECT_SIMPLIFIED_CONTRACT_NOTICE" type="object_simplified_contract_notice"/>
+			<xs:element name="PROCEDURES_SIMPLIFIED_CONTRACT_NOTICE" type="procedures_simplified_contract_notice"/>
+			<xs:element name="COMPLEMENTARY_INFORMATION_SIMPLIFIED_CONTRACT" type="complementary_information_simplified_contract"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- simplified_contract declaration -->
+	<xs:complexType name="simplified_contract">
+		<xs:sequence>
+			<xs:element name="FD_SIMPLIFIED_CONTRACT" type="fd_simplified_contract"/>
+		</xs:sequence>
+		<xs:attribute name="LG" type="languages" use="required"/>
+		<xs:attribute name="CATEGORY" type="category" use="required"/>
+		<xs:attribute name="FORM" use="required" fixed="9"/>
+		<xs:attribute name="VERSION" use="required" fixed="R2.0.8.S04"/>
+	</xs:complexType>
+	<!-- ROOT element -->
+	<xs:element name="SIMPLIFIED_CONTRACT" type="simplified_contract">
+		<xs:annotation>
+			<xs:documentation>F9 root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

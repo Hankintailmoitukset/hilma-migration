@@ -1,0 +1,2954 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+####################################################################################
+#  XSD name : common
+#  RELEASE : "R2.0.8.S04"
+#  Intermediate release number 003-20180515
+#  Last update :10/11/2016
+####################################################################################
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+	<xs:include schemaLocation="countries.xsd"/>
+	<xs:include schemaLocation="cpv_codes.xsd"/>
+	<xs:include schemaLocation="cpv_supplementary_codes.xsd"/>
+	<xs:include schemaLocation="nuts_codes_2016.xsd"/>
+	<xs:simpleType name="value_incomplete_reason">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="PROCEDURE_DISCONTINUED"/>
+			<xs:enumeration value="PROCEDURE_UNSUCCESSFUL"/>
+			<xs:enumeration value="CONTRACT_NOT_AWARDED"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="value_incomplete_info">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="CONTRACT_RE_PUBLICATION"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="category">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="ORIGINAL"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ctype">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="WORKS"/>
+			<xs:enumeration value="SERVICES"/>
+			<xs:enumeration value="SUPPLIES"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ################################################################# -->
+	<!-- # simpleType/complexType Definition - LST                                                 		 # -->
+	<!-- ################################################################# -->
+	<xs:simpleType name="lst_06">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="WORKS"/>
+			<xs:enumeration value="SERVICES"/>
+			<xs:enumeration value="SUPPLIES"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="TYPE_CONTRACT">
+		<xs:complexType>
+			<xs:attribute name="VALUE" type="lst_06" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="lst_08">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="HIRE_PURCHASE"/>
+			<xs:enumeration value="RENTAL"/>
+			<xs:enumeration value="LEASE"/>
+			<xs:enumeration value="PURCHASE"/>
+			<xs:enumeration value="COMBINATION_THESE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="TYPE_SUPPLIES_CONTRACT">
+		<xs:complexType>
+			<xs:attribute name="VALUE" type="lst_08"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FRAMEWORK_AGREEMENT" type="yes_no">
+		<xs:annotation>
+			<xs:documentation>Section II.3: The notice involves the establishment of a framework agreement:</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="notice_involves">
+		<xs:sequence>
+			<xs:element ref="ESTABLISHMENT_FRAMEWORK_AGREEMENT" minOccurs="0"/>
+			<xs:element ref="SETTING_UP_DPS" minOccurs="0"/>
+			<xs:element ref="PUBLIC_CONTRACT" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="NOTICE_INVOLVES" type="notice_involves"/>
+	<xs:simpleType name="lst_09_defence">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="ESTABLISHMENT_FRAMEWORK_AGREEMENT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="NOTICE_INVOLVES_DEFENCE">
+		<xs:complexType>
+			<xs:attribute name="VALUE" type="lst_09_defence" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="lst_10">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="ONE_LOT_ONLY"/>
+			<xs:enumeration value="ONE_OR_MORE_LOT"/>
+			<xs:enumeration value="ALL_LOTS"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="lst_11">
+		<xs:annotation>
+			<xs:documentation>List of procedure types created for Corrigendum Form</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="OPEN"/>
+			<xs:enumeration value="RESTRICTED"/>
+			<xs:enumeration value="ACCELERATED_RESTRICTED"/>
+			<xs:enumeration value="NEGOTIATED"/>
+			<xs:enumeration value="ACCELERATED_NEGOTIATED"/>
+			<xs:enumeration value="COMPETITIVE_DIALOGUE"/>
+			<xs:enumeration value="NEGOTIATED_WITH_COMPETITION"/>
+			<xs:enumeration value="NEGOTIATED_WITHOUT_COMPETITION"/>
+			<xs:enumeration value="AWARD_WITHOUT_PRIOR_PUBLICATION"/>
+			<xs:enumeration value="NEGOTIATED_WITH_CONTRACT_PUBLICATION"/>
+			<xs:enumeration value="NEGOTIATED_WITHOUT_CONTRACT_PUBLICATION"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="lst_16_defence">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="CONCLUSION_FRAMEWORK_AGREEMENT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="lst_19">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="OPEN_PROCEDURE"/>
+			<xs:enumeration value="RESTRICTED_PROCEDURE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="purchase_supplies_advantageaous_terms">
+		<xs:sequence>
+			<xs:element ref="RECEIVERS_ARRANGEMENT_CREDITORS" minOccurs="0"/>
+			<xs:element ref="SUPPLIER_WINDING_UP_BUSINESS" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PURCHASE_SUPPLIES_ADVANTAGEOUS_TERMS" type="purchase_supplies_advantageaous_terms"/>
+	<xs:complexType name="lst_22">
+		<xs:attribute name="CHOICE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="NOTICE_BUYER_PROFILE"/>
+					<xs:enumeration value="PRIOR_INFORMATION_NOTICE"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="PRIOR_INFORMATION_NOTICE_F2" type="lst_22"/>
+	<xs:element name="PREVIOUS_NOTICE_BUYER_PROFILE_F3" type="lst_22"/>
+	<xs:element name="PREVIOUS_NOTICE_BUYER_PROFILE_F5" type="lst_22_F5"/>
+	<xs:element name="PREVIOUS_NOTICE_BUYER_PROFILE_F18" type="lst_22"/>
+	<xs:complexType name="lst_22_F5">
+		<xs:attribute name="CHOICE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="NOTICE_BUYER_PROFILE"/>
+					<xs:enumeration value="PERIODIC_INDICATIVE_NOTICE"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="lst_23">
+		<xs:attribute name="CHOICE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="CONTRACT_NOTICE"/>
+					<xs:enumeration value="SIMPLIFIED_CONTRACT_NOTICE_DPS"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="CNT_NOTICE_INFORMATION_S" type="lst_23"/>
+	<xs:complexType name="lst_25">
+		<xs:attribute name="VALUE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="RAILWAY_SERVICES"/>
+					<xs:enumeration value="EXPLORATION_EXTRACTION_COAL_OTHER_SOLID_FUEL"/>
+					<xs:enumeration value="PORT_RELATED_ACTIVITIES"/>
+					<xs:enumeration value="WATER"/>
+					<xs:enumeration value="ELECTRICITY"/>
+					<xs:enumeration value="AIRPORT_RELATED_ACTIVITIES"/>
+					<xs:enumeration value="URBAN_RAILWAY_TRAMWAY_TROLLEYBUS_BUS_SERVICES"/>
+					<xs:enumeration value="EXPLORATION_EXTRACTION_GAS_OIL"/>
+					<xs:enumeration value="PRODUCTION_TRANSPORT_DISTRIBUTION_GAS_HEAT"/>
+					<xs:enumeration value="POSTAL_SERVICES"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="ACTIVITIES_OF_CONTRACTING_ENTITY">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ACTIVITY_OF_CONTRACTING_ENTITY" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ACTIVITY_OF_CONTRACTING_ENTITY_OTHER" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ACTIVITY_OF_CONTRACTING_ENTITY" type="lst_25"/>
+	<xs:element name="ACTIVITY_OF_CONTRACTING_ENTITY_OTHER">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="VALUE" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:NMTOKEN">
+								<xs:enumeration value="OTHER"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="lst_26">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="OPEN"/>
+			<xs:enumeration value="RESTRICTED"/>
+			<xs:enumeration value="NEGOTIATED"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="lst_28">
+		<xs:attribute name="CHOICE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="NOTICE_QUALIFICATION_SYSTEM"/>
+					<xs:enumeration value="PERIODIC_INDICATIVE_NOTICE"/>
+					<xs:enumeration value="NOTICE_BUYER_PROFILE"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="PREVIOUS_NOTICE_BUYER_PROFILE_F6" type="lst_28"/>
+	<xs:complexType name="lst_28_defence">
+		<xs:attribute name="CHOICE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="CONTRACT_AWARD_NOTICE"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="PREVIOUS_NOTICE_BUYER_PROFILE_F19" type="lst_28_defence"/>
+	<xs:simpleType name="lst_29">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="OPEN_PROCEDURE"/>
+			<xs:enumeration value="RESTRICTED_PROCEDURE"/>
+			<xs:enumeration value="NEGOTIATED_PROCEDURE_COMPETITION"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="lst_30">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="OPEN"/>
+			<xs:enumeration value="RESTRICTED"/>
+			<xs:enumeration value="NEGOTIATED"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="lst_32">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="LOWEST_PRICE"/>
+			<xs:enumeration value="MOST_ECONOMICALLY_TENDER"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="lst_33">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="PRIOR_INFORMATION_NOTICE"/>
+			<xs:enumeration value="PERIODIC_INDICATIVE_NOTICE"/>
+			<xs:enumeration value="PRIOR_INFORMATION_NOTICE_DEFENCE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="lst_34">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="DIRECTIVE_2004_17"/>
+			<xs:enumeration value="DIRECTIVE_2004_18"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--created for VEAT -->
+	<xs:complexType name="lst_35">
+		<xs:attribute name="NOTICE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="CONTRACTING_AUTHORITY"/>
+					<xs:enumeration value="CONTRACTING_ENTITY"/>
+					<xs:enumeration value="CONTRACTING_DEFENCE"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="NOTICE_COVERED">
+		<xs:complexType>
+			<xs:attribute name="VALUE" type="lst_34" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="lst_37">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="RECEIPT_TENDERS"/>
+			<xs:enumeration value="REQUEST_PARTICIPATE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="lst_38">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="SIMAP"/>
+			<xs:enumeration value="OJS_ESENDER"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--created for F15 -->
+	<xs:complexType name="lst_39">
+		<xs:attribute name="CHOICE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="PERIODIC_INDICATIVE_NOTICE"/>
+					<xs:enumeration value="NOTICE_BUYER_PROFILE"/>
+					<xs:enumeration value="NOTICE_QUALIFICATION_SYSTEM"/>
+					<xs:enumeration value="PRIOR_INFORMATION_NOTICE"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="PREVIOUS_NOTICE_BUYER_PROFILE_F15" type="lst_39"/>
+	<xs:complexType name="lst_40">
+		<xs:attribute name="VALUE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="EX_ANTE_NOTICE_INFORMATION_S" type="lst_40"/>
+	<xs:complexType name="lst_52">
+		<xs:attribute name="VALUE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="CONTRACT_NOTICE"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="CNT_NOTICE_INFORMATION_S_F18" type="lst_52"/>
+	<!-- ################################################################# -->
+	<!-- # Group Definition - INC                                                                                           # -->
+	<!-- ################################################################# -->
+	<xs:group name="INC_01">
+		<xs:sequence>
+			<xs:element ref="CA_CE_CONCESSIONAIRE_PROFILE"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_02">
+		<xs:sequence>
+			<xs:element ref="FURTHER_INFORMATION" minOccurs="0"/>
+			<xs:element ref="SPECIFICATIONS_AND_ADDITIONAL_DOCUMENTS" minOccurs="0"/>
+			<xs:element ref="TENDERS_REQUESTS_APPLICATIONS_MUST_BE_SENT_TO" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_02_1">
+		<xs:sequence>
+			<xs:element ref="FURTHER_INFORMATION"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_03">
+		<xs:sequence>
+			<xs:element ref="TYPE_AND_ACTIVITIES" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_04">
+		<xs:sequence>
+			<xs:element ref="CONTACT_DATA"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_05">
+		<xs:sequence>
+			<xs:element ref="CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_05_CHP">
+		<xs:sequence>
+			<xs:element ref="CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME_CHP"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_06">
+		<xs:sequence>
+			<xs:element ref="LOT_NUMBER" minOccurs="0"/>
+			<xs:element ref="LOT_TITLE" minOccurs="0"/>
+			<xs:element ref="LOT_DESCRIPTION" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_07">
+		<xs:sequence>
+			<xs:element ref="JUSTIFICATION_CHOICE_NEGOCIATED_PROCEDURE" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_10">
+		<xs:sequence>
+			<xs:element ref="CPV"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_11">
+		<xs:sequence>
+			<xs:element ref="TYPE_CONTRACT_LOCATION"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_11_DEFENCE">
+		<xs:sequence>
+			<xs:element ref="TYPE_CONTRACT_DEFENCE"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_11_PUB">
+		<xs:sequence>
+			<xs:element ref="TYPE_CONTRACT_LOCATION_W_PUB"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_11_PUB_DEFENCE">
+		<xs:sequence>
+			<xs:element ref="TYPE_CONTRACT_W_PUB_DEFENCE"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_12">
+		<xs:sequence>
+			<xs:element ref="LOCATION_NUTS" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_13">
+		<xs:sequence>
+			<xs:element ref="PERIOD_WORK_DATE_STARTING" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_15">
+		<xs:sequence>
+			<xs:element ref="COSTS_RANGE_AND_CURRENCY" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_17">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="OPTIONS" minOccurs="0"/>
+				<xs:element ref="NO_OPTIONS" minOccurs="0"/>
+			</xs:choice>
+			<xs:choice>
+				<xs:element ref="RECURRENT_CONTRACT" minOccurs="0"/>
+				<xs:element ref="NO_RECURRENT_CONTRACT" minOccurs="0"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_16">
+		<xs:sequence>
+			<xs:element ref="COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_20">
+		<xs:sequence>
+			<xs:element ref="CONTRACT_RELATING_CONDITIONS" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_21">
+		<xs:sequence>
+			<xs:element ref="RESERVED_CONTRACTS" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_22">
+		<xs:sequence>
+			<xs:element ref="SERVICES_CONTRACTS_SPECIFIC_CONDITIONS" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_30">
+		<xs:sequence>
+			<xs:element ref="AWARD_CRITERIA_DETAIL" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_30_F03">
+		<xs:sequence>
+			<xs:element ref="AWARD_CRITERIA_DETAIL_F03" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_30_F15">
+		<xs:sequence>
+			<xs:element ref="AWARD_CRITERIA_DETAIL_F15" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_30_F18">
+		<xs:sequence>
+			<xs:element ref="AWARD_CRITERIA_DETAIL_F18" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_31_F2">
+		<xs:sequence>
+			<xs:element ref="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F2" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_31_F3">
+		<xs:sequence>
+			<xs:element ref="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F3" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_31_F5">
+		<xs:sequence>
+			<xs:element ref="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F5" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_31_F6">
+		<xs:sequence>
+			<xs:element ref="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F6" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_31_F15">
+		<xs:sequence>
+			<xs:element ref="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F15" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_31_F17">
+		<xs:sequence>
+			<xs:element ref="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F17" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_31_F18">
+		<xs:sequence>
+			<xs:element ref="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F18" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_33">
+		<xs:sequence>
+			<xs:element ref="CONDITIONS_OBTAINING_SPECIFICATIONS" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_35">
+		<xs:sequence>
+			<xs:element ref="MINIMUM_TIME_MAINTAINING_TENDER" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_36">
+		<xs:sequence>
+			<xs:element ref="CONDITIONS_FOR_OPENING_TENDERS" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_40">
+		<xs:sequence>
+			<xs:element ref="INITIAL_ESTIMATED_TOTAL_VALUE_CONTRACT" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="INC_41">
+		<xs:choice>
+			<xs:element ref="CONTRACT_LIKELY_SUB_CONTRACTED" minOccurs="0"/>
+			<xs:element ref="NO_CONTRACT_LIKELY_SUB_CONTRACTED" minOccurs="0"/>
+		</xs:choice>
+	</xs:group>
+	<!-- ################################################################# -->
+	<!-- # Complex/Simple Type definition and associated elements - Other                      #  -->
+	<!-- ################################################################# -->
+	<xs:simpleType name="languages">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="BG"/>
+			<xs:enumeration value="CS"/>
+			<xs:enumeration value="DA"/>
+			<xs:enumeration value="DE"/>
+			<xs:enumeration value="EL"/>
+			<xs:enumeration value="EN"/>
+			<xs:enumeration value="ES"/>
+			<xs:enumeration value="ET"/>
+			<xs:enumeration value="FI"/>
+			<xs:enumeration value="FR"/>
+			<xs:enumeration value="GA"/>
+			<xs:enumeration value="HR"/>
+			<xs:enumeration value="HU"/>
+			<xs:enumeration value="IT"/>
+			<xs:enumeration value="LT"/>
+			<xs:enumeration value="LV"/>
+			<xs:enumeration value="MT"/>
+			<xs:enumeration value="NL"/>
+			<xs:enumeration value="PL"/>
+			<xs:enumeration value="PT"/>
+			<xs:enumeration value="RO"/>
+			<xs:enumeration value="SK"/>
+			<xs:enumeration value="SL"/>
+			<xs:enumeration value="SV"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="LANGUAGE_EC">
+		<xs:complexType>
+			<xs:attribute name="VALUE" type="languages" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="time">
+		<xs:annotation>
+			<xs:documentation>Pattern for Time (99:99)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(([0-1]?[0-9])|(2[0-3])):[0-5][0-9]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="TIME" type="time"/>
+	<xs:complexType name="date_time">
+		<xs:sequence>
+			<xs:element ref="DAY"/>
+			<xs:element ref="MONTH"/>
+			<xs:element ref="YEAR"/>
+			<xs:element ref="TIME" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RECEIPT_LIMIT_DATE" type="date_time"/>
+	<xs:element name="PARTICIPATE_LIMIT_DATE" type="date_time"/>
+	<xs:element name="TIME_LIMIT" type="date_time"/>
+	<xs:element name="TIME_LIMIT_CHP" type="date_time"/>
+	<xs:element name="DATE_TIME" type="date_time"/>
+	<xs:simpleType name="address">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Pattern for address: Does not accept return and newline</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="ADDRESS" type="address"/>
+	<xs:complexType name="long_address_no_mandatory">
+		<xs:sequence>
+			<xs:element ref="ORGANISATION" minOccurs="0"/>
+			<xs:element ref="ATTENTION" minOccurs="0"/>
+			<xs:element ref="ADDRESS" minOccurs="0"/>
+			<xs:element ref="POSTAL_CODE" minOccurs="0"/>
+			<xs:element ref="TOWN" minOccurs="0"/>
+			<xs:element ref="COUNTRY" minOccurs="0"/>
+			<xs:element ref="PHONE" minOccurs="0"/>
+			<xs:element ref="FAX" minOccurs="0"/>
+			<xs:element ref="E_MAILS" minOccurs="0"/>
+			<xs:element ref="URL" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ADDRESS_WINNER" type="long_address_no_mandatory"/>
+	<xs:complexType name="place_opening">
+		<xs:sequence>
+			<xs:element ref="ORGANISATION" minOccurs="0"/>
+			<xs:element ref="ATTENTION" minOccurs="0"/>
+			<xs:element ref="ADDRESS" minOccurs="0"/>
+			<xs:element ref="POSTAL_CODE" minOccurs="0"/>
+			<xs:element ref="TOWN" minOccurs="0"/>
+			<xs:element ref="COUNTRY" minOccurs="0"/>
+			<xs:element name="PLACE_NOT_STRUCTURED" type="btx" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PLACE_OPENING" type="place_opening"/>
+	<xs:complexType name="ft">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="TYPE" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:NMTOKEN">
+							<xs:enumeration value="REFOJ"/>
+							<xs:enumeration value="SUB"/>
+							<xs:enumeration value="SUP"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="FT" type="ft"/>
+	<xs:complexType name="yes_no">
+		<xs:attribute name="VALUE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="YES"/>
+					<xs:enumeration value="NO"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="ACCEPTED_VARIANTS" type="yes_no"/>
+	<xs:element name="CONTRACT_COVERED_GPA" type="yes_no"/>
+	<xs:element name="IS_CANDIDATE_SELECTED" type="yes_no"/>
+	<xs:complexType name="purchasing_on_behalf_yes">
+		<xs:sequence>
+			<xs:element ref="CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" minOccurs="0" maxOccurs="999"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PURCHASING_ON_BEHALF_YES" type="purchasing_on_behalf_yes"/>
+	<xs:element name="PURCHASING_ON_BEHALF_NO">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="PURCHASING_ON_BEHALF">
+		<xs:complexType>
+			<xs:annotation>
+				<xs:documentation>Contract award on behalf of other CA/CE</xs:documentation>
+			</xs:annotation>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="PURCHASING_ON_BEHALF_YES"/>
+					<xs:element ref="PURCHASING_ON_BEHALF_NO"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="REQUESTS_NAMES_PROFESSIONAL_QUALIFICATIONS" type="yes_no"/>
+	<xs:complexType name="contracting_authority">
+		<xs:attribute name="VALUE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="REGIONAL_AUTHORITY"/>
+					<xs:enumeration value="MINISTRY"/>
+					<xs:enumeration value="BODY_PUBLIC"/>
+					<xs:enumeration value="EU_INSTITUTION"/>
+					<xs:enumeration value="NATIONAL_AGENCY"/>
+					<xs:enumeration value="REGIONAL_AGENCY"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="TYPE_OF_CONTRACTING_AUTHORITY" type="contracting_authority"/>
+	<xs:complexType name="activity">
+		<xs:attribute name="VALUE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="GENERAL_PUBLIC_SERVICES"/>
+					<xs:enumeration value="SOCIAL_PROTECTION"/>
+					<xs:enumeration value="EDUCATION"/>
+					<xs:enumeration value="HEALTH"/>
+					<xs:enumeration value="ENVIRONMENT"/>
+					<xs:enumeration value="PUBLIC_ORDER_AND_SAFETY"/>
+					<xs:enumeration value="HOUSING_AND_COMMUNITY_AMENITIES"/>
+					<xs:enumeration value="DEFENCE"/>
+					<xs:enumeration value="ECONOMIC_AND_FINANCIAL_AFFAIRS"/>
+					<xs:enumeration value="RECREATION_CULTURE_AND_RELIGION"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="TYPE_OF_ACTIVITY" type="activity"/>
+	<xs:simpleType name="url">
+		<xs:annotation>
+			<xs:documentation>
+				<p>Pattern for URL (enhanced version)</p>
+				<p>Unfortunately the pattern string is very complex</p>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[^@]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="URL" type="url"/>
+	<xs:element name="URL_BUYER" type="url"/>
+	<xs:element name="URL_DOCUMENT" type="url"/>
+	<xs:element name="URL_GENERAL" type="url"/>
+	<xs:element name="URL_DPS" type="url"/>
+	<xs:element name="URL_INFORMATION" type="url"/>
+	<xs:element name="URL_PARTICIPATE" type="url"/>
+	<xs:simpleType name="email">
+		<xs:annotation>
+			<xs:documentation>Pattern for E-mail </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[^@]+@[^\.]+\..+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="E_MAIL" type="email"/>
+	<xs:complexType name="emails">
+		<xs:annotation>
+			<xs:documentation> list of E-mails</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="E_MAIL" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="user_email">
+		<xs:annotation>
+			<xs:documentation>Pattern for E-mail in USER element</xs:documentation>
+			<xs:documentation>This complex data type extends "email" data type</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="email">
+				<xs:attribute name="TYPE">
+					<xs:annotation>
+						<xs:documentation>Allowed attributes for email element</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="FUNCTIONAL"/>
+							<xs:enumeration value="TECHNICAL"/>
+							<xs:enumeration value="CONTENT"/>
+							<xs:enumeration value="RESPONSIBLE"/>
+							<xs:enumeration value="COORDINATION"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="USER_E_MAIL" type="user_email"/>
+	<xs:complexType name="user_emails">
+		<xs:annotation>
+			<xs:documentation> list of E-mails</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="USER_E_MAIL" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="E_MAILS" type="emails"/>
+	<xs:element name="USER_E_MAILS" type="user_emails"/>
+	<xs:simpleType name="phone">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+				<p>The plus character "+" is used in front of the international dialing code</p>
+				<p>A space character separates the international code from the remaining digits</p>
+				<p>The remaining digits should be presented as a single block</p>
+				<p>An extension number should be separated from the main number by hyphen "-"</p>
+				<p>When indicating more than one telephone number, separate them using a slash</p>
+				<p>In this case the international dialing code of the following phone numbers can be omitted.</p>
+				<p>When indicating consecutive numbers in an abbreviated manner use a slash</p>
+				<p>Examples:</p>
+				<p>+49 12345678</p>
+				<p>+49 12345678-0001</p>
+				<p>+49 12345678/79/80/81</p>
+				<p>+49 12345678/+49 987654321 / +49 9988776655</p>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\+\d{1,3}\s\d+(\-\d+)*((\s)?/(\s)?(\+\d{1,3}\s)?\d+(\-\d+)*)*)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="PHONE" type="phone"/>
+	<xs:simpleType name="fax">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+				<xs:documentation xml:lang="en">
+					<p>The plus character "+" is used in front of the international dialing code</p>
+					<p>A space character separates the international code from the remaining digits</p>
+					<p>The remaining digits should be presented as a single block</p>
+					<p>An extension number should be separated from the main number by hyphen "-"</p>
+					<p>When indicating more than one telephone number, separate them using a slash</p>
+					<p>In this case the international dialing code of the following phone numbers can be omitted.</p>
+					<p>When indicating consecutive numbers in an abbreviated manner use a slash</p>
+					<p>Examples:</p>
+					<p>+49 12345678</p>
+					<p>+49 12345678-0001</p>
+					<p>+49 12345678/79/80/81</p>
+					<p>+49 12345678/+49 987654321 / +49 9988776655</p>
+				</xs:documentation>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\+\d{1,3}\s\d+(\-\d+)*((\s)?/(\s)?(\+\d{1,3}\s)?\d+(\-\d+)*)*)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="FAX" type="fax"/>
+	<xs:complexType name="works">
+		<xs:attribute name="VALUE" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="DESIGN_AND_EXECUTION"/>
+					<xs:enumeration value="EXECUTION_BY_WHATEVER_MEANS"/>
+					<xs:enumeration value="EXECUTION"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="btx" mixed="true">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="FT"/>
+			<xs:element ref="P"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="ADDITIONAL_INFORMATION" type="btx"/>
+	<xs:element name="P" type="btx"/>
+	<xs:element name="ADDITIONAL_INFORMATION_ABOUT_LOTS" type="btx"/>
+	<xs:element name="INFO_ON_DEADLINE" type="btx"/>
+	<xs:element name="RELATES_TO_EU_PROJECT_YES" type="btx"/>
+	<xs:element name="DATA" type="btx"/>
+	<xs:element name="DESCRIPTION" type="btx"/>
+	<xs:element name="DESCRIPTION_OF_CONTRACT" type="btx"/>
+	<xs:element name="DESCRIPTION_SUM" type="btx"/>
+	<xs:element name="DOCUMENT_METHOD_OF_PAYMENT" type="btx"/>
+	<xs:element name="ECONOMIC_OPERATORS_PERSONAL_SITUATION" type="btx"/>
+	<xs:element name="ECONOMIC_OPERATORS_PERSONAL_SITUATION_SUBCONTRACTORS" type="btx"/>
+	<xs:element name="ELECTRONIC_AUCTION" type="btx"/>
+	<xs:element name="FILE_REFERENCE_NUMBER" type="btx"/>
+	<xs:element name="FINANCIAL_CAPACITY" type="btx"/>
+	<xs:element name="USE_ELECTRONIC_AUCTION" type="btx"/>
+	<xs:element name="LABEL" type="btx"/>
+	<xs:element name="LANGUAGE_OTHER" type="btx"/>
+	<xs:element name="MAIN_SITE_WORKS" type="btx"/>
+	<xs:element name="TOTAL_QUANTITY_OR_SCOPE" type="btx"/>
+	<xs:element name="PERSONAL_SITUATION" type="btx"/>
+	<xs:element name="LODGING_OF_APPEALS_PRECISION" type="btx"/>
+	<xs:element name="OPTION_DESCRIPTION" type="btx"/>
+	<xs:element name="RECURRENT_PROCUREMENT" type="btx"/>
+	<xs:element name="REFERENCE_NUMBER_ATTRIBUTED" type="btx"/>
+	<xs:element name="SHORT_CONTRACT_DESCRIPTION" type="btx"/>
+	<xs:element name="SHORT_DESCRIPTION" type="btx"/>
+	<xs:element name="SHORT_DESCRIPTION_CONTRACT" type="btx"/>
+	<xs:element name="TECHNICAL_CAPACITY" type="btx"/>
+	<xs:element name="TITLE_CONTRACT" type="btx"/>
+	<xs:element name="FREQUENCY_AWARDED_CONTRACTS" type="btx"/>
+	<xs:element name="LOT_DESCRIPTION" type="btx"/>
+	<xs:element name="LOCATION" type="btx"/>
+	<xs:element name="DEPOSITS_GUARANTEES_REQUIRED" type="btx"/>
+	<xs:element name="MAIN_FINANCING_CONDITIONS" type="btx"/>
+	<xs:element name="LEGAL_FORM" type="btx"/>
+	<xs:element name="EXISTENCE_OTHER_PARTICULAR_CONDITIONS" type="btx"/>
+	<xs:element name="EXECUTION_SERVICE_RESERVED_PARTICULAR_PROFESSION" type="btx"/>
+	<xs:element name="EXISTENCE_AUTHORISED_PERSONS" type="btx"/>
+	<xs:element name="REASON_CONTRACT_LAWFUL" type="btx"/>
+	<xs:simpleType name="currencies">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="GBP"/>
+			<xs:enumeration value="ISK"/>
+			<xs:enumeration value="LTL"/>
+			<xs:enumeration value="CHF"/>
+			<xs:enumeration value="SEK"/>
+			<xs:enumeration value="JPY"/>
+			<xs:enumeration value="LVL"/>
+			<xs:enumeration value="NOK"/>
+			<xs:enumeration value="MTL"/>
+			<xs:enumeration value="EEK"/>
+			<xs:enumeration value="CYP"/>
+			<xs:enumeration value="SKK"/>
+			<xs:enumeration value="RON"/>
+			<xs:enumeration value="CZK"/>
+			<xs:enumeration value="DKK"/>
+			<xs:enumeration value="PLN"/>
+			<xs:enumeration value="BGN"/>
+			<xs:enumeration value="HUF"/>
+			<xs:enumeration value="USD"/>
+			<xs:enumeration value="EUR"/>
+			<xs:enumeration value="MKD"/>
+			<xs:enumeration value="TRY"/>
+			<xs:enumeration value="HRK"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="cost">
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="DOCUMENT_COST">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="cost">
+					<xs:attribute name="CURRENCY" type="currencies" use="required"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EXCLUDING_VAT_VALUE">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="cost">
+					<xs:attribute name="CURRENCY" type="currencies" use="required"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="VALUE_COST" type="cost"/>
+	<xs:element name="LOW_VALUE" type="cost"/>
+	<xs:element name="HIGH_VALUE" type="cost"/>
+	<xs:simpleType name="noticeNo">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="20\d{2}/S \d{1,3}-\d{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="NOTICE_NUMBER_OJ" type="noticeNo"/>
+	<xs:simpleType name="DOCUMENTref">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(20\d{2}\-\d{6})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="NO_DOC_EXT" type="DOCUMENTref"/>
+	<xs:simpleType name="_3car">
+		<xs:annotation>
+			<xs:documentation>Pattern for 3 chars (integrer)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:totalDigits value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="LOT_NUMBER" type="_3car"/>
+	<xs:element name="PARTICIPANTS_NUMBER" type="_3car"/>
+	<xs:element name="NUMBER_OF_OFFERS_RECEIVED" type="_3car"/>
+	<xs:element name="NUMBER_CONTRACTS_AWARDED" type="_3car"/>
+	<xs:element name="MAX_NUMBER_PARTICIPANTS" type="_3car"/>
+	<xs:element name="NUMBER_PARTICIPANTS" type="_3car"/>
+	<xs:element name="DURATION_FRAMEWORK_MONTH" type="_3car"/>
+	<xs:element name="NUMBER_POSSIBLE_RENEWALS" type="_3car"/>
+	<xs:element name="NUMBER_POSSIBLE_RENEWALS_RANGE_MIN" type="_3car"/>
+	<xs:element name="NUMBER_POSSIBLE_RENEWALS_RANGE_MAX" type="_3car"/>
+	<xs:element name="PERIOD_MONTH" type="_3car"/>
+	<xs:element name="MONTHS" type="_3car"/>
+	<xs:element name="PROVISIONAL_TIMETABLE_MONTH" type="_3car"/>
+	<xs:element name="TIME_FRAME_SUBSEQUENT_CONTRACTS_MONTH" type="_3car"/>
+	<xs:simpleType name="_2car">
+		<xs:annotation>
+			<xs:documentation>Pattern for 2 chars (integer)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:totalDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="DURATION_FRAMEWORK_YEAR" type="_2car"/>
+	<xs:element name="ORDER_C" type="_2car"/>
+	<xs:simpleType name="_4car">
+		<xs:annotation>
+			<xs:documentation>Pattern for 4 chars (integer)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:totalDigits value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="DAYS" type="_4car"/>
+	<xs:element name="PROVISIONAL_TIMETABLE_DAY" type="_4car"/>
+	<xs:element name="TIME_FRAME_SUBSEQUENT_CONTRACTS_DAY" type="_4car"/>
+	<xs:element name="PERIOD_DAY" type="_4car"/>
+	<xs:simpleType name="day">
+		<xs:annotation>
+			<xs:documentation>Pattern for day with 1 or 2 char (between 1 and 31), leading zero is optional</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minExclusive value="0"/>
+			<xs:maxInclusive value="31"/>
+			<xs:pattern value="\d{1,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="month">
+		<xs:annotation>
+			<xs:documentation>Pattern for month with 1 or 2 char (between 1 and 12), leading zero is optional</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minExclusive value="0"/>
+			<xs:maxInclusive value="12"/>
+			<xs:pattern value="\d{1,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="year">
+		<xs:annotation>
+			<xs:documentation>Pattern for year from 2000 to 2099</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:gYear">
+			<xs:minInclusive value="2000"/>
+			<xs:maxInclusive value="2099"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="DAY" type="day"/>
+	<xs:element name="MONTH" type="month"/>
+	<xs:element name="YEAR" type="year"/>
+	<xs:complexType name="date">
+		<xs:annotation>
+			<xs:documentation>Pattern for date (99/99/9999)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="DAY"/>
+			<xs:element ref="MONTH"/>
+			<xs:element ref="YEAR"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DATE_OJ" type="date"/>
+	<xs:element name="NOTICE_DISPATCH_DATE" type="date"/>
+	<xs:element name="DISPATCH_INVITATIONS_DATE" type="date"/>
+	<xs:element name="DATE_OF_CONTRACT_AWARD" type="date"/>
+	<xs:element name="START_DATE" type="date"/>
+	<xs:element name="END_DATE" type="date"/>
+	<xs:element name="MODIFICATION_DISPATCH_DATE" type="date"/>
+	<xs:element name="NOTICE_DATE" type="date"/>
+	<xs:element name="PROCEDURE_DATE_STARTING" type="date"/>
+	<xs:element name="UNTIL_DATE" type="date"/>
+	<xs:element name="PUBLICATION_DATE" type="date"/>
+	<xs:element name="REGISTRATION_DATE" type="date"/>
+	<xs:complexType name="date_not_strict">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element ref="DAY" minOccurs="0"/>
+				<xs:element ref="MONTH"/>
+				<xs:element ref="YEAR"/>
+			</xs:sequence>
+			<xs:element ref="YEAR"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="WORK_DATE_STARTING" type="date_not_strict"/>
+	<xs:simpleType name="prct">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Pattern for percentage based on "decimal" data type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="100"/>
+			<xs:fractionDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="VAT_PRCT" type="prct"/>
+	<xs:element name="EXCLUDING_VAT_PRCT" type="prct"/>
+	<xs:element name="WEIGHTING" type="xs:integer"/>
+	<xs:simpleType name="service_category">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[3-5]|6(a|b)?|[7-9]|1[0-9]?|2[0-7]?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="SERVICE_CATEGORY" type="service_category"/>
+	<xs:element name="SERVICE_CATEGORY_DEFENCE">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[3-9]|1[0-9]?|2[0-6]?"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<!-- lefti_prior_information declaration -->
+	<xs:complexType name="lefti_prior_information">
+		<xs:annotation>
+			<xs:documentation>Section III: LEGAL, ECONOMIC, FINANCIAL AND TECHNICAL INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="MAIN_FINANCING_CONDITIONS" minOccurs="0"/>
+			<xs:group ref="INC_21"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="employment_protection_working_conditions">
+		<xs:sequence>
+			<xs:element name="EMPLOYMENT_PROTECTION_WORKING_CONDITIONS_VALUE" type="btx"/>
+			<xs:group ref="INC_04" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="environmental_protection_legislation">
+		<xs:sequence>
+			<xs:element name="ENVIRONMENTAL_PROTECTION_LEGISLATION_VALUE" type="btx"/>
+			<xs:group ref="INC_04" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tax_legislation">
+		<xs:sequence>
+			<xs:element name="TAX_LEGISLATION_VALUE" type="btx"/>
+			<xs:group ref="INC_04" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="information_regulatory_framework">
+		<xs:annotation>
+			<xs:documentation>Section VI.3: INFORMATION ON GENERAL REGULATORY FRAMEWORK</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TAX_LEGISLATION" type="tax_legislation" minOccurs="0"/>
+			<xs:element name="ENVIRONMENTAL_PROTECTION_LEGISLATION" type="environmental_protection_legislation" minOccurs="0"/>
+			<xs:element name="EMPLOYMENT_PROTECTION_WORKING_CONDITIONS" type="employment_protection_working_conditions" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- object_works_prior_information declaration -->
+	<xs:complexType name="lot_prior_information">
+		<xs:annotation>
+			<xs:documentation>LOTS</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="INC_06"/>
+			<xs:group ref="INC_10"/>
+			<xs:element ref="NATURE_QUANTITY_SCOPE" minOccurs="0"/>
+			<xs:element ref="SCHEDULED_DATE_PERIOD" minOccurs="0"/>
+			<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="ITEM" type="xs:integer"/>
+	</xs:complexType>
+	<!-- oth_info_prior_information declaration -->
+	<xs:complexType name="oth_info_prior_information">
+		<xs:annotation>
+			<xs:documentation>Section VI: COMPLEMENTARY INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element ref="RELATES_TO_EU_PROJECT_YES"/>
+				<xs:element ref="RELATES_TO_EU_PROJECT_NO"/>
+			</xs:choice>
+			<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+			<xs:element name="INFORMATION_REGULATORY_FRAMEWORK" type="information_regulatory_framework" minOccurs="0"/>
+			<xs:element ref="NOTICE_DISPATCH_DATE"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="name_addresses_contact_prior_information">
+		<xs:annotation>
+			<xs:documentation>Section I.1: NAME, ADDRESSES AND CONTACT POINT(S)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="INC_01"/>
+			<xs:element name="INTERNET_ADDRESSES_PRIOR_INFORMATION" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="URL_GENERAL" minOccurs="0"/>
+						<xs:element ref="URL_BUYER" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:group ref="INC_02_1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="award_criteria_contract_notice_information">
+		<xs:annotation>
+			<xs:documentation>Section IV.2: AWARD CRITERIA</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="INC_30" minOccurs="0"/>
+			<xs:element ref="IS_ELECTRONIC_AUCTION_USABLE" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="internet_addresses">
+		<xs:sequence>
+			<xs:element ref="URL_GENERAL" minOccurs="0"/>
+			<xs:element ref="URL_BUYER" minOccurs="0"/>
+			<xs:element ref="URL_INFORMATION" minOccurs="0"/>
+			<xs:element ref="URL_PARTICIPATE" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- complementary_information_contract_notice Declaration -->
+	<xs:complexType name="complementary_information_contract_notice">
+		<xs:annotation>
+			<xs:documentation>SECTION VI: COMPLEMENTARY INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element ref="RECURRENT_PROCUREMENT"/>
+				<xs:element ref="NO_RECURRENT_PROCUREMENT"/>
+			</xs:choice>
+			<xs:choice minOccurs="0">
+				<xs:element ref="RELATES_TO_EU_PROJECT_YES"/>
+				<xs:element ref="RELATES_TO_EU_PROJECT_NO"/>
+			</xs:choice>
+			<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+			<xs:element ref="PROCEDURES_FOR_APPEAL" minOccurs="0"/>
+			<xs:element ref="NOTICE_DISPATCH_DATE"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="maximum_number_invited">
+		<xs:annotation>
+			<xs:documentation>Section IV.1.2: LIMITATIONS ON THE NUMBER OF OPERATORS WHO WILL BE INVITED TO TENDER OR TO PARTICIPATE</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element name="OPE_ENVISAGED_NUMBER" type="_3car"/>
+				<xs:sequence>
+					<xs:element name="OPE_MINIMUM_NUMBER" type="_3car"/>
+					<xs:element name="OPE_MAXIMUM_NUMBER" type="_3car" minOccurs="0"/>
+				</xs:sequence>
+			</xs:choice>
+			<xs:element name="OPE_OBJECTIVE_CRITERIA" type="btx" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- lefti_contract declaration -->
+	<xs:complexType name="economic_financial_capacity_lefti">
+		<xs:annotation>
+			<xs:documentation>SECTION III.2.x: ECONOMIC AND FINANCIAL CAPACITY</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EAF_CAPACITY_INFORMATION" type="btx" minOccurs="0"/>
+			<xs:element name="EAF_CAPACITY_MIN_LEVEL" type="btx" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="technical_capacity_lefti">
+		<xs:annotation>
+			<xs:documentation>SECTION III.2.x: TECHNICAL CAPACITY</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="T_CAPACITY_INFORMATION" type="btx" minOccurs="0"/>
+			<xs:element name="T_CAPACITY_MIN_LEVEL" type="btx" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="name_addresses_contact_contract_award">
+		<xs:sequence>
+			<xs:group ref="INC_01"/>
+			<xs:element name="INTERNET_ADDRESSES_CONTRACT_AWARD" type="internet_addresses" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- complementary_information_contract_award Declaration -->
+	<xs:complexType name="complementary_information_contract_award">
+		<xs:annotation>
+			<xs:documentation>SECTION VI: COMPLEMENTARY INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element ref="RELATES_TO_EU_PROJECT_YES"/>
+				<xs:element ref="RELATES_TO_EU_PROJECT_NO"/>
+			</xs:choice>
+			<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+			<xs:element ref="PROCEDURES_FOR_APPEAL" minOccurs="0"/>
+			<xs:element ref="NOTICE_DISPATCH_DATE"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ################################################################# -->
+	<!-- # COMPLEX Elements definition (anonymous type definition)                                 #  -->
+	<!-- ################################################################# -->
+	<xs:element name="COMPLEMENTARY_INFORMATION_QUALIFICATION_SYSTEM">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice minOccurs="0">
+					<xs:element ref="RELATES_TO_EU_PROJECT_YES"/>
+					<xs:element ref="RELATES_TO_EU_PROJECT_NO"/>
+				</xs:choice>
+				<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+				<xs:element ref="APPEAL_PROCEDURES" minOccurs="0"/>
+				<xs:element ref="NOTICE_DISPATCH_DATE"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="COMPLEMENTARY_INFORMATION_RESULT_DESIGN_CONTEST">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice minOccurs="0">
+					<xs:element ref="RELATES_TO_EU_PROJECT_YES"/>
+					<xs:element ref="RELATES_TO_EU_PROJECT_NO"/>
+				</xs:choice>
+				<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+				<xs:element ref="APPEAL_PROCEDURES" minOccurs="0"/>
+				<xs:element ref="NOTICE_DISPATCH_DATE"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CNT_NOTICE_INFORMATION">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CNT_NOTICE_INFORMATION_S" minOccurs="0"/>
+				<xs:element ref="NOTICE_NUMBER_OJ" minOccurs="0"/>
+				<xs:element ref="DATE_OJ" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EX_ANTE_NOTICE_INFORMATION">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="EX_ANTE_NOTICE_INFORMATION_S" minOccurs="0"/>
+				<xs:element ref="NOTICE_NUMBER_OJ" minOccurs="0"/>
+				<xs:element ref="DATE_OJ" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="INTERVAL_DATE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="START_DATE" minOccurs="0"/>
+				<xs:element ref="END_DATE" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="APPEAL_PROCEDURES">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="RESPONSIBLE_FOR_APPEAL_PROCEDURES" minOccurs="0"/>
+				<xs:element ref="RESPONSIBLE_FOR_MEDIATION_PROCEDURES" minOccurs="0"/>
+				<xs:element ref="INFO_ON_DEADLINE" minOccurs="0"/>
+				<xs:element ref="SERVICE_FROM_INFORMATION" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="IS_ELECTRONIC_AUCTION_USABLE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="USE_ELECTRONIC_AUCTION"/>
+					<xs:element ref="NO_USE_ELECTRONIC_AUCTION"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- At least a language has to be defined any, a sequence of EU languege or other langages -->
+	<xs:element name="LANGUAGE">
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="LANGUAGE_ANY_EC" type="yes_no"/>
+						<xs:element ref="LANGUAGE_EC" maxOccurs="unbounded"/>
+					</xs:choice>
+					<xs:element ref="LANGUAGE_OTHER" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element ref="LANGUAGE_OTHER"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LOGIN">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ESENDER_LOGIN"/>
+				<xs:element ref="CUSTOMER_LOGIN" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="CLASS">
+				<xs:simpleType>
+					<xs:restriction base="xs:NMTOKEN">
+						<xs:enumeration value="A"/>
+						<xs:enumeration value="B"/>
+						<xs:enumeration value="C"/>
+						<xs:enumeration value="D"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ESENDER_LOGIN">
+		<xs:simpleType>
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					<p>This pattern declares the valid eSender logins</p>
+					<p>Examples:</p>
+					<p>TED-001</p>
+					<p>SIMAP-123</p>
+					<p>TEST444</p>
+				</xs:documentation>
+			</xs:annotation>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[a-zA-Z0-9]{1}[a-zA-Z0-9\-_]{0,7}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="CUSTOMER_LOGIN">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="30"/>
+				<xs:pattern value="[A-Za-z0-9._\-]*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MOST_ECONOMICALLY_ADVANTAGEOUS_TENDER">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="CRITERIA_STATED_BELOW"/>
+				<xs:element ref="CRITERIA_STATED_IN_OTHER_DOCUMENT"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CRITERIA_STATED_BELOW">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CRITERIA_DEFINITION" minOccurs="0" maxOccurs="99"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CRITERIA_DEFINITION">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ORDER_C" minOccurs="0"/>
+				<xs:element ref="CRITERIA" minOccurs="0"/>
+				<xs:element ref="WEIGHTING" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RANGE_VALUE_COST">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="LOW_VALUE"/>
+				<xs:element ref="HIGH_VALUE"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MOST_ECONOMICALLY_ADVANTAGEOUS_TENDER_SHORT">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CRITERIA_DEFINITION" minOccurs="0" maxOccurs="99"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NATURE_QUANTITY_SCOPE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="TOTAL_QUANTITY_OR_SCOPE" minOccurs="0"/>
+				<xs:group ref="INC_15" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_NOTICE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="NOTICE_NUMBER"/>
+				<xs:element ref="NOTICE_DATE"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PROCEDURES_FOR_APPEAL">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="APPEAL_PROCEDURE_BODY_RESPONSIBLE" minOccurs="0"/>
+				<xs:element ref="MEDIATION_PROCEDURE_BODY_RESPONSIBLE" minOccurs="0"/>
+				<xs:element ref="LODGING_OF_APPEALS" minOccurs="0"/>
+				<xs:element ref="LODGING_INFORMATION_FOR_SERVICE" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="APPEAL_PROCEDURE_BODY_RESPONSIBLE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="INC_05"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MEDIATION_PROCEDURE_BODY_RESPONSIBLE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="INC_05"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LODGING_INFORMATION_FOR_SERVICE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="INC_05"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RESPONSIBLE_FOR_APPEAL_PROCEDURES">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="INC_05"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RESPONSIBLE_FOR_MEDIATION_PROCEDURES">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="INC_05"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SERVICE_FROM_INFORMATION">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="INC_05"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ECONOMIC_OPERATOR_NAME_ADDRESS">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="INC_05"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LODGING_OF_APPEALS">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="LODGING_OF_APPEALS_PRECISION" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_OJ">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="NOTICE_NUMBER_OJ" minOccurs="0"/>
+				<xs:element ref="DATE_OJ" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="QUANTITY_SCOPE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="NATURE_QUANTITY_SCOPE" minOccurs="0"/>
+				<xs:group ref="INC_17"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OPTIONS">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="OPTION_DESCRIPTION" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="PROVISIONAL_TIMETABLE_MONTH"/>
+					<xs:element ref="PROVISIONAL_TIMETABLE_DAY"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RECURRENT_CONTRACT">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice minOccurs="0">
+					<xs:element ref="NUMBER_POSSIBLE_RENEWALS"/>
+					<xs:element ref="NUMBER_POSSIBLE_RENEWALS_RANGE"/>
+				</xs:choice>
+				<xs:choice minOccurs="0">
+					<xs:element ref="TIME_FRAME_SUBSEQUENT_CONTRACTS_MONTH"/>
+					<xs:element ref="TIME_FRAME_SUBSEQUENT_CONTRACTS_DAY"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NUMBER_POSSIBLE_RENEWALS_RANGE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="NUMBER_POSSIBLE_RENEWALS_RANGE_MIN"/>
+				<xs:element ref="NUMBER_POSSIBLE_RENEWALS_RANGE_MAX"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PERIOD_WORK_DATE_STARTING">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="DAYS"/>
+				<xs:element ref="MONTHS"/>
+				<xs:element ref="INTERVAL_DATE"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SCHEDULED_DATE_PERIOD">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PROCEDURE_DATE_STARTING" minOccurs="0"/>
+				<xs:group ref="INC_13"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SENDER">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="LOGIN"/>
+				<xs:element ref="USER"/>
+				<xs:element ref="NO_DOC_EXT"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="USER">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ORGANISATION" minOccurs="0"/>
+				<xs:element ref="ATTENTION" minOccurs="0"/>
+				<xs:element ref="ADDRESS" minOccurs="0"/>
+				<xs:element ref="POSTAL_CODE" minOccurs="0"/>
+				<xs:element ref="TOWN" minOccurs="0"/>
+				<xs:element ref="COUNTRY" minOccurs="0"/>
+				<xs:element ref="PHONE" minOccurs="0"/>
+				<xs:element ref="FAX" minOccurs="0"/>
+				<xs:element ref="USER_E_MAILS"/>
+				<xs:element ref="URL" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SEVERAL_OPERATORS">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice minOccurs="0">
+					<xs:element ref="NUMBER_PARTICIPANTS"/>
+					<xs:element ref="MAX_NUMBER_PARTICIPANTS"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SITE_OR_LOCATION">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="LABEL" minOccurs="0"/>
+				<xs:element ref="NUTS" minOccurs="0" maxOccurs="99"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TOTAL_ESTIMATED">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="INC_15"/>
+				<xs:element ref="FREQUENCY_AWARDED_CONTRACTS" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TYPE_OF_CONTRACTING_AUTHORITY_OTHER">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="VALUE" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:NMTOKEN">
+								<xs:enumeration value="OTHER"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TYPE_OF_ACTIVITY_OTHER">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="VALUE" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:NMTOKEN">
+								<xs:enumeration value="OTHER"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TYPE_AND_ACTIVITIES_AND_PURCHASING_ON_BEHALF">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="INC_03"/>
+				<xs:element ref="PURCHASING_ON_BEHALF" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TYPE_AND_ACTIVITIES_OR_CONTRACTING_ENTITY_AND_PURCHASING_ON_BEHALF">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="TYPE_AND_ACTIVITIES" minOccurs="0"/>
+					<xs:element ref="ACTIVITIES_OF_CONTRACTING_ENTITY" minOccurs="0"/>
+				</xs:choice>
+				<xs:element ref="PURCHASING_ON_BEHALF" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="REASONS_PROVIDED_PARTICULAR_TENDERER">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="REASONS_PROVIDED_PARTICULAR_TENDERER_TECHNICAL" minOccurs="0"/>
+				<xs:element ref="REASONS_PROVIDED_PARTICULAR_TENDERER_ARTISTIC" minOccurs="0"/>
+				<xs:element ref="REASONS_PROVIDED_PARTICULAR_TENDERER_EXCLUSIVE_RIGHTS" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CPV">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CPV_MAIN"/>
+				<xs:element ref="CPV_ADDITIONAL" minOccurs="0" maxOccurs="99"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CPV_ADDITIONAL">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CPV_CODE"/>
+				<xs:element ref="CPV_SUPPLEMENTARY_CODE" minOccurs="0" maxOccurs="20"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CPV_MAIN">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CPV_CODE"/>
+				<xs:element ref="CPV_SUPPLEMENTARY_CODE" minOccurs="0" maxOccurs="20"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="type_work_contract">
+		<xs:sequence>
+			<xs:element ref="DESIGN_EXECUTION" minOccurs="0"/>
+			<xs:element ref="EXECUTION" minOccurs="0"/>
+			<xs:element ref="REALISATION_REQUIREMENTS_SPECIFIED_CONTRACTING_AUTHORITIES" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TYPE_WORK_CONTRACT" type="type_work_contract"/>
+	<xs:element name="TYPE_CONTRACT_LOCATION">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="TYPE_CONTRACT"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="TYPE_WORK_CONTRACT"/>
+					<xs:element ref="TYPE_SUPPLIES_CONTRACT"/>
+					<xs:element ref="SERVICE_CATEGORY"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TYPE_CONTRACT_DEFENCE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="TYPE_CONTRACT"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="TYPE_WORK_CONTRACT"/>
+					<xs:element ref="TYPE_SUPPLIES_CONTRACT"/>
+					<xs:element ref="SERVICE_CATEGORY_DEFENCE"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SERVICE_CATEGORY_PUB">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="([1-5]|6(a|b)?|[7-9]|1[0-6])|((1[7-9]|2[0-7])(Y|N))"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="SERVICE_CATEGORY_PUB_DEFENCE">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="([3-9]|1[0-9]?|2(0)?)|(2[1-6](Y|N))"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="CA_CE_CONCESSIONAIRE_PROFILE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ORGANISATION"/>
+				<xs:element ref="ADDRESS"/>
+				<xs:element ref="TOWN"/>
+				<xs:element ref="POSTAL_CODE" minOccurs="0"/>
+				<xs:element ref="COUNTRY"/>
+				<xs:element ref="CONTACT_POINT" minOccurs="0"/>
+				<xs:element ref="ATTENTION" minOccurs="0"/>
+				<xs:element ref="PHONE" minOccurs="0"/>
+				<xs:element ref="E_MAILS" minOccurs="0"/>
+				<xs:element ref="FAX" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FURTHER_INFORMATION">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="IDEM"/>
+				<xs:group ref="INC_04"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TENDERS_REQUESTS_APPLICATIONS_MUST_BE_SENT_TO">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="IDEM"/>
+				<xs:group ref="INC_04"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SPECIFICATIONS_AND_ADDITIONAL_DOCUMENTS">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="IDEM"/>
+				<xs:group ref="INC_04"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TYPE_AND_ACTIVITIES">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice minOccurs="0">
+					<xs:element ref="TYPE_OF_CONTRACTING_AUTHORITY"/>
+					<xs:element ref="TYPE_OF_CONTRACTING_AUTHORITY_OTHER"/>
+				</xs:choice>
+				<xs:element ref="TYPE_OF_ACTIVITY" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="TYPE_OF_ACTIVITY_OTHER" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ContactData">
+		<xs:sequence>
+			<xs:element ref="ORGANISATION"/>
+			<xs:element ref="ADDRESS" minOccurs="0"/>
+			<xs:element ref="TOWN" minOccurs="0"/>
+			<xs:element ref="POSTAL_CODE" minOccurs="0"/>
+			<xs:element ref="COUNTRY" minOccurs="0"/>
+			<xs:element ref="CONTACT_POINT" minOccurs="0"/>
+			<xs:element ref="ATTENTION" minOccurs="0"/>
+			<xs:element ref="PHONE" minOccurs="0"/>
+			<xs:element ref="E_MAILS" minOccurs="0"/>
+			<xs:element ref="FAX" minOccurs="0"/>
+			<xs:element ref="URL" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CONTACT_DATA" type="ContactData"/>
+	<xs:element name="CONTACT_DATA_ABOUT_TAXES" type="ContactData"/>
+	<xs:element name="CONTACT_DATA_ABOUT_ENVIRONMENT" type="ContactData"/>
+	<xs:element name="CONTACT_DATA_ABOUT_EMPLOYMENT" type="ContactData"/>
+	<xs:element name="CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ORGANISATION"/>
+				<xs:element ref="ADDRESS" minOccurs="0"/>
+				<xs:element ref="TOWN" minOccurs="0"/>
+				<xs:element ref="POSTAL_CODE" minOccurs="0"/>
+				<xs:element ref="COUNTRY" minOccurs="0"/>
+				<xs:element ref="E_MAILS" minOccurs="0"/>
+				<xs:element ref="PHONE" minOccurs="0"/>
+				<xs:element ref="URL" minOccurs="0"/>
+				<xs:element ref="FAX" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME_CHP">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ORGANISATION"/>
+				<xs:element ref="ADDRESS" minOccurs="0"/>
+				<xs:element ref="TOWN" minOccurs="0"/>
+				<xs:element ref="POSTAL_CODE" minOccurs="0"/>
+				<xs:element ref="COUNTRY" minOccurs="0"/>
+				<xs:element ref="E_MAILS" minOccurs="0"/>
+				<xs:element ref="PHONE" minOccurs="0"/>
+				<xs:element ref="URL" minOccurs="0"/>
+				<xs:element ref="FAX" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ORGANISATION"/>
+				<xs:element ref="ADDRESS" minOccurs="0"/>
+				<xs:element ref="TOWN" minOccurs="0"/>
+				<xs:element ref="POSTAL_CODE" minOccurs="0"/>
+				<xs:element ref="COUNTRY" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JUSTIFICATION_CHOICE_NEGOCIATED_PROCEDURE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="REASONS_PROVIDED_PARTICULAR_TENDERER" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="EXTREME_URGENCY_EVENTS_UNFORESEEABLE"/>
+					<xs:element ref="NO_EXTREME_URGENCY_EVENTS_UNFORESEEABLE"/>
+				</xs:choice>
+				<xs:choice minOccurs="0">
+					<xs:element ref="ADDITIONAL_WORKS"/>
+					<xs:element ref="NO_ADDITIONAL_WORKS"/>
+				</xs:choice>
+				<xs:choice minOccurs="0">
+					<xs:element ref="WORKS_REPETITION_EXISTING_WORKS"/>
+					<xs:element ref="NO_WORKS_REPETITION_EXISTING_WORKS"/>
+				</xs:choice>
+				<xs:choice minOccurs="0">
+					<xs:element ref="SERVICE_CONTRACT_AWARDED_SUCCESSFUL_CANDIDATE"/>
+					<xs:element ref="NO_SERVICE_CONTRACT_AWARDED_SUCCESSFUL_CANDIDATE"/>
+				</xs:choice>
+				<xs:choice minOccurs="0">
+					<xs:element ref="SUPPLIES_QUOTED_PURCHASED_COMMODITY_MARKET"/>
+					<xs:element ref="NO_SUPPLIES_QUOTED_PURCHASED_COMMODITY_MARKET"/>
+				</xs:choice>
+				<xs:element ref="PURCHASE_SUPPLIES_ADVANTAGEOUS_TERMS" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LOCATION_NUTS">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="LOCATION" minOccurs="0"/>
+				<xs:element ref="NUTS" minOccurs="0" maxOccurs="99"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TYPE_CONTRACT_LOCATION_W_PUB">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="TYPE_CONTRACT"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="TYPE_WORK_CONTRACT"/>
+					<xs:element ref="TYPE_SUPPLIES_CONTRACT"/>
+					<xs:element ref="SERVICE_CATEGORY_PUB"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TYPE_CONTRACT_W_PUB_DEFENCE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="TYPE_CONTRACT"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="TYPE_WORK_CONTRACT"/>
+					<xs:element ref="TYPE_SUPPLIES_CONTRACT"/>
+					<xs:element ref="SERVICE_CATEGORY_PUB_DEFENCE"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="COSTS_RANGE_AND_CURRENCY">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="VALUE_COST"/>
+				<xs:element ref="RANGE_VALUE_COST"/>
+			</xs:choice>
+			<xs:attribute name="CURRENCY" type="currencies" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice minOccurs="0">
+					<xs:element ref="VALUE_COST"/>
+					<xs:element ref="RANGE_VALUE_COST"/>
+				</xs:choice>
+				<xs:choice minOccurs="0">
+					<xs:element ref="EXCLUDING_VAT"/>
+					<xs:element ref="INCLUDING_VAT"/>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="CURRENCY" type="currencies" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="INCLUDING_VAT">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="VAT_PRCT"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CONTRACT_RELATING_CONDITIONS">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="DEPOSITS_GUARANTEES_REQUIRED" minOccurs="0"/>
+				<xs:element ref="MAIN_FINANCING_CONDITIONS" minOccurs="0"/>
+				<xs:element ref="LEGAL_FORM" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="EXISTENCE_OTHER_PARTICULAR_CONDITIONS"/>
+					<xs:element ref="NO_EXISTENCE_OTHER_PARTICULAR_CONDITIONS"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RESERVED_CONTRACTS">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="RESTRICTED_TO_SHELTERED_WORKSHOPS" minOccurs="0"/>
+				<xs:element ref="RESTRICTED_TO_FRAMEWORK" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SERVICES_CONTRACTS_SPECIFIC_CONDITIONS">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice minOccurs="0">
+					<xs:element ref="EXECUTION_SERVICE_RESERVED_PARTICULAR_PROFESSION"/>
+					<xs:element ref="NO_EXEC_SERVICE_RESERVED_PARTICULAR_PROFESSION"/>
+				</xs:choice>
+				<xs:element ref="REQUESTS_NAMES_PROFESSIONAL_QUALIFICATIONS" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AWARD_CRITERIA_DETAIL">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="LOWEST_PRICE"/>
+				<xs:element ref="MOST_ECONOMICALLY_ADVANTAGEOUS_TENDER"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AWARD_CRITERIA_DETAIL_F03">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="LOWEST_PRICE"/>
+				<xs:element ref="MOST_ECONOMICALLY_ADVANTAGEOUS_TENDER_SHORT"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AWARD_CRITERIA_DETAIL_F15">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="LOWEST_PRICE"/>
+				<xs:element ref="MOST_ECONOMICALLY_ADVANTAGEOUS_TENDER_SHORT"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AWARD_CRITERIA_DETAIL_F18">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="LOWEST_PRICE"/>
+				<xs:element ref="MOST_ECONOMICALLY_ADVANTAGEOUS_TENDER_SHORT"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="notice_involves_desc">
+		<xs:annotation>
+			<xs:documentation>Section II.1.3: THE NOTICE INVOLVES</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="CONCLUSION_FRAMEWORK_AGREEMENT" minOccurs="0"/>
+			<xs:element ref="CONTRACTS_DPS" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="notice_involves_desc_defence">
+		<xs:annotation>
+			<xs:documentation>Section II.1.3: THE NOTICE INVOLVES</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="VALUE" type="lst_16_defence" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="total_final_value">
+		<xs:annotation>
+			<xs:documentation>Section II.2: TOTAL FINAL VALUE OF CONTRACT(S)</xs:documentation>
+		</xs:annotation>
+		<xs:group ref="INC_16"/>
+	</xs:complexType>
+	<xs:complexType name="contract_value_information">
+		<xs:annotation>
+			<xs:documentation>SECTION V.4: INFORMATION ON VALUE OF CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="INC_40"/>
+			<xs:group ref="INC_16"/>
+			<xs:element name="MORE_INFORMATION_IF_ANNUAL_MONTHLY" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:choice minOccurs="0">
+							<xs:element name="NUMBER_OF_YEARS" type="_2car"/>
+							<xs:element name="NUMBER_OF_MONTHS" type="_3car"/>
+						</xs:choice>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CONTRACT_VALUE_INFORMATION" type="contract_value_information"/>
+	<xs:complexType name="award_of_contract">
+		<xs:annotation>
+			<xs:documentation>Section V: AWARD OF CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:sequence>
+				<xs:element name="CONTRACT_NUMBER" type="xs:string" minOccurs="0"/>
+				<xs:choice>
+					<xs:sequence minOccurs="0" maxOccurs="unbounded">
+						<xs:element ref="LOT_NUMBER"/>
+						<xs:element name="CONTRACT_TITLE" type="btx"/>
+					</xs:sequence>
+					<xs:element name="CONTRACT_TITLE" type="btx" minOccurs="0"/>
+				</xs:choice>
+			</xs:sequence>
+			<xs:element name="CONTRACT_AWARD_DATE" type="date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>SECTION V.1: DATE OF CONTRACT AWARD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OFFERS_RECEIVED_NUMBER" type="_3car" minOccurs="0"/>
+			<xs:element name="OFFERS_RECEIVED_NUMBER_MEANING" type="_3car" minOccurs="0"/>
+			<xs:element ref="ECONOMIC_OPERATOR_NAME_ADDRESS" minOccurs="0"/>
+			<xs:element ref="CONTRACT_VALUE_INFORMATION" minOccurs="0"/>
+			<xs:element name="MORE_INFORMATION_TO_SUB_CONTRACTED" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>SECTION V.5: THE CONTRACT IS LIKELY TO BE SUB-CONTRACTED</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:group ref="INC_41"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ITEM" type="xs:integer"/>
+	</xs:complexType>
+	<xs:complexType name="award_of_contract_defence">
+		<xs:annotation>
+			<xs:documentation>Section V: AWARD OF CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:sequence>
+				<xs:element name="CONTRACT_NUMBER" type="xs:string" minOccurs="0"/>
+				<xs:choice>
+					<xs:sequence minOccurs="0" maxOccurs="unbounded">
+						<xs:element ref="LOT_NUMBER"/>
+						<xs:element name="CONTRACT_TITLE" type="btx"/>
+					</xs:sequence>
+					<xs:element name="CONTRACT_TITLE" type="btx" minOccurs="0"/>
+				</xs:choice>
+			</xs:sequence>
+			<xs:element name="CONTRACT_AWARD_DATE" type="date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>SECTION V.1: DATE OF CONTRACT AWARD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OFFERS_RECEIVED_NUMBER" type="_3car" minOccurs="0"/>
+			<xs:element name="OFFERS_RECEIVED_NUMBER_MEANING" type="_3car" minOccurs="0"/>
+			<xs:element ref="ECONOMIC_OPERATOR_NAME_ADDRESS" minOccurs="0"/>
+			<xs:element ref="CONTRACT_VALUE_INFORMATION" minOccurs="0"/>
+			<xs:element name="MORE_INFORMATION_TO_SUB_CONTRACTED" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>SECTION V.5: THE CONTRACT IS LIKELY TO BE SUB-CONTRACTED</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="CONTRACT_LIKELY_SUB_CONTRACTED_WITH_DEFENCE" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:choice minOccurs="0">
+										<xs:element ref="EXCLUDING_VAT_VALUE"/>
+										<xs:element ref="EXCLUDING_VAT_PRCT"/>
+										<xs:element ref="UNKNOWN_VALUE"/>
+									</xs:choice>
+									<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+									<xs:element name="SUBCONTRACT_DEFENCE" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="SUBCONTRACT_AWARD_PART" type="yes_no" minOccurs="0"/>
+												<xs:element name="SUBCONTRACT_SHARE" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element ref="MIN_PERCENTAGE"/>
+															<xs:element ref="MAX_PERCENTAGE"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element ref="NO_CONTRACT_LIKELY_SUB_CONTRACTED" minOccurs="0"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ITEM" type="xs:integer"/>
+	</xs:complexType>
+	<xs:element name="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F2">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="PREVIOUS_PUBLICATION_EXISTS_F2"/>
+				<xs:element ref="NO_PREVIOUS_PUBLICATION_EXISTS_F2"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_EXISTS_F2">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PREVIOUS_PUBLICATION_NOTICE_F2" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="OTHER_PREVIOUS_PUBLICATIONS"/>
+					<xs:element ref="NO_OTHER_PREVIOUS_PUBLICATION"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_NOTICE_F2">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PRIOR_INFORMATION_NOTICE_F2" minOccurs="0"/>
+				<xs:element ref="NOTICE_NUMBER_OJ" minOccurs="0"/>
+				<xs:element ref="DATE_OJ" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OTHER_PREVIOUS_PUBLICATIONS">
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="OTHER_PREVIOUS_PUBLICATION"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OTHER_PREVIOUS_PUBLICATION">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="NOTICE_NUMBER_OJ" minOccurs="0"/>
+				<xs:element ref="DATE_OJ" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F3">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="PREVIOUS_PUBLICATION_EXISTS_F3"/>
+				<xs:element ref="NO_PREVIOUS_PUBLICATION_EXISTS_F3"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_EXISTS_F3">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PREVIOUS_PUBLICATION_NOTICE_F3" minOccurs="0"/>
+				<xs:element ref="CNT_NOTICE_INFORMATION" minOccurs="0"/>
+				<xs:element ref="EX_ANTE_NOTICE_INFORMATION" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="OTHER_PREVIOUS_PUBLICATIONS"/>
+					<xs:element ref="NO_OTHER_PREVIOUS_PUBLICATION"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_NOTICE_F3">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PREVIOUS_NOTICE_BUYER_PROFILE_F3" minOccurs="0"/>
+				<xs:element ref="NOTICE_NUMBER_OJ" minOccurs="0"/>
+				<xs:element ref="DATE_OJ" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F5">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="PREVIOUS_PUBLICATION_EXISTS_F5"/>
+				<xs:element ref="NO_PREVIOUS_PUBLICATION_EXISTS_F5"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_EXISTS_F5">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PREVIOUS_PUBLICATION_NOTICE_F5" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="OTHER_PREVIOUS_PUBLICATIONS"/>
+					<xs:element ref="NO_OTHER_PREVIOUS_PUBLICATION"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_NOTICE_F5">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PREVIOUS_NOTICE_BUYER_PROFILE_F5" minOccurs="0"/>
+				<xs:element ref="NOTICE_NUMBER_OJ" minOccurs="0"/>
+				<xs:element ref="DATE_OJ" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F6">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="PREVIOUS_PUBLICATION_EXISTS_F6"/>
+				<xs:element ref="NO_PREVIOUS_PUBLICATION_EXISTS_F6"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_EXISTS_F6">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PREVIOUS_PUBLICATION_NOTICE_F6" minOccurs="0"/>
+				<xs:element ref="CNT_NOTICE_INFORMATION" minOccurs="0"/>
+				<xs:element ref="EX_ANTE_NOTICE_INFORMATION" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="OTHER_PREVIOUS_PUBLICATIONS"/>
+					<xs:element ref="NO_OTHER_PREVIOUS_PUBLICATION"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_NOTICE_F6">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PREVIOUS_NOTICE_BUYER_PROFILE_F6" minOccurs="0"/>
+				<xs:element ref="NOTICE_NUMBER_OJ" minOccurs="0"/>
+				<xs:element ref="DATE_OJ" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F15">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="PREVIOUS_PUBLICATION_EXISTS_F15"/>
+				<xs:element ref="NO_PREVIOUS_PUBLICATION_EXISTS_F15"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_EXISTS_F15">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PREVIOUS_PUBLICATION_NOTICE_F15" minOccurs="0"/>
+				<xs:element ref="CNT_NOTICE_INFORMATION" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="OTHER_PREVIOUS_PUBLICATIONS"/>
+					<xs:element ref="NO_OTHER_PREVIOUS_PUBLICATION"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_NOTICE_F15">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PREVIOUS_NOTICE_BUYER_PROFILE_F15" minOccurs="0"/>
+				<xs:element ref="NOTICE_NUMBER_OJ" minOccurs="0"/>
+				<xs:element ref="DATE_OJ" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F17">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="PREVIOUS_PUBLICATION_EXISTS_F17"/>
+				<xs:element ref="NO_PREVIOUS_PUBLICATION_EXISTS_F17"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_EXISTS_F17">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PREVIOUS_PUBLICATION_NOTICE_F17" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="OTHER_PREVIOUS_PUBLICATIONS"/>
+					<xs:element ref="NO_OTHER_PREVIOUS_PUBLICATION"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_NOTICE_F17">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PRIOR_INFORMATION_NOTICE_F17" minOccurs="0"/>
+				<xs:element ref="NOTICE_NUMBER_OJ" minOccurs="0"/>
+				<xs:element ref="DATE_OJ" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PRIOR_INFORMATION_NOTICE_F17" type="lst_22"/>
+	<xs:element name="CONDITIONS_OBTAINING_SPECIFICATIONS">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="TIME_LIMIT" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="NO_PAYABLE_DOCUMENTS"/>
+					<xs:element ref="PAYABLE_DOCUMENTS"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F18">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="PREVIOUS_PUBLICATION_EXISTS_F18"/>
+				<xs:element ref="NO_PREVIOUS_PUBLICATION_EXISTS_F18"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_EXISTS_F18">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PREVIOUS_PUBLICATION_NOTICE_F18" minOccurs="0"/>
+				<xs:element ref="CNT_NOTICE_INFORMATION_F18" minOccurs="0"/>
+				<xs:element ref="EX_ANTE_NOTICE_INFORMATION" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="OTHER_PREVIOUS_PUBLICATIONS"/>
+					<xs:element ref="NO_OTHER_PREVIOUS_PUBLICATION"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_NOTICE_F18">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PREVIOUS_NOTICE_BUYER_PROFILE_F18" minOccurs="0"/>
+				<xs:element ref="NOTICE_NUMBER_OJ" minOccurs="0"/>
+				<xs:element ref="DATE_OJ" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CNT_NOTICE_INFORMATION_F18">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CNT_NOTICE_INFORMATION_S_F18" minOccurs="0"/>
+				<xs:element ref="NOTICE_NUMBER_OJ" minOccurs="0"/>
+				<xs:element ref="DATE_OJ" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F19">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="PREVIOUS_PUBLICATION_EXISTS_F19"/>
+				<xs:element ref="NO_PREVIOUS_PUBLICATION_EXISTS_F19"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_EXISTS_F19">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PREVIOUS_PUBLICATION_NOTICE_F19" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="OTHER_PREVIOUS_PUBLICATIONS"/>
+					<xs:element ref="NO_OTHER_PREVIOUS_PUBLICATION"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION_NOTICE_F19">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PREVIOUS_NOTICE_BUYER_PROFILE_F19" minOccurs="0"/>
+				<xs:element ref="NOTICE_NUMBER_OJ" minOccurs="0"/>
+				<xs:element ref="DATE_OJ" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PAYABLE_DOCUMENTS">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="DOCUMENT_COST" minOccurs="0"/>
+				<xs:element ref="DOCUMENT_METHOD_OF_PAYMENT" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CONDITIONS_OBTAINING_SPECIFICATIONS_SUM">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="TIME_LIMIT" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREVIOUS_PUBLICATION">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="OTHER_PREVIOUS_PUBLICATIONS"/>
+				<xs:element ref="NO_OTHER_PREVIOUS_PUBLICATION"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MINIMUM_TIME_MAINTAINING_TENDER">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="UNTIL_DATE"/>
+				<xs:element ref="PERIOD_MONTH"/>
+				<xs:element ref="PERIOD_DAY"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CONDITIONS_FOR_OPENING_TENDERS">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="DATE_TIME" minOccurs="0"/>
+				<xs:element ref="PLACE_OPENING" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="EXISTENCE_AUTHORISED_PERSONS"/>
+					<xs:element ref="NO_EXISTENCE_AUTHORISED_PERSONS"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="INITIAL_ESTIMATED_TOTAL_VALUE_CONTRACT">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="VALUE_COST" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="EXCLUDING_VAT"/>
+					<xs:element ref="INCLUDING_VAT"/>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="CURRENCY" type="currencies" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CONTRACT_LIKELY_SUB_CONTRACTED">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice minOccurs="0">
+					<xs:element ref="EXCLUDING_VAT_VALUE"/>
+					<xs:element ref="EXCLUDING_VAT_PRCT"/>
+					<xs:element ref="UNKNOWN_VALUE"/>
+				</xs:choice>
+				<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OTHER_JUSTIFICATION">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="CONTRACT_SERVICES_LISTED_IN_DIRECTIVE"/>
+				<xs:element ref="CONTRACT_SERVICES_OUTSIDE_DIRECTIVE"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ORGANISATION">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="OFFICIALNAME"/>
+				<xs:element ref="NATIONALID" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- ################################################################# -->
+	<!-- # PCDATA Elements definition                                                                                #  -->
+	<!-- ################################################################# -->
+	<xs:element name="ATTENTION" type="xs:string"/>
+	<xs:element name="OFFICIALNAME" type="xs:string"/>
+	<xs:element name="NATIONALID" type="xs:string"/>
+	<xs:element name="POSTAL_CODE" type="xs:string"/>
+	<xs:element name="TOWN" type="xs:string"/>
+	<xs:element name="CONTACT_POINT" type="xs:string"/>
+	<xs:element name="MAXIMUM" type="xs:string"/>
+	<xs:element name="MINIMUM" type="xs:string"/>
+	<xs:element name="CRITERIA" type="xs:string"/>
+	<xs:element name="NOTICE_NUMBER" type="xs:string"/>
+	<xs:element name="NUMBER" type="xs:string"/>
+	<xs:element name="LOT_TITLE" type="xs:string"/>
+	<xs:element name="MIN_PERCENTAGE" type="prct"/>
+	<xs:element name="MAX_PERCENTAGE" type="prct"/>
+	<!-- ################################################################# -->
+	<!-- # EMPTY Elements definition                                                                                   #  -->
+	<!-- ################################################################# -->
+	<xs:element name="ESTABLISHMENT_FRAMEWORK_AGREEMENT">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="SETTING_UP_DPS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="PUBLIC_CONTRACT">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="CONCLUSION_FRAMEWORK_AGREEMENT">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="CONTRACTS_DPS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="RECEIVERS_ARRANGEMENT_CREDITORS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="SUPPLIER_WINDING_UP_BUSINESS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="DESIGN_EXECUTION">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="EXECUTION">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="REALISATION_REQUIREMENTS_SPECIFIED_CONTRACTING_AUTHORITIES">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="RELATES_TO_EU_PROJECT_NO">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="COVERED_BY_GPA_NO">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="COVERED_BY_GPA_YES">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="DIV_INTO_LOT_NO">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="ELECTRONIC_AUCTION_SUM">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="IDEM">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_USE_ELECTRONIC_AUCTION">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="LOWEST_PRICE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="CRITERIA_STATED_IN_OTHER_DOCUMENT">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_ELECTRONIC_AUCTION">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_RECURRENT_PROCUREMENT">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="PT_COMPETITIVE_DIALOGUE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="PT_OPEN">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="PT_RESTRICTED">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="PT_ACCELERATED_RESTRICTED">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="PT_NEGOTIATED_WITH_COMPETITION">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="PT_ACCELERATED_NEGOTIATED">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_OPTIONS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_RECURRENT_CONTRACT">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="SINGLE_OPERATOR">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="UNKNOWN_VALUE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="WILL_VARIANTS_BE_ACCEPTED_YES">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="EXTREME_URGENCY_EVENTS_UNFORESEEABLE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_EXTREME_URGENCY_EVENTS_UNFORESEEABLE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="ADDITIONAL_WORKS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_ADDITIONAL_WORKS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="WORKS_REPETITION_EXISTING_WORKS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_WORKS_REPETITION_EXISTING_WORKS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="SERVICE_CONTRACT_AWARDED_SUCCESSFUL_CANDIDATE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_SERVICE_CONTRACT_AWARDED_SUCCESSFUL_CANDIDATE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="SUPPLIES_QUOTED_PURCHASED_COMMODITY_MARKET">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_SUPPLIES_QUOTED_PURCHASED_COMMODITY_MARKET">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="REASONS_PROVIDED_PARTICULAR_TENDERER_TECHNICAL">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="REASONS_PROVIDED_PARTICULAR_TENDERER_ARTISTIC">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="REASONS_PROVIDED_PARTICULAR_TENDERER_EXCLUSIVE_RIGHTS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="EXCLUDING_VAT">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_EXISTENCE_OTHER_PARTICULAR_CONDITIONS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="RESTRICTED_TO_SHELTERED_WORKSHOPS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="RESTRICTED_TO_FRAMEWORK">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_EXEC_SERVICE_RESERVED_PARTICULAR_PROFESSION">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_PREVIOUS_PUBLICATION_EXISTS_F2">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_OTHER_PREVIOUS_PUBLICATION">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_PREVIOUS_PUBLICATION_EXISTS_F3">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_PREVIOUS_PUBLICATION_EXISTS_F5">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_PREVIOUS_PUBLICATION_EXISTS_F6">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_PAYABLE_DOCUMENTS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_CONTRACT_LIKELY_SUB_CONTRACTED">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="CONTRACT_SERVICES_LISTED_IN_DIRECTIVE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="CONTRACT_SERVICES_OUTSIDE_DIRECTIVE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_PREVIOUS_PUBLICATION_EXISTS_F15">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_PREVIOUS_PUBLICATION_EXISTS_F17">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_PREVIOUS_PUBLICATION_EXISTS_F18">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_PREVIOUS_PUBLICATION_EXISTS_F19">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="CONTRACTS_AWARDED_FRAMEWORK_DIRECTIVE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_CONTRACTS_AWARDED_FRAMEWORK_DIRECTIVE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="MANUFACTURED_BY_DIRECTIVE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_MANUFACTURED_BY_DIRECTIVE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="CONTRACT_RESEARCH_DIRECTIVE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_CONTRACT_RESEARCH_DIRECTIVE">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="ONLY_IRREGULAR_INACCEPTABLE_TENDERERS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_ONLY_IRREGULAR_INACCEPTABLE_TENDERERS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_NOTICE_CALL_COMPETITION">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_NOTICE_TIME_LIMITS_RECEIPT_TENDERS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NOTICE_TIME_LIMITS_RECEIPT_TENDERS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NOTICE_CALL_COMPETITION">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="F06_ELECTRONIC_AUCTION">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="COMMUNITY_ORIGIN">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="CONTRACT_AWARDED">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_CONTRACT_AWARDED">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="TENDERS_EXCLUDED">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_TENDERS_EXCLUDED">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="F09_TYPE_PROCEDURE_OPEN">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="OPEN_CONTEST">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="FOLLOW_UP_CONTRACTS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_FOLLOW_UP_CONTRACTS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="DECISION_BINDING_CONTRACTING">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_DECISION_BINDING_CONTRACTING">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_PREVIOUS_PUBLICATION">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="CORRESPONDING_TENDER">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="MODIFICATION_ORIGINAL">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="PUBLICATION_TED">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="ADDITIONAL_INFO">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_EXISTENCE_AUTHORISED_PERSONS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:simpleType name="lst_41">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="RESTRICTED_PROCEDURE"/>
+			<xs:enumeration value="NEGOTIATED_PROCEDURE_COMPETITION"/>
+			<xs:enumeration value="COMPETITIVE_DIALOGUE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="PERIOD_FOR_PROCEDURE_INCOMPATIBLE_WITH_CRISIS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_PERIOD_FOR_PROCEDURE_INCOMPATIBLE_WITH_CRISIS">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="AIR_MARITIME_TRANSPORT_FOR_ARMED_FORCES_DEPLOYMENT">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="NO_AIR_MARITIME_TRANSPORT_FOR_ARMED_FORCES_DEPLOYMENT">
+		<xs:complexType/>
+	</xs:element>
+	<xs:complexType name="annex_d_f03">
+		<xs:annotation>
+			<xs:documentation>Annexe D: JUSTIFICATION FOR THE CHOICE OF THE NEGOCIATED PROCEDURE WITHOUT PRIOR CALL FOR COMPETITION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NO_OPEN_RESTRICTED" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="VALUE" type="lst_19" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:choice minOccurs="0">
+				<xs:element ref="MANUFACTURED_BY_DIRECTIVE"/>
+				<xs:element ref="NO_MANUFACTURED_BY_DIRECTIVE"/>
+			</xs:choice>
+			<xs:group ref="INC_07" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element ref="ONLY_IRREGULAR_INACCEPTABLE_TENDERERS"/>
+				<xs:element ref="NO_ONLY_IRREGULAR_INACCEPTABLE_TENDERERS"/>
+			</xs:choice>
+			<xs:element ref="OTHER_JUSTIFICATION" minOccurs="0"/>
+			<xs:element ref="REASON_CONTRACT_LAWFUL" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="annex_d_f06">
+		<xs:annotation>
+			<xs:documentation>ANNEX D - JUSTIFICATION FOR THE CHOICE OF THE NEGOTIATED PROCEDURE WITHOUT PRIOR CALL FOR COMPETITION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NO_TENDERS_RESPONSE" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="PROCEDURE" type="lst_29" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:choice minOccurs="0">
+				<xs:element ref="CONTRACT_RESEARCH_DIRECTIVE"/>
+				<xs:element ref="NO_CONTRACT_RESEARCH_DIRECTIVE"/>
+			</xs:choice>
+			<xs:group ref="INC_07"/>
+			<xs:choice minOccurs="0">
+				<xs:element ref="CONTRACTS_AWARDED_FRAMEWORK_DIRECTIVE"/>
+				<xs:element ref="NO_CONTRACTS_AWARDED_FRAMEWORK_DIRECTIVE"/>
+			</xs:choice>
+			<xs:element ref="OTHER_JUSTIFICATION" minOccurs="0"/>
+			<xs:element ref="REASON_CONTRACT_LAWFUL" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="annex_d_f18">
+		<xs:annotation>
+			<xs:documentation>Annexe D: JUSTIFICATION FOR THE CHOICE OF THE NEGOCIATED PROCEDURE WITHOUT PRIOR CALL FOR COMPETITION or PUBLICATION OF THE CONTRACT NOTICE</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NO_OPEN_RESTRICTED" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="VALUE" type="lst_41" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:choice minOccurs="0">
+				<xs:element ref="ONLY_IRREGULAR_INACCEPTABLE_TENDERERS"/>
+				<xs:element ref="NO_ONLY_IRREGULAR_INACCEPTABLE_TENDERERS"/>
+			</xs:choice>
+			<xs:element name="JUSTIFICATION_CHOICE_NEGOCIATED_PROCEDURE" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:choice minOccurs="0">
+							<xs:element ref="PERIOD_FOR_PROCEDURE_INCOMPATIBLE_WITH_CRISIS"/>
+							<xs:element ref="NO_PERIOD_FOR_PROCEDURE_INCOMPATIBLE_WITH_CRISIS"/>
+						</xs:choice>
+						<xs:choice minOccurs="0">
+							<xs:element ref="EXTREME_URGENCY_EVENTS_UNFORESEEABLE"/>
+							<xs:element ref="NO_EXTREME_URGENCY_EVENTS_UNFORESEEABLE"/>
+						</xs:choice>
+						<xs:element name="REASONS_PROVIDED_PARTICULAR_TENDERER" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="REASONS_PROVIDED_PARTICULAR_TENDERER_TECHNICAL" minOccurs="0"/>
+									<xs:element ref="REASONS_PROVIDED_PARTICULAR_TENDERER_EXCLUSIVE_RIGHTS" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:choice minOccurs="0">
+							<xs:element ref="CONTRACT_RESEARCH_DIRECTIVE"/>
+							<xs:element ref="NO_CONTRACT_RESEARCH_DIRECTIVE"/>
+						</xs:choice>
+						<xs:choice minOccurs="0">
+							<xs:element ref="MANUFACTURED_BY_DIRECTIVE"/>
+							<xs:element ref="NO_MANUFACTURED_BY_DIRECTIVE"/>
+						</xs:choice>
+						<xs:choice minOccurs="0">
+							<xs:element ref="ADDITIONAL_WORKS"/>
+							<xs:element ref="NO_ADDITIONAL_WORKS"/>
+						</xs:choice>
+						<xs:choice minOccurs="0">
+							<xs:element ref="SUPPLIES_QUOTED_PURCHASED_COMMODITY_MARKET"/>
+							<xs:element ref="NO_SUPPLIES_QUOTED_PURCHASED_COMMODITY_MARKET"/>
+						</xs:choice>
+						<xs:element ref="PURCHASE_SUPPLIES_ADVANTAGEOUS_TERMS" minOccurs="0"/>
+						<xs:choice minOccurs="0">
+							<xs:element ref="WORKS_REPETITION_EXISTING_WORKS"/>
+							<xs:element ref="NO_WORKS_REPETITION_EXISTING_WORKS"/>
+						</xs:choice>
+						<xs:choice minOccurs="0">
+							<xs:element ref="AIR_MARITIME_TRANSPORT_FOR_ARMED_FORCES_DEPLOYMENT"/>
+							<xs:element ref="NO_AIR_MARITIME_TRANSPORT_FOR_ARMED_FORCES_DEPLOYMENT"/>
+						</xs:choice>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="OTHER_JUSTIFICATION" minOccurs="0"/>
+			<xs:element ref="REASON_CONTRACT_LAWFUL" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

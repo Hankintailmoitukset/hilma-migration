@@ -1,0 +1,29 @@
+using Hilma.Domain.Attributes;
+using Hilma.Domain.Entities;
+using Hilma.Domain.Enums;
+
+namespace Hilma.Domain.DataContracts
+{
+    /// <summary>
+    /// II.2.3) Information about renewals 
+    /// </summary>
+    [Contract]
+    public class DefenceRenewals
+    {
+        /// <summary>
+        ///     If the notice can be renewed after the duration.
+        /// </summary>
+        [CorrigendumLabel("renewals_subject", "II.2.3")]
+        public bool CanBeRenewed { get; set; }
+
+        /// <summary>
+        /// If number of renewals is set exactly or by range
+        /// </summary>
+        public ValueRangeContract Amount { get; set; }
+
+        /// <summary>
+        /// If months or days
+        /// </summary>
+        public TimeFrame SubsequentContract { get; set;}
+    }
+}

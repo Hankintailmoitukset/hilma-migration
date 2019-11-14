@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+####################################################################################
+#  XSD name : F04_PERIODIC_INDICATIVE_UTILITIES
+#  RELEASE : "R2.0.8.S04"
+#  Intermediate release number 003-20180515
+#  Last update :20/02/2012
+####################################################################################
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+	<xs:include schemaLocation="common.xsd"/>
+	<!-- annex_b_information_lots_periodic_indicative declaration -->
+	<xs:complexType name="annex_b_information_lots_periodic_indicative">
+		<xs:annotation>
+			<xs:documentation>ANNEX B: INFORMATION ABOUT LOTS</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="INC_06"/>
+			<xs:group ref="INC_10"/>
+			<xs:element ref="NATURE_QUANTITY_SCOPE" minOccurs="0"/>
+			<xs:element ref="SCHEDULED_DATE_PERIOD" minOccurs="0"/>
+			<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="ITEM" type="xs:integer"/>
+	</xs:complexType>
+	<!-- aI_complementary_information_periodic_indicativ declaration -->
+	<xs:complexType name="service_information_lodging_appeals">
+		<xs:group ref="INC_05"/>
+	</xs:complexType>
+	<xs:complexType name="body_responsible_mediation">
+		<xs:group ref="INC_05"/>
+	</xs:complexType>
+	<xs:complexType name="body_responsible_appeal">
+		<xs:group ref="INC_05"/>
+	</xs:complexType>
+	<xs:complexType name="procedures_appeal">
+		<xs:annotation>
+			<xs:documentation>Section VI.3: PROCEDURES FOR APPEAL</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BODY_RESPONSIBLE_APPEAL" type="body_responsible_appeal" minOccurs="0"/>
+			<xs:element name="BODY_RESPONSIBLE_MEDIATION" type="body_responsible_mediation" minOccurs="0"/>
+			<xs:element name="LODGING_APPEALS" type="btx" minOccurs="0"/>
+			<xs:element name="SERVICE_INFORMATION_LODGING_APPEALS" type="service_information_lodging_appeals" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="aI_complementary_information_periodic_indicative">
+		<xs:annotation>
+			<xs:documentation>Section VI: COMPLEMENTARY INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element ref="RECURRENT_PROCUREMENT"/>
+				<xs:element ref="NO_RECURRENT_PROCUREMENT"/>
+			</xs:choice>
+			<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+			<xs:element name="PROCEDURES_APPEAL" type="procedures_appeal" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- aI_procedure_periodic_indicative declaration -->
+	<xs:complexType name="administrative_information_def">
+		<xs:annotation>
+			<xs:documentation>Section IV.3: ADMINISTRATIVE INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="INC_33"/>
+			<xs:element name="DATE_LIMIT_RECEIPT_INTEREST" type="date_time" minOccurs="0"/>
+			<xs:element name="DATE_LIMIT_RECEIPT_APPLICATION" type="date_time" minOccurs="0"/>
+			<xs:element ref="LANGUAGE" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="award_criteria_periodic_indicative">
+		<xs:annotation>
+			<xs:documentation>Section IV.2: AWARD CRITERIA</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="INC_30"/>
+			<xs:choice minOccurs="0">
+				<xs:element ref="ELECTRONIC_AUCTION"/>
+				<xs:element ref="NO_ELECTRONIC_AUCTION"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="f04_type_procedure">
+		<xs:annotation>
+			<xs:documentation>Section IV.1: TYPE OF PROCEDURE</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="TYPE" type="lst_30" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="aI_procedure_periodic_indicative">
+		<xs:annotation>
+			<xs:documentation>Section IV: PROCEDURE</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="F04_TYPE_PROCEDURE" type="f04_type_procedure" minOccurs="0"/>
+			<xs:element name="AWARD_CRITERIA_PERIODIC_INDICATIVE" type="award_criteria_periodic_indicative" minOccurs="0"/>
+			<xs:element name="ADMINISTRATIVE_INFORMATION_DEF" type="administrative_information_def"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- aI_lefti_periodic_indicative declaration -->
+	<xs:complexType name="conditions_participation">
+		<xs:annotation>
+			<xs:documentation>Section III.2: CONDITIONS FOR PARTICIPATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="PERSONAL_SITUATION" minOccurs="0"/>
+			<xs:element ref="FINANCIAL_CAPACITY" minOccurs="0"/>
+			<xs:element ref="TECHNICAL_CAPACITY" minOccurs="0"/>
+			<xs:group ref="INC_21"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="conditions_contract">
+		<xs:annotation>
+			<xs:documentation>Section III.1: CONDITIONS RELATING TO THE CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DEPOSITS_GUARANTEES" type="btx" minOccurs="0"/>
+			<xs:element name="LEGAL_FORM_CONTRACT" type="btx" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="PARTICULAR_CONDITIONS" type="btx"/>
+				<xs:element name="NO_PARTICULAR_CONDITIONS">
+					<xs:complexType/>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="aI_lefti_periodic_indicative">
+		<xs:annotation>
+			<xs:documentation>Section III: LEGAL, ECONOMIC, FINANCIAL AND TECHNICAL INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CONDITIONS_CONTRACT" type="conditions_contract" minOccurs="0"/>
+			<xs:element name="CONDITIONS_PARTICIPATION" type="conditions_participation" minOccurs="0"/>
+			<xs:group ref="INC_22"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- aI_object_nature_periodic_indicative declaration -->
+	<xs:complexType name="aI_object_nature_periodic_indicative">
+		<xs:annotation>
+			<xs:documentation>Section II.2</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="NATURE_QUANTITY_SCOPE" minOccurs="0"/>
+			<xs:group ref="INC_17"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- aI_object_description_periodic_indicative declaration -->
+	<xs:complexType name="f04_div_into_lot_yes">
+		<xs:sequence>
+			<xs:element name="ANNEX_B_INFORMATION_LOTS_PERIODIC_INDICATIVE" type="annex_b_information_lots_periodic_indicative" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="NUMBER" type="lst_10"/>
+	</xs:complexType>
+	<xs:complexType name="f04_division_into_lots">
+		<xs:choice>
+			<xs:element name="F04_DIV_INTO_LOT_YES" type="f04_div_into_lot_yes"/>
+			<xs:element ref="DIV_INTO_LOT_NO"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="f04_framework">
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element ref="SINGLE_OPERATOR"/>
+				<xs:element ref="SEVERAL_OPERATORS"/>
+			</xs:choice>
+			<xs:choice minOccurs="0">
+				<xs:element ref="DURATION_FRAMEWORK_YEAR"/>
+				<xs:element ref="DURATION_FRAMEWORK_MONTH"/>
+			</xs:choice>
+			<xs:element ref="TOTAL_ESTIMATED" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="aI_object_description_periodic_indicative">
+		<xs:annotation>
+			<xs:documentation>Section II.1</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="TITLE_CONTRACT" minOccurs="0"/>
+			<xs:group ref="INC_11"/>
+			<xs:group ref="INC_12"/>
+			<xs:element name="NOTICE_INVOLVES_PERIODIC_INDICATIVE" type="notice_involves" minOccurs="0"/>
+			<xs:element name="F04_FRAMEWORK" type="f04_framework" minOccurs="0"/>
+			<xs:element name="F04_DIVISION_INTO_LOTS" type="f04_division_into_lots" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- aI_object_contract_periodic_indicative declaration -->
+	<xs:complexType name="aI_object_contract_periodic_indicative">
+		<xs:annotation>
+			<xs:documentation>Section II: OBJECT OF THE CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AI_OBJECT_DESCRIPTION_PERIODIC_INDICATIVE" type="aI_object_description_periodic_indicative" minOccurs="0"/>
+			<xs:element name="AI_OBJECT_NATURE_PERIODIC_INDICATIVE" type="aI_object_nature_periodic_indicative" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- complementary_information_periodic_indicative declaration -->
+	<xs:complexType name="complementary_information_periodic_indicative">
+		<xs:annotation>
+			<xs:documentation>SECTION VI: COMPLEMENTARY INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element ref="RELATES_TO_EU_PROJECT_YES"/>
+				<xs:element ref="RELATES_TO_EU_PROJECT_NO"/>
+			</xs:choice>
+			<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+			<xs:group ref="INC_16" minOccurs="0"/>
+			<xs:element ref="NOTICE_DISPATCH_DATE"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- procedure_administrative_information_periodic declaration -->
+	<xs:complexType name="procedure_administrative_information_periodic">
+		<xs:annotation>
+			<xs:documentation>Section IV: PROCEDURE AND ADMINISTRATIVE INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="REFERENCE_NUMBER_ATTRIBUTED"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- object_contract_periodic_indicative declaration -->
+	<xs:complexType name="estimated_cost_main_financing">
+		<xs:annotation>
+			<xs:documentation>Section II.6</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="INC_15"/>
+			<xs:element name="MAIN_FINANCIAL_CONDITIONS" type="btx" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Section II.6.2: Main financing conditions</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="type_contract_location_works">
+		<xs:annotation>
+			<xs:documentation>Section II.2: Type of contract and location of works, place of delivery or of performance</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="CONTRACT_TYPE" type="lst_06" use="required"/>
+		<xs:attribute name="SERVICES_CATEGORY" type="service_category"/>
+	</xs:complexType>
+	<xs:complexType name="object_contract_periodic_indicative">
+		<xs:annotation>
+			<xs:documentation>Section II: OBJECT OF THE CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="TITLE_CONTRACT" minOccurs="0"/>
+			<xs:element name="TYPE_CONTRACT_LOCATION_WORKS" type="type_contract_location_works"/>
+			<xs:element ref="DESCRIPTION_OF_CONTRACT"/>
+			<xs:element name="ANNEX_B_INFORMATION_LOTS_PERIODIC_INDICATIVE" type="annex_b_information_lots_periodic_indicative" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:group ref="INC_10"/>
+			<xs:element ref="SCHEDULED_DATE_PERIOD" minOccurs="0"/>
+			<xs:element name="ESTIMATED_COST_MAIN_FINANCING" type="estimated_cost_main_financing" minOccurs="0"/>
+			<xs:element ref="CONTRACT_COVERED_GPA" minOccurs="0"/>
+			<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- authority_periodic_indicative declaration -->
+	<xs:complexType name="internet_addresses_periodic_indicative_utilities">
+		<xs:sequence>
+			<xs:element ref="URL_GENERAL" minOccurs="0"/>
+			<xs:element ref="URL_BUYER" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="name_addresses_contact_periodic_indicative_utilities">
+		<xs:annotation>
+			<xs:documentation>Section I.1: NAME, ADDRESSES AND CONTACT POINT(S)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="INC_01"/>
+			<xs:element name="INTERNET_ADDRESSES_PERIODIC_INDICATIVE_UTILITIES" type="internet_addresses_periodic_indicative_utilities" minOccurs="0"/>
+			<xs:group ref="INC_02" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="authority_periodic_indicative">
+		<xs:annotation>
+			<xs:documentation>Section I: CONTRACTING ENTITY</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NAME_ADDRESSES_CONTACT_PERIODIC_INDICATIVE_UTILITIES" type="name_addresses_contact_periodic_indicative_utilities"/>
+			<xs:element ref="ACTIVITIES_OF_CONTRACTING_ENTITY" minOccurs="0"/>
+			<xs:element ref="PURCHASING_ON_BEHALF" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- introduction_periodic_indicative declaration -->
+	<xs:complexType name="annex_I">
+		<xs:annotation>
+			<xs:documentation>Annex I: PRIOR INDICATIVE NOTICE BEING A CALL FOR COMPETITION OR AIMING AT REDUCING TIME-LIMITS FOR THE RECEIPT OF TENDERS</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AI_OBJECT_CONTRACT_PERIODIC_INDICATIVE" type="aI_object_contract_periodic_indicative"/>
+			<xs:element name="AI_LEFTI_PERIODIC_INDICATIVE" type="aI_lefti_periodic_indicative"/>
+			<xs:element name="AI_PROCEDURE_PERIODIC_INDICATIVE" type="aI_procedure_periodic_indicative"/>
+			<xs:element name="AI_COMPLEMENTARY_INFORMATION_PERIODIC_INDICATIVE" type="aI_complementary_information_periodic_indicative"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="introduction_periodic_indicative">
+		<xs:annotation>
+			<xs:documentation>INTRODUCTION PERIODIC INDICATIVE</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:sequence>
+				<xs:element ref="NO_NOTICE_CALL_COMPETITION"/>
+				<xs:choice>
+					<xs:element ref="NO_NOTICE_TIME_LIMITS_RECEIPT_TENDERS"/>
+					<xs:sequence>
+						<xs:element ref="NOTICE_TIME_LIMITS_RECEIPT_TENDERS"/>
+						<xs:element name="ANNEX_I" type="annex_I"/>
+					</xs:sequence>
+				</xs:choice>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element ref="NOTICE_CALL_COMPETITION"/>
+				<xs:element ref="NO_NOTICE_TIME_LIMITS_RECEIPT_TENDERS"/>
+				<xs:element name="ANNEX_I" type="annex_I"/>
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+	<!-- fd_periodic_indicative_utilities declaration -->
+	<xs:complexType name="fd_periodic_indicative_utilities">
+		<xs:sequence>
+			<xs:element name="INTRODUCTION_PERIODIC_INDICATIVE" type="introduction_periodic_indicative"/>
+			<xs:element name="AUTHORITY_PERIODIC_INDICATIVE" type="authority_periodic_indicative"/>
+			<xs:element name="OBJECT_CONTRACT_PERIODIC_INDICATIVE" type="object_contract_periodic_indicative" maxOccurs="unbounded"/>
+			<xs:element name="PROCEDURE_ADMINISTRATIVE_INFORMATION_PERIODIC" type="procedure_administrative_information_periodic" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="COMPLEMENTARY_INFORMATION_PERIODIC_INDICATIVE" type="complementary_information_periodic_indicative"/>
+		</xs:sequence>
+		<xs:attribute name="CTYPE" type="ctype" use="required"/>
+	</xs:complexType>
+	<!-- periodic_indicative_utilities declaration -->
+	<xs:complexType name="periodic_indicative_utilities">
+		<xs:sequence>
+			<xs:element name="FD_PERIODIC_INDICATIVE_UTILITIES" type="fd_periodic_indicative_utilities"/>
+		</xs:sequence>
+		<xs:attribute name="LG" type="languages" use="required"/>
+		<xs:attribute name="CATEGORY" type="category" use="required"/>
+		<xs:attribute name="FORM" use="required" fixed="4"/>
+		<xs:attribute name="VERSION" use="required" fixed="R2.0.8.S04"/>
+	</xs:complexType>
+	<!-- ROOT element -->
+	<xs:element name="PERIODIC_INDICATIVE_UTILITIES" type="periodic_indicative_utilities">
+		<xs:annotation>
+			<xs:documentation>F4 root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

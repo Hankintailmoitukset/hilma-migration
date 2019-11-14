@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+####################################################################################
+#  XSD name : F10_CONCESSION
+#  RELEASE : "R2.0.8.S04"
+#  Intermediate release number 003-20180515
+#  Last update :18/03/2013
+####################################################################################
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+	<xs:include schemaLocation="common.xsd"/>
+	<!-- complementary_information_concession declaration -->
+	<xs:complexType name="complementary_information_concession">
+		<xs:annotation>
+			<xs:documentation>Section VI: OTHER INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element ref="RELATES_TO_EU_PROJECT_YES"/>
+				<xs:element ref="RELATES_TO_EU_PROJECT_NO"/>
+			</xs:choice>
+			<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+			<xs:element ref="APPEAL_PROCEDURES" minOccurs="0"/>
+			<xs:element ref="NOTICE_DISPATCH_DATE"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- procedures_concession declaration -->
+	<xs:complexType name="procedures_concession">
+		<xs:annotation>
+			<xs:documentation>Section IV: PROCEDURES</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AWARD_CRITERIA_CONCESSION" type="btx" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Section IV.1: AWARD CRITERIA</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ADMINISTRATIVE_INFORMATION_CONCESSION">
+				<xs:annotation>
+					<xs:documentation>Section IV.2: ADMINISTRATIVE INFORMATION</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="REFERENCE_NUMBER_ATTRIBUTED" minOccurs="0"/>
+						<xs:element ref="TIME_LIMIT_CHP"/>
+						<xs:element ref="LANGUAGE" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- lefti_concession declaration -->
+	<xs:complexType name="lefti_concession">
+		<xs:annotation>
+			<xs:documentation>Section III: LEGAL, ECONOMIC, FINANCIAL AND TECHNICAL INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="PERSONAL_SITUATION" minOccurs="0"/>
+			<xs:element ref="FINANCIAL_CAPACITY" minOccurs="0"/>
+			<xs:element ref="TECHNICAL_CAPACITY" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- object_concession declaration -->
+	<xs:complexType name="quantity_scope_concession">
+		<xs:annotation>
+			<xs:documentation>Section II.2: QUANTITY OR SCOPE OF THE CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="NATURE_QUANTITY_SCOPE" minOccurs="0"/>
+			<xs:element name="MINIMUM_PERCENTAGE_THIRD_PARTIES" type="btx" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Minimum percentage</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="f10_type_of_works_contract">
+		<xs:sequence>
+			<xs:element name="F10_CONTRACT_TYPE" type="type_work_contract" minOccurs="0"/>
+			<xs:element ref="NUTS" minOccurs="0" maxOccurs="99"/>
+			<xs:element ref="MAIN_SITE_WORKS" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="object_concession">
+		<xs:annotation>
+			<xs:documentation>Section II: OBJECT OF THE WORKS CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DESCRIPTION_CONCESSION">
+				<xs:annotation>
+					<xs:documentation>Section II.1: DESCRIPTION OF THE CONCESSION</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="TITLE_CONTRACT" minOccurs="0"/>
+						<xs:element name="F10_TYPE_OF_WORKS_CONTRACT" type="f10_type_of_works_contract" minOccurs="0"/>
+						<xs:element ref="DESCRIPTION_OF_CONTRACT"/>
+						<xs:group ref="INC_10"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="QUANTITY_SCOPE_CONCESSION" type="quantity_scope_concession" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--authority_concession declaration -->
+	<xs:complexType name="authority_concession">
+		<xs:annotation>
+			<xs:documentation>Section I: CONTRACTING AUTHORITY</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NAME_ADDRESSES_CONTACT_CONCESSION">
+				<xs:annotation>
+					<xs:documentation>Section I.1: NAME, ADDRESSES AND CONTACT POINT(S)</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="INC_01"/>
+						<xs:element name="INTERNET_ADDRESSES_CONCESSION" type="internet_addresses" minOccurs="0"/>
+						<xs:group ref="INC_02"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="TYPE_AND_ACTIVITIES_AND_PURCHASING_ON_BEHALF" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- fd_concession declaration -->
+	<xs:complexType name="fd_concession">
+		<xs:sequence>
+			<xs:element name="AUTHORITY_CONCESSION" type="authority_concession"/>
+			<xs:element name="OBJECT_CONCESSION" type="object_concession"/>
+			<xs:element name="LEFTI_CONCESSION" type="lefti_concession"/>
+			<xs:element name="PROCEDURES_CONCESSION" type="procedures_concession"/>
+			<xs:element name="COMPLEMENTARY_INFORMATION_CONCESSION" type="complementary_information_concession"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- concession declaration -->
+	<xs:complexType name="concession">
+		<xs:sequence>
+			<xs:element name="FD_CONCESSION" type="fd_concession"/>
+		</xs:sequence>
+		<xs:attribute name="LG" type="languages" use="required"/>
+		<xs:attribute name="CATEGORY" type="category" use="required"/>
+		<xs:attribute name="FORM" use="required" fixed="10"/>
+		<xs:attribute name="VERSION" use="required" fixed="R2.0.8.S04"/>
+	</xs:complexType>
+	<!-- ROOT element -->
+	<xs:element name="CONCESSION" type="concession">
+		<xs:annotation>
+			<xs:documentation>F10 root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

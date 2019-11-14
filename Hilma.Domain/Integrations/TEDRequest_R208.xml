@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TED_ESENDERS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://publications.europa.eu/TED_schema/Reception/R2.0.8.S04/TED_ESENDERS.xd" xmlns:n2016="http://publications.europa.eu/resource/schema/ted/2016/nuts">
+  <SENDER>
+    <LOGIN CLASS="B">
+      <ESENDER_LOGIN>TEDE0MUT</ESENDER_LOGIN>
+    </LOGIN>
+    <USER>
+      <USER_E_MAILS>
+        <USER_E_MAIL TYPE="FUNCTIONAL">ari.nurkkala@innofactor.com</USER_E_MAIL>
+      </USER_E_MAILS>
+    </USER>
+    <NO_DOC_EXT>2019-007617</NO_DOC_EXT>
+  </SENDER>
+
+  <FORM_SECTION>
+    <PRIOR_INFORMATION LG="FI" CATEGORY="ORIGINAL" FORM="1" VERSION="R2.0.8.S04">
+      <FD_PRIOR_INFORMATION CTYPE="WORKS">
+        <AUTHORITY_PRIOR_INFORMATION>
+          <NAME_ADDRESSES_CONTACT_PRIOR_INFORMATION>
+            <CA_CE_CONCESSIONAIRE_PROFILE>
+              <ORGANISATION>
+                <OFFICIALNAME>Rahoitusvakausvirasto</OFFICIALNAME>
+                <NATIONALID>2683902-3</NATIONALID>
+              </ORGANISATION>
+              <ADDRESS>Valto Käkelän katu 3</ADDRESS>
+              <TOWN>Lappeenranta</TOWN>
+              <POSTAL_CODE>53130</POSTAL_CODE>
+              <COUNTRY VALUE="FI"/>
+              <PHONE>+358 406511225</PHONE>
+              <E_MAILS>
+                <E_MAIL>ari.nurkkala@innofactor.com</E_MAIL>
+              </E_MAILS>
+            </CA_CE_CONCESSIONAIRE_PROFILE>
+          </NAME_ADDRESSES_CONTACT_PRIOR_INFORMATION>
+        </AUTHORITY_PRIOR_INFORMATION>
+        <OBJECT_WORKS_PRIOR_INFORMATION>
+          <TITLE_CONTRACT>
+            <P>Tietopyyntö: Puolustushankinta tosi isoille tankeille</P>
+          </TITLE_CONTRACT>
+          <SITE_OR_LOCATION>
+            <LABEL>
+              <P>Etelä-Karjala</P>
+            </LABEL>
+            <NUTS CODE="00"/>
+          </SITE_OR_LOCATION>
+          <QUANTITY_SCOPE_WORKS>
+            <TOTAL_QUANTITY_OR_SCOPE>12</TOTAL_QUANTITY_OR_SCOPE>
+            <F01_DIVISION_INTO_LOTS>
+              <DIV_INTO_LOT_NO />
+            </F01_DIVISION_INTO_LOTS>
+          </QUANTITY_SCOPE_WORKS>
+          <CPV>
+            <CPV_MAIN>
+              <CPV_CODE CODE="60000000" />
+            </CPV_MAIN>
+          </CPV>
+          <ADDITIONAL_INFORMATION>Additional info</ADDITIONAL_INFORMATION>
+          <!--<FRAMEWORK_AGREEMENT VALUE="NO" />
+          <CONTRACT_COVERED_GPA VALUE="NO" />-->
+        </OBJECT_WORKS_PRIOR_INFORMATION>
+        <LEFTI_PRIOR_INFORMATION>
+          <MAIN_FINANCING_CONDITIONS>
+            <P>Financing conditions</P>
+          </MAIN_FINANCING_CONDITIONS>
+          <RESERVED_CONTRACTS>
+            <RESTRICTED_TO_SHELTERED_WORKSHOPS />
+            <RESTRICTED_TO_FRAMEWORK />
+          </RESERVED_CONTRACTS>
+        </LEFTI_PRIOR_INFORMATION>
+        <OTH_INFO_PRIOR_INFORMATION>
+          <ADDITIONAL_INFORMATION>
+            <P>Additional info</P>
+          </ADDITIONAL_INFORMATION>
+          <INFORMATION_REGULATORY_FRAMEWORK>
+            <TAX_LEGISLATION>
+              <TAX_LEGISLATION_VALUE>
+                <P>Tax legislation</P>
+              </TAX_LEGISLATION_VALUE>
+              <CONTACT_DATA>
+                <ORGANISATION>
+                  <OFFICIALNAME>Rahoitusvakausvirasto</OFFICIALNAME>
+                  <NATIONALID>2683902-3</NATIONALID>
+                </ORGANISATION>
+                <URL>https://legislation.com</URL>
+              </CONTACT_DATA>
+            </TAX_LEGISLATION>
+            <ENVIRONMENTAL_PROTECTION_LEGISLATION>
+              <ENVIRONMENTAL_PROTECTION_LEGISLATION_VALUE>
+                <P>Environment prototection legislation</P>
+              </ENVIRONMENTAL_PROTECTION_LEGISLATION_VALUE>
+              <CONTACT_DATA>
+                <ORGANISATION>
+                  <OFFICIALNAME>Rahoitusvakausvirasto</OFFICIALNAME>
+                  <NATIONALID>2683902-3</NATIONALID>
+                </ORGANISATION>
+                <URL>https://legislation.com</URL>
+              </CONTACT_DATA>
+            </ENVIRONMENTAL_PROTECTION_LEGISLATION>
+            <EMPLOYMENT_PROTECTION_WORKING_CONDITIONS>
+              <EMPLOYMENT_PROTECTION_WORKING_CONDITIONS_VALUE>
+                <P>Employment protection working conditions</P>
+              </EMPLOYMENT_PROTECTION_WORKING_CONDITIONS_VALUE>
+              <CONTACT_DATA>
+                <ORGANISATION>
+                  <OFFICIALNAME>Rahoitusvakausvirasto</OFFICIALNAME>
+                  <NATIONALID>2683902-3</NATIONALID>
+                </ORGANISATION>
+                <URL>https://workingconditions.com</URL>
+              </CONTACT_DATA>
+            </EMPLOYMENT_PROTECTION_WORKING_CONDITIONS>
+          </INFORMATION_REGULATORY_FRAMEWORK>
+          <NOTICE_DISPATCH_DATE>
+            <DAY>9</DAY>
+            <MONTH>4</MONTH>
+            <YEAR>2019</YEAR>
+          </NOTICE_DISPATCH_DATE>
+        </OTH_INFO_PRIOR_INFORMATION>
+      </FD_PRIOR_INFORMATION>
+    </PRIOR_INFORMATION>
+  </FORM_SECTION>
+</TED_ESENDERS>

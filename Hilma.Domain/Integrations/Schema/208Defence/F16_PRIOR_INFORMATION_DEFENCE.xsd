@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+####################################################################################
+#  XSD name : F16_PRIOR_INFORMATION_DEFENCE
+#  RELEASE : "R2.0.8.S04"
+#  Intermediate release number 003-20180515
+#  Last update :20/02/2012
+####################################################################################
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+	<xs:include schemaLocation="common.xsd"/>
+	<!-- object_supplies_services_prior_information declaration -->
+	<xs:complexType name="quantity_scope_prior_information_defence">
+		<xs:annotation>
+			<xs:documentation>Section II.4: SHORT DESCRIPTION OF NATURE AND SCOPE OF WORKS, SUPPLIES OR SERVICES</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:sequence>
+				<xs:element ref="TOTAL_QUANTITY_OR_SCOPE"/>
+				<xs:group ref="INC_15"/>
+			</xs:sequence>
+			<xs:element name="F16_DIVISION_INTO_LOTS" type="f16_division_into_lots" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="type_contract_pi_defence">
+		<xs:sequence>
+			<xs:element ref="TYPE_CONTRACT"/>
+			<xs:element ref="SERVICE_CATEGORY_DEFENCE" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="type_contract_place_delivery_defence">
+		<xs:annotation>
+			<xs:documentation>Section II.2: Type of contract and place of delivery or of performance</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TYPE_CONTRACT_PI_DEFENCE" type="type_contract_pi_defence"/>
+			<xs:element ref="SITE_OR_LOCATION" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="object_works_supplies_services_prior_information">
+		<xs:annotation>
+			<xs:documentation>Section II: OBJECT OF THE CONTRACT </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="TITLE_CONTRACT" minOccurs="0"/>
+			<xs:element name="TYPE_CONTRACT_PLACE_DELIVERY_DEFENCE" type="type_contract_place_delivery_defence"/>
+			<xs:element ref="FRAMEWORK_AGREEMENT" minOccurs="0"/>
+			<xs:element name="QUANTITY_SCOPE_WORKS_DEFENCE" type="quantity_scope_prior_information_defence"/>
+			<xs:group ref="INC_10"/>
+			<xs:element ref="SCHEDULED_DATE_PERIOD" minOccurs="0"/>
+			<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="f16_div_into_lot_yes">
+		<xs:sequence>
+			<xs:element name="LOT_PRIOR_INFORMATION" type="lot_prior_information" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="f16_division_into_lots">
+		<xs:annotation>
+			<xs:documentation>DIVISION INTO LOTS</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="F16_DIV_INTO_LOT_YES" type="f16_div_into_lot_yes"/>
+				<xs:element ref="DIV_INTO_LOT_NO"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- authority_prior_information_defence declaration -->
+	<xs:complexType name="authority_prior_information_defence">
+		<xs:annotation>
+			<xs:documentation>Section I: CONTRACTING AUTHORITY</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NAME_ADDRESSES_CONTACT_PRIOR_INFORMATION" type="name_addresses_contact_prior_information"/>
+			<xs:element ref="TYPE_AND_ACTIVITIES_OR_CONTRACTING_ENTITY_AND_PURCHASING_ON_BEHALF" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- fd_prior_information declaration -->
+	<xs:complexType name="fd_prior_information_defence">
+		<xs:sequence>
+			<xs:element name="AUTHORITY_PRIOR_INFORMATION_DEFENCE" type="authority_prior_information_defence"/>
+			<xs:element name="OBJECT_WORKS_SUPPLIES_SERVICES_PRIOR_INFORMATION" type="object_works_supplies_services_prior_information" maxOccurs="unbounded"/>
+			<xs:element name="LEFTI_PRIOR_INFORMATION" type="lefti_prior_information"/>
+			<xs:element name="OTH_INFO_PRIOR_INFORMATION" type="oth_info_prior_information"/>
+		</xs:sequence>
+		<xs:attribute name="CTYPE" type="ctype" use="required"/>
+	</xs:complexType>
+	<!-- prior_information declaration -->
+	<xs:complexType name="prior_information_defence">
+		<xs:sequence>
+			<xs:element name="FD_PRIOR_INFORMATION_DEFENCE" type="fd_prior_information_defence"/>
+		</xs:sequence>
+		<xs:attribute name="LG" type="languages" use="required"/>
+		<xs:attribute name="CATEGORY" type="category" use="required"/>
+		<xs:attribute name="FORM" use="required" fixed="16"/>
+		<xs:attribute name="VERSION" use="required" fixed="R2.0.8.S04"/>
+	</xs:complexType>
+	<!-- ROOT element -->
+	<xs:element name="PRIOR_INFORMATION_DEFENCE" type="prior_information_defence">
+		<xs:annotation>
+			<xs:documentation>F16 root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

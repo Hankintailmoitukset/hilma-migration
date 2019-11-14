@@ -1,0 +1,129 @@
+<TED_ESENDERS xmlns:n2016="http://publications.europa.eu/resource/schema/ted/2016/nuts">
+  <FORM_SECTION>
+    <F02_2014 LG="FI" CATEGORY="ORIGINAL" FORM="F02">
+      <LEGAL_BASIS VALUE="32014L0024" />
+      <CONTRACTING_BODY>
+        <ADDRESS_CONTRACTING_BODY>
+          <OFFICIALNAME>Testia Oy</OFFICIALNAME>
+          <NATIONALID>2364760-8</NATIONALID>
+          <ADDRESS>Testikatu 3, 3. krs.</ADDRESS>
+          <TOWN>Kuopio</TOWN>
+          <POSTAL_CODE>70600</POSTAL_CODE>
+          <COUNTRY VALUE="FI" />
+          <CONTACT_POINT>Teppo Testaaja</CONTACT_POINT>
+          <PHONE>+358 447333333</PHONE>
+          <E_MAIL>testia@testia.fi</E_MAIL>
+          <n2016:NUTS xmlns:n2016="http://publications.europa.eu/resource/schema/ted/2016/nuts" CODE="FI1">Manner-Suomi</n2016:NUTS>
+          <URL_GENERAL>https://www.Testia.fi</URL_GENERAL>
+          <URL_BUYER>https://www.Testia.fi</URL_BUYER>
+        </ADDRESS_CONTRACTING_BODY>
+          <OFFICIALNAME>Testia Oy</OFFICIALNAME>
+		  <ADDRESS_CONTRACTING_BODY_ADDITIONAL>
+          <NATIONALID>2364760-8</NATIONALID>
+          <TOWN>Kuopio</TOWN>
+          <POSTAL_CODE>70600</POSTAL_CODE>
+          <COUNTRY VALUE="FI" />
+          <E_MAIL>hankinnat@testia.fi</E_MAIL>
+          <n2016:NUTS xmlns:n2016="http://publications.europa.eu/resource/schema/ted/2016/nuts" CODE="FI1">Manner-Suomi</n2016:NUTS>
+          <URL_GENERAL>http://www.testia.fi</URL_GENERAL>
+        </ADDRESS_CONTRACTING_BODY_ADDITIONAL>
+        <JOINT_PROCUREMENT_INVOLVED />
+        <CENTRAL_PURCHASING />
+        <DOCUMENT_FULL />
+        <URL_DOCUMENT>https://testia.fi/sampo/rftender/view/3689/b530f51f01f6718500cfb5dcc0d65b5e</URL_DOCUMENT>
+        <ADDRESS_FURTHER_INFO_IDEM />
+        <URL_PARTICIPATION>https://testia.fi/sampo/rftender/view/3689/b530f51f01f6718500cfb5dcc0d65b5e</URL_PARTICIPATION>
+        <ADDRESS_PARTICIPATION_IDEM />
+        <CA_TYPE_OTHER>Yhteishankintayksikkö</CA_TYPE_OTHER>
+        <CA_ACTIVITY_OTHER>Yleisagentuuritoiminta</CA_ACTIVITY_OTHER>
+      </CONTRACTING_BODY>
+      <OBJECT_CONTRACT>
+        <TITLE>
+          <P>Henkilökuljetukset Testia Oy:n Pohjois-Savon alueella sijaitseville Tilaajille DPS (osallistumispyyntö)</P>
+        </TITLE>
+        <REFERENCE_NUMBER>1811291</REFERENCE_NUMBER>
+        <CPV_MAIN>
+          <CPV_CODE CODE="60000000" />
+        </CPV_MAIN>
+        <TYPE_CONTRACT CTYPE="SERVICES" />
+        <SHORT_DESCR>
+          <P>Tällä hankintailmoituksella perustetaan dynaaminen hankintajärjestelmä (DPS) koskien henkilökuljetuksia Testia Oy:n Pohjois-Savon alueella sijatiseville Tilaajille.</P>
+          <P>Testia Oy:n (jäljempänä Testia) toteuttaa hankinnat dynaamiseen hankintajärjestelmään hyväksyttyjen toimittajien kesken DPS:n sisäisillä kilpailutuksilla. Kilpailutukset voivat ajoittua koko dynaamisen hankintajärjestelmän hankintavaiheen voimassaoloajalle. Hankinnat voivat koskea mm. vammaispalvelu- tai sosiaalihuoltolain mukaisia kuljetuksia, kehitysvammaisten työ- ja päivätoimintakuljetuksia sekä ikäihmisten päivätoimintakuljetuksia, koululaiskuljetuksia, potilassiirtoja sekä asiointiliikennettä ja muuta avointa joukkoliikennettä (pois lukien TVV:n järjestämä joukkoliikenne)</P>
+        </SHORT_DESCR>
+        <VAL_ESTIMATED_TOTAL CURRENCY="EUR">65000000</VAL_ESTIMATED_TOTAL>
+        <NO_LOT_DIVISION />
+        <OBJECT_DESCR ITEM="1">
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="60000000" />
+          </CPV_ADDITIONAL>
+          <n2016:NUTS xmlns:n2016="http://publications.europa.eu/resource/schema/ted/2016/nuts" CODE="FI1">Manner-Suomi</n2016:NUTS>
+          <SHORT_DESCR>
+            <P>Tällä hankintailmoituksella perustetaan dynaaminen hankintajärjestelmä (DPS) koskien henkilökuljetuksia.</P>
+            <P>Testia Oy:n (jäljempänä Testia) toteuttaa hankinnat dynaamiseen hankintajärjestelmään hyväksyttyjen toimittajien kesken DPS:n sisäisillä kilpailutuksilla. Kilpailutukset voivat ajoittua koko dynaamisen hankintajärjestelmän hankintavaiheen voimassaoloajalle. </P>
+            <P>Hankinnat voivat koskea mm. </P>
+            <P>- vammaispalvelu- tai sosiaalihuoltolain mukaisia kuljetuksia</P>
+            <P>- kehitysvammaisten työ- ja päivätoimintakuljetuksia</P>
+            <P>- ikäihmisten päivätoimintakuljetuksia</P>
+            <P>- koululaiskuljetuksia</P>
+            <P>- potilassiirtoja</P>
+            <P>- asiointiliikennettä </P>
+            <P>- sekä muita mahdollisia henkilöliikenteen kuljetuksia</P>
+            <P>Järjestelmään hyväksytään kaikki soveltuvuusvaatimukset täyttävät toimittajat. Järjestelmään ilmoittautuminen ei sido toimittajaa mitenkään. Toimittaja voi valita, mihin järjestelmän sisällä järjestettäviin kilpailutuksiin osallistuu.</P>
+            <P>Dynaamisen hankintajärjestelmän perustamisvaihe kestää 4.3.2019 saakka. Perustamisvaiheen aikana ja sen jälkeen osallistumishakemukset käsitellään 10 työpäivän kuluessa osallistumishakemuksen vastaanottamisesta. Testia Oy varaa oikeuden yksittäistapauksissa 15 työpäivän osallistumishakemusten käsittelyaikaan dynaamisen hankintajärjestelmän perustamisvaiheessa jos hyväksymisarvioinnissa on tarkastettava täydentäviä asiakirjojen tai muutoin tarkastettava soveltuvuusvaatimusten täyttyminen tai muusta perustellusta syystä. Tänä aikana dynaamisesssa hankintajärjestelmässä ei julkaista tarjouspyyntöjä. Osallistumishakemuksia voi jättää koko dynaamisen hankintajärjestelmän keston ajan.</P>
+            <P>Dynaamisen hankintajärjestelmän keston aikana järjestelmä voidaan sulkea esim. loma-ajaksi tai ajaksi, jolloin hankintoja ei tehdä ja uusien hakijoiden hyväksyminen voidaan siirtää myöhemmäksi.</P>
+            <P>DPS:n sisäisen kilpailutuksen tuloksena syntyvät hankintasopimukset voivat olla voimassa ilmoitetun dynaamisen hankintajärjestelmän päättymispäivän jälkeen.</P>
+            <P>Tällä ilmoituksella ilmoitetut Tilaajat voivat myös kilpailuttaa hankintansa dynaamisen hankintajärjestelmän ulkopuolella käyttäen muita menettelyjä mikäli se on tarkoituksenmukaista.</P>
+            <P>Osassa hankinnoista voidaan edellyttää erillisiä autolaitesovelluksia ja -laitteita mikäli kuljetukset ohjautuvat Testian matkojenyhdistelykeskuksen kautta. Myös kalustoa koskevat vaatimukset voivat poiketa eri kilpailutuksissa sekä valintaperusteet voivat vaihdella kilpailutuksissa. Asioista ilmoitetaan aina kilpailutuskohtaisesti.</P>
+            <P>Testia Oy voi milloin tahansa pyytää toimittamaan hankintalain 87 §:n tarkoitetun päivitetyn ESPD-asiakirjan tai selvitykset siitä, koskeeko toimijaa poissulkemisperuste sekä selvitykset soveltuvuudesta viiden päivän kuluessa pyynnön esittämisestä dynaamisen hankintajärjestelmä voimassaoloaikana.</P>
+            <P>Dynaamisen hankintajärjestelmän arvioitu arvo sen koko voimassaoloajan on noin 65 000 000 €.</P>
+            <P>Testialla on oikeus keskeyttää dynaaminen hankintajärjestelmä milloin tahansa ilmoittamalla siitä uudella ilmoituksella.</P>
+          </SHORT_DESCR>
+          <AC>
+            <AC_PROCUREMENT_DOC />
+          </AC>
+          <VAL_OBJECT CURRENCY="EUR">65000000</VAL_OBJECT>
+          <DATE_START>2019-02-01</DATE_START>
+          <DATE_END>2025-01-31</DATE_END>
+          <RENEWAL />
+          <RENEWAL_DESCR>
+            <P>Järjestelmää voidaan jatkaa tekemällä siitä uusi ilmoitus.</P>
+          </RENEWAL_DESCR>
+          <NO_ACCEPTED_VARIANTS />
+          <NO_OPTIONS />
+          <NO_EU_PROGR_RELATED />
+          <INFO_ADD>
+            <P>Testia Oy ei korvaa toimittajalle osallistumishakemuksen tai tarjouksen tekemisestä johtuvia kustannuksia.</P>
+          </INFO_ADD>
+        </OBJECT_DESCR>
+      </OBJECT_CONTRACT>
+      <PROCEDURE>
+        <PT_RESTRICTED />
+        <DPS />
+        <CONTRACT_COVERED_GPA />
+        <DATE_RECEIPT_TENDERS>2025-01-31</DATE_RECEIPT_TENDERS>
+        <TIME_RECEIPT_TENDERS>00:00</TIME_RECEIPT_TENDERS>
+        <LANGUAGES>
+          <LANGUAGE VALUE="FI" />
+        </LANGUAGES>
+        <DATE_TENDER_VALID>2025-01-31</DATE_TENDER_VALID>
+      </PROCEDURE>
+      <COMPLEMENTARY_INFO>
+        <NO_RECURRENT_PROCUREMENT />
+        <EORDERING />
+        <EINVOICING />
+        <ADDRESS_REVIEW_BODY>
+          <OFFICIALNAME>Markkinaoikeus</OFFICIALNAME>
+          <ADDRESS>Radanrakentajantie 5</ADDRESS>
+          <TOWN>Helsinki</TOWN>
+          <POSTAL_CODE>00520</POSTAL_CODE>
+          <COUNTRY VALUE="FI" />
+          <PHONE>+358 295643300</PHONE>
+          <E_MAIL>markkinaoikeus@oikeus.fi</E_MAIL>
+          <FAX>+358 295643314</FAX>
+          <URL>http://www.oikeus.fi/markkinaoikeus</URL>
+        </ADDRESS_REVIEW_BODY>
+        <DATE_DISPATCH_NOTICE>2019-01-30</DATE_DISPATCH_NOTICE>
+      </COMPLEMENTARY_INFO>
+    </F02_2014>
+  </FORM_SECTION>
+</TED_ESENDERS>

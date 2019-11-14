@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+####################################################################################
+#  XSD name : F15_VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE
+#  RELEASE : "R2.0.8.S04"
+#  Intermediate release number 003-20180515
+#  Last update :20/02/2012
+####################################################################################
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+	<xs:include schemaLocation="common.xsd"/>
+	<!-- complementary_information_veat Declaration -->
+	<xs:complexType name="complementary_information_veat">
+		<xs:annotation>
+			<xs:documentation>SECTION VI: COMPLEMENTARY INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element ref="RELATES_TO_EU_PROJECT_YES"/>
+				<xs:element ref="RELATES_TO_EU_PROJECT_NO"/>
+			</xs:choice>
+			<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+			<xs:element ref="PROCEDURES_FOR_APPEAL" minOccurs="0"/>
+			<xs:element ref="NOTICE_DISPATCH_DATE"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- procedure_definition_veat declaration -->
+	<xs:complexType name="administrative_information_veat">
+		<xs:annotation>
+			<xs:documentation>SECTION IV.3: ADMINISTRATIVE INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="FILE_REFERENCE_NUMBER" minOccurs="0"/>
+			<xs:group ref="INC_31_F15"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="award_criteria_veat_information">
+		<xs:annotation>
+			<xs:documentation>SECTION IV.2: AWARD CRITERIA</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="INC_30_F15" minOccurs="0"/>
+			<xs:element name="F15_IS_ELECTRONIC_AUCTION_USABLE" type="yes_no" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>AN ELECTRONIC AUCTION WILL BE USED</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="annex_d_f15">
+		<xs:annotation>
+			<xs:documentation>Annexe D: JUSTIFICATION FOR THE CHOICE OF THE NEGOCIATED PROCEDURE WITHOUT PRIOR CALL FOR COMPETITION</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="ANNEX_D1" type="annex_d_f03"/>
+			<xs:element name="ANNEX_D2" type="annex_d_f06"/>
+			<xs:element name="ANNEX_D3" type="annex_d_f18"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="f15_pt_negotiated_without_competition">
+		<xs:sequence>
+			<xs:element name="ANNEX_D_F15" type="annex_d_f15" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="f15_award_without_prior_publication">
+		<xs:sequence>
+			<xs:element name="ANNEX_D_F15" type="annex_d_f15" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="type_of_procedure_def_f15">
+		<xs:annotation>
+			<xs:documentation>Section IV.1: TYPE OF PROCEDURE</xs:documentation>
+		</xs:annotation>
+		<xs:choice minOccurs="0">
+			<xs:element name="F15_PT_NEGOTIATED_WITHOUT_COMPETITION" type="f15_pt_negotiated_without_competition"/>
+			<xs:element name="F15_AWARD_WITHOUT_PRIOR_PUBLICATION" type="f15_award_without_prior_publication"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="procedure_definition_veat">
+		<xs:annotation>
+			<xs:documentation>Section IV: PROCEDURE</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TYPE_OF_PROCEDURE_DEF_F15" type="type_of_procedure_def_f15" minOccurs="0"/>
+			<xs:element name="AWARD_CRITERIA_VEAT_INFORMATION" type="award_criteria_veat_information" minOccurs="0"/>
+			<xs:element name="ADMINISTRATIVE_INFORMATION_VEAT" type="administrative_information_veat" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- object_veat declaration -->
+	<xs:complexType name="description_veat">
+		<xs:annotation>
+			<xs:documentation>Section II.1: DESCRIPTION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="TITLE_CONTRACT" minOccurs="0"/>
+			<xs:choice>
+				<xs:group ref="INC_11_DEFENCE"/>
+				<xs:group ref="INC_11"/>
+			</xs:choice>
+			<xs:group ref="INC_12"/>
+			<xs:element name="NOTICE_INVOLVES_DESC" type="notice_involves_desc" minOccurs="0"/>
+			<xs:element ref="SHORT_CONTRACT_DESCRIPTION"/>
+			<xs:group ref="INC_10"/>
+			<xs:element ref="CONTRACT_COVERED_GPA" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="object_veat">
+		<xs:annotation>
+			<xs:documentation>Section II: OBJECT OF THE CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DESCRIPTION_VEAT" type="description_veat"/>
+			<xs:element name="TOTAL_FINAL_VALUE" type="total_final_value" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- contacting_authorithy_information declaration -->
+	<xs:complexType name="name_addresses_contact_veat">
+		<xs:sequence>
+			<xs:group ref="INC_01"/>
+			<xs:element name="INTERNET_ADDRESSES_VEAT" type="internet_addresses" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="contracting_authority_veat">
+		<xs:annotation>
+			<xs:documentation>Section I: CONTRACTING AUTHORITY</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NAME_ADDRESSES_CONTACT_VEAT" type="name_addresses_contact_veat">
+				<xs:annotation>
+					<xs:documentation>Section I.1: NAME, ADDRESSES AND CONTACT POINT(S)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TYPE_AND_ACTIVITIES_OR_CONTRACTING_ENTITY_AND_PURCHASING_ON_BEHALF" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- fd_voluntary_ex_ante_transparency_notice declaration -->
+	<xs:complexType name="fd_voluntary_ex_ante_transparency_notice">
+		<xs:sequence>
+			<xs:element name="NOTICE_PUBLISHED" type="lst_35"/>
+			<xs:element name="CONTRACTING_AUTHORITY_VEAT" type="contracting_authority_veat"/>
+			<xs:element name="OBJECT_VEAT" type="object_veat"/>
+			<xs:element name="PROCEDURE_DEFINITION_VEAT" type="procedure_definition_veat"/>
+			<xs:element name="AWARD_OF_CONTRACT_DEFENCE" type="award_of_contract_defence" maxOccurs="unbounded"/>
+			<xs:element name="COMPLEMENTARY_INFORMATION_VEAT" type="complementary_information_veat"/>
+		</xs:sequence>
+		<xs:attribute name="CTYPE" type="ctype" use="required"/>
+	</xs:complexType>
+	<!-- voluntary_ex_ante_transparency_notice declaration -->
+	<xs:complexType name="voluntary_ex_ante_transparency_notice">
+		<xs:sequence>
+			<xs:element name="FD_VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE" type="fd_voluntary_ex_ante_transparency_notice"/>
+		</xs:sequence>
+		<xs:attribute name="LG" type="languages" use="required"/>
+		<xs:attribute name="CATEGORY" type="category" use="required"/>
+		<xs:attribute name="FORM" use="required" fixed="15"/>
+		<xs:attribute name="VERSION" use="required" fixed="R2.0.8.S04"/>
+	</xs:complexType>
+	<!-- ROOT element -->
+	<xs:element name="VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE" type="voluntary_ex_ante_transparency_notice">
+		<xs:annotation>
+			<xs:documentation>F15 root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

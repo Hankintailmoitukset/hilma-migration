@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+####################################################################################
+#  XSD name : F11_CONTRACT_CONCESSIONNAIRE
+#  RELEASE : "R2.0.8.S04"
+#  Intermediate release number 003-20180515
+#  Last update :18/03/2013
+####################################################################################
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+	<xs:include schemaLocation="common.xsd"/>
+	<!-- complementary_information_contract_concessionaire declaration  -->
+	<xs:complexType name="complementary_information_contract_concessionaire">
+		<xs:annotation>
+			<xs:documentation>Section VI: COMPLEMENTARY INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element ref="RELATES_TO_EU_PROJECT_YES"/>
+				<xs:element ref="RELATES_TO_EU_PROJECT_NO"/>
+			</xs:choice>
+			<xs:element ref="ADDITIONAL_INFORMATION" minOccurs="0"/>
+			<xs:element ref="NOTICE_DISPATCH_DATE"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- procedures_contract_notice declaration -->
+	<xs:complexType name="f11_time_limit_type">
+		<xs:sequence>
+			<xs:element ref="TIME_LIMIT"/>
+		</xs:sequence>
+		<xs:attribute name="VALUE" type="lst_37" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="procedures_contract_notice">
+		<xs:annotation>
+			<xs:documentation>Section IV: PROCEDURES</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AWARD_CRITERIA_CONTRACT_CONCESSIONAIRE" type="btx" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Section IV.1: AWARD CRITERIA</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ADMINISTRATIVE_INFORMATION_CONTRACT_CONCESSIONAIRE">
+				<xs:annotation>
+					<xs:documentation>Section IV.2: ADMINISTRATIVE INFORMATION</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="REFERENCE_NUMBER_ATTRIBUTED" minOccurs="0"/>
+						<xs:element name="F11_TIME_LIMIT_TYPE" type="f11_time_limit_type"/>
+						<xs:element ref="DISPATCH_INVITATIONS_DATE" minOccurs="0"/>
+						<xs:element ref="LANGUAGE" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- lefti_contract_notice declaration -->
+	<xs:complexType name="lefti_contract_notice">
+		<xs:annotation>
+			<xs:documentation>Section III: LEGAL, ECONOMIC, FINANCIAL AND TECHNICAL INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CONDITIONS_RELATING_CONTRACT_TEXT" type="btx" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Section III.1: CONDITIONS RELATING TO THE CONTRACT</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CONDITIONS_FOR_PARTICIPATION_LEFTI" type="btx" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Section III.2: CONDITIONS FOR PARTICIPATION</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- object_contract_notice declaration -->
+	<xs:complexType name="contract_location_type_contract_concessionaire">
+		<xs:annotation>
+			<xs:documentation>Section II.1.2</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="F11_CONTRACT_TYPE" type="type_work_contract" minOccurs="0"/>
+			<xs:element ref="NUTS" minOccurs="0" maxOccurs="99"/>
+			<xs:element ref="MAIN_SITE_WORKS" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="object_contract_notice">
+		<xs:annotation>
+			<xs:documentation>Section II: OBJECT OF THE CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OBJECT_CONTRACT_NOTICE_DESCRIPTION">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="TITLE_CONTRACT" minOccurs="0"/>
+						<xs:element name="CONTRACT_LOCATION_TYPE_CONTRACT_CONCESSIONAIRE" type="contract_location_type_contract_concessionaire" minOccurs="0"/>
+						<xs:element ref="SHORT_DESCRIPTION_CONTRACT"/>
+						<xs:group ref="INC_10"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="NATURE_QUANTITY_SCOPE" minOccurs="0"/>
+			<xs:group ref="INC_13"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- public_works_concessionaire_contract_notice declaration -->
+	<xs:complexType name="public_works_concessionaire_contract_notice">
+		<xs:annotation>
+			<xs:documentation>Section I: PUBLIC WORKS CONCESSIONAIRE</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NAME_ADDRESSES_CONTACT_CONTRACT_CONCESSIONAIRE">
+				<xs:annotation>
+					<xs:documentation>Section I.1: NAME, ADDRESSES AND CONTACT POINT(S)</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="INC_01"/>
+						<xs:element name="INTERNET_ADDRESSES_CONTRACT_CONCESSIONAIRE" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="URL_GENERAL" minOccurs="0"/>
+									<xs:element ref="URL_INFORMATION" minOccurs="0"/>
+									<xs:element ref="URL_PARTICIPATE" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:group ref="INC_02"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- fd_contract_concessionaire declaration -->
+	<xs:complexType name="fd_contract_concessionaire">
+		<xs:sequence>
+			<xs:element name="PUBLIC_WORKS_CONCESSIONAIRE_CONTRACT_NOTICE" type="public_works_concessionaire_contract_notice"/>
+			<xs:element name="OBJECT_CONTRACT_NOTICE" type="object_contract_notice"/>
+			<xs:element name="LEFTI_CONTRACT_NOTICE" type="lefti_contract_notice"/>
+			<xs:element name="PROCEDURES_CONTRACT_NOTICE" type="procedures_contract_notice"/>
+			<xs:element name="COMPLEMENTARY_INFORMATION_CONTRACT_CONCESSIONAIRE" type="complementary_information_contract_concessionaire"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- contract_concessionaire declaration -->
+	<xs:complexType name="contract_concessionaire">
+		<xs:sequence>
+			<xs:element name="FD_CONTRACT_CONCESSIONAIRE" type="fd_contract_concessionaire"/>
+		</xs:sequence>
+		<xs:attribute name="LG" type="languages" use="required"/>
+		<xs:attribute name="CATEGORY" type="category" use="required"/>
+		<xs:attribute name="FORM" use="required" fixed="11"/>
+		<xs:attribute name="VERSION" use="required" fixed="R2.0.8.S04"/>
+	</xs:complexType>
+	<!-- ROOT element -->
+	<xs:element name="CONTRACT_CONCESSIONAIRE" type="contract_concessionaire">
+		<xs:annotation>
+			<xs:documentation>F11 root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

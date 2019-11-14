@@ -1,0 +1,140 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Projects\\Hansel\\Hilma\\Hilma.MigrationExample\\Hilma.MigrationExample.csproj": {}
+  },
+  "projects": {
+    "C:\\Projects\\Hansel\\Hilma\\Hilma.Domain\\Hilma.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Projects\\Hansel\\Hilma\\Hilma.Domain\\Hilma.Domain.csproj",
+        "projectName": "Hilma.Domain",
+        "projectPath": "C:\\Projects\\Hansel\\Hilma\\Hilma.Domain\\Hilma.Domain.csproj",
+        "packagesPath": "C:\\Users\\tuomas.tolvanen\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\Hansel\\Hilma\\Hilma.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\tuomas.tolvanen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "AutoMapper.Attributes": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Innofactor.EfCoreJsonValueConverter": {
+              "target": "Package",
+              "version": "[1.29.0, )"
+            },
+            "Innofactor.EfCoreJsonValueConverter.Attributes": {
+              "target": "Package",
+              "version": "[1.23.0, )"
+            },
+            "Microsoft.Azure.Search": {
+              "target": "Package",
+              "version": "[10.0.1, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\Projects\\Hansel\\Hilma\\Hilma.MigrationExample\\Hilma.MigrationExample.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Projects\\Hansel\\Hilma\\Hilma.MigrationExample\\Hilma.MigrationExample.csproj",
+        "projectName": "Hilma.MigrationExample",
+        "projectPath": "C:\\Projects\\Hansel\\Hilma\\Hilma.MigrationExample\\Hilma.MigrationExample.csproj",
+        "packagesPath": "C:\\Users\\tuomas.tolvanen\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\Hansel\\Hilma\\Hilma.MigrationExample\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\tuomas.tolvanen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\Projects\\Hansel\\Hilma\\Hilma.Domain\\Hilma.Domain.csproj": {
+                "projectPath": "C:\\Projects\\Hansel\\Hilma\\Hilma.Domain\\Hilma.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.Extensions.CommandLineUtils": {
+              "target": "Package",
+              "version": "[1.1.1, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+####################################################################################
+#  XSD name : F02_CONTRACT
+#  RELEASE : "R2.0.8.S04"
+#  Intermediate release number 003-20180515
+#  Last update :23/04/2012
+####################################################################################
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+	<xs:include schemaLocation="common.xsd"/>
+	<!-- procedure_definition_contract_notice Declaration -->
+	<xs:complexType name="administrative_information_contract_notice">
+		<xs:annotation>
+			<xs:documentation>SECTION IV.3: ADMINISTRATIVE INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="FILE_REFERENCE_NUMBER" minOccurs="0"/>
+			<xs:group ref="INC_31_F2"/>
+			<xs:group ref="INC_33" minOccurs="0"/>
+			<xs:element ref="RECEIPT_LIMIT_DATE"/>
+			<xs:element ref="DISPATCH_INVITATIONS_DATE" minOccurs="0"/>
+			<xs:element ref="LANGUAGE" minOccurs="0"/>
+			<xs:group ref="INC_35" minOccurs="0"/>
+			<xs:group ref="INC_36" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="type_of_procedure_detail_for_contract_notice">
+		<xs:annotation>
+			<xs:documentation>Section IV.1.1: TYPE OF PROCEDURE</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element ref="PT_OPEN"/>
+			<xs:element ref="PT_RESTRICTED"/>
+			<xs:element name="PT_ACCELERATED_RESTRICTED_CHOICE">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PTAR_JUSTIFICATION" type="btx" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PT_NEGOTIATED_CHOICE">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="IS_CANDIDATE_SELECTED" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="F02_PT_ACCELERATED_NEGOTIATED">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PTAN_JUSTIFICATION" type="btx" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="PT_COMPETITIVE_DIALOGUE"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="type_of_procedure">
+		<xs:annotation>
+			<xs:documentation>SECTION IV.1: TYPE OF PROCEDURE</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TYPE_OF_PROCEDURE_DETAIL_FOR_CONTRACT_NOTICE" type="type_of_procedure_detail_for_contract_notice"/>
+			<xs:element name="MAXIMUM_NUMBER_INVITED" type="maximum_number_invited" minOccurs="0"/>
+			<xs:element name="REDUCTION_OF_THE_NUMBER" type="yes_no" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Section IV.1.3: REDUCTION ON THE NUMBER OF OPERATORS DURING THE NEGOTIATION OR DIALOGUE</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="procedure_definition_contract_notice">
+		<xs:annotation>
+			<xs:documentation>SECTION IV: PROCEDURE</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TYPE_OF_PROCEDURE" type="type_of_procedure"/>
+			<xs:element name="AWARD_CRITERIA_CONTRACT_NOTICE_INFORMATION" type="award_criteria_contract_notice_information" minOccurs="0"/>
+			<xs:element name="ADMINISTRATIVE_INFORMATION_CONTRACT_NOTICE" type="administrative_information_contract_notice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="f02_conditions_for_participation">
+		<xs:annotation>
+			<xs:documentation>SECTION III.2: CONDITIONS FOR PARTICIPATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="ECONOMIC_OPERATORS_PERSONAL_SITUATION" minOccurs="0"/>
+			<xs:element name="F02_ECONOMIC_FINANCIAL_CAPACITY" type="economic_financial_capacity_lefti" minOccurs="0"/>
+			<xs:element name="TECHNICAL_CAPACITY_LEFTI" type="technical_capacity_lefti" minOccurs="0"/>
+			<xs:group ref="INC_21" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="lefti_contract">
+		<xs:annotation>
+			<xs:documentation>SECTION III: LEGAL, ECONOMIC, FINANCIAL AND TECHNICAL INFORMATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="INC_20" minOccurs="0"/>
+			<xs:element name="F02_CONDITIONS_FOR_PARTICIPATION" type="f02_conditions_for_participation" minOccurs="0"/>
+			<xs:group ref="INC_22" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- object_contract_information declaration -->
+	<xs:complexType name="f02_annex_b">
+		<xs:annotation>
+			<xs:documentation>Annexe B: INFORMATION ABOUT LOTS</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="INC_06"/>
+			<xs:group ref="INC_10"/>
+			<xs:element ref="NATURE_QUANTITY_SCOPE" minOccurs="0"/>
+			<xs:group ref="INC_13"/>
+			<xs:element ref="ADDITIONAL_INFORMATION_ABOUT_LOTS" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="ITEM" type="xs:integer"/>
+	</xs:complexType>
+	<xs:complexType name="f02_div_into_lot_yes">
+		<xs:sequence>
+			<xs:element name="F02_ANNEX_B" type="f02_annex_b" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="VALUE" type="lst_10"/>
+	</xs:complexType>
+	<xs:complexType name="f02_division_into_lots">
+		<xs:annotation>
+			<xs:documentation>Section II.1.8: DIVISION INTO LOTS</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="F02_DIV_INTO_LOT_YES" type="f02_div_into_lot_yes"/>
+				<xs:element ref="DIV_INTO_LOT_NO"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="f02_framework">
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element ref="SINGLE_OPERATOR"/>
+				<xs:element ref="SEVERAL_OPERATORS"/>
+			</xs:choice>
+			<xs:choice minOccurs="0">
+				<xs:element ref="DURATION_FRAMEWORK_YEAR"/>
+				<xs:element ref="DURATION_FRAMEWORK_MONTH"/>
+			</xs:choice>
+			<xs:element name="JUSTIFICATION" type="btx" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Section II.1.4.6: justification for a framework agreement the duration of which exceeds four years</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TOTAL_ESTIMATED" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="description_contract_information">
+		<xs:annotation>
+			<xs:documentation>Section II.1: DESCRIPTION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="TITLE_CONTRACT" minOccurs="0"/>
+			<xs:sequence>
+				<xs:group ref="INC_11"/>
+				<xs:group ref="INC_12"/>
+			</xs:sequence>
+			<xs:element ref="NOTICE_INVOLVES" minOccurs="0"/>
+			<xs:element name="F02_FRAMEWORK" type="f02_framework" minOccurs="0"/>
+			<xs:element ref="SHORT_CONTRACT_DESCRIPTION"/>
+			<xs:group ref="INC_10"/>
+			<xs:element ref="CONTRACT_COVERED_GPA" minOccurs="0"/>
+			<xs:element name="F02_DIVISION_INTO_LOTS" type="f02_division_into_lots" minOccurs="0"/>
+			<xs:element ref="ACCEPTED_VARIANTS" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="object_contract_information">
+		<xs:annotation>
+			<xs:documentation>Section II: OBJECT OF THE CONTRACT</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DESCRIPTION_CONTRACT_INFORMATION" type="description_contract_information"/>
+			<xs:element ref="QUANTITY_SCOPE" minOccurs="0"/>
+			<xs:group ref="INC_13"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- contracting_authority_information declaration -->
+	<xs:complexType name="contracting_authority_information">
+		<xs:annotation>
+			<xs:documentation>Section I: CONTRACTING AUTHORITY</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NAME_ADDRESSES_CONTACT_CONTRACT">
+				<xs:annotation>
+					<xs:documentation>Section I.1: NAME, ADDRESSES AND CONTACT POINT(S)</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="INC_01"/>
+						<xs:element name="INTERNET_ADDRESSES_CONTRACT" type="internet_addresses" minOccurs="0"/>
+						<xs:group ref="INC_02"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="TYPE_AND_ACTIVITIES_AND_PURCHASING_ON_BEHALF" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--fd_contract declaration -->
+	<xs:complexType name="fd_contract">
+		<xs:sequence>
+			<xs:element name="CONTRACTING_AUTHORITY_INFORMATION" type="contracting_authority_information"/>
+			<xs:element name="OBJECT_CONTRACT_INFORMATION" type="object_contract_information"/>
+			<xs:element name="LEFTI_CONTRACT" type="lefti_contract"/>
+			<xs:element name="PROCEDURE_DEFINITION_CONTRACT_NOTICE" type="procedure_definition_contract_notice"/>
+			<xs:element name="COMPLEMENTARY_INFORMATION_CONTRACT_NOTICE" type="complementary_information_contract_notice"/>
+		</xs:sequence>
+		<xs:attribute name="CTYPE" type="ctype" use="required"/>
+	</xs:complexType>
+	<!-- contract declaration -->
+	<xs:complexType name="contract">
+		<xs:sequence>
+			<xs:element name="FD_CONTRACT" type="fd_contract"/>
+		</xs:sequence>
+		<xs:attribute name="LG" type="languages" use="required"/>
+		<xs:attribute name="CATEGORY" type="category" use="required"/>
+		<xs:attribute name="FORM" use="required" fixed="2"/>
+		<xs:attribute name="VERSION" use="required" fixed="R2.0.8.S04"/>
+	</xs:complexType>
+	<!-- ROOT element -->
+	<xs:element name="CONTRACT" type="contract">
+		<xs:annotation>
+			<xs:documentation>F2 root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>
