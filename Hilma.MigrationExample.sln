@@ -15,19 +15,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0454492E-38BC-4BC7-B6C3-2147054FC808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0454492E-38BC-4BC7-B6C3-2147054FC808}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B03334D-BFF9-41D6-979C-638597ABFC2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9B03334D-BFF9-41D6-979C-638597ABFC2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B03334D-BFF9-41D6-979C-638597ABFC2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B03334D-BFF9-41D6-979C-638597ABFC2F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A827B46A-AD22-46CB-9078-BA8A28209DF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A827B46A-AD22-46CB-9078-BA8A28209DF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+<<<<<<< HEAD
 		{A827B46A-AD22-46CB-9078-BA8A28209DF9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CA7174C6-6753-449F-9809-8F245C2293B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CA7174C6-6753-449F-9809-8F245C2293B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA7174C6-6753-449F-9809-8F245C2293B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA7174C6-6753-449F-9809-8F245C2293B7}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{0454492E-38BC-4BC7-B6C3-2147054FC808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0454492E-38BC-4BC7-B6C3-2147054FC808}.Release|Any CPU.ActiveCfg = Release|Any CPU
+>>>>>>> Use Docker to build
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
