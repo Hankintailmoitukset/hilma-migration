@@ -45,6 +45,8 @@ class Build : NukeBuild
     Target Restore => _ => _
         .Executes(() =>
         {
+            TeamCity.Instance.Write("dsdsa");
+
             DotNetRestore(s => s
                 .SetProjectFile(DomainCsproj));
         });

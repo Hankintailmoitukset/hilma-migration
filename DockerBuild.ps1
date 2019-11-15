@@ -27,11 +27,12 @@ if($env:TEAMCITY_BUILD_PROPERTIES_FILE)
 
 	$extraArgs += " -i"
 	$extraArgs += " --env TEAMCITY_BUILD_PROPERTIES_FILE=/build/teamcity.build.properties"
-	$extraArgs += " --env TEAMCITY.VERSION='2019.1.2 (build 66342)'"
+	$extraArgs += " --env TEAMCITY_VERSION='2019.1.2 (build 66342)'"
 	$extraArgs += " -v /nuget:/nuget"
 }
 else
 {
+	#$extraArgs += " --env TEAMCITY_BUILD_PROPERTIES_FILE=/build/teamcity.build.properties"
 	#$extraArgs += " --env TEAMCITY_VERSION='2019.1.2 (build 66342)'"
     $extraArgs += " --tty"
 	$extraArgs += " -it"
