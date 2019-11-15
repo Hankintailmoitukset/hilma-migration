@@ -66,6 +66,7 @@ class Build : NukeBuild
             DotNetPack(s => s
                 .SetSources(DomainCsproj)
                 .SetOutputDirectory(ArtifactsDirectory)
+                .SetConfiguration(Configuration)
                 .SetNoBuild(true)
             );
 
