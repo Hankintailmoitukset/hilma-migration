@@ -74,7 +74,7 @@ class Build : NukeBuild
 
             if (TeamCity.Instance != null)
             {
-                TeamCity.Instance.PublishArtifacts(TeamCity.Instance.SystemProperties?["teamcity_build_workingDir"] + "/artifacts/Hilma.Domain.1.0.0.nupkg");
+                TeamCity.Instance.PublishArtifacts(TeamCity.Instance.SystemProperties?["teamcity.build.workingDir"] + "/artifacts/Hilma.Domain.1.0.0.nupkg");
             }
         });
 }
