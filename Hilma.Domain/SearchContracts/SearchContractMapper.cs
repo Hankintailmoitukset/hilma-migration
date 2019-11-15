@@ -45,7 +45,7 @@ namespace Hilma.Domain.SearchContracts
                                 .ForMember(d => d.IncludesFrameworkAgreement, d => d.MapFrom((n, s) => n.ProcedureInformation?.FrameworkAgreement?.IncludesFrameworkAgreement ?? false))
                                 .ForMember(d => d.IsNationalProcurement, d => d.MapFrom( (n,s) => n.Project.Publish == PublishType.ToHilma ))
                                 .ForMember(d => d.ObjectDescriptions,
-                                           d => d.MapFrom((x,s) => string.Join(" ", x.ObjectDescriptions.Select(l => $"{l.Title ?? ""} {string.Join(' ', l.DescrProcurement??new[] { "" })}"))))
+                                           d => d.MapFrom((x,s) => string.Join(" ", x.ObjectDescriptions.Select(l => $"{l.Title ?? ""} {string.Join(" ", l.DescrProcurement??new[] { "" })}"))))
                                 );
             return config.CreateMapper();
         }

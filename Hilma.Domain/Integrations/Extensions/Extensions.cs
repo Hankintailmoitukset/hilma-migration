@@ -24,7 +24,7 @@ namespace Hilma.Domain.Integrations.Extensions
         }
         public static string ToParagraphedString(this string[] value)
         {
-            return string.Join('\n', value);
+            return string.Join("\n", value);
         }
 
         public static string ToLongLang(this string lang)

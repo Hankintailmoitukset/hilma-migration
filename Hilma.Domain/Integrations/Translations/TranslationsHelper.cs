@@ -24,7 +24,7 @@ namespace Hilma.Domain.Integrations.Translations
         public static string GetTranslation(this JObject dictionary, string translation, string language)
         {
             var currentDictionary = dictionary[language];
-            var translationParts = translation.Split(".");
+            var translationParts = translation.Split('.');
 
             foreach (var translationPart in translationParts)
             {
