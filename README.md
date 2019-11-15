@@ -1,8 +1,9 @@
 # Hilma Migration example
 
 ## Prerequisites
-
-  * Install .NET Core 2.2 SDK or newer https://dotnet.microsoft.com/download/dotnet-core/2.2
+  
+  * This is a .Net Standard 2.0 libary - Please see compatibility https://dotnet.microsoft.com/platform/dotnet-standard#versions
+  
 ## Building
 
 Run  `dotnet build` to build the solution
