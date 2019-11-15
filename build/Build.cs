@@ -33,6 +33,8 @@ class Build : NukeBuild
 
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
+    AbsolutePath DomainCsproj => RootDirectory / "Hilma.Domain" / "Hilma.Domain.csproj";
+
     Target Clean => _ => _
         .Before(Restore)
         .Executes(() =>
@@ -44,7 +46,7 @@ class Build : NukeBuild
         .Executes(() =>
         {
             DotNetRestore(s => s
-                .SetProjectFile(Solution));
+                .SetProjectFile(DomainCsproj));
         });
 
     Target Compile => _ => _
@@ -52,7 +54,7 @@ class Build : NukeBuild
         .Executes(() =>
         {
             DotNetBuild(s => s
-                .SetProjectFile(Solution)
+                .SetProjectFile(DomainCsproj)
                 .SetConfiguration(Configuration)
                 .EnableNoRestore());
         });
@@ -62,7 +64,7 @@ class Build : NukeBuild
         .Executes(() =>
         {
             DotNetPack(s => s
-                .SetSources(RootDirectory / "Hilma.Domain" + "Hilma.Domain.csproj")
+                .SetSources(DomainCsproj)
                 .SetOutputDirectory(ArtifactsDirectory)
                 .SetNoBuild(true)
             );
