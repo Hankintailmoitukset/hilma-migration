@@ -16,7 +16,7 @@ namespace Hilma.Tests
     [TestClass]
     public class FormTests
     {
-        private void TestForm(string formNumber)
+        private void TestForm(string formNumber, string noticeType)
         {
             var parser = new NoticeXMLParser();
             var formOriginalXml = TestHelpers.GetEmbeddedResourceAsString($"Form{formNumber}.xml");
@@ -26,7 +26,7 @@ namespace Hilma.Tests
                 FormNumber = formNumber,
                 NoticeNumber = string.Empty, // Assigned by Hilma
                 NoticeOjsNumber = null,
-                NoticeType = null,
+                NoticeType = noticeType,
                 HilmaSubmissionDate = DateTime.Now,
                 Notice = formOriginalXml
             };
@@ -61,48 +61,47 @@ namespace Hilma.Tests
         [TestMethod]
         public void TestForm1()
         {
-            TestForm("1");
+            TestForm("1", null);
         }
 
         [TestMethod]
         public void TestForm2()
         {
-            TestForm("2");
+            TestForm("2", null);
         }
 
         [Ignore]
         [TestMethod]
         public void TestForm3()
         {
-            TestForm("3");
+            TestForm("3", null);
         }
 
         [Ignore]
         [TestMethod]
         public void TestForm4()
         {
-            TestForm("4");
+            TestForm("4", null);
         }
 
         [Ignore]
         [TestMethod]
         public void TestForm5()
         {
-            TestForm("5");
+            TestForm("5", null);
         }
 
         [Ignore]
         [TestMethod]
         public void TestForm6()
         {
-            TestForm("6");
+            TestForm("6", null);
         }
 
-        [Ignore]
         [TestMethod]
         public void TestForm21()
         {
-            TestForm("21");
+            TestForm("21", "contract");
         }
     }
 }
