@@ -24,7 +24,7 @@ namespace Hilma.MigrationExample
         public string PreviousNoticeNumber { get; set; }
     }
 
-    public class Program 
+    public class Program
 
     {
         static void Main(string[] args)
@@ -55,15 +55,16 @@ namespace Hilma.MigrationExample
                 {
                     FormNumber = formNumber,
                     NoticeNumber = string.Empty, // Assigned by Hilma
-                    NoticeOjsNumber = ojsNumber, 
+                    NoticeOjsNumber = ojsNumber,
                     NoticeType = noticeType,
-                    HilmaSubmissionDate =  DateTime.Now,
+                    HilmaSubmissionDate = DateTime.Now,
                     Notice = sr.ReadToEnd(),
                 };
 
                 var notice = parser.ParseNotice(importModel);
                 var etsNotice = new EtsNoticeContract(notice);
                 Console.Write(JsonConvert.SerializeObject(etsNotice));
+                Console.ReadLine();
             }
         }
     }
