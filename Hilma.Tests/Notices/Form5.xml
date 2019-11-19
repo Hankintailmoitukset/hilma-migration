@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TED_ESENDERS VERSION="R2.0.9.S03">
+  <SENDER>
+    <IDENTIFICATION>
+      <ESENDER_LOGIN>TED45</ESENDER_LOGIN>
+      <NO_DOC_EXT>2019-008378</NO_DOC_EXT>
+    </IDENTIFICATION>
+    <CONTACT>
+      <ORGANISATION>Mercell Danmark A/S</ORGANISATION>
+      <COUNTRY VALUE="DK" />
+      <PHONE>+45 63133700</PHONE>
+      <E_MAIL>internal.support@mercell.com</E_MAIL>
+    </CONTACT>
+  </SENDER>
+  <FORM_SECTION>
+    <F14_2014 LG="DA" CATEGORY="ORIGINAL" FORM="F14">
+      <LEGAL_BASIS VALUE="32014L0025" />
+      <CONTRACTING_BODY>
+        <ADDRESS_CONTRACTING_BODY>
+          <OFFICIALNAME>ARGO I/S </OFFICIALNAME>
+          <NATIONALID>13507406</NATIONALID>
+          <ADDRESS>Håndværkervej 70</ADDRESS>
+          <TOWN>Roskilde</TOWN>
+          <POSTAL_CODE>4000</POSTAL_CODE>
+          <COUNTRY VALUE="DK" />
+          <CONTACT_POINT>Jesper Marker</CONTACT_POINT>
+          <E_MAIL>jma@argo.dk</E_MAIL>
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <URL_GENERAL>https://permalink.mercell.com/113523614.aspx</URL_GENERAL>
+          <URL_BUYER>http://www.argo.dk/</URL_BUYER>
+        </ADDRESS_CONTRACTING_BODY>
+      </CONTRACTING_BODY>
+      <OBJECT_CONTRACT>
+        <TITLE>
+          <P>Udbud af smedearbejde til ARGOs kraftvarmeværk</P>
+        </TITLE>
+        <REFERENCE_NUMBER>1492</REFERENCE_NUMBER>
+        <CPV_MAIN>
+          <CPV_CODE CODE="71550000" />
+        </CPV_MAIN>
+        <TYPE_CONTRACT CTYPE="SERVICES" />
+        <SHORT_DESCR>
+          <P>Smedearbejde - drift og vedligeholdelse på ARGOs Kraftvarmeværk.</P>
+          <P>Udbuddet omfatter smedearbejde bestående af årlig revision af 2 ovne på ARGOs kraftvarmeværk. Derudover løbende samt akut fejlfinding, reparationsarbejde, levering og installation af reservedele og funktionskontrol på ARGOs kraftvarmeværk.</P>
+          <P>Tryk her https://permalink.mercell.com/113523614.aspx</P>
+        </SHORT_DESCR>
+      </OBJECT_CONTRACT>
+      <COMPLEMENTARY_INFO>
+        <DATE_DISPATCH_NOTICE>2019-11-18</DATE_DISPATCH_NOTICE>
+        <ORIGINAL_TED_ESENDER PUBLICATION="NO" />
+        <ESENDER_LOGIN PUBLICATION="NO">TED45</ESENDER_LOGIN>
+        <NO_DOC_EXT PUBLICATION="NO">2019-008298</NO_DOC_EXT>
+        <NOTICE_NUMBER_OJ>2019/S 218-536396</NOTICE_NUMBER_OJ>
+        <DATE_DISPATCH_ORIGINAL PUBLICATION="NO">2019-11-07</DATE_DISPATCH_ORIGINAL>
+      </COMPLEMENTARY_INFO>
+      <CHANGES>
+        <MODIFICATION_ORIGINAL PUBLICATION="NO" />
+        <CHANGE>
+          <WHERE>
+            <SECTION>IV.2.2</SECTION>
+          </WHERE>
+          <OLD_VALUE>
+            <DATE>2019-12-06</DATE>
+            <TIME>12:00</TIME>
+          </OLD_VALUE>
+          <NEW_VALUE>
+            <DATE>2019-12-09</DATE>
+            <TIME>23:59</TIME>
+          </NEW_VALUE>
+        </CHANGE>
+        <CHANGE>
+          <WHERE>
+            <SECTION>IV.2.3</SECTION>
+          </WHERE>
+          <OLD_VALUE>
+            <DATE>2019-12-09</DATE>
+          </OLD_VALUE>
+          <NEW_VALUE>
+            <DATE>2019-12-10</DATE>
+          </NEW_VALUE>
+        </CHANGE>
+        <CHANGE>
+          <WHERE>
+            <SECTION>II.2.4</SECTION>
+            <LOT_NO>2</LOT_NO>
+          </WHERE>
+          <OLD_VALUE>
+            <TEXT>
+              <P>Kontraktens genstand er smedearbejde på ARGOs kraftvarmeværk. Smedearbejdet er bestående af årlig revision af 2 ovne på kraftvarmeværket. Derudover løbende fejlfinding, reparationsarbejde, levering og installation af reservedele og funktionskontrol på ARGOs kraftvarmeværk.</P>
+              <P>Delaftale 2 omfatter opgaver vedrørende normalt løbende smedearbejde, som ikke er omfattet af delaftale 1 eller delaftale 3.</P>
+              <P>Den største opgave afvikles hen over sommerperioden, hvor ordregivers 2 kedler på skift er lukket ned med henblik på gennemgribende revision af anlæggene. I perioden for revision arbejdes der hele døgnet/alle</P>
+            </TEXT>
+          </OLD_VALUE>
+          <NEW_VALUE>
+            <TEXT>
+              <P>Kontraktens genstand er smedearbejde på ARGOs kraftvarmeværk. Smedearbejdet er bestående af årlig revision af 2 ovne på kraftvarmeværket. Derudover løbende fejlfinding, reparationsarbejde, levering og installation af reservedele og funktionskontrol på ARGOs kraftvarmeværk.</P>
+              <P>Delaftale 2 omfatter opgaver vedrørende normalt løbende smedearbejde, som ikke er omfattet af delaftale 1 eller delaftale 3.</P>
+              <P>Den største opgave afvikles hen over sommerperioden, hvor ordregivers 2 kedler på skift er lukket ned med henblik på gennemgribende revision af anlæggene. I perioden for revision arbejdes der hele døgnet/alle ugens dage "24/7", således at de 2 kedler er lukket ned i kortest mulig tid (ca. 3 uger ad gangen).</P>
+            </TEXT>
+          </NEW_VALUE>
+        </CHANGE>
+      </CHANGES>
+    </F14_2014>
+  </FORM_SECTION>
+</TED_ESENDERS>

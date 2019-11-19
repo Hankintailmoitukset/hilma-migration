@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TED_ESENDERS VERSION="R2.0.9.S03">
+  <SENDER>
+    <IDENTIFICATION>
+      <ESENDER_LOGIN>TED45</ESENDER_LOGIN>
+      <NO_DOC_EXT>2019-008377</NO_DOC_EXT>
+    </IDENTIFICATION>
+    <CONTACT>
+      <ORGANISATION>Mercell Danmark A/S</ORGANISATION>
+      <COUNTRY VALUE="DK" />
+      <PHONE>+45 63133700</PHONE>
+      <E_MAIL>internal.support@mercell.com</E_MAIL>
+    </CONTACT>
+  </SENDER>
+  <FORM_SECTION>
+    <F03_2014 LG="DA" CATEGORY="ORIGINAL" FORM="F03">
+      <LEGAL_BASIS VALUE="32014L0024" />
+      <CONTRACTING_BODY>
+        <ADDRESS_CONTRACTING_BODY>
+          <OFFICIALNAME>Københavns Kommune - Økonomiforvaltningen</OFFICIALNAME>
+          <NATIONALID>64942212</NATIONALID>
+          <ADDRESS>Borups Allé 177, Blok E, 3. sal</ADDRESS>
+          <TOWN>København</TOWN>
+          <POSTAL_CODE>2400</POSTAL_CODE>
+          <COUNTRY VALUE="DK" />
+          <CONTACT_POINT>Símun Petur Eið</CONTACT_POINT>
+          <E_MAIL>dw9a@kk.dk</E_MAIL>
+          <NUTS CODE="DK011" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <URL_GENERAL>https://permalink.mercell.com/108058454.aspx</URL_GENERAL>
+        </ADDRESS_CONTRACTING_BODY>
+        <CA_TYPE VALUE="REGIONAL_AUTHORITY" />
+        <CA_ACTIVITY VALUE="HEALTH" />
+      </CONTRACTING_BODY>
+      <OBJECT_CONTRACT>
+        <TITLE>
+          <P>Massageordning til kommunens medarbejdere</P>
+        </TITLE>
+        <REFERENCE_NUMBER>2019-0142565</REFERENCE_NUMBER>
+        <CPV_MAIN>
+          <CPV_CODE CODE="98333000" />
+        </CPV_MAIN>
+        <TYPE_CONTRACT CTYPE="SERVICES" />
+        <SHORT_DESCR>
+          <P>Ved nærværende udbud ønsker Ordregiver at indhente tilbud på massageordning. Ved massage skal forstås en dybdegående fysiurgisk massage af muskelgener, hvor massøren masserer musklerne fra deres udspring til deres hæfte.</P>
+        </SHORT_DESCR>
+        <VAL_TOTAL CURRENCY="DKK">1500000.00</VAL_TOTAL>
+        <NO_LOT_DIVISION />
+        <OBJECT_DESCR ITEM="1">
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="98330000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="DK011" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <MAIN_SITE>
+            <P>På Københavns Kommues enheder</P>
+          </MAIN_SITE>
+          <SHORT_DESCR>
+            <P>Massageordningen er et personalegode til Ordregivers medarbejdere. Medarbejderne booker hovedsageligt massagen via Leverandørens bookingsystem. Hoveddelen af omsætningen forgår på hverdage (forventeligt min. 95%), mens den resterende del muligvis kan forgå om aften og i weekenden (forventeligt maks. 5%).</P>
+          </SHORT_DESCR>
+          <AC>
+            <AC_PRICE />
+          </AC>
+          <NO_OPTIONS />
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+      </OBJECT_CONTRACT>
+      <PROCEDURE>
+        <PT_OPEN />
+        <FRAMEWORK />
+        <CONTRACT_COVERED_GPA />
+        <NOTICE_NUMBER_OJ>2019/S 175-426606</NOTICE_NUMBER_OJ>
+      </PROCEDURE>
+      <AWARD_CONTRACT ITEM="1">
+        <TITLE>
+          <P>Massageordning til kommunens medarbejdere</P>
+        </TITLE>
+        <AWARDED_CONTRACT>
+          <DATE_CONCLUSION_CONTRACT>2019-11-15</DATE_CONCLUSION_CONTRACT>
+          <TENDERS>
+            <NB_TENDERS_RECEIVED>2</NB_TENDERS_RECEIVED>
+            <NB_TENDERS_RECEIVED_SME>1</NB_TENDERS_RECEIVED_SME>
+          </TENDERS>
+          <CONTRACTORS>
+            <NO_AWARDED_TO_GROUP />
+            <CONTRACTOR>
+              <ADDRESS_CONTRACTOR>
+                <OFFICIALNAME>Cityfys A/S</OFFICIALNAME>
+                <ADDRESS>Tietgensgade 65</ADDRESS>
+                <TOWN>København V</TOWN>
+                <POSTAL_CODE>1704</POSTAL_CODE>
+                <COUNTRY VALUE="DK" />
+                <PHONE>+45 70200726</PHONE>
+                <E_MAIL>cityfys@cityfys.dk</E_MAIL>
+                <NUTS CODE="DK011" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              </ADDRESS_CONTRACTOR>
+              <SME />
+            </CONTRACTOR>
+          </CONTRACTORS>
+          <VALUES>
+            <VAL_TOTAL CURRENCY="DKK">1500000.00</VAL_TOTAL>
+          </VALUES>
+        </AWARDED_CONTRACT>
+      </AWARD_CONTRACT>
+      <COMPLEMENTARY_INFO>
+        <INFO_ADD>
+          <P>Tilbudsgiver må ikke være omfattet af en eller flere udelukkelsesgrunde nævnt i Udbudsloven</P>
+          <P>§§ 135, 136 og 137 stk. 1 , nr. 1,2, 6 og 7. (se herom i udbudsbetingelserne). Tilbudsgiver er</P>
+          <P>endvidere udelukket fra at deltage i udbuddet, hvis ordregiveren kan påvise, at tilbudsgiver har</P>
+          <P>begået handlinger, der har ført til domfældelse for overtrædelse af gældende skattelovgivning</P>
+          <P>inden for det område, hvor virksomheden udøver sit erhverv, i henhold til Udbudslovens § 137,</P>
+          <P>stk. 1, nr. 3.</P>
+        </INFO_ADD>
+        <ADDRESS_REVIEW_BODY>
+          <OFFICIALNAME>Klagenævnet for Udbud</OFFICIALNAME>
+          <ADDRESS>Nævnenes Hus, Toldboden 2</ADDRESS>
+          <TOWN>Viborg</TOWN>
+          <POSTAL_CODE>8800</POSTAL_CODE>
+          <COUNTRY VALUE="DK" />
+          <PHONE>+45 35291000</PHONE>
+          <E_MAIL>klfu@naevneneshus.dk</E_MAIL>
+          <FAX>+45 33307799</FAX>
+          <URL>http://www.klfu.dk</URL>
+        </ADDRESS_REVIEW_BODY>
+        <REVIEW_PROCEDURE>
+          <P>Præcise oplysninger om klagefrist(er): I henhold til LBK nr. 593 af 02.06.2016 om lov om Klagenævnet for Udbud gælder følgende klagefrister i relation til gennemførelse af udbud:</P>
+          <P>Klage over ikke at være prækvalificeret skal være indgivet til Klagenævnet for Udbud inden 20 kalenderdage</P>
+          <P>regnet fra dagen efter den dag, hvor ordregiveren har afsendt en underretning til de berørte ansøgere om, hvem</P>
+          <P>der er blevet prækvalificeret, hvis underretningen har angivet en kort redegørelse for de relevante grunde for</P>
+          <P>beslutningen, jf. lovens § 7, stk. 1.</P>
+          <P>Klage over tildeling af kontrakten skal være indgivet til Klagenævnet for Udbud inden 45 dage efter, at</P>
+          <P>ordregiveren har offentliggjort en bekendtgørelse i Den Europæiske Unions Tidende om, at ordregiveren har</P>
+          <P>indgået en kontrakt.</P>
+          <P>Klage i forbindelse med indgåelse af en rammeaftale skal indgives inden 6 måneder regnet fra dagen efter den</P>
+          <P>dag, hvor ordregiver har underrettet de berørte ansøgere og tilbudsgivere.</P>
+          <P>Senest samtidig med at en klage indgives til Klagenævnet for Udbud, skal klageren skriftligt underrette</P>
+          <P>ordregiveren om, at klage indgives til Klagenævnet for Udbud, og om, hvorvidt klagen er indgivet i standstillperioden,</P>
+          <P>jf. lovens § 6, stk. 4. I tilfælde, hvor klagen ikke er indgivet i standstill-perioden, skal klageren tillige</P>
+          <P>angive, hvorvidt der begæres opsættende virkning af klagen, jf. lovens § 12, stk. 1.</P>
+          <P>Samtidig med indgivelse af klage skal der indbetales et klagegebyr på kr. 20.000 til Klagenævnet for Udbud.</P>
+        </REVIEW_PROCEDURE>
+        <ADDRESS_REVIEW_INFO>
+          <OFFICIALNAME>Konkurrence- og Forbrugerstyrelsen</OFFICIALNAME>
+          <ADDRESS>Carl Jacobsens Vej 35</ADDRESS>
+          <TOWN>Valby</TOWN>
+          <POSTAL_CODE>2500</POSTAL_CODE>
+          <COUNTRY VALUE="DK" />
+          <PHONE>+45 41715000</PHONE>
+          <E_MAIL>kfst@kfst.dk</E_MAIL>
+          <FAX>+45 41715100</FAX>
+          <URL>http://www.kfst.dk</URL>
+        </ADDRESS_REVIEW_INFO>
+        <DATE_DISPATCH_NOTICE>2019-11-18</DATE_DISPATCH_NOTICE>
+      </COMPLEMENTARY_INFO>
+    </F03_2014>
+  </FORM_SECTION>
+</TED_ESENDERS>

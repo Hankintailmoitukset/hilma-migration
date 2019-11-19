@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TED_ESENDERS VERSION="R2.0.9.S03">
+  <SENDER>
+    <IDENTIFICATION>
+      <ESENDER_LOGIN>TED45</ESENDER_LOGIN>
+      <NO_DOC_EXT>2019-007972</NO_DOC_EXT>
+    </IDENTIFICATION>
+    <CONTACT>
+      <ORGANISATION>Mercell Danmark A/S</ORGANISATION>
+      <COUNTRY VALUE="DK" />
+      <PHONE>+45 63133700</PHONE>
+      <E_MAIL>internal.support@mercell.com</E_MAIL>
+    </CONTACT>
+  </SENDER>
+  <FORM_SECTION>
+    <F04_2014 LG="EN" CATEGORY="ORIGINAL" FORM="F04">
+      <LEGAL_BASIS VALUE="32014L0025" />
+      <NOTICE TYPE="PER_ONLY" />
+      <CONTRACTING_BODY>
+        <ADDRESS_CONTRACTING_BODY>
+          <OFFICIALNAME>Energinet</OFFICIALNAME>
+          <NATIONALID>28980671</NATIONALID>
+          <ADDRESS>Tonne Kjærsvej 65, Erritsø</ADDRESS>
+          <TOWN>Fredericia</TOWN>
+          <POSTAL_CODE>7000</POSTAL_CODE>
+          <COUNTRY VALUE="DK" />
+          <CONTACT_POINT>Lene Ritz, Chief Risk Officer</CONTACT_POINT>
+          <E_MAIL>ler@energinet.dk</E_MAIL>
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <URL_GENERAL>https://permalink.mercell.com/111939775.aspx</URL_GENERAL>
+          <URL_BUYER>http://www.willis.dk/</URL_BUYER>
+        </ADDRESS_CONTRACTING_BODY>
+        <ADDRESS_FURTHER_INFO_IDEM />
+        <CE_ACTIVITY VALUE="ELECTRICITY" />
+      </CONTRACTING_BODY>
+      <OBJECT_CONTRACT ITEM="1">
+        <TITLE>
+          <P>Viking Link Project - Invitation Insurance Market Roadshow 30th August 2019 London</P>
+        </TITLE>
+        <CPV_MAIN>
+          <CPV_CODE CODE="66510000" />
+        </CPV_MAIN>
+        <TYPE_CONTRACT CTYPE="SERVICES" />
+        <SHORT_DESCR>
+          <P>Viking Link Project - Invitation Insurance Market Roadshow 30th August 2019 London</P>
+          <P>In preparation for the EU Insurance tender for the Viking Link project anticipated to attach 1st of January 2020, we are pleased to invite you to a Viking Link presentation that will be held on 30th August 2019 from 09:45 am to 13:00 pm (BST). </P>
+          <P>Location:</P>
+          <P>Willis Building</P>
+          <P>51 Lime Street,</P>
+          <P>London, EC3M 7DQ</P>
+          <P>Information of attendees must by notified by email no later than 26th August 2019 to: Michael.ekdahl@willlistowerswatson.com</P>
+        </SHORT_DESCR>
+        <NO_LOT_DIVISION />
+        <OBJECT_DESCR ITEM="1">
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="66513200" />
+          </CPV_ADDITIONAL>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="66516400" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Viking Link Project - Invitation Insurance Market Roadshow 30th August 2019 London</P>
+            <P>In preparation for the EU Insurance tender for the Viking Link project anticipated to attach 1st of January 2020, we are pleased to invite you to a Viking Link presentation that will be held on 30th August 2019 from 09:45 am to 13:00 pm (BST). </P>
+            <P>Location:</P>
+            <P>Willis Building</P>
+            <P>51 Lime Street,</P>
+            <P>London, EC3M 7DQ</P>
+            <P>This presentation will include speakers from the Viking Link project who will provide an overview of the project, construction partners, timeline, risk management/SHEQ and technology &amp; installation methods.</P>
+            <P>The full underwriting submission will be available during the EU insurance tender process which is anticipated to commence 4th September 2019.</P>
+            <P>Please confirm your availability and name of attendee(s). Number of attendees will be limited to maximum 3 participants per Insurer. We reserve our right to reduce the participant number pending number of total participants due to space limitation for the meeting room facility.</P>
+            <P>Information of attendees must by notified by email no later than 26th August 2019 to:</P>
+            <P>Michael.ekdahl@willlistowerswatson.com</P>
+          </SHORT_DESCR>
+        </OBJECT_DESCR>
+        <DATE_PUBLICATION_NOTICE>2019-09-04</DATE_PUBLICATION_NOTICE>
+      </OBJECT_CONTRACT>
+      <PROCEDURE>
+        <NO_CONTRACT_COVERED_GPA />
+      </PROCEDURE>
+      <COMPLEMENTARY_INFO>
+        <DATE_DISPATCH_NOTICE>2019-08-19</DATE_DISPATCH_NOTICE>
+      </COMPLEMENTARY_INFO>
+    </F04_2014>
+  </FORM_SECTION>
+</TED_ESENDERS>

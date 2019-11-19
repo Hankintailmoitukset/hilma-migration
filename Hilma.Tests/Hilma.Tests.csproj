@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Notices\Form1.xml" />
+    <None Remove="Notices\Form2.xml" />
+    <None Remove="Notices\Form21.xml" />
+    <None Remove="Notices\Form3.xml" />
+    <None Remove="Notices\Form4.xml" />
+    <None Remove="Notices\Form5.xml" />
+    <None Remove="Notices\Form6.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Notices\Form1.xml" />
+    <EmbeddedResource Include="Notices\Form2.xml" />
+    <EmbeddedResource Include="Notices\Form21.xml" />
+    <EmbeddedResource Include="Notices\Form3.xml" />
+    <EmbeddedResource Include="Notices\Form4.xml" />
+    <EmbeddedResource Include="Notices\Form5.xml" />
+    <EmbeddedResource Include="Notices\Form6.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
+    <PackageReference Include="coverlet.collector" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hilma.Domain\Hilma.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

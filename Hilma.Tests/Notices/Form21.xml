@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TED_ESENDERS VERSION="R2.0.9.S03">
+  <SENDER>
+    <IDENTIFICATION>
+      <ESENDER_LOGIN>TED45</ESENDER_LOGIN>
+      <NO_DOC_EXT>2019-008317</NO_DOC_EXT>
+    </IDENTIFICATION>
+    <CONTACT>
+      <ORGANISATION>Mercell Danmark A/S</ORGANISATION>
+      <COUNTRY VALUE="DK" />
+      <PHONE>+45 63133700</PHONE>
+      <E_MAIL>internal.support@mercell.com</E_MAIL>
+    </CONTACT>
+  </SENDER>
+  <FORM_SECTION>
+    <F21_2014 LG="DA" CATEGORY="ORIGINAL" FORM="F21">
+      <LEGAL_BASIS VALUE="32014L0024" />
+      <NOTICE TYPE="CONTRACT" />
+      <CONTRACTING_BODY>
+        <ADDRESS_CONTRACTING_BODY>
+          <OFFICIALNAME>Røde Kors Asylafdeling</OFFICIALNAME>
+          <NATIONALID>18887886</NATIONALID>
+          <ADDRESS>Rosenørns Alle 31</ADDRESS>
+          <TOWN>Frederiksberg C</TOWN>
+          <POSTAL_CODE>1970</POSTAL_CODE>
+          <COUNTRY VALUE="DK" />
+          <CONTACT_POINT>Maria Brøchner Tødt</CONTACT_POINT>
+          <E_MAIL>mart@redcross.dk</E_MAIL>
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <URL_GENERAL>https://permalink.mercell.com/115786701.aspx</URL_GENERAL>
+        </ADDRESS_CONTRACTING_BODY>
+        <DOCUMENT_FULL />
+        <URL_DOCUMENT>https://permalink.mercell.com/115786701.aspx</URL_DOCUMENT>
+        <ADDRESS_FURTHER_INFO_IDEM />
+        <URL_PARTICIPATION>https://permalink.mercell.com/115786701.aspx</URL_PARTICIPATION>
+        <CA_TYPE VALUE="EU_INSTITUTION" />
+        <CA_ACTIVITY_OTHER>Humanitær hjælpeorganisation</CA_ACTIVITY_OTHER>
+      </CONTRACTING_BODY>
+      <OBJECT_CONTRACT ITEM="1">
+        <TITLE>
+          <P>Udbud af pædagogiske ydelser og sociale foranstaltninger</P>
+        </TITLE>
+        <CPV_MAIN>
+          <CPV_CODE CODE="85000000" />
+        </CPV_MAIN>
+        <TYPE_CONTRACT CTYPE="SERVICES" />
+        <SHORT_DESCR>
+          <P>Rammeaftalen omfatter en række delaftaler fordelt på pædagogiske ydelser og sociale foranstaltninger, der relaterer sig til asylansøgerne på Røde Kors Asylafdelings centre rundt omkring i Danmark.</P>
+          <P>Sortimentet på rammeaftalen er specificeret i rammeaftalens bilag 1 – kravspecifikation.</P>
+          <P>Delaftale 1 og 3 omfatter pædagogiske vikarydelser på daginstitution/klub, skole, børnecentre og voksencentre. Delaftale 2 og 4 omfatter sociale foranstaltninger i henhold til serviceloven kap 11 og 14. </P>
+          <P>Tryk her https://permalink.mercell.com/115786701.aspx</P>
+        </SHORT_DESCR>
+        <VAL_ESTIMATED_TOTAL CURRENCY="DKK">48000000.00</VAL_ESTIMATED_TOTAL>
+        <LOT_DIVISION>
+          <LOT_ALL />
+        </LOT_DIVISION>
+        <OBJECT_DESCR ITEM="1">
+          <TITLE>
+            <P>Delaftale 1 Pædagogiske vikarer - Vest</P>
+          </TITLE>
+          <LOT_NO>1</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85000000" />
+          </CPV_ADDITIONAL>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="98000000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <MAIN_SITE>
+            <P>Danmark</P>
+          </MAIN_SITE>
+          <SHORT_DESCR>
+            <P>Delaftale 1 omfatter pædagogiske vikarydelser på daginstitution/klub, skole, børnecentre og voksencentre. </P>
+            <P>Delaftale 1omfatter følgende kategorier:</P>
+            <P>- Pædagogisk medhjælp (ikke uddannet)</P>
+            <P>- Pædagogisk assistent (uddannet assistent eller tilsvarende uddannelse)</P>
+            <P>- Pædagog - institution, klub og skole (uddannet pædagog eller tilsvarende uddannelse)</P>
+            <P>- Pædagog med støttefunktion (uddannet pædagog eller tilsvarende uddannelse)</P>
+            <P>- Pædagog - børnecenter (uddannet pædagog eller tilsvarende uddannelse)</P>
+            <P>- Lærer (uddannet lærer eller tilsvarende uddannelse)</P>
+          </SHORT_DESCR>
+          <VAL_OBJECT CURRENCY="DKK">4000000.00</VAL_OBJECT>
+          <DURATION TYPE="MONTH">12</DURATION>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="2">
+          <TITLE>
+            <P>Delaftale 2 Sociale foranstaltninger - Vest</P>
+          </TITLE>
+          <LOT_NO>2</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85000000" />
+          </CPV_ADDITIONAL>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="98000000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <MAIN_SITE>
+            <P>Danmark</P>
+          </MAIN_SITE>
+          <SHORT_DESCR>
+            <P>Delaftale 2 omfatter sociale foranstaltninger (Serviceloven kapitel 11 og 14). Delaftale 2 omfatter følgende kategorier:</P>
+            <P>- Støttekontaktperson for barnet, den unge herunder uledsagede mindreårige og gravide (SEL § 52, stk. 3., nr. 6 og 9)</P>
+            <P>- Praktisk, pædagogisk eller anden støtte i hjemmet. (SEL §52, stk. 3, nr. 2.)</P>
+            <P>- Familiebehandling eller behandling af barnet eller den unges problemer (SEL § 52, stk. 3, nr. 3)</P>
+            <P>- Pasning af børn ved forældres fravær, fx ifbm hospitalsindlæggelse</P>
+            <P>- Støtteperson til forældre i forbindelse med anbringelse af et barnet uden for hjemmet (SEL § 54)</P>
+            <P>- Praktisk hjælp, omsorg eller støtte samt optræning og hjælp til udvikling af færdigheder til voksne, der har behov herfor på grund af betydelig nedsat fysisk eller psykisk funktionsevne eller særlige sociale problemer (SEL § 85).</P>
+            <P>- Ledsagerordning for voksne (SEL § 97)</P>
+          </SHORT_DESCR>
+          <VAL_OBJECT CURRENCY="DKK">8000000.00</VAL_OBJECT>
+          <DURATION TYPE="MONTH">12</DURATION>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="3">
+          <TITLE>
+            <P>Delaftale 3 Pædagogiske vikarer  - Øst</P>
+          </TITLE>
+          <LOT_NO>3</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85000000" />
+          </CPV_ADDITIONAL>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="98000000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <MAIN_SITE>
+            <P>Danmark</P>
+          </MAIN_SITE>
+          <SHORT_DESCR>
+            <P>Delaftale 3 omfatter pædagogiske vikarydelser på daginstitution/klub, skole, børnecentre og voksencentre. Delaftale 3 omfatter følgende kategorier:</P>
+            <P>- Pædagogisk medhjælp (ikke uddannet)</P>
+            <P>- Pædagogisk assistent (uddannet assistent eller tilsvarende uddannelse)</P>
+            <P>- Pædagog - institution, klub og skole (uddannet pædagog eller tilsvarende uddannelse)</P>
+            <P>- Pædagog med støttefunktion (uddannet pædagog eller tilsvarende uddannelse)</P>
+            <P>- Pædagog - børnecenter (uddannet pædagog eller tilsvarende uddannelse)</P>
+            <P>- Lærer (uddannet lærer eller tilsvarende uddannelse)</P>
+          </SHORT_DESCR>
+          <VAL_OBJECT CURRENCY="DKK">16000000.00</VAL_OBJECT>
+          <DURATION TYPE="MONTH">12</DURATION>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="4">
+          <TITLE>
+            <P>Delaftale 4 Sociale foranstaltninger - Øst</P>
+          </TITLE>
+          <LOT_NO>4</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85000000" />
+          </CPV_ADDITIONAL>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="98000000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <MAIN_SITE>
+            <P>Danmark</P>
+          </MAIN_SITE>
+          <SHORT_DESCR>
+            <P>Delaftale 4 omfatter sociale foranstaltninger (Serviceloven kapitel 11 og 14). Delaftale 4 omfatter følgende kategorier:</P>
+            <P>- Støttekontaktperson for barnet, den unge herunder uledsagede mindreårige og gravide (SEL § 52, stk. 3., nr. 6 og 9)</P>
+            <P>- Praktisk, pædagogisk eller anden støtte i hjemmet. (SEL §52, stk. 3, nr. 2.)</P>
+            <P>- Familiebehandling eller behandling af barnet eller den unges problemer (SEL § 52, stk. 3, nr. 3)</P>
+            <P>- Pasning af børn ved forældres fravær, fx ifbm hospitalsindlæggelse</P>
+            <P>- Støtteperson til forældre i forbindelse med anbringelse af et barnet uden for hjemmet (SEL § 54)</P>
+            <P>- Praktisk hjælp, omsorg eller støtte samt optræning og hjælp til udvikling af færdigheder til voksne, der har behov herfor på grund af betydelig nedsat fysisk eller psykisk funktionsevne eller særlige sociale problemer (SEL § 85).</P>
+            <P>- Ledsagerordning for voksne (SEL § 97)</P>
+          </SHORT_DESCR>
+          <VAL_OBJECT CURRENCY="DKK">20000000.00</VAL_OBJECT>
+          <DURATION TYPE="MONTH">12</DURATION>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+      </OBJECT_CONTRACT>
+      <LEFTI>
+        <RULES_CRITERIA>
+          <P>Tro- og loveerklæring: </P>
+          <P> Tilbudsgiver skal underskrive vedlagt tro og love erklæring vedr. udbudsloven § 135-136 og § 137, stk. 1, nr. 2. </P>
+          <P>Økonomiske krav:</P>
+          <P> Det er et minimumskrav, at tilbudsgiver i seneste disponible regnskabsår skal have haft en positiv soliditetsgrad.</P>
+          <P> Det er et minimumskrav, at tilbudsgiver i seneste disponible regnskabsår skal have haft en samlet ydelsesspecifik omsætning på minimum 2 gange delaftalens årlige omsætning. Med ydelsesspeci-fik omsætningen menes, at omsætningen skal vedrøre de ydelser, der er at finde i delaftalens sortiment.</P>
+          <P>Tekniske oplysninger:</P>
+          <P> Det er et minimumskrav, at tilbudsgiver skal oplyse 3 referencer på leverancer af tilsvarende ydel-ser, som omfatter en eller flere af rammeaftalens sortimentskategorier. De 3 referencer skal samlet set omfatte alle kategorier på en delaftale. Det betyder fx at en reference godt kan være på bare to kategorier så længe referencerne tilsammen omfatter alle kategorier. </P>
+          <P>Se yderligere udbudsbetingelserne. </P>
+        </RULES_CRITERIA>
+      </LEFTI>
+      <PROCEDURE>
+        <PT_OPEN />
+        <FRAMEWORK />
+        <MAIN_FEATURES_AWARD>
+          <P>Tilbuds evaluering efter tildelingskriteriet bedste forhold mellem pris og kvalitet. Se udbudsbetingelserne.</P>
+        </MAIN_FEATURES_AWARD>
+        <DATE_RECEIPT_TENDERS>2019-12-10</DATE_RECEIPT_TENDERS>
+        <TIME_RECEIPT_TENDERS>13:00</TIME_RECEIPT_TENDERS>
+        <LANGUAGES>
+          <LANGUAGE VALUE="DA" />
+        </LANGUAGES>
+      </PROCEDURE>
+      <COMPLEMENTARY_INFO>
+        <ADDRESS_REVIEW_BODY>
+          <OFFICIALNAME>Klagenævnet for Udbud</OFFICIALNAME>
+          <ADDRESS>Nævnenes Hus, Toldboden 2</ADDRESS>
+          <TOWN>Viborg</TOWN>
+          <POSTAL_CODE>8800</POSTAL_CODE>
+          <COUNTRY VALUE="DK" />
+          <PHONE>+45 35291000</PHONE>
+          <E_MAIL>klfu@naevneneshus.dk</E_MAIL>
+          <FAX>+45 33307799</FAX>
+          <URL>http://www.klfu.dk</URL>
+        </ADDRESS_REVIEW_BODY>
+        <REVIEW_PROCEDURE>
+          <P>Præcise oplysninger om klagefrist(er): I henhold til LBK nr. 593 af 02.06.2016 om lov om Klagenævnet for Udbud gælder følgende klagefrister i relation til gennemførelse af udbud:</P>
+          <P>Klage over ikke at være prækvalificeret skal være indgivet til Klagenævnet for Udbud inden 20 kalenderdage</P>
+          <P>regnet fra dagen efter den dag, hvor ordregiveren har afsendt en underretning til de berørte ansøgere om, hvem</P>
+          <P>der er blevet prækvalificeret, hvis underretningen har angivet en kort redegørelse for de relevante grunde for</P>
+          <P>beslutningen, jf. lovens § 7, stk. 1.</P>
+          <P>Klage over tildeling af kontrakten skal være indgivet til Klagenævnet for Udbud inden 45 dage efter, at</P>
+          <P>ordregiveren har offentliggjort en bekendtgørelse i Den Europæiske Unions Tidende om, at ordregiveren har</P>
+          <P>indgået en kontrakt.</P>
+          <P>Klage i forbindelse med indgåelse af en rammeaftale skal indgives inden 6 måneder regnet fra dagen efter den</P>
+          <P>dag, hvor ordregiver har underrettet de berørte ansøgere og tilbudsgivere.</P>
+          <P>Senest samtidig med at en klage indgives til Klagenævnet for Udbud, skal klageren skriftligt underrette</P>
+          <P>ordregiveren om, at klage indgives til Klagenævnet for Udbud, og om, hvorvidt klagen er indgivet i standstillperioden,</P>
+          <P>jf. lovens § 6, stk. 4. I tilfælde, hvor klagen ikke er indgivet i standstill-perioden, skal klageren tillige</P>
+          <P>angive, hvorvidt der begæres opsættende virkning af klagen, jf. lovens § 12, stk. 1.</P>
+          <P>Samtidig med indgivelse af klage skal der indbetales et klagegebyr på kr. 20.000 til Klagenævnet for Udbud.</P>
+        </REVIEW_PROCEDURE>
+        <ADDRESS_REVIEW_INFO>
+          <OFFICIALNAME>Konkurrence- og Forbrugerstyrelsen</OFFICIALNAME>
+          <ADDRESS>Carl Jacobsens Vej 35</ADDRESS>
+          <TOWN>Valby</TOWN>
+          <POSTAL_CODE>2500</POSTAL_CODE>
+          <COUNTRY VALUE="DK" />
+          <PHONE>+45 41715000</PHONE>
+          <E_MAIL>kfst@kfst.dk</E_MAIL>
+          <FAX>+45 41715100</FAX>
+          <URL>http://www.kfst.dk</URL>
+        </ADDRESS_REVIEW_INFO>
+        <DATE_DISPATCH_NOTICE>2019-11-08</DATE_DISPATCH_NOTICE>
+      </COMPLEMENTARY_INFO>
+    </F21_2014>
+  </FORM_SECTION>
+</TED_ESENDERS>

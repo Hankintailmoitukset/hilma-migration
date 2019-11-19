@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TED_ESENDERS VERSION="R2.0.9.S03">
+  <SENDER>
+    <IDENTIFICATION>
+      <ESENDER_LOGIN>TED45</ESENDER_LOGIN>
+      <NO_DOC_EXT>2019-008327</NO_DOC_EXT>
+    </IDENTIFICATION>
+    <CONTACT>
+      <ORGANISATION>Mercell Danmark A/S</ORGANISATION>
+      <COUNTRY VALUE="DK" />
+      <PHONE>+45 63133700</PHONE>
+      <E_MAIL>internal.support@mercell.com</E_MAIL>
+    </CONTACT>
+  </SENDER>
+  <FORM_SECTION>
+    <F06_2014 LG="DA" CATEGORY="ORIGINAL" FORM="F06">
+      <LEGAL_BASIS VALUE="32014L0025" />
+      <CONTRACTING_BODY>
+        <ADDRESS_CONTRACTING_BODY>
+          <OFFICIALNAME>Brædstrup Totalenergianlæg A/S</OFFICIALNAME>
+          <NATIONALID>10419034</NATIONALID>
+          <ADDRESS>Fjernvarmevej 2</ADDRESS>
+          <TOWN>Brædstrup</TOWN>
+          <POSTAL_CODE>8740</POSTAL_CODE>
+          <COUNTRY VALUE="DK" />
+          <CONTACT_POINT>Lisa Blenstrup Pallisgaard på vegne af Brædstrup Totalenergianlæg A/S</CONTACT_POINT>
+          <E_MAIL>lbp@planenergi.dk</E_MAIL>
+          <NUTS CODE="DK04" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <URL_GENERAL>https://permalink.mercell.com/110147205.aspx</URL_GENERAL>
+          <URL_BUYER>http://www.planenergi.dk/</URL_BUYER>
+        </ADDRESS_CONTRACTING_BODY>
+        <CE_ACTIVITY VALUE="PRODUCTION_TRANSPORT_DISTRIBUTION_GAS_HEAT" />
+      </CONTRACTING_BODY>
+      <OBJECT_CONTRACT>
+        <TITLE>
+          <P>Tildelingsbekendtgørelse på eldrevet varmepumpe til Brædstrup Totalenergianlæg A/S</P>
+        </TITLE>
+        <CPV_MAIN>
+          <CPV_CODE CODE="42511110" />
+        </CPV_MAIN>
+        <TYPE_CONTRACT CTYPE="SUPPLIES" />
+        <SHORT_DESCR>
+          <P>Brædstrup Totalenergianlæg A/S ønsker at etablere en eldrevet varmepumpe, der kan anvende udeluft som</P>
+          <P>varmekilde til produktion af fjernvarme i samdrift med værkets eksisterende produktionsenheder.</P>
+        </SHORT_DESCR>
+        <VAL_TOTAL CURRENCY="DKK" PUBLICATION="NO">45000000.00</VAL_TOTAL>
+        <NO_LOT_DIVISION />
+        <OBJECT_DESCR ITEM="1">
+          <NUTS CODE="DK04" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Brædstrup Totalenergianlæg A/S ønsker at etablere en eldrevet varmepumpe, der kan anvende udeluft som</P>
+            <P>varmekilde til produktion af fjernvarme i samdrift med værkets eksisterende produktionsenheder.</P>
+          </SHORT_DESCR>
+          <AC PUBLICATION="YES">
+            <AC_QUALITY>
+              <AC_CRITERION>Faglige kompetencer samt anlæggets kvalitet, driftssikkerhed og opbygning, herunder enkel vedligeholdelse</AC_CRITERION>
+              <AC_WEIGHTING>30</AC_WEIGHTING>
+            </AC_QUALITY>
+            <AC_QUALITY>
+              <AC_CRITERION>Opbygning af serviceorganisation og garantiperiode</AC_CRITERION>
+              <AC_WEIGHTING>20</AC_WEIGHTING>
+            </AC_QUALITY>
+            <AC_PRICE>
+              <AC_WEIGHTING>50</AC_WEIGHTING>
+            </AC_PRICE>
+          </AC>
+          <NO_OPTIONS />
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+      </OBJECT_CONTRACT>
+      <PROCEDURE>
+        <PT_NEGOTIATED_WITH_PRIOR_CALL />
+        <NO_CONTRACT_COVERED_GPA />
+        <NOTICE_NUMBER_OJ>2019/S 133-328144</NOTICE_NUMBER_OJ>
+      </PROCEDURE>
+      <AWARD_CONTRACT ITEM="1">
+        <TITLE>
+          <P>Tilbudsfase på eldrevet varmepumpe til Brædstrup Totalenergianlæg A/S</P>
+        </TITLE>
+        <AWARDED_CONTRACT>
+          <DATE_CONCLUSION_CONTRACT>2019-10-22</DATE_CONCLUSION_CONTRACT>
+          <TENDERS PUBLICATION="YES">
+            <NB_TENDERS_RECEIVED>4</NB_TENDERS_RECEIVED>
+            <NB_TENDERS_RECEIVED_EMEANS>4</NB_TENDERS_RECEIVED_EMEANS>
+          </TENDERS>
+          <CONTRACTORS PUBLICATION="YES">
+            <NO_AWARDED_TO_GROUP />
+            <CONTRACTOR>
+              <ADDRESS_CONTRACTOR>
+                <OFFICIALNAME>Innoterm A/S</OFFICIALNAME>
+                <ADDRESS>Essen 32</ADDRESS>
+                <TOWN>Kolding</TOWN>
+                <POSTAL_CODE>6000</POSTAL_CODE>
+                <COUNTRY VALUE="DK" />
+                <PHONE>+45 74505550</PHONE>
+                <E_MAIL>pl@innoterm.dk</E_MAIL>
+                <NUTS CODE="DK032" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              </ADDRESS_CONTRACTOR>
+              <SME />
+            </CONTRACTOR>
+          </CONTRACTORS>
+          <VALUES PUBLICATION="YES">
+            <VAL_TOTAL CURRENCY="DKK">1.00</VAL_TOTAL>
+          </VALUES>
+          <NB_CONTRACT_AWARDED PUBLICATION="NO">1</NB_CONTRACT_AWARDED>
+          <COUNTRY_ORIGIN PUBLICATION="NO">
+            <COMMUNITY_ORIGIN />
+          </COUNTRY_ORIGIN>
+          <NO_AWARDED_TENDERER_VARIANT PUBLICATION="NO" />
+          <NO_TENDERS_EXCLUDED PUBLICATION="NO" />
+        </AWARDED_CONTRACT>
+      </AWARD_CONTRACT>
+      <COMPLEMENTARY_INFO>
+        <ADDRESS_REVIEW_BODY>
+          <OFFICIALNAME>Klagenævnet for Udbud</OFFICIALNAME>
+          <ADDRESS>Nævnenes Hus, Toldboden 2</ADDRESS>
+          <TOWN>Viborg</TOWN>
+          <POSTAL_CODE>8800</POSTAL_CODE>
+          <COUNTRY VALUE="DK" />
+          <PHONE>+45 35291000</PHONE>
+          <E_MAIL>klfu@naevneneshus.dk</E_MAIL>
+          <FAX>+45 33307799</FAX>
+          <URL>http://www.klfu.dk</URL>
+        </ADDRESS_REVIEW_BODY>
+        <REVIEW_PROCEDURE>
+          <P>Præcise oplysninger om klagefrist(er): I henhold til LBK nr. 593 af 02.06.2016 om lov om Klagenævnet for Udbud gælder følgende klagefrister i relation til gennemførelse af udbud:</P>
+          <P>Klage over ikke at være prækvalificeret skal være indgivet til Klagenævnet for Udbud inden 20 kalenderdage</P>
+          <P>regnet fra dagen efter den dag, hvor ordregiveren har afsendt en underretning til de berørte ansøgere om, hvem</P>
+          <P>der er blevet prækvalificeret, hvis underretningen har angivet en kort redegørelse for de relevante grunde for</P>
+          <P>beslutningen, jf. lovens § 7, stk. 1.</P>
+          <P>Klage over tildeling af kontrakten skal være indgivet til Klagenævnet for Udbud inden 45 dage efter, at</P>
+          <P>ordregiveren har offentliggjort en bekendtgørelse i Den Europæiske Unions Tidende om, at ordregiveren har</P>
+          <P>indgået en kontrakt.</P>
+          <P>Klage i forbindelse med indgåelse af en rammeaftale skal indgives inden 6 måneder regnet fra dagen efter den</P>
+          <P>dag, hvor ordregiver har underrettet de berørte ansøgere og tilbudsgivere.</P>
+          <P>Senest samtidig med at en klage indgives til Klagenævnet for Udbud, skal klageren skriftligt underrette</P>
+          <P>ordregiveren om, at klage indgives til Klagenævnet for Udbud, og om, hvorvidt klagen er indgivet i standstillperioden,</P>
+          <P>jf. lovens § 6, stk. 4. I tilfælde, hvor klagen ikke er indgivet i standstill-perioden, skal klageren tillige</P>
+          <P>angive, hvorvidt der begæres opsættende virkning af klagen, jf. lovens § 12, stk. 1.</P>
+          <P>Samtidig med indgivelse af klage skal der indbetales et klagegebyr på kr. 20.000 til Klagenævnet for Udbud.</P>
+        </REVIEW_PROCEDURE>
+        <ADDRESS_REVIEW_INFO>
+          <OFFICIALNAME>Konkurrence- og Forbrugerstyrelsen</OFFICIALNAME>
+          <ADDRESS>Carl Jacobsens Vej 35</ADDRESS>
+          <TOWN>Valby</TOWN>
+          <POSTAL_CODE>2500</POSTAL_CODE>
+          <COUNTRY VALUE="DK" />
+          <PHONE>+45 41715000</PHONE>
+          <E_MAIL>kfst@kfst.dk</E_MAIL>
+          <FAX>+45 41715100</FAX>
+          <URL>http://www.kfst.dk</URL>
+        </ADDRESS_REVIEW_INFO>
+        <DATE_DISPATCH_NOTICE>2019-11-13</DATE_DISPATCH_NOTICE>
+      </COMPLEMENTARY_INFO>
+    </F06_2014>
+  </FORM_SECTION>
+</TED_ESENDERS>

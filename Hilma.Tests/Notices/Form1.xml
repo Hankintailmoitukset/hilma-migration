@@ -1,0 +1,70 @@
+<FORM_SECTION xmlns="http://publications.europa.eu/resource/schema/ted/R2.0.9/reception">
+  <F01_2014 LG="EN" CATEGORY="ORIGINAL" FORM="F01">
+    <LEGAL_BASIS VALUE="32014L0024" />
+    <NOTICE TYPE="PRI_ONLY" />
+    <CONTRACTING_BODY>
+      <ADDRESS_CONTRACTING_BODY>
+        <OFFICIALNAME>Turun ammattikorkeakoulu Oy</OFFICIALNAME>
+        <NATIONALID>2528160-3</NATIONALID>
+        <ADDRESS>Joukahaisenkatu 3</ADDRESS>
+        <TOWN>Turku</TOWN>
+        <POSTAL_CODE>20520</POSTAL_CODE>
+        <COUNTRY VALUE="FI" />
+        <CONTACT_POINT>Elina Lindström</CONTACT_POINT>
+        <E_MAIL>elina.lindstrom@juhaconsulting.fi</E_MAIL>
+        <n2016:NUTS CODE="FI" xmlns:n2016="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+        <URL_GENERAL>https://permalink.mercell.com/117700326.aspx</URL_GENERAL>
+        <URL_BUYER>https://www.turkuamk.fi/fi/</URL_BUYER>
+      </ADDRESS_CONTRACTING_BODY>
+      <ADDRESS_FURTHER_INFO_IDEM />
+      <CA_TYPE VALUE="BODY_PUBLIC" />
+      <CA_ACTIVITY VALUE="EDUCATION" />
+    </CONTRACTING_BODY>
+    <OBJECT_CONTRACT ITEM="1">
+      <TITLE>
+        <P>Request for information / 3D printing apparatus capable of printing metal</P>
+      </TITLE>
+      <CPV_MAIN>
+        <CPV_CODE CODE="42632000" />
+      </CPV_MAIN>
+      <TYPE_CONTRACT CTYPE="SUPPLIES" />
+      <SHORT_DESCR>
+        <P>This request for information is intended to identify the operators involved in metal printing solutions as well as the printing solutions they provide.</P>
+        <P>In the spring of 2019, Turku University of Applied Sciences received funding for the launch of the Multicomponent Materials Center of Expertise for Additive Manufacturing project. The aim of the project is to develop 3D printing and 3D design of different material combinations in engineering applications and to utilize 3D printing also in dentistry. For this purpose, it is intended to procure a 3D printing apparatus capable of printing metal.</P>
+        <P>Answers to questions may be submitted in writing in Finnish or English (maximum 10 A4 pages) by November 20, 2019 to the Mercell purchasing system. Specific questions can be found from the Tietopyyntö / 3D printing apparatus cabable of printing metal - pdf document.</P>
+      </SHORT_DESCR>
+      <NO_LOT_DIVISION />
+      <OBJECT_DESCR ITEM="1">
+        <CPV_ADDITIONAL>
+          <CPV_CODE CODE="42630000" />
+        </CPV_ADDITIONAL>
+        <CPV_ADDITIONAL>
+          <CPV_CODE CODE="42631000" />
+        </CPV_ADDITIONAL>
+        <CPV_ADDITIONAL>
+          <CPV_CODE CODE="42674000" />
+        </CPV_ADDITIONAL>
+        <n2016:NUTS CODE="FI1C1" xmlns:n2016="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+        <SHORT_DESCR>
+          <P>The request for clarification must describe a piece of equipment that includes:</P>
+          <P> 3D printers capable of printing less than 10mm pieces with accuracy of at least 50 µm.</P>
+          <P> 3D printer print chamber size 125x125x125 mm or more</P>
+          <P> Printer capable of printing metal materials (CoCr) that are suitable for the fabrication of fixed and removable dental restorations and appliances. Metal should be medical approved by ISO standard 22674 (mechanical properties), ISO standard 10993-1 (biological hazards) and ISO standard 7405 (biological hazards) or other similar standards.</P>
+          <P> Software (CAM software) to control the printer and place prints on the output tray and a computer (if required by the printing hardware). The software should be open so that it takes, for example, .STL files and does not require just a specific .STL file design software</P>
+          <P> Cleaning device for cleaning prints (if required by selected printing technology)</P>
+          <P> Print sintering furnace</P>
+          <P>All hardware and software are to be purchased as a complete unit with consumables installed ready for use on site.</P>
+          <P>This is not a contract notice or an invitation to tender, but a request for information. This request for information does not oblige the contracting entity to make any procurement. If the procurement described in the information request is decided upon, it may deviate from the content of this information request. Responses to a request for information also do not bind the defendant in relation to any subsequent procurement. This announcement is not asking for offers. Responding to or not responding to a request for information does not prevent you from participating in any tender. The request for information shall not oblige the contracting entity to carry out the actual invitation to tender. The contracting entity may hold a technical dialogue between the interested parties that have expressed an interest. The contracting entity will not reimburse you for answering questions in the information request or for dialogue with journalists. If your response contains business and professional secrets or other confidential information, please clearly identify and mark the confidential information.</P>
+        </SHORT_DESCR>
+      </OBJECT_DESCR>
+      <DATE_PUBLICATION_NOTICE>2020-04-30</DATE_PUBLICATION_NOTICE>
+    </OBJECT_CONTRACT>
+    <LEFTI />
+    <PROCEDURE>
+      <CONTRACT_COVERED_GPA />
+    </PROCEDURE>
+    <COMPLEMENTARY_INFO>
+      <DATE_DISPATCH_NOTICE>2019-11-19</DATE_DISPATCH_NOTICE>
+    </COMPLEMENTARY_INFO>
+  </F01_2014>
+</FORM_SECTION>
