@@ -2,9 +2,20 @@
 // Responsible team:
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using AutoMapper;
+using Hilma.Domain.Configuration;
+using Hilma.Domain.DataContracts;
+using Hilma.Domain.DataContracts.EtsContracts;
+using Hilma.Domain.Entities;
+using Hilma.Domain.Enums;
+using Hilma.Domain.Integrations.HilmaMigration;
+using Hilma.Domain.Validators;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace Hilma.Tests
 {
@@ -27,6 +38,48 @@ namespace Hilma.Tests
             }
 
             return result;
+        }
+
+        public  static string ValidateFormReturnTedXml(string formNumber, string noticeType, string formOriginalXml)
+        {
+            var parser = new NoticeXMLParser();
+
+
+            var importModel = new NoticeImportContract()
+            {
+                FormNumber = formNumber,
+                NoticeNumber = string.Empty, // Assigned by Hilma
+                NoticeOjsNumber = null,
+                NoticeType = noticeType,
+                HilmaSubmissionDate = DateTime.Now,
+                Notice = formOriginalXml
+            };
+
+            var notice = parser.ParseNotice(importModel);
+            var etsNotice = new EtsNoticeContract(notice);
+
+            var noticeDto = etsNotice.CreateNotice("123");
+            noticeDto.CreatorId = Guid.NewGuid();
+            noticeDto.Project.Id = 1;
+            noticeDto.Project.Organisation.Id = Guid.NewGuid();
+            noticeDto.Project.Publish = PublishType.ToTed;
+            noticeDto.NoticeNumber = "2019-123456";
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Notice, NoticeContract>());
+            var translate = new Mock<ITranslationProvider>();
+
+            var noticeValidator = new NoticeValidator(noticeDto, config.CreateMapper(), translate.Object);
+
+            var isValid = noticeValidator.Validate(true, out string tedXml);
+
+            foreach (string error in noticeValidator.ValidationErrors)
+            {
+                Trace.WriteLine(error);
+            }
+
+            Assert.IsTrue(isValid);
+
+            return tedXml;
         }
     }
 }
