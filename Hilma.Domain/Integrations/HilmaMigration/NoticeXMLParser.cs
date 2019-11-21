@@ -1100,8 +1100,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 Months = 0,
                 Days = 0,
                 RenewalDescription = ParsePElements(objectDescription.Element("RENEWAL_DESCR"), 0),
-                Type = objectDescription.Element("DURATION")?.Attribute("TYPE")?.Value != null ? TimeFrameType.Months :
-                       objectDescription.Element("DURATION")?.Attribute("TYPE")?.Value != null ? TimeFrameType.Days :
+                Type = objectDescription.Element("DURATION")?.Attribute("TYPE")?.Value == "MONTH" ? TimeFrameType.Months :
+                       objectDescription.Element("DURATION")?.Attribute("TYPE")?.Value == "DAY" ? TimeFrameType.Days :
                        objectDescription.Element("DATE_START") != null ? TimeFrameType.BeginAndEndDate :
                        TimeFrameType.Undefined
             };
