@@ -15,12 +15,11 @@ namespace Hilma.Domain.Integrations.General
         private readonly NoticeContract _notice;
         private readonly AnnexConfiguration _configuration;
 
-    /// <summary>
-    /// Public constructor that sets the notice and configuration.
-    /// </summary>
-    /// <param name="notice"></param>
-    /// <param name="configuration">Annex field configuration</param>
-    public AnnexHelper(NoticeContract notice, AnnexConfiguration configuration)
+        /// <summary>
+        /// Public constructor that sets the notice and configuration.
+        /// </summary>
+        /// <param name="notice"></param>
+        public AnnexHelper(NoticeContract notice, AnnexConfiguration configuration)
         {
             _notice = notice;
             _configuration = configuration;

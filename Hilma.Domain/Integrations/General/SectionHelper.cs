@@ -52,7 +52,9 @@ namespace Hilma.Domain.Integrations.General
             bool hideJoint = false)
         {
             var organisation = project.Organisation;
-            var isUtilitiesNotice = type.IsUtilities();
+
+            // F15 ex-ante for utility procurements behaves as an utility notice here
+            var isUtilitiesNotice = type.IsUtilities() || (type == NoticeType.ExAnte && project.ProcurementCategory == ProcurementCategory.Utility);
 
             return Element("CONTRACTING_BODY",
                 ADDRS1("ADDRESS_CONTRACTING_BODY", organisation, contactPerson),
@@ -296,8 +298,7 @@ namespace Hilma.Domain.Integrations.General
                 config.MainsiteplaceWorksDelivery ? PElement("MAIN_SITE", objectDescription.MainsiteplaceWorksDelivery) : null,
                 config.DescrProcurement ? PElement("SHORT_DESCR", objectDescription.DescrProcurement) : null,
                 _notice.Type == NoticeType.ExAnte
-                    ? Element(DirectiveSelector(),
-                        Element("AC", awardCriteriaAttribute, AwardCriteriaExAnte(objectDescription)))
+                    ? Element(DirectiveSelector(), objectDescription.AwardCriteria.CriterionTypes != AwardCriterionType.Undefined ? Element("AC", awardCriteriaAttribute, AwardCriteriaExAnte(objectDescription)) : null)
                     : config.AwardCriteria?.CriterionTypes ?? false ? Element("AC", awardCriteriaAttribute, AwardCriteria(objectDescription)) : null,
                 config.EstimatedValue.Value && objectDescription.EstimatedValue.Value > 0 ? ElementWithAttribute("VAL_OBJECT", "CURRENCY", objectDescription.EstimatedValue.Currency, objectDescription.EstimatedValue.Value.GetValueOrDefault()) : null,
                 config.TimeFrame.Type ? Duration(objectDescription.TimeFrame) : null,
@@ -719,6 +720,9 @@ namespace Hilma.Domain.Integrations.General
                     case ProcedureType.AwardWoPriorPubD1Other:
                         procedure.Add(_annexHelper.SelectAnnexD());
                         break;
+                    case ProcedureType.ProctypeNegotWCall:
+                        procedure.Add(Element("PT_NEGOTIATED_WITH_PRIOR_CALL"));
+                        break;
                 }
             }
 
@@ -940,7 +944,7 @@ namespace Hilma.Domain.Integrations.General
                 var noAwardedContract = lot.AwardContract.NoAwardedContract;
                 var awardedContractConfig = _configuration.ObjectDescriptions.AwardContract.AwardedContract;
 
-                var hideTenders = _notice.Type == NoticeType.ExAnte;
+                var isExante = _notice.Type == NoticeType.ExAnte;
 
                 return Element("AWARD_CONTRACT", new XAttribute("ITEM", lot.LotNumber),
                     Element("CONTRACT_NO", GetContractNumber(_notice, lot.LotNumber)),
@@ -950,9 +954,9 @@ namespace Hilma.Domain.Integrations.General
                     lot.AwardContract.ContractAwarded == ContractAwarded.AwardedContract ?
                     Element("AWARDED_CONTRACT",
                         DateElement("DATE_CONCLUSION_CONTRACT", awardedContract.ConclusionDate <= DateTime.Now ? awardedContract.ConclusionDate : DateTime.Now),
-                        hideTenders
+                        isExante
                             ? null
-                            : Element("TENDERS", awardedContractConfig.NumberOfTenders.DisagreeTenderInformationToBePublished
+                            : Element("TENDERS", awardedContractConfig.NumberOfTenders.DisagreeTenderInformationToBePublished && _notice.Project.ProcurementCategory == ProcurementCategory.Utility
                                 ? new XAttribute("PUBLICATION", awardedContract.NumberOfTenders.DisagreeTenderInformationToBePublished ? "NO" : "YES")
                                 : null,
                                 Element("NB_TENDERS_RECEIVED", awardedContract.NumberOfTenders.Total),
@@ -961,9 +965,13 @@ namespace Hilma.Domain.Integrations.General
                                 Element("NB_TENDERS_RECEIVED_NON_EU", awardedContract.NumberOfTenders.NonEu ?? 0),
                                 Element("NB_TENDERS_RECEIVED_EMEANS", awardedContract.NumberOfTenders.Electronic ?? 0)),
                         Element("CONTRACTORS",
-                            awardedContractConfig.DisagreeContractorInformationToBePublished
-                                ? new XAttribute("PUBLICATION", awardedContract.DisagreeContractorInformationToBePublished ? "NO" : "YES")
-                                : null,
+                            _notice.Type == NoticeType.ExAnte
+                                ? _notice.Project.ProcurementCategory == ProcurementCategory.Utility
+                                    ? new XAttribute("PUBLICATION", awardedContract.DisagreeContractorInformationToBePublished ? "NO" : "YES")
+                                    : null
+                                : awardedContractConfig.DisagreeContractorInformationToBePublished
+                                    ? new XAttribute("PUBLICATION", awardedContract.DisagreeContractorInformationToBePublished ? "NO" : "YES")
+                                    : null,
                             awardedContract.Contractors.Count > 1 ? Element("AWARDED_TO_GROUP") : _notice.Type != NoticeType.SocialContractAward ? Element("NO_AWARDED_TO_GROUP") : null,
                             awardedContract.Contractors.Select((contractor, a) =>
                                 Element("CONTRACTOR",
@@ -972,7 +980,11 @@ namespace Hilma.Domain.Integrations.General
                                 )
                             )
                         ),
-                        Element("VALUES", awardedContractConfig.FinalTotalValue.DisagreeToBePublished && awardedContract.FinalTotalValue.DisagreeToBePublished != null ? new XAttribute("PUBLICATION", awardedContract.FinalTotalValue.DisagreeToBePublished == false ? "YES" : "NO") : null,
+                        Element("VALUES", awardedContractConfig.FinalTotalValue.DisagreeToBePublished && awardedContract.FinalTotalValue.DisagreeToBePublished != null
+                                ? !isExante || _notice.Project.ProcurementCategory == ProcurementCategory.Utility
+                                    ? new XAttribute("PUBLICATION", awardedContract.FinalTotalValue.DisagreeToBePublished == false ? "YES" : "NO")
+                                    : null
+                                : null,
                             awardedContract.InitialEstimatedValueOfContract.Value != null ?
                                 ElementWithAttribute("VAL_ESTIMATED_TOTAL", "CURRENCY", awardedContract.InitialEstimatedValueOfContract.Currency, awardedContract.InitialEstimatedValueOfContract.Value) : null,
                             ValueTotal(awardedContract.FinalTotalValue, false)

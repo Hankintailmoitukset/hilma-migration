@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.DataContracts.EtsContracts;
 using Hilma.Domain.Enums;
@@ -47,7 +48,7 @@ namespace Hilma.Domain.Entities
                     ContractType = dto.Project.ContractType,
                     ReferenceNumber = dto.Project.ReferenceNumber,
                     State = PublishState.Draft,
-                    CoPurchasers = new List<ContractBodyContactInformation>(),
+                    CoPurchasers = dto.Project.CoPurchasers,
                     Organisation = new OrganisationContract
                     {
                         Information = dto.Organisation.Information,
@@ -63,7 +64,7 @@ namespace Hilma.Domain.Entities
                     ProcurementLaw = dto.Project.ProcurementLaw,
                     CentralPurchasing = dto.Project.CentralPurchasing,
                     JointProcurement = dto.Project.JointProcurement,
-                    Publish = dto.Project.PublishToTed ? PublishType.ToTed : PublishType.ToHilma,
+                    Publish = NoticeTypeExtensions.IsNational(dto.Type) ? PublishType.ToHilma : PublishType.ToTed,
                     AgricultureWorks = dto.Project.AgricultureWorks
                 },
                 ProceduresForReview = dto.ProceduresForReview,

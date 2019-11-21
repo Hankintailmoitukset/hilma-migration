@@ -129,10 +129,9 @@ namespace Hilma.Domain.Entities
             if (State == PublishState.Published)
             {
                 if (ProcurementCategory != dto.ProcurementCategory ||
-                    ContractType != dto.ContractType ||
-                    Organisation.IsUtilitiesEntity != dto.Organisation.IsUtilitiesEntity)
+                    ContractType != dto.ContractType)
                 {
-                    throw new HilmaException("Updating procurement category, contract type or organisation.isUtilitiesEntity is not allowed for published projects");
+                    throw new HilmaException("Updating procurement category, contract type is not allowed for published projects");
                 }
             }
             // Creator and  Id cannot be updated with this method.

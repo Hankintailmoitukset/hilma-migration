@@ -694,16 +694,15 @@ namespace Hilma.Domain.Integrations.General
             changes.Add(parentLot.AwardContract.AwardedContract.NotPublicFields.AbnormallyLowTendersExcluded.ToYesNo(Language), lot.AwardContract.AwardedContract.NotPublicFields.AbnormallyLowTendersExcluded.ToYesNo(Language), typeof(ContractAwardNotPublicFields), nameof(ContractAwardNotPublicFields.AwardedToTendererWithVariant), lot.LotNumber, "V.2.10");
 
         }
-    #endregion
+        #endregion
 
-    #region Section VI: Complementary information
-    /// <summary>
-    /// Section VI: Complementary information
-    /// </summary>
-    /// <param name="notice">The notice </param>/param>
-    /// <param name="parent">The parent notice</param>
-    /// <param name="changes">List of changes to append to</param>
-    private static void ComplementaryInfo(NoticeContract notice, NoticeContract parent, List<XElement> changes)
+        #region Section VI: Complementary information
+        /// <summary>
+        /// Section VI: Complementary information
+        /// </summary>/param>
+        /// <param name="parent">The parent notice</param>
+        /// <param name="changes">List of changes to append to</param>
+        private static void ComplementaryInfo(NoticeContract notice, NoticeContract parent, List<XElement> changes)
         {
             var comp = notice.ComplementaryInformation;
             var parentComp = parent.ComplementaryInformation;

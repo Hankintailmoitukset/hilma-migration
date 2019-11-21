@@ -26,11 +26,6 @@ namespace Hilma.Domain.Entities
         /// </summary>
         public ContractBodyContactInformation Information { get; set; }
 
-        /// <summary>
-        /// The procurement is governed by the procurement act on entities operating in the water, energy, transport and postal services sectors.
-        /// NOTE! Only for view model purposes. Irrelevant for TED
-        /// </summary>
-        public bool IsUtilitiesEntity { get; set; }
 
         /// <summary>
         /// Type of the contracting authority
@@ -104,7 +99,6 @@ namespace Hilma.Domain.Entities
 
             ValidationState = dto.ValidationState;
             Information = dto.Information;
-            IsUtilitiesEntity = dto.IsUtilitiesEntity;
             ContractingAuthorityType = dto.ContractingAuthorityType;
             OtherContractingAuthorityType = dto.ContractingAuthorityType == ContractingAuthorityType.OtherType ? dto.OtherContractingAuthorityType : null;
             MainActivity = dto.MainActivity;

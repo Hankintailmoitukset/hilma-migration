@@ -1,4 +1,5 @@
 using Hilma.Domain.Attributes;
+using Hilma.Domain.Enums;
 
 namespace Hilma.Domain.DataContracts
 {
@@ -16,5 +17,30 @@ namespace Hilma.Domain.DataContracts
         public string[] OtherProcedure { get; set; }
 
         public string[] AdditionalProcedureInformation { get; set; }
+
+        /// <summary>
+        /// Used in national transparency notices
+        /// Ilmoituksen tyyppi
+        /// </summary>
+        public TransparencyType TransparencyType { get; set; }
+
+        /// <summary>
+        /// Used in national transparency notices
+        /// Menettelyyn valitaan rajoitettu määrä osallistujia
+        /// </summary>
+        public bool LimitedNumberOfParticipants { get; set; }
+
+        /// <summary>
+        /// Used in national transparency notices
+        /// jos kyllä: kuinka monta / valittavien osallistujien enimmäismäärä
+        /// </summary>
+        public int NumberOfParticipants { get; set; }
+
+        /// <summary>
+        /// Used in national transparency notices
+        /// Valintaperuste
+        /// (jos menettelyyn sisältyy valintaa)
+        /// </summary>
+        public string[] SelectionCriteria { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace Hilma.Domain.Integrations.Configuration
         
         
         public bool IncludesFrameworkAgreement {get; set;} = false;
+        public bool IncludesConclusionOfFrameworkAgreement {get; set;} = false;
         public bool FrameworkAgreementType {get; set;} = false;
         public bool EnvisagedNumberOfParticipants {get; set;} = false;
         public bool FrameworkEnvisagedType {get; set;} = false;

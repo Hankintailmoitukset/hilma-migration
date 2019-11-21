@@ -21,6 +21,8 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         {
             EtsIdentifier = dbo.EtsIdentifier;
             ProjectId = dbo.ProcurementProjectId;
+            NoticeId = dbo.Id;
+
             OrganisationId = dbo.Project.Organisation.Information.NationalRegistrationNumber;
 
             CreationDate = dbo.DateCreated.Value;
@@ -28,7 +30,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             HilmaPublicationDate = dbo.DatePublished;
             TedStatus = dbo.TedPublishState;
             TedSubmissionId = dbo.TedSubmissionId;
-
+            NoticeOjsNumber = dbo.NoticeOjsNumber;
             TedValidationReport = dbo.TedValidationErrors;
 
             if (dbo.TedPublicationInfo != null)
@@ -44,6 +46,12 @@ namespace Hilma.Domain.DataContracts.EtsContracts
                 Notice = new EtsNoticeContract(dbo);
             }
         }
+
+        /// <summary>
+        /// OJS Number for published Ted notices.
+        /// <example>2019/S 001-999999</example>
+        /// </summary>
+        public string NoticeOjsNumber { get; set; }
 
         /// <summary>
         /// The datetime at which this notice was first sent to EtsApi.
@@ -73,6 +81,13 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         /// If not supplied, hilma will generate a new project based on the information provided.
         /// </summary>
         public int ProjectId { get; set; }
+
+        /// <summary>
+        /// Internal identifier of created Hilma notice. 
+        /// This identifier can be user to generate URL to public notice in Hilma together with project id
+        /// </summary>
+        public int NoticeId { get; set; }
+
         /// <summary>
         /// Information regarding publication in TED.
         /// </summary>
