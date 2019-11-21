@@ -22,4 +22,4 @@ jobs:
       uses: warrenbuckley/Setup-Nuget@v1
     
     - name: Deploy NuGet Package
-      run: dotnet nuget push hilma-migration/NuGetPackages/*.nupkg -k  ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push NuGetPackages/*.nupkg -k  ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
