@@ -23,7 +23,7 @@ class Build : NukeBuild
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
 
-    public static int Main () => Execute<Build>(x => x.Compile);
+    public static int Main() => Execute<Build>(x => x.Compile);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
@@ -45,8 +45,6 @@ class Build : NukeBuild
     Target Restore => _ => _
         .Executes(() =>
         {
-            TeamCity.Instance.Write("dsdsa");
-
             DotNetRestore(s => s
                 .SetProjectFile(DomainCsproj));
         });
@@ -70,11 +68,12 @@ class Build : NukeBuild
                 .SetOutputDirectory(ArtifactsDirectory)
                 .SetConfiguration(Configuration)
                 .SetNoBuild(true)
+                
             );
-
+            
             if (TeamCity.Instance != null)
             {
-                TeamCity.Instance.PublishArtifacts(TeamCity.Instance.SystemProperties?["teamcity.build.workingDir"] + "/artifacts/Hilma.Domain.1.0.0.nupkg");
+                TeamCity.Instance.PublishArtifacts(TeamCity.Instance.SystemProperties?["teamcity.build.workingDir"] + $"/artifacts/Hilma.Domain.1.0.0.{TeamCity.Instance.BuildNumber}.nupkg");
             }
         });
 }
