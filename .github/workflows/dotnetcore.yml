@@ -18,4 +18,4 @@ jobs:
     - name: Build NuGet Package
       run: dotnet pack Hilma.Domain/Hilma.Domain.csproj --configuration Release -o NuGetPackages
     - name: Deploy NuGet Package
-      run: dotnet nuget push hilma-migration/hilma-migration/NuGetPackages/*.nupkg -k $nugetKey -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push Hilma.Domain/NuGetPackages/*.nupkg -k $nugetKey -s https://api.nuget.org/v3/index.json
