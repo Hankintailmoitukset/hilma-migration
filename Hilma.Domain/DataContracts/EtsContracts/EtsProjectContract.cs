@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
@@ -52,6 +53,11 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         public bool CentralPurchasing { get; set; }
 
         /// <summary>
+        ///     List of involved organisations in case of joint procurement
+        /// </summary>
+        public List<ContractBodyContactInformation> CoPurchasers { get; set; }
+
+        /// <summary>
         ///     If defence contract and ContractType = Works: use this enum
         /// </summary>
         public Works DefenceWorks { get; set; }
@@ -63,10 +69,6 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         ///     If defence contract and ContractType = Services: use this entity
         /// </summary>
         public DefenceCategory DefenceCategory { get; set; }
-        /// <summary>
-        /// If notices under this project should be published to TED as well
-        /// </summary>
-        public bool PublishToTed { get; set; }
         /// <summary>
         /// If NoticeType == NationalAgricultureContract and ContractType == Works
         /// </summary>

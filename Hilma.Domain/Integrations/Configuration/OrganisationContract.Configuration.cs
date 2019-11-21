@@ -10,7 +10,6 @@ namespace Hilma.Domain.Integrations.Configuration
         
         public bool Id {get; set;} = false;
         public ContractBodyContactInformationConfiguration Information {get; set;} = new ContractBodyContactInformationConfiguration();
-        public bool IsUtilitiesEntity {get; set;} = false;
         public bool ContractingAuthorityType {get; set;} = false;
         public bool OtherContractingAuthorityType {get; set;} = false;
         public bool MainActivity {get; set;} = false;

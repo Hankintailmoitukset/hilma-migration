@@ -54,7 +54,7 @@ namespace Hilma.Domain.Validators
                 || _notice.Type == NoticeType.NationalDirectAward;
 
             var hilmaValidation = ValidateAll(noticeValid,
-                               Validate(_notice.Project),
+                               Validate(_notice.Project, _notice.Type),
                                Validate(_notice.ContactPerson),
                                (communicationInformationNotRequired || Validate(_notice.CommunicationInformation)),
                                Validate(_notice.LotsInfo),
@@ -193,24 +193,22 @@ namespace Hilma.Domain.Validators
                    _notice.ObjectDescriptions?.All(Validate) ?? false);
         }
 
-        public bool Validate(ObjectDescription objectDescription)
-        {
-            return ValidateAll(Valid((objectDescription.DescrProcurement).HasAnyContent() || _notice.Type.IsDefence(), "ObjectDescription.DescrProcurement"),
-                             Valid(objectDescription.NutsCodes.Any()
-                             || _notice.Type.IsDefence()
-                             || _notice.Type == NoticeType.DesignContest
-                             || _notice.Type == NoticeType.NationalDesignContest
-                             || _notice.Type == NoticeType.NationalAgricultureContract, "ObjectDescription.NutsCodes"),
-                             Valid(!objectDescription.TimeFrame.CanBeRenewed || (objectDescription.TimeFrame.CanBeRenewed && (objectDescription.TimeFrame?.RenewalDescription).HasAnyContent()), "ObjectDescription.TimeFrame.RenewalDescription"),
-                             Valid(!(objectDescription.AwardCriteria.CriterionTypes == AwardCriterionType.DescriptiveCriteria && _notice.Type == NoticeType.ContractAward), "Award criteria cannot be descriptive for contract award."));
-        }
+        public bool Validate(ObjectDescription objectDescription) =>
+            ValidateAll(Valid((objectDescription.DescrProcurement).HasAnyContent() || _notice.Type.IsDefence(), "ObjectDescription.DescrProcurement"),
+                Valid(objectDescription.NutsCodes.Any()
+                      || _notice.Type.IsDefence()
+                      || _notice.Type == NoticeType.DesignContest
+                      || _notice.Type == NoticeType.NationalDesignContest
+                      || _notice.Type == NoticeType.NationalAgricultureContract, "ObjectDescription.NutsCodes"),
+                Valid(!objectDescription.TimeFrame.CanBeRenewed || (objectDescription.TimeFrame.CanBeRenewed && (objectDescription.TimeFrame?.RenewalDescription).HasAnyContent()), "ObjectDescription.TimeFrame.RenewalDescription"),
+                Valid(!(objectDescription.AwardCriteria.CriterionTypes == AwardCriterionType.DescriptiveCriteria && _notice.Type == NoticeType.ContractAward), "Award criteria cannot be descriptive for contract award."));
 
-        public bool Validate(ProcurementProjectContract project)
+        public bool Validate(ProcurementProjectContract project, NoticeType type)
         {
             return ValidateAll(Valid(project != null && project.Id != 0, "ProcurementProjectContract"),
                                Valid(project?.ContractType != ContractType.Undefined, "ProcurementProjectContract.ContractType"),
                                Valid(!string.IsNullOrWhiteSpace(project?.Title), "ProcurementProjectContract.Title"),
-                               Validate(project?.Organisation));
+                               Validate(project?.Organisation, type, project));
         }
 
         public bool Validate(ProcedureInformation info)
@@ -271,12 +269,14 @@ namespace Hilma.Domain.Validators
                                       || _notice.Type == NoticeType.NationalAgricultureContract, "ProcurementObject.ShortDescription"));
         }
 
-        public bool Validate(OrganisationContract organisation)
+        public bool Validate(OrganisationContract organisation, NoticeType type, ProcurementProjectContract project)
         {
+            var isUtilitiesNotice = type.IsUtilities() || (type == NoticeType.ExAnte && project.ProcurementCategory == ProcurementCategory.Utility);
             return ValidateAll(Valid(organisation != null, "Organisation"),
+                               Valid(isUtilitiesNotice
+                                ? organisation?.MainActivityUtilities != MainActivityUtilities.Undefined
+                                : (organisation?.MainActivity != MainActivity.Undefined || organisation?.ContractingAuthorityType == ContractingAuthorityType.MaintypeFarmer), "Organisation.MainActivity"),
                                Valid(organisation?.ContractingAuthorityType != ContractingAuthorityType.Undefined, "Organisation.ContractingAuthorityType"),
-                               Valid((organisation?.MainActivity != MainActivity.Undefined || organisation?.ContractingAuthorityType == ContractingAuthorityType.MaintypeFarmer) ||
-                                organisation?.MainActivityUtilities != MainActivityUtilities.Undefined, "Organisation.MainActivity"),
                                Valid(organisation?.Id != Guid.Empty, "Organisation.Id"),
                                Validate(organisation?.Information));
 

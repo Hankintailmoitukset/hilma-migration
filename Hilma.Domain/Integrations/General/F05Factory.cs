@@ -93,8 +93,8 @@ namespace Hilma.Domain.Integrations.General
                     AddressFurtherInfo(communicationInformation),
 
                     _notice.CommunicationInformation.SendTendersOption == TenderSendOptions.AddressSendTenders ? TedHelpers.Element("URL_PARTICIPATION", _notice.CommunicationInformation.ElectronicAddressToSendTenders) : null,
-                    _notice.CommunicationInformation.SendTendersOption == TenderSendOptions.AddressFollowing ? TedHelpers.ADDRS1("ADDRESS_PARTICIPATION", _notice.CommunicationInformation.AddressToSendTenders)
-                        : TedHelpers.Element("ADDRESS_PARTICIPATION_IDEM"),
+                    _notice.CommunicationInformation.SendTendersOption == TenderSendOptions.AddressFollowing ? TedHelpers.ADDRS1("ADDRESS_PARTICIPATION", _notice.CommunicationInformation.AddressToSendTenders) :null,
+                    _notice.CommunicationInformation.SendTendersOption == TenderSendOptions.AddressOrganisation ? TedHelpers.Element("ADDRESS_PARTICIPATION_IDEM"):null,
 
                     _notice.CommunicationInformation.ElectronicCommunicationRequiresSpecialTools ? TedHelpers.Element("URL_TOOL", _notice.CommunicationInformation.ElectronicCommunicationInfoUrl) : null,
 
@@ -384,6 +384,10 @@ namespace Hilma.Domain.Integrations.General
                 conditions.Add(TedHelpers.PElement("REFERENCE_TO_LAW", _notice.ConditionsInformation.ReferenceToRelevantLawRegulationOrProvision));
             }
 
+            if(_notice.ConditionsInformation.ContractPerformanceConditions != null)
+            {   
+                conditions.Add(TedHelpers.PElement("PERFORMANCE_CONDITIONS", _notice.ConditionsInformation.ContractPerformanceConditions));
+            }
 
             return conditions;
         }
@@ -420,11 +424,15 @@ namespace Hilma.Domain.Integrations.General
             }
 
             var participants = _notice.ProcedureInformation.FrameworkAgreement.EnvisagedNumberOfParticipants;
+            var frameworkAgreementType = _notice.ProcedureInformation.FrameworkAgreement.FrameworkAgreementType;
 
-            procedure.Add(TedHelpers.Element("FRAMEWORK",
-                participants != null && participants > 1 ? TedHelpers.Element("SEVERAL_OPERATORS") : TedHelpers.Element("SINGLE_OPERATOR"),
-                TedHelpers.Element("NB_PARTICIPANTS", participants),
-                TedHelpers.PElement("JUSTIFICATION", _notice.ProcedureInformation.FrameworkAgreement.JustificationForDurationOverFourYears)));
+            if (_notice.ProcedureInformation.FrameworkAgreement.IncludesFrameworkAgreement)
+            {
+                procedure.Add(TedHelpers.Element("FRAMEWORK", frameworkAgreementType == FrameworkAgreementType.FrameworkSeveral ?
+                              TedHelpers.Element("SEVERAL_OPERATORS") : TedHelpers.Element("SINGLE_OPERATOR"),
+                              frameworkAgreementType == FrameworkAgreementType.FrameworkSeveral  ? TedHelpers.Element("NB_PARTICIPANTS", participants) : null,
+                              TedHelpers.PElement("JUSTIFICATION", _notice.ProcedureInformation.FrameworkAgreement.JustificationForDurationOverFourYears)));
+            }  
 
             procedure.Add(_notice.ProcedureInformation.FrameworkAgreement.IncludesDynamicPurchasingSystem ? TedHelpers.Element("DPS") : null);
 

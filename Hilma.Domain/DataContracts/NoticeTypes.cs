@@ -9,35 +9,51 @@ namespace Hilma.Domain.DataContracts
     [Configuration]
     public class NoticeTypes
     {
+        /// <summary>
+        /// The order is important and shown in this order in UI.
+        /// </summary>
         public NoticeType[] SupportNoticeTypes { get; } =
         {
             NoticeType.PriorInformation,
             NoticeType.PriorInformationReduceTimeLimits,
-            NoticeType.PeriodicIndicativeUtilities,
-            NoticeType.SocialUtilitiesPriorInformation,
             NoticeType.Contract,
             NoticeType.ContractAward,
-            NoticeType.ContractAwardUtilities,
+
+            NoticeType.PeriodicIndicativeUtilities,
             NoticeType.ContractUtilities,
+            NoticeType.ContractAwardUtilities,
+
+            NoticeType.DesignContest,
+
+            NoticeType.ExAnte,
+
+            NoticeType.DefencePriorInformation,
+            NoticeType.DefenceContract,
+            NoticeType.DefenceContractAward,
+
             NoticeType.Modification,
+
+            NoticeType.SocialPriorInformation,
             NoticeType.SocialContract,
             NoticeType.SocialContractAward,
-            NoticeType.DefenceContract,
-            NoticeType.ExAnte,
+
+            NoticeType.SocialUtilitiesPriorInformation,
             NoticeType.SocialUtilities,
-            NoticeType.DefencePriorInformation,
-            NoticeType.SocialPriorInformation,
-            NoticeType.DefenceContractAward,
-            NoticeType.NationalDirectAward,
+
+            NoticeType.Concession,
+
+            // Nationals below
             NoticeType.NationalPriorInformation,
             NoticeType.NationalContract,
-            NoticeType.NationalAgricultureContract,
-            NoticeType.DesignContest,
+
+            NoticeType.NationalDirectAward,
             NoticeType.NationalDesignContest,
+
             NoticeType.NationalDefencePriorInformation,
             NoticeType.NationalDefenceContract,
-            NoticeType.PriorInformationReduceTimeLimits,
-            NoticeType.Concession
+
+            NoticeType.NationalAgricultureContract,
+            NoticeType.NationalTransparency
         };
 
         public NoticeType[] PublicNotices { get; } = new[] {
@@ -59,7 +75,8 @@ namespace Hilma.Domain.DataContracts
             NoticeType.NationalExAnte,
             NoticeType.NationalDefencePriorInformation,
             NoticeType.NationalDefenceContract,
-            NoticeType.NationalAgricultureContract
+            NoticeType.NationalAgricultureContract,
+            NoticeType.NationalTransparency
         };
 
         /// <summary>
@@ -102,7 +119,7 @@ namespace Hilma.Domain.DataContracts
         /// <summary>
         /// Utilities notice types
         /// </summary>
-        public  NoticeType[] UtilitiesNotices { get; } = new[] {
+        public NoticeType[] UtilitiesNotices { get; } = new[] {
             NoticeType.PeriodicIndicativeUtilities,
             NoticeType.PeriodicIndicativeUtilitiesReduceTimeLimits,
             NoticeType.ContractAwardUtilities,
@@ -127,7 +144,7 @@ namespace Hilma.Domain.DataContracts
         /// <summary>
         /// Defence notices
         /// </summary>
-        public  NoticeType[] DefenceNotices { get; } = new[] {
+        public NoticeType[] DefenceNotices { get; } = new[] {
             NoticeType.DefenceConcession,
             NoticeType.DefencePriorInformation,
             NoticeType.DefenceContract,
@@ -139,6 +156,77 @@ namespace Hilma.Domain.DataContracts
             NoticeType.NationalDefenceContract
         };
 
+        /// <summary>
+        /// 2014/24/EU
+        /// </summary>
+        public NoticeType[] EuPublicCategories { get; } = new[] {
+            NoticeType.PriorInformation,
+            NoticeType.PriorInformationReduceTimeLimits,
+            NoticeType.Contract,
+            NoticeType.ContractAward,
+            NoticeType.DesignContest,
+            NoticeType.DesignContestResults,
+            NoticeType.ExAnte,
+            NoticeType.Modification,
+            NoticeType.SocialPriorInformation,
+            NoticeType.SocialContract,
+            NoticeType.SocialContractAward
+        };
+
+        public NoticeType[] NationalPublicCategories { get; } = new[] {
+            NoticeType.NationalPriorInformation,
+            NoticeType.NationalContract,
+            NoticeType.NationalDesignContest,
+            NoticeType.NationalDirectAward
+        };
+
+        /// <summary>
+        /// 2009/81/EC
+        /// </summary>
+        public NoticeType[] EuDefenceCategories { get; } = new[] {
+            NoticeType.DefencePriorInformation,
+            NoticeType.DefenceContract,
+            NoticeType.DefenceContractAward,
+            NoticeType.ExAnte
+        };
+
+        public NoticeType[] NationalDefenceCategories { get; } = new[] {
+            NoticeType.NationalDefencePriorInformation,
+            NoticeType.NationalDefenceContract
+        };
+
+        /// <summary>
+        /// 2014/25/EU
+        /// </summary>
+        public NoticeType[] EuUtilityCategories { get; } = new[] {
+            NoticeType.PeriodicIndicativeUtilities,
+            NoticeType.ContractUtilities,
+            NoticeType.ContractAwardUtilities,
+            NoticeType.QualificationSystemUtilities,
+            NoticeType.DesignContest,
+            NoticeType.DesignContestResults,
+            NoticeType.ExAnte,
+            NoticeType.Modification,
+            NoticeType.PeriodicIndicativeUtilitiesReduceTimeLimits,
+            NoticeType.SocialUtilities,
+            NoticeType.SocialUtilitiesPriorInformation
+        };
+
+        /// <summary>
+        /// 2014/23/EU
+        /// </summary>
+        public NoticeType[] EuLisenceCategories { get; } = new[] {
+            NoticeType.Concession,
+            NoticeType.ConcessionAward,
+            NoticeType.SocialConcessions,
+            NoticeType.Modification,
+            NoticeType.ExAnte
+        };
+
+        public NoticeType[] AgricultureCategories { get; } = new[] {
+            NoticeType.NationalAgricultureContract
+        };
+
     }
-    
+
 }

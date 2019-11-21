@@ -121,7 +121,7 @@ namespace Hilma.Domain.Integrations.Defence
 
             XElement activityElement;
 
-            if (organisation.IsUtilitiesEntity)
+            if (_notice.Project.ProcurementCategory == ProcurementCategory.Utility)
             {
                 if (organisation.ContractingAuthorityType == ContractingAuthorityType.OtherType)
                 {
@@ -415,11 +415,11 @@ namespace Hilma.Domain.Integrations.Defence
                 {
                     return ElementWithAttribute("FRAMEWORK_AGREEMENT", "VALUE", "YES");
                 }
-                if (_notice.Type == NoticeType.DefenceContract)
+                if (_notice.Type == NoticeType.DefenceContract && agreement.IncludesFrameworkAgreement)
                 {
                     return ElementWithAttribute("NOTICE_INVOLVES_DEFENCE", "VALUE", "ESTABLISHMENT_FRAMEWORK_AGREEMENT");
                 }
-                if (_notice.Type == NoticeType.DefenceContractAward)
+                if (_notice.Type == NoticeType.DefenceContractAward && agreement.IncludesConclusionOfFrameworkAgreement)
                 {
                     return ElementWithAttribute("NOTICE_INVOLVES_DESC_DEFENCE", "VALUE", "CONCLUSION_FRAMEWORK_AGREEMENT");
                 }
@@ -434,23 +434,19 @@ namespace Hilma.Domain.Integrations.Defence
 
             if (config.FrameworkAgreementType && agreement.FrameworkAgreementType != Entities.FrameworkAgreementType.Undefined)
             {
-                return Element("F17_FRAMEWORK",
-                    agreement.FrameworkAgreementType == Entities.FrameworkAgreementType.FrameworkSeveral
-                        ? Element("SEVERAL_OPERATORS",
-                            agreement.FrameworkEnvisagedType == FrameworkEnvisagedType.FrameworkEnvisagedExact ?
-                            Element("NUMBER_PARTICIPANTS", agreement.EnvisagedNumberOfParticipants) :
-                            Element("MAX_NUMBER_PARTICIPANTS", agreement.EnvisagedNumberOfParticipants))
-                        : Element("SINGLE_OPERATOR"),
-                    agreement.Duration.Type == TimeFrameType.Years ?
-                    Element("DURATION_FRAMEWORK_YEAR", agreement.Duration.Years) :
-                    Element("DURATION_FRAMEWORK_MONTH", agreement.Duration.Months),
-                    PElement("JUSTIFICATION", agreement.JustificationForDurationOverSevenYears),
-                    Element("TOTAL_ESTIMATED",
-                        ElementWithAttribute("COSTS_RANGE_AND_CURRENCY", "CURRENCY", agreement.EstimatedTotalValue.Currency,
-                            agreement.EstimatedTotalValue.Type == ContractValueType.Range ?
-                            Element("RANGE_VALUE_COST", Element("LOW_VALUE", agreement.EstimatedTotalValue.MinValue), Element("HIGH_VALUE", agreement.EstimatedTotalValue.MaxValue)) :
-                            Element("VALUE_COST", agreement.EstimatedTotalValue.Value)),
-                        PElement("FREQUENCY_AWARDED_CONTRACTS", agreement.FrequencyAndValue)));
+                return Element("F17_FRAMEWORK", agreement.FrameworkAgreementType == Entities.FrameworkAgreementType.FrameworkSeveral ?
+                       Element("SEVERAL_OPERATORS", agreement.FrameworkEnvisagedType == FrameworkEnvisagedType.FrameworkEnvisagedExact ?
+                       Element("NUMBER_PARTICIPANTS", agreement.EnvisagedNumberOfParticipants) :
+                       Element("MAX_NUMBER_PARTICIPANTS", agreement.EnvisagedNumberOfParticipants)) :
+                       Element("SINGLE_OPERATOR"), agreement.Duration.Type == TimeFrameType.Years ?
+                       Element("DURATION_FRAMEWORK_YEAR", agreement.Duration.Years) :
+                       Element("DURATION_FRAMEWORK_MONTH", agreement.Duration.Months),
+                       PElement("JUSTIFICATION", agreement.JustificationForDurationOverSevenYears),
+                       Element("TOTAL_ESTIMATED",
+                       ElementWithAttribute("COSTS_RANGE_AND_CURRENCY", "CURRENCY", agreement.EstimatedTotalValue.Currency, agreement.EstimatedTotalValue.Type == ContractValueType.Range ?
+                       Element("RANGE_VALUE_COST", Element("LOW_VALUE", agreement.EstimatedTotalValue.MinValue), Element("HIGH_VALUE", agreement.EstimatedTotalValue.MaxValue)) :
+                       Element("VALUE_COST", agreement.EstimatedTotalValue.Value)),
+                       PElement("FREQUENCY_AWARDED_CONTRACTS", agreement.FrequencyAndValue)));
             }
 
             return null;

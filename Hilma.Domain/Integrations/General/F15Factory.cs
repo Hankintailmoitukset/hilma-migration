@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Xml.Linq;
 using Hilma.Domain.DataContracts;
-using Hilma.Domain.Entities;
-using Hilma.Domain.Entities.Annexes;
 using Hilma.Domain.Enums;
 using Hilma.Domain.Integrations.Configuration;
 using Hilma.Domain.Integrations.ConfigurationFactories;
@@ -19,7 +15,7 @@ namespace Hilma.Domain.Integrations.General
         private readonly NoticeContract _notice;
         private readonly string _eSenderLogin;
         private readonly string _tedContactEmail;
-        private string _tedESenderOrganisation;
+        private readonly string _tedESenderOrganisation;
         private readonly NoticeContractConfiguration _configuration;
         private readonly SectionHelper _helper;
         private readonly AnnexHelper _annexHelper;
@@ -117,11 +113,15 @@ namespace Hilma.Domain.Integrations.General
                     : null,
                 procuremenObject.TotalValue.Type == ContractValueType.Exact
                     ? TedHelpers.Element("VAL_TOTAL",
-                        new XAttribute("PUBLICATION", (!procuremenObject.TotalValue.DisagreeToBePublished ?? false).ToYesNo("EN").ToUpperInvariant()),
+                        _notice.Project.ProcurementCategory == ProcurementCategory.Utility
+                            ? new XAttribute("PUBLICATION", (!procuremenObject.TotalValue.DisagreeToBePublished ?? false).ToYesNo("EN").ToUpperInvariant())
+                            : null,
                         new XAttribute("CURRENCY", procuremenObject.TotalValue.Currency),
                         procuremenObject.TotalValue.Value)
                     : TedHelpers.Element("VAL_RANGE_TOTAL",
-                        new XAttribute("PUBLICATION", (!procuremenObject.TotalValue.DisagreeToBePublished ?? false).ToYesNo("EN").ToUpperInvariant()),
+                        _notice.Project.ProcurementCategory == ProcurementCategory.Utility
+                            ? new XAttribute("PUBLICATION", (!procuremenObject.TotalValue.DisagreeToBePublished ?? false).ToYesNo("EN").ToUpperInvariant())
+                            : null,
                         new XAttribute("CURRENCY", procuremenObject.TotalValue.Currency),
                         TedHelpers.Element("LOW", procuremenObject.TotalValue.MinValue),
                         TedHelpers.Element("HIGH", procuremenObject.TotalValue.MaxValue)),

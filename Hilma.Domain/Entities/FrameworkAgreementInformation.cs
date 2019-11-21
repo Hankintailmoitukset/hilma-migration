@@ -17,6 +17,13 @@ namespace Hilma.Domain.Entities
         public bool IncludesFrameworkAgreement { get; set; }
 
         /// <summary>
+        /// Directive 2009/81/EC
+        /// The procurement involves the establishment of a framework agreement (incorrect in TED form - correct value in Excel)
+        /// </summary>
+        [CorrigendumLabel("notice_involves_framework_conclusion", "IV.1.3")]
+        public bool IncludesConclusionOfFrameworkAgreement { get; set; }
+
+        /// <summary>
         /// Defines if framework agreement for single or several providers
         /// </summary>
         [CorrigendumLabel("notice_involves_framework", "IV.1.3")]

@@ -231,6 +231,11 @@ namespace Hilma.Domain.Enums
         /// National defence contract
         /// </summary>
         NationalDefenceContract = 9911,
+
+        /// <summary>
+        /// National transparency notice
+        /// </summary>
+        NationalTransparency = 9920
     }
 
 }
