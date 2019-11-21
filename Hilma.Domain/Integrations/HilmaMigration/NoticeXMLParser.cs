@@ -41,9 +41,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 {
                     formElement = ResolveFormElement(noticeType, formSection, importedNotice);
                 }
-
                 
-                var noticeNumber = doc.Element("TED_ESENDERS")?.Element("HILMA_METADATA")?.Element("NO_DOC_EXT")?.Value;
+                var noticeNumber = importedNotice.NoticeNumber;
 
                 if (noticeType.IsNational())
                 {
