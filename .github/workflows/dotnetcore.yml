@@ -17,5 +17,9 @@ jobs:
       run: dotnet build Hilma.Domain/Hilma.Domain.csproj --configuration Release
     - name: Build NuGet Package
       run: dotnet pack Hilma.Domain/Hilma.Domain.csproj --configuration Release -o NuGetPackages
+    
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+    
     - name: Deploy NuGet Package
-      run: dotnet nuget push Hilma.Domain/NuGetPackages/*.nupkg -k $nugetKey -s https://api.nuget.org/v3/index.json
+      run: nuget push -Apikey $nugetKey Hilma.Domain/NuGetPackages/*.nupkg 
