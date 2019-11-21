@@ -22,4 +22,4 @@ jobs:
       uses: warrenbuckley/Setup-Nuget@v1
     
     - name: Deploy NuGet Package
-      run: nuget push Hilma.Domain/NuGetPackages/*.nupkg -source https://api.nuget.org/v3/index.json -apikey $NUGET_KEY
+      run: nuget push Hilma.Domain/NuGetPackages/*.nupkg -source https://api.nuget.org/v3/index.json -apikey $
