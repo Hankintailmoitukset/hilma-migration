@@ -1,0 +1,25 @@
+name: .NET Core
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: [windows-latest]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+    - name: Build with dotnet
+      run: dotnet build Hilma.Domain/Hilma.Domain.csproj --configuration Release
+    - name: Build NuGet Package
+      run: dotnet pack Hilma.Domain/Hilma.Domain.csproj --configuration Release -o NuGetPackages
+    
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+    
+    - name: Deploy NuGet Package
+      run: dotnet nuget push D:\a\hilma-migration\hilma-migration\NuGetPackages\*.nupkg -k  ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
