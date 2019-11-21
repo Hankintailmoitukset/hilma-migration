@@ -7,8 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hilma.Domain", "Hilma.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hilma.MigrationExample", "Hilma.MigrationExample\Hilma.MigrationExample.csproj", "{A827B46A-AD22-46CB-9078-BA8A28209DF9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{0454492E-38BC-4BC7-B6C3-2147054FC808}"
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hilma.Tests", "Hilma.Tests\Hilma.Tests.csproj", "{CA7174C6-6753-449F-9809-8F245C2293B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hilma.Tests", "Hilma.Tests\Hilma.Tests.csproj", "{CA7174C6-6753-449F-9809-8F245C2293B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,8 +21,6 @@ Global
 		{9B03334D-BFF9-41D6-979C-638597ABFC2F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A827B46A-AD22-46CB-9078-BA8A28209DF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A827B46A-AD22-46CB-9078-BA8A28209DF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0454492E-38BC-4BC7-B6C3-2147054FC808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0454492E-38BC-4BC7-B6C3-2147054FC808}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A827B46A-AD22-46CB-9078-BA8A28209DF9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CA7174C6-6753-449F-9809-8F245C2293B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CA7174C6-6753-449F-9809-8F245C2293B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
