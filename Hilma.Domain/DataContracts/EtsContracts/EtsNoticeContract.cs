@@ -78,6 +78,66 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             CorrigendumAdditionalInformation = dbo.CorrigendumAdditionalInformation;
             ContractAwardsDefence = dbo.ContractAwardsDefence;
         }
+        
+        /// <summary>
+        /// Create EtsNoticeContract from NoticeContract
+        /// </summary>
+        /// <param name="dto">Notice data contract</param>
+        public EtsNoticeContract(NoticeContract dto)
+        {
+            Id = dto.Id;
+            CommunicationInformation = dto.CommunicationInformation;
+            ComplementaryInformation = dto.ComplementaryInformation;
+            ConditionsInformation = dto.ConditionsInformation;
+            ConditionsInformationDefence = dto.ConditionsInformationDefence;
+            ContactPerson = dto.ContactPerson;
+            EstimatedValue = dto.ProcurementObject.EstimatedValue;
+            LotsInfo = dto.LotsInfo;
+            MainCpvCode = dto.ProcurementObject.MainCpvCode;
+            ObjectDescriptions = dto.ObjectDescriptions;
+            NoticeOjsNumber = dto.NoticeOjsNumber;
+            PreviousNoticeOjsNumber = dto.PreviousNoticeOjsNumber;
+
+            Project = new EtsProjectContract
+            {
+                Id = dto.Project.Id,
+                ContractType = dto.Project.ContractType,
+                ReferenceNumber = dto.Project.ReferenceNumber,
+                Title = dto.Project.Title,
+                CentralPurchasing = dto.Project.CentralPurchasing,
+                DefenceCategory = dto.Project.DefenceCategory,
+                DefenceSupplies = dto.Project.DefenceSupplies,
+                DefenceWorks = dto.Project.DefenceWorks,
+                JointProcurement = dto.Project.JointProcurement,
+                ProcurementCategory = dto.Project.ProcurementCategory,
+                ProcurementLaw = dto.Project.ProcurementLaw,
+                AgricultureWorks = dto.Project.AgricultureWorks
+            };
+            Organisation = new EtsOrganisationContract
+            {
+                Information = dto.Project.Organisation.Information,
+                ContractingAuthorityType = dto.Project.Organisation.ContractingAuthorityType,
+                MainActivity = dto.Project.Organisation.MainActivity,
+                OtherContractingAuthorityType = dto.Project.Organisation.OtherContractingAuthorityType,
+                OtherMainActivity = dto.Project.Organisation.OtherMainActivity
+            };
+            ShortDescription = dto.ProcurementObject.ShortDescription;
+            TenderingInformation = dto.TenderingInformation;
+            RewardsAndJury = dto.RewardsAndJury;
+            ProcedureInformation = dto.ProcedureInformation;
+            ProceduresForReview = dto.ProceduresForReview;
+            Modifications = dto.Modifications;
+            Type = dto.Type;
+            LegalBasis = dto.LegalBasis;
+            Language = dto.Language;
+            Links = dto.AttachmentInformation.Links;
+            Defence = dto.ProcurementObject.Defence;
+            IsCorrigendum = dto.IsCorrigendum;
+            Changes = dto.Changes;
+            CorrigendumAdditionalInformation = dto.CorrigendumAdditionalInformation;
+            ContractAwardsDefence = dto.ContractAwardsDefence;
+        }
+
 
         /// <summary>
         /// The regulation number that is used as a legal basis for the notice
