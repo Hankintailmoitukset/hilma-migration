@@ -55,8 +55,8 @@ namespace Hilma.Tests
                 Notice = formOriginalXml
             };
 
-            var notice = parser.ParseNotice(importModel);
-            var etsNotice = new EtsNoticeContract(notice);
+            var noticeContract = parser.ParseNotice(importModel);
+            var etsNotice = new EtsNoticeContract(noticeContract);
 
             var noticeDto = etsNotice.CreateNotice("123");
             noticeDto.CreatorId = Guid.NewGuid();

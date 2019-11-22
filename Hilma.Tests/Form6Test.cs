@@ -8,7 +8,6 @@ namespace Hilma.Tests
     [TestClass]
     public class Form6Test
     {
-        [Ignore]
         [TestMethod]
         public void TestForm6()
         {

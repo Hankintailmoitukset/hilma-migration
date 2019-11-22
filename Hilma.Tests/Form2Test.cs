@@ -24,6 +24,7 @@ namespace Hilma.Tests
             Assert.AreEqual("DAY", tedDoc.SelectSingleNode("//bk:DURATION", nsmgr).Attributes["TYPE"].Value);
         }
 
+        [Ignore]
         [TestMethod]
         public void TestForm2_AddressReviewInfo()
         {
