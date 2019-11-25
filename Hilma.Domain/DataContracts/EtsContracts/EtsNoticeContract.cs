@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
+using Newtonsoft.Json.Serialization;
 
 namespace Hilma.Domain.DataContracts.EtsContracts
 {
@@ -33,12 +34,12 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             ConditionsInformationDefence = dbo.ConditionsInformationDefence;
             ContactPerson = dbo.ContactPerson;
             EstimatedValue = dbo.ProcurementObject.EstimatedValue;
+            TotalValue = dbo.ProcurementObject.TotalValue;
             LotsInfo = dbo.LotsInfo;
             MainCpvCode = dbo.ProcurementObject.MainCpvCode;
             ObjectDescriptions = dbo.ObjectDescriptions;
             NoticeOjsNumber = dbo.NoticeOjsNumber;
             PreviousNoticeOjsNumber = dbo.PreviousNoticeOjsNumber;
-
             Project = new EtsProjectContract {
                 Id = dbo.Project.Id,
                 ContractType = dbo.Project.ContractType,
@@ -78,7 +79,12 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             CorrigendumAdditionalInformation = dbo.CorrigendumAdditionalInformation;
             ContractAwardsDefence = dbo.ContractAwardsDefence;
         }
-        
+      
+        /// <summary>
+        /// Total value of the procurement
+        /// </summary>
+        public ValueRangeContract TotalValue { get; set; }
+
         /// <summary>
         /// Create EtsNoticeContract from NoticeContract
         /// </summary>
@@ -92,6 +98,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             ConditionsInformationDefence = dto.ConditionsInformationDefence;
             ContactPerson = dto.ContactPerson;
             EstimatedValue = dto.ProcurementObject.EstimatedValue;
+            TotalValue = dto.ProcurementObject.TotalValue;
             LotsInfo = dto.LotsInfo;
             MainCpvCode = dto.ProcurementObject.MainCpvCode;
             ObjectDescriptions = dto.ObjectDescriptions;

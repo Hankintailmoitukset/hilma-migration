@@ -41,7 +41,12 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 {
                     formElement = ResolveFormElement(noticeType, formSection, importedNotice);
                 }
-                
+
+                if (formElement == null)
+                {
+                  throw new Exception("Form element could not be resolved");
+                }
+
                 var noticeNumber = importedNotice.NoticeNumber;
 
                 if (noticeType.IsNational())
@@ -847,8 +852,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 },
                 ShortDescription = ParsePElements(objectContract.Element("SHORT_DESCR"), 4000),
                 ValidationState = ValidationState.Valid,
-                EstimatedValue = ParseValueRangeContract(objectContract.Element("VAL_ESTIMATED_TOTAL")),
-                TotalValue = ParseValueRangeContract(objectContract.Element("VAL_TOTAL"))
+                EstimatedValue = ParseValueRangeContract(objectContract.Element("VAL_ESTIMATED_TOTAL"), null ),
+                TotalValue = ParseValueRangeContract(objectContract.Element("VAL_TOTAL"), objectContract.Element("VAL_RANGE_TOTAL"))
             };
         }
 
@@ -908,7 +913,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     TendersMustBePresentedAsElectronicCatalogs = objectDescription.Element("ECATALOGUE_REQUIRED") != null,
                     AdditionalInformation = ParsePElements(objectDescription.Element("INFO_ADD"), 0),
                     ValidationState = ValidationState.Valid,
-                    EstimatedValue = ParseValueRangeContract(objectDescription.Element("VAL_OBJECT")),
+                    EstimatedValue = ParseValueRangeContract(objectDescription.Element("VAL_OBJECT"), null),
                     AwardContract = new Award(),
                     CandidateNumberRestrictions = new CandidateNumberRestrictions()
                     {
@@ -1160,7 +1165,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             return new ValueContract();
         }
 
-        private static ValueRangeContract ParseValueRangeContract(XElement valueElement)
+        private static ValueRangeContract ParseValueRangeContract(XElement valueElement, XElement rangeElement = null)
         {
             if (valueElement != null)
             {
@@ -1169,9 +1174,20 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     Currency = valueElement.Attribute("CURRENCY")?.Value,
                     Value = ParseDecimal(valueElement.Value),
                     Type = valueElement.Name.LocalName == "VAL_TOTAL" ? ContractValueType.Exact : ContractValueType.Undefined,
-                    DisagreeToBePublished = valueElement?.Attribute("PUBLICATION")?.Value == "YES" ? false : true,
+                    DisagreeToBePublished = valueElement?.Attribute("PUBLICATION")?.Value == "NO" ? true : false ,
                 };
+            }else if (rangeElement != null)
+            {
+              return new ValueRangeContract()
+              {
+                Currency = rangeElement?.Attribute("CURRENCY")?.Value,
+                MaxValue = ParseDecimal(rangeElement?.Element("HIGH")?.Value),
+                MinValue = ParseDecimal(rangeElement?.Element("LOW")?.Value),
+                Type = ContractValueType.Range,
+                DisagreeToBePublished = rangeElement?.Attribute("PUBLICATION")?.Value == "NO" ? true : false,
+              };
             }
+
             return new ValueRangeContract();
 
         }
@@ -1262,56 +1278,67 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
         }
 
-        private static OrganisationContract ParseOrganisation(XNamespace nutsSchema, XElement addressContractinBody, XElement contractingBody, NoticeType noticeType)
+        private static OrganisationContract ParseOrganisation(XNamespace nutsSchema, XElement addressContractinBody,
+          XElement contractingBody, NoticeType noticeType)
         {
-            var organisationContract = new OrganisationContract()
+          var organisationContract = new OrganisationContract()
+          {
+            Information = ParseContractingBodyInformation(nutsSchema, addressContractinBody),
+
+
+          };
+
+          if (noticeType.IsUtilities())
+          {
+
+            if (contractingBody.Element("CE_ACTIVITY_OTHER") != null)
             {
-                Information = ParseContractingBodyInformation(nutsSchema, addressContractinBody),
-                MainActivity = FromTEDFormatMainActivity(contractingBody.Element("CA_ACTIVITY")?.Attribute("VALUE")?.Value),
-
-
-            };
-
-            if (noticeType.IsUtilities())
+              organisationContract.MainActivityUtilities = MainActivityUtilities.OtherActivity;
+              organisationContract.OtherMainActivity = contractingBody.Element("CE_ACTIVITY_OTHER")?.Value;
+            }
+            else if (contractingBody.Element("CE_ACTIVITY") != null)
             {
-
-                if (contractingBody.Element("CE_ACTIVITY_OTHER") != null)
-                {
-                    organisationContract.MainActivityUtilities = MainActivityUtilities.OtherActivity;
-                    organisationContract.OtherMainActivity = contractingBody.Element("CE_ACTIVITY_OTHER")?.Value;
-                }
-                else if (contractingBody.Element("CE_ACTIVITY") != null)
-                {
-                    organisationContract.MainActivityUtilities = FromTEDFormat(contractingBody.Element("CE_ACTIVITY")?.Attribute("VALUE")?.Value);
-                }
-                else if (contractingBody.Element("CA_ACTIVITY_OTHER") != null)
-                {
-                    organisationContract.MainActivity = MainActivity.OtherActivity;
-                    organisationContract.OtherMainActivity = contractingBody.Element("CA_ACTIVITY_OTHER")?.Value;
-                }
-                else
-                {
-                    organisationContract.MainActivity = FromTEDFormatMainActivity(contractingBody.Element("CA_ACTIVITY")?.Attribute("VALUE")?.Value);
-                }
+              organisationContract.MainActivityUtilities =
+                FromTEDFormat(contractingBody.Element("CE_ACTIVITY")?.Attribute("VALUE")?.Value);
+            }
+            else if (contractingBody.Element("CA_ACTIVITY_OTHER") != null)
+            {
+              organisationContract.MainActivity = MainActivity.OtherActivity;
+              organisationContract.OtherMainActivity = contractingBody.Element("CA_ACTIVITY_OTHER")?.Value;
             }
             else
             {
-                if (contractingBody.Element("CA_TYPE_OTHER") != null)
-                {
-                    organisationContract.ContractingAuthorityType = ContractingAuthorityType.OtherType;
-                    organisationContract.OtherContractingAuthorityType = contractingBody.Element("CA_TYPE_OTHER")?.Value;
-                    if (contractingBody.Element("CA_ACTIVITY_OTHER") != null)
-                    {
-                        organisationContract.MainActivity = MainActivity.OtherActivity;
-                        organisationContract.OtherMainActivity = contractingBody.Element("CA_ACTIVITY_OTHER")?.Value;
-                    }
-                }
-                else
-                {
-                    organisationContract.ContractingAuthorityType = FromTEDFormatContractingAuthorityType(contractingBody.Element("CA_TYPE")?.Attribute("VALUE")?.Value);
-                }
+              organisationContract.MainActivity =
+                FromTEDFormatMainActivity(contractingBody.Element("CA_ACTIVITY")?.Attribute("VALUE")?.Value);
             }
-            return organisationContract;
+          }
+          else
+          {
+            if (contractingBody.Element("CA_TYPE_OTHER") != null)
+            {
+              organisationContract.ContractingAuthorityType = ContractingAuthorityType.OtherType;
+              organisationContract.OtherContractingAuthorityType = contractingBody.Element("CA_TYPE_OTHER")?.Value;
+            }
+            else if (contractingBody.Element("CA_TYPE") != null)
+            {
+              organisationContract.ContractingAuthorityType =
+                FromTEDFormatContractingAuthorityType(contractingBody.Element("CA_TYPE")?.Attribute("VALUE")?.Value);
+            }
+
+            if (contractingBody.Element("CA_ACTIVITY_OTHER") != null)
+            {
+              organisationContract.MainActivity = MainActivity.OtherActivity;
+              organisationContract.OtherMainActivity = contractingBody.Element("CA_ACTIVITY_OTHER")?.Value;
+            }
+            else
+            {
+              organisationContract.MainActivity =
+                FromTEDFormatMainActivity(contractingBody.Element("CA_ACTIVITY")?.Attribute("VALUE")?.Value);
+            }
+
+          }
+
+          return organisationContract;
         }
 
 
