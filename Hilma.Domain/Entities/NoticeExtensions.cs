@@ -37,6 +37,7 @@ namespace Hilma.Domain.Entities
                 {
                     ShortDescription = dto.ShortDescription,
                     EstimatedValue = dto.EstimatedValue,
+                    TotalValue = dto.TotalValue,
                     MainCpvCode = dto.MainCpvCode,
                     Defence = dto.Defence
                 },
