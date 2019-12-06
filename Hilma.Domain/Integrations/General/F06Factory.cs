@@ -1,6 +1,5 @@
 using System.Xml.Linq;
 using Hilma.Domain.DataContracts;
-using Hilma.Domain.Enums;
 using Hilma.Domain.Integrations.Configuration;
 using Hilma.Domain.Integrations.ConfigurationFactories;
 

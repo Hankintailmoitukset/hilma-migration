@@ -1,9 +1,5 @@
-using System.Collections.Generic;
-using AutoMapper;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Enums;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace Hilma.Domain.Entities
 {

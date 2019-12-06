@@ -1,7 +1,6 @@
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
-using Hilma.Domain.Validators;
 
 namespace Hilma.Domain.DataContracts
 {
@@ -16,7 +15,7 @@ namespace Hilma.Domain.DataContracts
         ///     Name of the object. Omitted if the notice is not split into lots.
         /// </summary>
         [CorrigendumLabel("title_official", "II.2.1")]
-        [StringMaxLength(400)]
+        //[StringMaxLength(400)]
         public string Title { get; set; }
 
         /// <summary>
@@ -57,14 +56,14 @@ namespace Hilma.Domain.DataContracts
         ///     Describes the location in more granular manner than the nuts codes in free text.
         /// </summary>
         [CorrigendumLabel("mainsiteplace_works_delivery", "II.2.3")]
-        [StringMaxLength(200)]
+        //[StringMaxLength(200)]
         public string[] MainsiteplaceWorksDelivery { get; set; }
 
         /// <summary>
         ///     Describes the object in free text.
         /// </summary>
         [CorrigendumLabel("descr_procurement", "II.2.4")]
-        [StringMaxLength(10000)]
+        //[StringMaxLength(10000)]
         public string[] DescrProcurement { get; set; }
 
         /// <summary>
@@ -119,7 +118,7 @@ namespace Hilma.Domain.DataContracts
         ///     More free text information about the project.
         /// </summary>
         [CorrigendumLabel("info_additional", "II.2.14")]
-        [StringMaxLength(6000)]
+        //[StringMaxLength(6000)]
 
         public string[] AdditionalInformation { get; set; }
 

@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Enums;
 using Hilma.Domain.Exceptions;
-using Hilma.Domain.Extensions;
 
 namespace Hilma.Domain.Entities
 {
@@ -17,8 +14,8 @@ namespace Hilma.Domain.Entities
         /// <summary>
         ///     Primary key for the entity.
         /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         /// <summary>
@@ -30,7 +27,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// Type of the contracting authority
         /// </summary>
-        [Required]
+        //[Required]
         public ContractingAuthorityType ContractingAuthorityType { get; set; }
 
         /// <summary>

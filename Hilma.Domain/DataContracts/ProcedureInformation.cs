@@ -1,7 +1,6 @@
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
-using Hilma.Domain.Validators;
 
 namespace Hilma.Domain.DataContracts
 {
@@ -30,7 +29,7 @@ namespace Hilma.Domain.DataContracts
         /// Justification for accelerated procedure
         /// </summary>
         [CorrigendumLabel("justification", "IV.1.1")]
-        [StringMaxLength(1000)]
+        //[StringMaxLength(1000)]
         public string[] JustificationForAcceleratedProcedure { get; set; }
 
         /// <summary>
@@ -79,7 +78,7 @@ namespace Hilma.Domain.DataContracts
         /// Additional information about electronic auction
         /// </summary>
         [CorrigendumLabel("eauction_info_addit", "IV.1.6")]
-        [StringMaxLength(1000)]
+        //[StringMaxLength(1000)]
         public string[] AdditionalInformationAboutElectronicAuction { get; set; }
 
         /// <summary>

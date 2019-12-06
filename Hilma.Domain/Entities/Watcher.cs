@@ -1,8 +1,7 @@
-using System;
 using Hilma.Domain.Attributes;
-using Microsoft.Azure.Search.Models;
 
-namespace Hilma.Domain.Entities {
+namespace Hilma.Domain.Entities
+{
     /// <summary>
     ///     A search saved as a watcher by an user, to get personalized email digest of
     ///     new notices.

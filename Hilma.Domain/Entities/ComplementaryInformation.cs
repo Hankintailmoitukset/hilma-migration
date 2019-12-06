@@ -22,7 +22,7 @@ namespace Hilma.Domain.Entities
         ///     Free text to specify information when further contract notices will be published.
         /// </summary>
         [CorrigendumLabel("further_notices_timing", "VI.1")]
-        [StringMaxLength(400)]
+        //[StringMaxLength(400)]
         public string[] EstimatedTimingForFurtherNoticePublish { get; set; }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Hilma.Domain.Entities
         ///     to attend to the procurements process
         /// </summary>
         [CorrigendumLabel("info_additional", "VI.3")]
-        [StringMaxLength(10000)]
+        //[StringMaxLength(10000)]
         public string[] AdditionalInformation { get; set; }
 
         /// <summary>

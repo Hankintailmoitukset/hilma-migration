@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Enums;
 using Hilma.Domain.Exceptions;
-using Hilma.Domain.Validators;
 
 namespace Hilma.Domain.Entities
 {
@@ -15,27 +12,27 @@ namespace Hilma.Domain.Entities
     /// </summary>
     public class ProcurementProject : BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         /// <summary>
         /// II.1.1) Title
         /// </summary>
-        [Required]
-        [StringMaxLength(400)]
+        //[Required]
+        //[StringMaxLength(400)]
         public string Title { get; set; }
 
         /// <summary>
         /// II.1.3) Type of contract
         /// </summary>
-        [Required]
+        //[Required]
         public ContractType ContractType { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [Required]
+        //[Required]
         public ProcurementCategory ProcurementCategory { get; set; }
 
         /// <summary>
@@ -71,7 +68,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// I.2.2) Reference to applicable law related to JointProcurement.
         /// </summary>
-        [StringMaxLength(200)]
+        //[StringMaxLength(200)]
         public string[] ProcurementLaw { get; set; }
 
         /// <summary>

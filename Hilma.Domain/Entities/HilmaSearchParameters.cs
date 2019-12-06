@@ -1,10 +1,9 @@
-using Microsoft.Azure.Search.Models;
-
-namespace Hilma.Domain.Entities {
+namespace Hilma.Domain.Entities
+{
     /// <summary>
     ///     Search parameters for azure search
     /// </summary>
-    public class HilmaSearchParameters : SearchParameters
+    public class HilmaSearchParameters
     {
         /// <summary>
         ///     Search query for azure search.

@@ -1,5 +1,4 @@
 using Hilma.Domain.Attributes;
-using System.ComponentModel.DataAnnotations;
 
 namespace Hilma.Domain.Entities
 {
@@ -15,7 +14,7 @@ namespace Hilma.Domain.Entities
         /// <example>
         ///     Erin Example
         /// </example>
-        [MaxLength(300)]
+        //[MaxLength(300)]
         [CorrigendumLabel("contactpoint", "I.1")]
         public string Name { get; set; }
 
@@ -25,7 +24,7 @@ namespace Hilma.Domain.Entities
         /// <example>
         ///     erin.example@innofactor.com
         /// </example>
-        [MaxLength(200)]
+        //[MaxLength(200)]
         public string Email { get; set; }
 
         /// <summary>
@@ -34,7 +33,7 @@ namespace Hilma.Domain.Entities
         /// <example>
         ///     +358 123123123
         /// </example>
-        [MaxLength(100)]
+        //[MaxLength(100)]
         public string Phone { get; set; }
     }
 }

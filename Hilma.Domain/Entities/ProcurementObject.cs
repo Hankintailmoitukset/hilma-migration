@@ -1,10 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using Hilma.Domain.Attributes;
-using Hilma.Domain.DataContracts;
 using Hilma.Domain.Enums;
 using Hilma.Domain.Validators;
-using Innofactor.EfCoreJsonValueConverter;
-using Microsoft.EntityFrameworkCore;
 
 namespace Hilma.Domain.Entities
 {
@@ -17,9 +13,9 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// II.1.4) Short description
         /// </summary>
-        [Required]
+        //[Required]
         [CorrigendumLabel("descr_short", "II.1.4")]
-        [StringMaxLength(4000)]
+        //[StringMaxLength(4000)]
         public string[] ShortDescription { get; set; }
 
         /// <summary>
@@ -31,8 +27,8 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// II.1.2) Main CPV code
         /// </summary>
-        [Required]
-        [JsonField]
+        //[Required]
+        //[JsonField]
         [CorrigendumLabel("cpv_main", "II.1.2")]
         public CpvCode MainCpvCode { get; set; }
 

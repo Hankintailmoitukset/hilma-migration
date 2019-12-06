@@ -1,7 +1,5 @@
 using Hilma.Domain.Attributes;
 using Hilma.Domain.DataContracts;
-using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Hilma.Domain.Entities
 {
@@ -10,7 +8,7 @@ namespace Hilma.Domain.Entities
     /// Section II: Object of the contract
     /// Procurement object for defence contracts
     /// </summary>
-    [Owned]
+    //[Owned]
     [Contract]
     public class ProcurementObjectDefence
     {

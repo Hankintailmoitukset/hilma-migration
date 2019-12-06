@@ -1,5 +1,4 @@
 using Hilma.Domain.Attributes;
-using Hilma.Domain.DataContracts;
 
 namespace Hilma.Domain.DataContracts
 {

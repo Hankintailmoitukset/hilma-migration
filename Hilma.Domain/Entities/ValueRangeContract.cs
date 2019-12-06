@@ -1,14 +1,12 @@
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Enums;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace Hilma.Domain.Entities
 {
     /// <summary>
     /// A number or currency value represented as a single value or range
     /// </summary>
-    [Owned]
+    //[Owned]
     [Contract]
     public class ValueRangeContract
     {
@@ -38,7 +36,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// Currency
         /// </summary>
-        [Required]
+        //[Required]
         [CorrigendumLabel("currency", "II.2.1")]
         public string Currency { get; set; } = "EUR";
 

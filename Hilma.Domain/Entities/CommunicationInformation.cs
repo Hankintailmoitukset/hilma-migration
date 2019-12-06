@@ -1,6 +1,5 @@
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Enums;
-using Microsoft.EntityFrameworkCore;
 
 namespace Hilma.Domain.Entities
 {
@@ -8,7 +7,8 @@ namespace Hilma.Domain.Entities
     ///     Communications section of a notice. Contains information on where to
     ///     get additional information and where to send the offers.
     /// </summary>
-    [Owned][Contract]
+    //[Owned]
+    [Contract]
     public class CommunicationInformation
     {
         /// <summary>

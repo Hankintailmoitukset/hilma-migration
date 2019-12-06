@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Enums;
 using Hilma.Domain.Validators;
@@ -14,7 +13,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         ///     If the notice is partitioned.
         /// </summary>
-        [Required]
+        //[Required]
         [CorrigendumLabel("division_lots", "II.1.6")]
         public bool DivisionLots { get; set; }
 
@@ -59,7 +58,7 @@ namespace Hilma.Domain.Entities
         ///     Free text description describing the possible lot combinations, criteria etc.
         /// </summary>
         [CorrigendumLabel("lots_combination_possible_ca_ce", "II.1.6")]
-        [StringMaxLength(1000)]
+        //[StringMaxLength(1000)]
         public string[] LotCombinationPossibleDescription { get; set; }
 
         /// <summary>

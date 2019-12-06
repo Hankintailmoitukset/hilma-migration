@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Enums;
 
@@ -30,7 +29,7 @@ namespace Hilma.Domain.DataContracts {
         /// <summary>
         ///     Which other method was used to submit the original notice.
         /// </summary>
-        [MaxLength(200)]
+        //[MaxLength(200)]
         public string OriginalNoticeSentViaOther { get; set; }
 
         /// <summary>

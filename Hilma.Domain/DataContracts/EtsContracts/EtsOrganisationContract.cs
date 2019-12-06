@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
 

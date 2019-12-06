@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
 
@@ -15,7 +14,9 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         ///     II.1.3) Type of contract
         ///     Type of contract described by this project.
         /// </summary>
-        [Required] public ContractType ContractType { get; set; }
+        
+        //[Required] 
+        public ContractType ContractType { get; set; }
 
         /// <summary>
         ///     II.1.1) Reference number
@@ -27,14 +28,15 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         ///     II.1.1) Title
         ///     Given name for the procurement described by this project.
         /// </summary>
-        [Required] public string Title { get; set; }
+        //[Required] 
+        public string Title { get; set; }
 
 
         /// <summary>
         ///     Selection to to help select correct directive and form when later
         ///     creating a notice.
         /// </summary>
-        [Required]
+        //[Required]
         public ProcurementCategory ProcurementCategory { get; set; }
 
         /// <summary>

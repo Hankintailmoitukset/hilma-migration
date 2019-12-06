@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
-using Hilma.Domain.Validators;
 
 namespace Hilma.Domain.DataContracts {
     /// <summary>
@@ -83,7 +82,7 @@ namespace Hilma.Domain.DataContracts {
         ///     Short description of the part of the contract to be subcontracted.
         /// </summary>
         [CorrigendumLabel("subcontr_descr_short", "V.2.5")]
-        [StringMaxLength(2000)]
+        //[StringMaxLength(2000)]
         public string[] SubcontractingDescription { get; set; }
 
         /// <summary>

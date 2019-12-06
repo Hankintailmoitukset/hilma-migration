@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using AutoMapper.Attributes;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
-using Hilma.Domain.Validators;
 
 namespace Hilma.Domain.DataContracts
 {
@@ -23,16 +21,16 @@ namespace Hilma.Domain.DataContracts
         /// <summary>
         ///     Title displayed for this notice in various UIs
         /// </summary>
-        [Required]
+        //[Required]
         [CorrigendumLabel("title_official", "II.1.1")]
-        [StringMaxLength(400)]
+        //[StringMaxLength(400)]
         public string Title { get; set; }
         /// <summary>
         ///     Type of procurement according to TED taxonomy. This limits
         ///     what CPV codes are acceptable, for example. Is not always
         ///     intuitive at all.
         /// </summary>
-        [Required]
+        //[Required]
         [CorrigendumLabel("type_contract", "II.1.3")]
         public ContractType ContractType { get; set; }
 
@@ -40,7 +38,7 @@ namespace Hilma.Domain.DataContracts
         ///     Selection to to help select correct directive and form when later
         ///     creating a notice.
         /// </summary>
-        [Required]
+        //[Required]
         public ProcurementCategory ProcurementCategory { get; set; }
 
         /// <summary>
@@ -58,7 +56,7 @@ namespace Hilma.Domain.DataContracts
         /// I.1.2.2) Reference to applicable law related to JointProcurement.
         /// </summary>
         [CorrigendumLabel("procurement_law", "I.1.2")]
-        [StringMaxLength(200)]
+        //[StringMaxLength(200)]
         public string[] ProcurementLaw { get; set; }
         /// <summary>
         /// I.1.2.3) Contract is awarded by a central purchasing body.

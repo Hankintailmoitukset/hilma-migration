@@ -1,6 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Hilma.Domain.Enums;
 
 namespace Hilma.Domain.Entities {
@@ -12,8 +10,8 @@ namespace Hilma.Domain.Entities {
         /// <summary>
         ///     Hilma assigned identifier for this file.
         /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         /// <summary>
         ///     Blob container of this file.

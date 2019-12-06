@@ -1,6 +1,5 @@
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Xml.Linq;
 using Hilma.Domain.Integrations.General;
 using Hilma.Domain.Extensions;
+using Newtonsoft.Json.Linq;
 
 namespace Hilma.Domain.Integrations.Extensions
 {

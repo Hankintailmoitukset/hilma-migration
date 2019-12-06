@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Linq;
 using Hilma.Domain.DataContracts;
-using Hilma.Domain.Entities;
-using Hilma.Domain.Enums;
 using Hilma.Domain.Integrations.Configuration;
 using Hilma.Domain.Integrations.ConfigurationFactories;
-using Hilma.Domain.Integrations.Extensions;
 
 namespace Hilma.Domain.Integrations.General
 {

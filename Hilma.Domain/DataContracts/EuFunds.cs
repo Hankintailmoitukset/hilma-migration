@@ -1,5 +1,4 @@
 using Hilma.Domain.Attributes;
-using Hilma.Domain.Validators;
 
 namespace Hilma.Domain.DataContracts
 {
@@ -18,7 +17,7 @@ namespace Hilma.Domain.DataContracts
         ///     EU funding project number. Applicable if EU funds are used.
         /// </summary>
         [CorrigendumLabel("eu_progr_ref", "II.2.13")]
-        [StringMaxLength(400)]
+        //[StringMaxLength(400)]
         public string[] ProjectIdentification { get; set; }
     }
 }

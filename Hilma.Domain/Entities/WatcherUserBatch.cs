@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace Hilma.Domain.Entities {
     /// <summary>
@@ -37,22 +35,22 @@ namespace Hilma.Domain.Entities {
         /// <param name="users"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public static async Task<List<WatcherUserBatch>> CreateWatchers(DbSet<User> users,
-            CancellationToken token)
-        {
-            return await users
-                .AsNoTracking()
-                .Where(x => x.WatcherCount > 0)
-                .Select(x => new WatcherUserBatch {
-                    DeliveryEmail = x.ContactEmail,
-                    Language = x.Language,
-                    Runnables = x.SavedWatchers.Select(y => new WatcherRunnable
-                    {
-                        Name = y.Name,
-                        SearchParameters = y.SearchParameters
-                    }).ToList()
-                })
-                .ToListAsync(token);
-        }
+        //public static async Task<List<WatcherUserBatch>> CreateWatchers(DbSet<User> users,
+        //    CancellationToken token)
+        //{
+        //    return await users
+        //        .AsNoTracking()
+        //        .Where(x => x.WatcherCount > 0)
+        //        .Select(x => new WatcherUserBatch {
+        //            DeliveryEmail = x.ContactEmail,
+        //            Language = x.Language,
+        //            Runnables = x.SavedWatchers.Select(y => new WatcherRunnable
+        //            {
+        //                Name = y.Name,
+        //                SearchParameters = y.SearchParameters
+        //            }).ToList()
+        //        })
+        //        .ToListAsync(token);
+        //}
     }
 }

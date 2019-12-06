@@ -59,7 +59,7 @@ namespace Hilma.Domain.Entities
         /// In the case of framework agreements, provide justification for any duration exceeding 4 years
         /// </summary>
         [CorrigendumLabel("framework_just_four", "IV.1.3")]
-        [StringMaxLength(2000)]
+        //[StringMaxLength(2000)]
         public string[] JustificationForDurationOverFourYears { get; set; }
 
         /// <summary>
@@ -67,14 +67,14 @@ namespace Hilma.Domain.Entities
         /// In the case of framework agreements, provide justification for any duration exceeding 7 years
         /// </summary>
         [CorrigendumLabel("framework_just_seven", "IV.1.3")]
-        [StringMaxLength(2000)]
+        //[StringMaxLength(2000)]
         public string[] JustificationForDurationOverSevenYears { get; set; }
 
         /// <summary>
         /// In the case of framework agreements, provide justification for any duration exceeding 8 years
         /// </summary>
         [CorrigendumLabel("framework_just_eight", "IV.1.3")]
-        [StringMaxLength(2000)]
+        //[StringMaxLength(2000)]
         public string[] JustificationForDurationOverEightYears { get; set; }
 
         /// <summary>

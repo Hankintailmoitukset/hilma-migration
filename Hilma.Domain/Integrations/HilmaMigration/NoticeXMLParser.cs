@@ -1,12 +1,10 @@
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 
 namespace Hilma.Domain.Integrations.HilmaMigration
@@ -14,13 +12,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
     public class NoticeXMLParser
     {
-        private ILogger log;
         private readonly XNamespace _nutsSchema = "http://publications.europa.eu/resource/schema/ted/2016/nuts";
-
-        public NoticeXMLParser(ILogger log = null)
-        {
-            this.log = log;
-        }
 
         public NoticeContract ParseNotice(INoticeImportModel importedNotice)
         {
@@ -59,8 +51,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             }
             catch (Exception e)
             {
-                if (this.log != null)
-                    this.log.LogError(e, "Error while parsing notice xml");
+                //if (this.log != null)
+                //    this.log.LogError(e, "Error while parsing notice xml");
                 throw;
             }
 

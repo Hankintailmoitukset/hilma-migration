@@ -1,6 +1,6 @@
+#if false
+
 using Hilma.Domain.Enums;
-using Microsoft.Azure.Search;
-using Microsoft.Azure.Search.Models;
 using Newtonsoft.Json;
 using System;
 
@@ -97,3 +97,4 @@ namespace Hilma.Domain.SearchContracts
         public string NoticeNumber { get; internal set; }
     }
 }
+#endif

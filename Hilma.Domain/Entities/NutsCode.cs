@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Hilma.Domain.Attributes;
 
 namespace Hilma.Domain.Entities
@@ -15,7 +14,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         ///     The code itself.
         /// </summary>
-        [Required]
+        //[Required]
         public string Code { get; set; }
 
         /// <summary>

@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using AutoMapper.Attributes;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
@@ -27,14 +26,14 @@ namespace Hilma.Domain.DataContracts
         /// <summary>
         ///     Type of the contracting authority
         /// </summary>
-        [Required]
+        //[Required]
         [CorrigendumLabel("ca_type", "I.4")]
         public ContractingAuthorityType ContractingAuthorityType { get; set; }
 
         /// <summary>
         ///     Asked if ContractingAuthorityType is "Other"
         /// </summary>
-        [MaxLength(1000)]
+        //[MaxLength(1000)]
         [CorrigendumLabel("other_type", "I.4")]
         public string OtherContractingAuthorityType { get; set; }
 

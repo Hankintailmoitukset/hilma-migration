@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Hilma.Domain.Attributes;
 
 namespace Hilma.Domain.Entities
@@ -9,7 +8,7 @@ namespace Hilma.Domain.Entities
         [CorrigendumLabel("value_excl_vat", "II.1.5")]
         public decimal? Value { get; set; }
 
-        [Required]
+        //[Required]
         [CorrigendumLabel("currency", "II.1.5")]
         public string Currency { get; set; } = "EUR";
     }

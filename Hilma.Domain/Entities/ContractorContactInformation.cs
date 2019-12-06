@@ -1,14 +1,12 @@
-using System.ComponentModel.DataAnnotations;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Enums;
-using Microsoft.EntityFrameworkCore;
 
 namespace Hilma.Domain.Entities
 {
     /// <summary>
     ///     Contact information section for additional contracting body information on Hilma form.
     /// </summary>
-    [Owned]
+    //[Owned]
     [Contract]
     public class ContractorContactInformation
     {
@@ -21,25 +19,25 @@ namespace Hilma.Domain.Entities
         /// Official name of the contracting body
         /// <example>Innofactor Oyj</example>
         /// </summary>
-        [Required]
+        //[Required]
         [CorrigendumLabel("name_official", "V.2.3")]
-        [MaxLength(300)]
+        //[MaxLength(300)]
         public string OfficialName { get; set; }
 
         /// <summary>
         /// National registration number of the contracting body
         /// <example>1732626-9</example>
         /// </summary>
-        [Required]
+        //[Required]
         [CorrigendumLabel("national_id", "V.2.3")]
-        [MaxLength(100)]
+        //[MaxLength(100)]
         public string NationalRegistrationNumber { get; set; }
 
         /// <summary>
         /// Location code for the organisation
         /// </summary>
-        [Required]
-        [MinLength(1), MaxLength(20)]
+        //[Required]
+        //[MinLength(1), MaxLength(20)]
         [CorrigendumLabel("nutscode", "V.2.3")]
         public string[] NutsCodes { get; set; } = new string[0];
 
@@ -54,7 +52,7 @@ namespace Hilma.Domain.Entities
         /// <example>
         ///     +358 123123123
         /// </example>
-        [MaxLength(100)]
+        //[MaxLength(100)]
         [CorrigendumLabel("address_phone", "V.2.3")]
         public string TelephoneNumber { get; set; }
 
@@ -64,7 +62,7 @@ namespace Hilma.Domain.Entities
         /// <example>
         ///     tendering@innofactor.com
         /// </example>
-        [MaxLength(200)]
+        //[MaxLength(200)]
         [CorrigendumLabel("address_email", "V.2.3")]
         public string Email { get; set; }
 
@@ -74,7 +72,7 @@ namespace Hilma.Domain.Entities
         /// <example>
         ///     https://www.innofactor.com
         /// </example>
-        [MaxLength(200)]
+        //[MaxLength(200)]
         [CorrigendumLabel("H_url", "V.2.3")]
         public string MainUrl { get; set; }
 

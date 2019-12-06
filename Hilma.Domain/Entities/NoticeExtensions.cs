@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.DataContracts.EtsContracts;
 using Hilma.Domain.Enums;

@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Hilma.Domain.Attributes;
 
 namespace Hilma.Domain.Entities
@@ -16,7 +15,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         ///     The code itself.
         /// </summary>
-        [Required]
+        //[Required]
         [CorrigendumLabel("cpv_main", "II.1.2")]
         public string Code { get; set; }
 

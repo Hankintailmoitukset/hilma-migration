@@ -1,6 +1,5 @@
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
-using Hilma.Domain.Enums;
 
 namespace Hilma.Domain.DataContracts
 {

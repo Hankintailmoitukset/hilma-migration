@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
-using Newtonsoft.Json.Serialization;
 
 namespace Hilma.Domain.DataContracts.EtsContracts
 {

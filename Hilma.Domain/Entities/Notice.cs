@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using AutoMapper;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Enums;
-using Hilma.Domain.Validators;
 using Newtonsoft.Json;
 
 namespace Hilma.Domain.Entities
@@ -18,8 +15,8 @@ namespace Hilma.Domain.Entities
         /// <summary>
         ///     Hilma generated primary key.
         /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         /// <summary>
@@ -149,15 +146,15 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// VII.2 Other additional information for why the corrigendum was made.
         /// </summary>
-        [StringMaxLength(6000)]
+        //[StringMaxLength(6000)]
         public string[] CorrigendumAdditionalInformation { get; set; }
 
         /// <summary>
         /// OJS Number for published Ted notices.
         /// <example>2019/S 001-999999</example>
         /// </summary>
-        [RegularExpression(@"^(19|20)\d{2}/S (((00)?[1-9])|([0]?[1-9][0-9])|(1[0-9][0-9])|(2[0-5][0-9]))-\d{6}$",
-            ErrorMessage = "Notice OJS Number must be correctly formatted")]
+        //[RegularExpression(@"^(19|20)\d{2}/S (((00)?[1-9])|([0]?[1-9][0-9])|(1[0-9][0-9])|(2[0-5][0-9]))-\d{6}$",
+        //    ErrorMessage = "Notice OJS Number must be correctly formatted")]
         public string NoticeOjsNumber { get; set; }
 
         /// <summary>
@@ -165,8 +162,8 @@ namespace Hilma.Domain.Entities
         /// Previous submission to TED regarding the same procurement.
         /// <example>2019/S 001-999999</example>
         /// </summary>
-        [RegularExpression(@"^(19|20)\d{2}/S (((00)?[1-9])|([0]?[1-9][0-9])|(1[0-9][0-9])|(2[0-5][0-9]))-\d{6}$",
-            ErrorMessage = "Previous notice OJS Number must be correctly formatted")]
+        //[RegularExpression(@"^(19|20)\d{2}/S (((00)?[1-9])|([0]?[1-9][0-9])|(1[0-9][0-9])|(2[0-5][0-9]))-\d{6}$",
+        //    ErrorMessage = "Previous notice OJS Number must be correctly formatted")]
         public string PreviousNoticeOjsNumber { get; set; }
 
         /// <summary>
@@ -295,7 +292,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         ///     If this notice could be published.
         /// </summary>
-        [NotMapped]
+        //[NotMapped]
         public bool CanEdit => State != PublishState.Published;
 
         

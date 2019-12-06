@@ -1,5 +1,4 @@
 using Hilma.Domain.Attributes;
-using Hilma.Domain.Validators;
 
 namespace Hilma.Domain.DataContracts
 {
@@ -31,7 +30,7 @@ namespace Hilma.Domain.DataContracts
         ///     Free text description of candidate number of selection criteria.
         /// </summary>
         [CorrigendumLabel("criteria_choosing_limited", "II.2.9")]
-        [StringMaxLength(6000)]
+        //[StringMaxLength(6000)]
 
         public string[] ObjectiveCriteriaForChoosing{ get; set; }
 

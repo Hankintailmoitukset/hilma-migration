@@ -20,7 +20,7 @@ namespace Hilma.Domain.Entities
         /// Precise information on deadline(s) for review procedures
         /// </summary>
         [CorrigendumLabel("appeals_lodging","VI.4.3" )]
-        [StringMaxLength(4000)]
+        //[StringMaxLength(4000)]
         public string[] ReviewProcedure { get; set; }
 
         public ValidationState ValidationState { get; set; }

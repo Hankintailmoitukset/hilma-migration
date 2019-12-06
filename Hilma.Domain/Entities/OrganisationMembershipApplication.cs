@@ -1,14 +1,12 @@
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Hilma.Domain.Enums;
 
 namespace Hilma.Domain.Entities
 {
     public class OrganisationMembershipApplication
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         public OrganisationMembershipApplicationStatus ApplicationStatus { get; set; }

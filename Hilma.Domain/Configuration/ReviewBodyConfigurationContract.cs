@@ -1,7 +1,3 @@
-using Hilma.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Hilma.Domain.Attributes;
 
 namespace Hilma.Domain.Configuration

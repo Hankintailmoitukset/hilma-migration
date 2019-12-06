@@ -1,5 +1,4 @@
 using Hilma.Domain.Attributes;
-using Hilma.Domain.Validators;
 
 namespace Hilma.Domain.DataContracts
 {
@@ -31,7 +30,7 @@ namespace Hilma.Domain.DataContracts
         ///     Description of options in free text. Only valid if Options=true.
         /// </summary>
         [CorrigendumLabel("options_description", "II.2.11")]
-        [StringMaxLength(6000)]
+        //[StringMaxLength(6000)]
 
         public string[] OptionsDescription { get; set; }
 

@@ -1,12 +1,12 @@
 using Hilma.Domain.Attributes;
-using Microsoft.EntityFrameworkCore;
 
 namespace Hilma.Domain.Entities
 {
     /// <summary>
     ///     Represents an address.
     /// </summary>
-    [Owned][Contract]
+    //[Owned]
+    [Contract]
     public class PostalAddress
     {
         /// <summary>

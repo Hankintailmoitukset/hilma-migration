@@ -1,5 +1,3 @@
-using Hilma.Domain.Entities;
-
 namespace Hilma.Domain.DataContracts {
     public partial class CpvCodeMetadata
     {

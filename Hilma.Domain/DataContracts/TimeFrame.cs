@@ -1,6 +1,5 @@
 using System;
 using Hilma.Domain.Attributes;
-using Hilma.Domain.Validators;
 
 namespace Hilma.Domain.DataContracts
 {
@@ -56,7 +55,7 @@ namespace Hilma.Domain.DataContracts
         ///     Free text description for the renewal option, if it is selected.
         /// </summary>
         [CorrigendumLabel("renewals_descr", "II.2.7")]
-        [StringMaxLength(1000)]
+        //[StringMaxLength(1000)]
         public string[] RenewalDescription { get; set; }
 
         /// <summary>
