@@ -1,5 +1,6 @@
 using System;
 using System.Xml.Linq;
+using Hilma.Domain.Configuration;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Enums;
 using Hilma.Domain.Integrations.Defence;
@@ -18,15 +19,7 @@ namespace Hilma.Domain.Integrations
         private readonly string _tedContactEmail;
 
         private string _eSenderLogin;
-        /// <summary>
-        /// Translations
-        /// </summary>
-        public static JObject Translations;
-
-        /// <summary>
-        /// Needed for corrigendum notices.
-        /// </summary>
-        public static string NoticeLanguage;
+        private ITranslationProvider _translationProvider;
 
         private string _tedSenderOrganisation;
 
@@ -43,18 +36,17 @@ namespace Hilma.Domain.Integrations
         /// <param name="tedSenderOrganisationName">Sender organisation name of TED eSender</param>
         /// <param name="tedContactEmail">The TED contact email</param>
         /// <param name="eSenderLogin">eSenderLogin</param>
-        /// <param name="translations">Remote translations (Loco)</param>
+        /// <param name="translationProvider">Remote translations (Loco)</param>
         /// <param name="publishToTed">If publishing to ted</param>
         public TedNoticeFactory(NoticeContract notice, NoticeContract parent, string tedSenderOrganisationName,
-            string tedContactEmail, string eSenderLogin, string translations, bool publishToTed = true)
+            string tedContactEmail, string eSenderLogin, ITranslationProvider translationProvider = null, bool publishToTed = true)
         {
             _notice = notice;
             _parent = parent;
             _tedContactEmail = tedContactEmail;
             _tedSenderOrganisation = tedSenderOrganisationName;
             _eSenderLogin = eSenderLogin;
-            Translations = string.IsNullOrEmpty(translations) ? new JObject() : JObject.Parse(translations);
-            NoticeLanguage = notice.Language;
+            _translationProvider = translationProvider;
             PublishToTed = publishToTed;
         }
 
@@ -64,35 +56,41 @@ namespace Hilma.Domain.Integrations
         /// <returns></returns>
         public XDocument CreateDocument()
         {
-            // Corrigendum, if parent exists and has TED ID
-            if (IsCorrigendum())
+            if (IsCorrigendum() && !NoticeTypeExtensions.IsDefence(_notice.Type))
             {
-                var f14Factory = new F14Factory(_notice, _parent, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
+                var f14Factory = new General.F14Factory(_notice, _parent, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                 return f14Factory.Form14();
+            }
+
+            if (IsCorrigendum() && NoticeTypeExtensions.IsDefence(_notice.Type))
+            {
+                var f14Factory = new Defence.F14Factory(_notice, _parent, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
+                return f14Factory.CreateForm();
             }
 
             switch (_notice.Type)
             {
                 case NoticeType.PriorInformation:
                 case NoticeType.PriorInformationReduceTimeLimits:
-                    var f01Factory = new F01Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
+                    var f01Factory = new F01Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f01Factory.CreateForm();
                 case NoticeType.Contract:
-                    var f02Factory = new F02Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
+                    var f02Factory = new F02Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f02Factory.CreateForm();
                 case NoticeType.Undefined:
                     break;
                 case NoticeType.ContractAward:
-                    var f03Factory = new F03Factory(_notice, _parent, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
+                    var f03Factory = new F03Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f03Factory.CreateForm();
                 case NoticeType.PeriodicIndicativeUtilities:
-                    var f04Factory = new F04Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
+                case NoticeType.PeriodicIndicativeUtilitiesReduceTimeLimits:
+                    var f04Factory = new F04Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f04Factory.CreateForm();
                 case NoticeType.ContractUtilities:
-                    var f05Factory = new F05Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
+                    var f05Factory = new F05Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f05Factory.CreateForm();
                 case NoticeType.ContractAwardUtilities:
-                    var f06Factory = new F06Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
+                    var f06Factory = new F06Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f06Factory.CreateForm();
                 case NoticeType.QualificationSystemUtilities:
                     break;
@@ -105,12 +103,13 @@ namespace Hilma.Domain.Integrations
                 case NoticeType.DefenceContractConcessionnaire:
                     break;
                 case NoticeType.DesignContest:
-                    var f12Factory = new F12Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
+                    var f12Factory = new F12Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f12Factory.CreateForm();
                 case NoticeType.DesignContestResults:
-                    break;
+                    var f13Factory = new F13Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
+                    return f13Factory.CreateForm();
                 case NoticeType.ExAnte:
-                    var f15factory = new F15Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
+                    var f15factory = new F15Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f15factory.CreateForm();
                 case NoticeType.DefencePriorInformation:
                     var f16Factory = new F16Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
@@ -128,19 +127,33 @@ namespace Hilma.Domain.Integrations
                 case NoticeType.SocialPriorInformation:
                 case NoticeType.SocialContract:
                 case NoticeType.SocialContractAward:
-                    var f21Factory = new F21Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
+                    var f21Factory = new F21Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f21Factory.CreateForm();
                 case NoticeType.SocialUtilities:
                 case NoticeType.SocialUtilitiesPriorInformation:
-                    var f22Factory = new F22Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
+                case NoticeType.SocialUtilitiesContractAward:
+                case NoticeType.SocialUtilitiesQualificationSystem:
+                    var f22Factory = new F22Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f22Factory.CreateForm();
                 case NoticeType.SocialConcessions:
                     break;
                 case NoticeType.Concession:
-                    var f24Factory = new F24Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
+                    var f24Factory = new F24Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f24Factory.CreateForm();
                 case NoticeType.ConcessionAward:
-                    break;
+                    var f25Factory = new F25Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
+                    return f25Factory.CreateForm();
+                case NoticeType.DpsAward:
+                    if(_notice.Project.ProcurementCategory == ProcurementCategory.Public)
+                    {
+                        var dpsAward3 = new F03Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
+                        return dpsAward3.CreateForm();
+                    }
+                    else
+                    {
+                        var dpsAward6 = new F06Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
+                        return dpsAward6.CreateForm();
+                    }
                 default:
                     throw new ArgumentOutOfRangeException($"Notice type: {_notice.Type} is not supported");
             }
@@ -151,7 +164,8 @@ namespace Hilma.Domain.Integrations
         // Corrigendum, if parent has been published
         private bool IsCorrigendum()
         {
-            return _notice.IsCorrigendum && _parent != null && _parent.State == PublishState.Published;
+            return _notice.IsCorrigendum && _parent != null &&
+                (_parent.State == PublishState.Published || _parent.State == PublishState.NotPublic);
         }
     }
 }

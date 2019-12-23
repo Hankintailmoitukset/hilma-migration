@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using Hilma.Domain.Entities.Annexes;
 
 namespace Hilma.Domain.Integrations.HilmaMigration
 {
@@ -52,6 +53,11 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 if (noticeType.IsNational())
                 {
                     return ParseNationalNotices(formElement, noticeNumber, importedNotice, noticeType, isCorrigendum);
+                }
+
+                if (noticeType.IsDefence())
+                {
+                    return ParseDefenceNotices(formElement, noticeNumber, importedNotice, noticeType, isCorrigendum);
                 }
 
                 return ParseEuNotice(importedNotice, noticeType, formElement, noticeNumber, isCorrigendum);
@@ -120,7 +126,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 PreviousNoticeOjsNumber = procedure?.Element("NOTICE_NUMBER_OJ")?.Value ?? complementaryInfo?.Element("NOTICE_NUMBER_OJ")?.Value,
                 CorrigendumPreviousNoticeNumber = complementaryInfo?.Element("NO_DOC_EXT")?.Value,
                 IsCorrigendum = isCorrigendum,
-                Annexes = ParseAnnex(procedure)
+                Annexes = ParseAnnex(procedure),
+                Modifications = ParseEuModifications(formElement?.Element("MODIFICATIONS_CONTRACT"),_nutsSchema)
 
             };
 
@@ -133,34 +140,721 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             return notice;
         }
 
+        private static Modifications ParseEuModifications(XElement modificationsContract, XNamespace nutsSchema)
+        {
+
+            var descriptionProcurement = modificationsContract?.Element("DESCRIPTION_PROCUREMENT");
+
+            return new Modifications()
+            {
+                AdditionalCpvCodes = ParseAdditionalCpvCodes(descriptionProcurement),
+                AwardedToGroupOfEconomicOperators = descriptionProcurement?.Element("CONTRACTORS")?.Element("AWARDED_TO_GROUP") !=null,
+                Contractors = new List<ContractorContactInformation> {
+                     ParseContractor(descriptionProcurement?.Element("CONTRACTORS")?.Element("CONTRACTOR")?.Element("ADDRESS_CONTRACTOR"))
+                },
+                Description = ParsePElements(modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("SHORT_DESCR")),
+                DescrProcurement = ParsePElements(descriptionProcurement?.Element("SHORT_DESCR")) ,
+                IncreaseBeforeModifications = new ValueContract() {
+                    Currency = modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("VALUES")?.Element("VAL_TOTAL_BEFORE")?.Attribute("CURRENCY")?.Value,
+                    Value = ParseDecimal(modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("VALUES")?.Element("VAL_TOTAL_BEFORE")?.Value)
+                },
+                IncreaseAfterModifications = new ValueContract()
+                {
+                    Currency = modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("VALUES")?.Element("VAL_TOTAL_AFTER")?.Attribute("CURRENCY")?.Value,
+                    Value = ParseDecimal(modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("VALUES")?.Element("VAL_TOTAL_AFTER")?.Value)
+                },
+                JustificationForDurationOverEightYears = ParsePElements(descriptionProcurement?.Element("JUSTIFICATION")),
+                JustificationForDurationOverFourYears = ParsePElements(descriptionProcurement?.Element("JUSTIFICATION")),
+                MainCpvCode = ParseCpvCode(descriptionProcurement),
+                MainsiteplaceWorksDelivery =ParsePElements(descriptionProcurement?.Element("MAIN_SITE")),
+                NutsCodes= ParseNutsCodes(nutsSchema, descriptionProcurement),
+                Reason = modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("ADDITIONAL_NEED") !=null? ModificationReason.ModNeedForAdditional: ModificationReason.ModNeedByCircums,
+                ReasonDescriptionCircumstances = ParsePElements(modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("UNFORESEEN_CIRCUMSTANCE")) ,
+                ReasonDescriptionEconomic = ParsePElements(modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("ADDITIONAL_NEED")),
+                TimeFrame = ParseTimeFrame(descriptionProcurement),
+                TotalValue = new ValueContract() {
+                    Currency = descriptionProcurement?.Element("VALUES")?.Element("VAL_TOTAL")?.Attribute("CURRENCY")?.Value,
+                    Value = ParseDecimal(descriptionProcurement?.Element("VALUES")?.Element("VAL_TOTAL")?.Value)
+                },
+                ValidationState = ValidationState.Valid
+            };
+        }
+
+        private NoticeContract ParseNationalNotices(XElement formElement, string noticeNumber, INoticeImportModel importedNotice, NoticeType noticeType, bool isCorrigendum)
+        {
+            var domesticContract = formElement.Element("FD_DOMESTIC_CONTRACT") != null ? formElement.Element("FD_DOMESTIC_CONTRACT") : formElement.Element("FD_DOMESTIC_DIRECT_AWARD");
+            var domesticNoticeType = domesticContract?.Element("DOMESTIC_NOTICE_TYPE");
+
+
+            if (noticeType == NoticeType.Undefined && !isCorrigendum)
+            {
+                throw new NotImplementedException("NoticeType is not supported. Type was " + domesticNoticeType?.Elements()?.First()?.Name?.LocalName);
+            }
+
+            var domesticAuthorityInformation = domesticContract?.Element("DOMESTIC_AUTHORITY_INFORMATION");
+            var domesticObjectContract = domesticContract?.Element("DOMESTIC_OBJECT_INFORMATION");
+            var domesticContractRC = domesticContract?.Element("DOMESTIC_CONTRACT_RELATING_CONDITIONS");
+            var domesticNameAddresses = domesticContract?.Element("DOMESTIC_AUTHORITY_INFORMATION")?.Element("DOMESTIC_NAME_ADDRESSES");
+            var organisationInformation = ParseContractingBodyInformation(_nutsSchema, domesticNameAddresses);
+            var domesticProcedureDefinition = domesticContract?.Element("DOMESTIC_PROCEDURE_DEFINITION");
+
+            var notice = new NoticeContract()
+            {
+                PreviousNoticeOjsNumber = domesticNoticeType?.Element("CORRIGENDUM_NOTICE")?.Element("DOMESTIC_ORIGINAL_NOTICE")?.Attribute("NO_DOC_EXT")?.Value,
+                IsCorrigendum = isCorrigendum,
+                CreatorId = null,
+                NoticeNumber = noticeNumber,
+                Language = "FI",
+                Type = noticeType == NoticeType.NationalDirectAward? noticeType:  ParseNationalNoticeType(domesticNoticeType.Elements().First().Name.LocalName),
+                ContactPerson = ParseContactPerson(domesticNameAddresses),
+                IsLatest = true,
+                Project = new ProcurementProjectContract()
+                {
+                    Title = domesticObjectContract?.Element("TITLE_CONTRACT")?.Value,
+                    ReferenceNumber = domesticObjectContract?.Element("FILE_REFERENCE_NUMBER")?.Value,
+
+                    Organisation = new OrganisationContract()
+                    {
+                        Information = organisationInformation,
+                        ContractingAuthorityType = FromTEDFormatContractingAuthorityType(domesticAuthorityInformation?.Element("DOMESTIC_TYPE_OF_CONTRACTING").Descendants().First().Name.ToString()),
+                        OtherContractingAuthorityType = domesticAuthorityInformation?.Element("DOMESTIC_TYPE_OF_CONTRACTING")?.Element("OTHER")?.Value,
+
+                    },
+                    ProcurementCategory = ProcurementCategory.Public,
+                    ContractType = ParseContractType(domesticContract?.Attribute("DOMESTIC_CTYPE").Value),
+                    CentralPurchasing = domesticAuthorityInformation?.Element("PURCHASING_ON_BEHALF")?.Attribute("VALUE")?.Value == "YES",
+                    ValidationState = ValidationState.Valid,
+                    Publish = PublishType.ToHilma
+                },
+                CommunicationInformation = ParseNationalCommunicationInformation(domesticAuthorityInformation, organisationInformation),
+                ProcurementObject = new ProcurementObject()
+                {
+                    MainCpvCode = new CpvCode
+                    {
+                        Code = domesticObjectContract?.Element("CPV")?.Element("CPV_MAIN")?.Element("CPV_CODE")?.Attribute("CODE")?.Value,
+                        VocCodes = domesticObjectContract?.Element("CPV")?.Element("CPV_MAIN")?.Elements("CPV_SUPPLEMENTARY_CODE")?.Select(s => new VocCode { Code = s?.Attribute("CODE")?.Value }).ToArray()
+                    },
+                    EstimatedValue = ParseNationalEstimatedValue(domesticObjectContract),
+                    ValidationState = ValidationState.Valid
+                },
+                ObjectDescriptions =  ParseNationalObjectDescriptions(_nutsSchema, domesticContract, domesticContractRC, domesticObjectContract).ToArray(), 
+                ProcedureInformation = new ProcedureInformation()
+                {
+                    ProcedureType = ParseNationalProcedureTypes(domesticProcedureDefinition?.Element("DOMESTIC_TYPE_OF_PROCEDURE")),
+                    FrameworkAgreement = new FrameworkAgreementInformation()
+                    {
+                        IncludesFrameworkAgreement = domesticProcedureDefinition?.Element("FRAMEWORK_AGREEMENT_IS_ESTABLISH")?.Attribute("VALUE")?.Value == "YES" ? true : false,
+                    },
+                    National = new ProcedureInformationNational()
+                    {
+                        OtherProcedure = ParsePElements(domesticProcedureDefinition?.Element("DOMESTIC_PROCEDURE_DEFINITION")),
+                        AdditionalProcedureInformation = ParsePElements(domesticContractRC?.Element("SELECTION_CRITERIA_INFORMATION")?? domesticProcedureDefinition?.Element("ADDITIONAL_INFORMATION")),
+                    }
+                },
+                ConditionsInformationNational = new ConditionsInformationNational()
+                {
+                    ParticipantSuitabilityCriteria = ParsePElements(domesticContractRC?.Element("SELECTION_CRITERIA")),
+                    RequiredCertifications = ParsePElements(domesticContractRC?.Element("SELECTION_CRITERIA_CERTIFICATIONS")),
+                    ReservedForShelteredWorkshopOrProgram = domesticProcedureDefinition?.Element("RESERVED_CONTRACTS")?.Attribute("VALUE").Value == "YES"
+                },
+                ConditionsInformation = new ConditionsInformation(),
+                TenderingInformation = new TenderingInformation()
+                {
+                    TendersOrRequestsToParticipateDueDateTime = ParseDateTimeFromElements(domesticContractRC?.Element("RECEIPT_LIMIT_DATE")),
+                    ValidationState = ValidationState.Valid
+                },
+                ProceduresForReview = ParseProceduresForReview(domesticContract?.Element("DOMESTIC_ADDRESS_REVIEW_BODY"), null),
+                ComplementaryInformation = new ComplementaryInformation()
+                {
+                    AdditionalInformation = domesticContractRC?.Descendants("ADDITIONAL_INFORMATION")?.SelectMany(i => ParsePElements(i)).ToArray() ?? new string[0],
+                },
+                LotsInfo = new LotsInfo()
+                {
+                    DivisionLots = domesticProcedureDefinition?.Element("DIVISION_INTO_LOTS")?.Attribute("VALUE").Value == "YES",
+                },
+                AttachmentInformation = new AttachmentInformation(),
+                Attachments = new string[0],
+                State = PublishState.Published,
+                DatePublished = importedNotice.HilmaPublishedDate,
+
+            };
+
+            if (notice.Type == NoticeType.NationalDirectAward)
+            {
+                notice.Annexes = new Annex()
+                {
+                    DirectNational = new AnnexNational()
+                    {
+                        Justification = ParsePElements(domesticProcedureDefinition?.Element("DOMESTIC_TYPE_OF_PROCEDURE")?.Element("PT_DIRECT_AWARD")?.Element("JUSTIFICATION_DIRECT_AWARD")),
+                        PurchaseType = NationalDirectPurchaseType.JustifiableDirectPurchase
+                    }
+                };
+            }
+
+            if (notice.Project.Organisation.ContractingAuthorityType == ContractingAuthorityType.OtherType)
+            {
+                if (string.IsNullOrEmpty(notice.Project.Organisation.OtherContractingAuthorityType))
+                {
+                    notice.Project.Organisation.OtherContractingAuthorityType = "Ei määritelty";
+                }
+            }
+
+            notice.Project.Organisation.Information.NutsCodes = new[]{
+                    domesticContract?.Element("DOMESTIC_OBJECT_INFORMATION")?.Element(_nutsSchema + "NUTS")?.Attribute("CODE")?.Value
+                   };
+
+            return notice;
+        }
+
+        private NoticeContract ParseDefenceNotices(XElement formElement, string noticeNumber, INoticeImportModel importedNotice, NoticeType noticeType, bool isCorrigendum)
+        {
+            var prefix = noticeType == NoticeType.DefenceContract ? "_CONTRACT" : "_CONTRACT_AWARD";
+            var prefix1 = noticeType == NoticeType.DefenceContractAward ? "_AWARD": "";
+            var prefix2 = noticeType == NoticeType.DefenceContractAward ? "_CONTRACT_AWARD" : "";
+            var prefix3 = noticeType == NoticeType.DefenceContractAward ? "_CONTRACT_AWARD_NOTICE" : "";
+            var prefix4 = noticeType == NoticeType.DefenceContractAward ? "AWARD" : "NOTICE";
+            var prefix5 = noticeType == NoticeType.DefenceContractAward ? "AWARD_NOTICE" : "CONTRACT";
+            var prefix6 = noticeType == NoticeType.DefenceContractAward ? "W_PUB_" : "";
+            var prefix7 = noticeType == NoticeType.DefenceContractAward ? "_PUB_" : "_";
+            var prefix8 = noticeType == NoticeType.DefenceContractAward ? "F18_" : "";
+            var prefix9 = noticeType == NoticeType.DefenceContractAward ? "_DEFENCE" : "";
+
+            
+            var defenceContract = formElement.Element($"FD{prefix}_DEFENCE");
+            var defenceAuthorityInformation = defenceContract?.Element($"CONTRACTING_AUTHORITY_INFORMATION{prefix2}_DEFENCE");
+            var defenceNameAdress = defenceAuthorityInformation?.Element($"NAME_ADDRESSES_CONTACT_CONTRACT{prefix1}");
+            var defenceContractInformation = defenceContract?.Element($"OBJECT_CONTRACT_INFORMATION{prefix3}_DEFENCE");
+            var defenceLeftiContract = defenceContract?.Element("LEFTI_CONTRACT_DEFENCE");
+            var defenceProcedureDefinitonContract = defenceContract?.Element($"PROCEDURE_DEFINITION_CONTRACT{prefix1}_NOTICE_DEFENCE");
+            var defenceCcomplimentaryInformation = defenceContract?.Element($"COMPLEMENTARY_INFORMATION_CONTRACT_{prefix4}");
+            var reviewBody = defenceCcomplimentaryInformation?.Element("PROCEDURES_FOR_APPEAL")?.Element("APPEAL_PROCEDURE_BODY_RESPONSIBLE")?.Element("CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME");
+            var administrativeInformationContractNoticeDefence = defenceProcedureDefinitonContract?.Element($"ADMINISTRATIVE_INFORMATION_CONTRACT_{prefix4}_DEFENCE");            
+            var concessionaireProfile = defenceNameAdress?.Element("CA_CE_CONCESSIONAIRE_PROFILE");
+            var organisationInformation = ParseContractingBodyInformation(_nutsSchema, concessionaireProfile);
+            var ContractRC = defenceLeftiContract?.Element("CONTRACT_RELATING_CONDITIONS");
+            var descriptionContractInformation = defenceContractInformation.Element($"DESCRIPTION_{prefix5}_INFORMATION_DEFENCE");
+            var typeContractDefence = descriptionContractInformation?.Element($"TYPE_CONTRACT_{prefix6}DEFENCE");
+            var typeAndActivities = defenceAuthorityInformation?.Element("TYPE_AND_ACTIVITIES_OR_CONTRACTING_ENTITY_AND_PURCHASING_ON_BEHALF")?.Element("TYPE_AND_ACTIVITIES");
+            var typeOfProcedure = defenceProcedureDefinitonContract?.Element($"TYPE_OF_PROCEDURE{prefix2}_DEFENCE");
+            var awardOfContractDefence = defenceContract?.Element("AWARD_OF_CONTRACT_DEFENCE");
+            var previousPublicationExist =  administrativeInformationContractNoticeDefence?.Element("PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F18")?.Element("PREVIOUS_PUBLICATION_EXISTS_F18");
+
+
+            var notice = new NoticeContract()
+            {
+                PreviousNoticeOjsNumber = null,
+                TedSubmissionId = importedNotice.TedSubmissionId,
+                NoticeOjsNumber = importedNotice.NoticeOjsNumber,
+                IsCorrigendum = isCorrigendum,
+                CreatorId = null,
+                NoticeNumber = noticeNumber,
+                Language = formElement.Attribute("LG")?.Value ?? "FI",
+                Type = noticeType,
+                ContactPerson = ParseContactPerson(concessionaireProfile),
+                IsLatest = true,
+                Project = new ProcurementProjectContract()
+                {
+                    Title = descriptionContractInformation?.Element("TITLE_CONTRACT")?.Value,
+                    ReferenceNumber = administrativeInformationContractNoticeDefence?.Element("FILE_REFERENCE_NUMBER")?.Element("P")?.Value,
+
+                    Organisation = new OrganisationContract()
+                    {
+                        Information = organisationInformation,
+                        ContractingAuthorityType = FromTEDFormatContractingAuthorityType(typeAndActivities?.Element("TYPE_OF_CONTRACTING_AUTHORITY")?.Attribute("VALUE")?.Value != null ?
+                        typeAndActivities?.Element("TYPE_OF_CONTRACTING_AUTHORITY")?.Attribute("VALUE")?.Value: typeAndActivities?.Element("TYPE_OF_CONTRACTING_AUTHORITY_OTHER")?.Attribute("VALUE")?.Value),
+
+                        OtherContractingAuthorityType = defenceAuthorityInformation?.Element("TYPE_OF_CONTRACTING_AUTHORITY")?.Element("OTHER")?.Value != null ?
+                                                        defenceAuthorityInformation?.Element("TYPE_OF_CONTRACTING_AUTHORITY")?.Element("OTHER")?.Value:
+                                                        typeAndActivities?.Element("TYPE_OF_CONTRACTING_AUTHORITY_OTHER")?.Value,
+
+                        MainActivity = FromTEDFormatMainActivity(typeAndActivities?.Element("TYPE_OF_ACTIVITY") != null ? typeAndActivities?.Element("TYPE_OF_ACTIVITY")?.Attribute("VALUE")?.Value : typeAndActivities?.Element("TYPE_OF_ACTIVITY_OTHER")?.Attribute("VALUE")?.Value),
+
+                        OtherMainActivity = typeAndActivities?.Element("TYPE_OF_ACTIVITY_OTHER")?.Value,
+                        
+                        ValidationState = ValidationState.Valid
+                    },
+                    ProcurementCategory = ProcurementCategory.Defence,
+
+                    ContractType = ParseContractType(typeContractDefence?.Element("TYPE_CONTRACT")?.Attribute("VALUE")?.Value),
+
+                    CentralPurchasing = defenceAuthorityInformation?.Element("PURCHASING_ON_BEHALF")?.Element("PURCHASING_ON_BEHALF_YES") != null,
+                    DefenceCategory = new DefenceCategory()
+                    {
+                        Code = typeContractDefence?.Element($"SERVICE_CATEGORY{prefix7}DEFENCE")?.Value
+                    },
+                    DefenceSupplies = ParseSuppliesTEDFormat(typeContractDefence?.Element("TYPE_SUPPLIES_CONTRACT")?.Attribute("VALUE")?.Value),
+                    DefenceWorks = typeContractDefence?.Element("TYPE_WORK_CONTRACT")?.Element("DESIGN_EXECUTION") != null ? Works.Design :
+                                   typeContractDefence?.Element("TYPE_WORK_CONTRACT")?.Element("EXECUTION") != null ? Works.Execution :
+                                   typeContractDefence?.Element("TYPE_WORK_CONTRACT")?.Element("REALISATION_REQUIREMENTS_SPECIFIED_CONTRACTING_AUTHORITIES") != null ? Works.Realisation : Works.Undefined,
+                    JointProcurement = defenceAuthorityInformation?.Element("TYPE_AND_ACTIVITIES_OR_CONTRACTING_ENTITY_AND_PURCHASING_ON_BEHALF")?.Element("PURCHASING_ON_BEHALF")?.Element("PURCHASING_ON_BEHALF_YES") != null,
+                    CoPurchasers = new List<ContractBodyContactInformation>() {
+                        ParseContractingBodyInformation(_nutsSchema, defenceAuthorityInformation?.Element("TYPE_AND_ACTIVITIES_OR_CONTRACTING_ENTITY_AND_PURCHASING_ON_BEHALF")?.Element("PURCHASING_ON_BEHALF")?.Element("PURCHASING_ON_BEHALF_YES")?.Element("CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY"))
+                    },
+
+                    ValidationState = ValidationState.Valid,
+                    Publish = PublishType.ToTed
+                },
+                CommunicationInformation = ParseDefenceCommunicationInformation(_nutsSchema, defenceAuthorityInformation, noticeType),
+                ProcurementObject = new ProcurementObject()
+                {
+                    MainCpvCode = new CpvCode
+                    {
+                        Code = descriptionContractInformation?.Element("CPV")?.Element("CPV_MAIN").Element("CPV_CODE")?.Attribute("CODE")?.Value,
+                        VocCodes = descriptionContractInformation?.Element("CPV")?.Element("CPV_MAIN").Elements("CPV_SUPPLEMENTARY_CODE").Select(s => new VocCode { Code = s.Attribute("CODE")?.Value }).ToArray(),
+                    },
+                    EstimatedValue = ParseNationalEstimatedValue(descriptionContractInformation),
+
+                    TotalValue = ParseValueRangeContract(
+                        valueElement: defenceContractInformation?.Element("TOTAL_FINAL_VALUE")?.Element("VALUE_COST") !=null ?
+                            defenceContractInformation?.Element("TOTAL_FINAL_VALUE")?.Element("VALUE_COST") :
+                            defenceContractInformation?.Element("TOTAL_FINAL_VALUE")?.Element("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE"),
+                        rangeElement:
+                            defenceContractInformation?.Element("TOTAL_FINAL_VALUE")?.Element("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE")),
+
+                    Defence = new ProcurementObjectDefence()
+                    {
+                        AdditionalCpvCodes = ParseAdditionalCpvCodes(descriptionContractInformation?.Element("CPV")),
+                        AdditionalInformation = ParsePElements(defenceCcomplimentaryInformation?.Element("ADDITIONAL_INFORMATION")),
+                        FrameworkAgreement = ParseDefenceFrameworkAgreement(descriptionContractInformation),
+                        MainsiteplaceWorksDelivery = noticeType != NoticeType.DefencePriorInformation ? new string[] { descriptionContractInformation.Element("LOCATION_NUTS")?.Element("LOCATION")?.Value } :
+                                                     ParsePElements(descriptionContractInformation.Element("SITE_OR_LOCATION")?.Element("LABEL")),
+                        NutsCodes = ParseNutsCodes(_nutsSchema, descriptionContractInformation.Element("LOCATION_NUTS")),
+                        OptionsAndVariants = new OptionsAndVariants()
+                        {
+                            Options = defenceContractInformation?.Element("QUANTITY_SCOPE")?.Element("OPTIONS") != null,
+                            OptionsDays = ParseInt(defenceContractInformation?.Element("QUANTITY_SCOPE")?.Element("OPTIONS")?.Element("PROVISIONAL_TIMETABLE_DAY")?.Value),
+                            OptionsDescription = ParsePElements(defenceContractInformation?.Element("QUANTITY_SCOPE")?.Element("OPTIONS")?.Element("OPTION_DESCRIPTION")),
+                            OptionsMonths = ParseInt(defenceContractInformation?.Element("QUANTITY_SCOPE")?.Element("OPTIONS")?.Element("PROVISIONAL_TIMETABLE_MONTH")?.Value),
+                            OptionType = defenceContractInformation?.Element("QUANTITY_SCOPE")?.Element("OPTIONS")?.Element("PROVISIONAL_TIMETABLE_MONTH") != null ? TimeFrameType.Months :
+                                         defenceContractInformation?.Element("QUANTITY_SCOPE")?.Element("OPTIONS")?.Element("PROVISIONAL_TIMETABLE_DAY") != null ? TimeFrameType.Days :
+                                         TimeFrameType.Undefined,
+                        },
+                        Renewals = new DefenceRenewals()
+                        {
+                            Amount = ParseValueRangeContract(defenceContractInformation?.Element("QUANTITY_SCOPE")?.Element("RECURRENT_CONTRACT")),
+                            CanBeRenewed = defenceContractInformation?.Element("QUANTITY_SCOPE")?.Element("RECURRENT_CONTRACT") != null,
+                            SubsequentContract = new TimeFrame()
+                            {
+                                Type = defenceContractInformation?.Element("QUANTITY_SCOPE")?.Element("RECURRENT_CONTRACT")?.Element("TIME_FRAME_SUBSEQUENT_CONTRACTS_DAY") != null ? TimeFrameType.Days :
+                                       defenceContractInformation?.Element("QUANTITY_SCOPE")?.Element("RECURRENT_CONTRACT")?.Element("TIME_FRAME_SUBSEQUENT_CONTRACTS_MONTH") != null ? TimeFrameType.Months : TimeFrameType.Undefined,
+                                Days = ParseInt(defenceContractInformation?.Element("QUANTITY_SCOPE")?.Element("RECURRENT_CONTRACT")?.Element("TIME_FRAME_SUBSEQUENT_CONTRACTS_DAY")?.Value),
+                                Months = ParseInt(defenceContractInformation?.Element("QUANTITY_SCOPE")?.Element("RECURRENT_CONTRACT")?.Element("TIME_FRAME_SUBSEQUENT_CONTRACTS_MONTH")?.Value)
+                            }
+                        },
+                        Subcontract = ParseDefenceSubcontract(descriptionContractInformation),
+                        TimeFrame = ParseTimeFrame(defenceContractInformation?.Element("PERIOD_WORK_DATE_STARTING")),
+                        TotalQuantity = ParsePElements(defenceContractInformation?.Element("QUANTITY_SCOPE")?.Element("NATURE_QUANTITY_SCOPE")?.Element("TOTAL_QUANTITY_OR_SCOPE")),
+                        TotalQuantityOrScope = ParseValueRangeContract(defenceContractInformation?.Element("QUANTITY_SCOPE")?.Element("NATURE_QUANTITY_SCOPE"))
+                    },
+                    ShortDescription = ParsePElements(descriptionContractInformation?.Element("SHORT_CONTRACT_DESCRIPTION")),
+                    ValidationState = ValidationState.Valid
+                },
+                ConditionsInformationDefence = ParseConditionsInformationDefence(defenceLeftiContract),
+
+
+
+                ProcedureInformation = new ProcedureInformation()
+                {
+                    ProcedureType = ParseProcedureType(typeOfProcedure?.Element("TYPE_OF_PROCEDURE_DETAIL_FOR_CONTRACT_NOTICE_DEFENCE") != null ? typeOfProcedure?.Element("TYPE_OF_PROCEDURE_DETAIL_FOR_CONTRACT_NOTICE_DEFENCE") : typeOfProcedure),
+
+                    FrameworkAgreement = new FrameworkAgreementInformation()
+                    {
+                        IncludesFrameworkAgreement = defenceProcedureDefinitonContract?.Element("FRAMEWORK_AGREEMENT_IS_ESTABLISH")?.Attribute("VALUE")?.Value == "YES" ? true : false,
+
+                    },
+                    National = new ProcedureInformationNational()
+                    {
+                        OtherProcedure = ParsePElements(defenceProcedureDefinitonContract),
+                        AdditionalProcedureInformation = ParsePElements(ContractRC?.Element("SELECTION_CRITERIA_INFORMATION"))
+                    },
+                    Defence = new ProcedureInformationDefence()
+                    {
+                        AwardCriteria = ParseDefenceAwardCriteria(defenceProcedureDefinitonContract),
+                        CandidateNumberRestrictions = new CandidateNumberRestrictions() {
+                            EnvisagedMaximumNumber = ParseInt(defenceProcedureDefinitonContract?.Element("TYPE_OF_PROCEDURE_DEFENCE")?.Element("MAXIMUM_NUMBER_INVITED")?.Element("OPE_MAXIMUM_NUMBER")?.Value),
+                            EnvisagedMinimumNumber = ParseInt(defenceProcedureDefinitonContract?.Element("TYPE_OF_PROCEDURE_DEFENCE")?.Element("MAXIMUM_NUMBER_INVITED")?.Element("OPE_MINIMUM_NUMBER")?.Value),
+                            EnvisagedNumber = ParseInt(defenceProcedureDefinitonContract?.Element("TYPE_OF_PROCEDURE_DEFENCE")?.Element("MAXIMUM_NUMBER_INVITED")?.Element("OPE_ENVISAGED_NUMBER")?.Value),
+                            ObjectiveCriteriaForChoosing = ParsePElements(defenceProcedureDefinitonContract?.Element("TYPE_OF_PROCEDURE_DEFENCE")?.Element("MAXIMUM_NUMBER_INVITED")?.Element("OPE_OBJECTIVE_CRITERIA")),
+                            Selected = defenceProcedureDefinitonContract?.Element("TYPE_OF_PROCEDURE_DEFENCE")?.Element("MAXIMUM_NUMBER_INVITED") != null ?
+                                        EnvisagedParticipantsOptions.EnvisagedNumber :
+                                        defenceProcedureDefinitonContract?.Element("TYPE_OF_PROCEDURE_DEFENCE")?.Element("MAXIMUM_NUMBER_INVITED")?.Element("OPE_MINIMUM_NUMBER") != null ?
+                                        EnvisagedParticipantsOptions.Range :
+                                        EnvisagedParticipantsOptions.Undefined
+
+                        }
+                    },
+                    JustificationForAcceleratedProcedure = ParsePElements(defenceProcedureDefinitonContract?.Element("TYPE_OF_PROCEDURE_DEFENCE")?.Element("TYPE_OF_PROCEDURE_DETAIL_FOR_CONTRACT_NOTICE_DEFENCE")?.Element("PT_ACCELERATED_RESTRICTED_CHOICE")?.Element("PTAR_JUSTIFICATION")),
+                    AcceleratedProcedure = ParseDefenceAcceleratedProcedure(defenceProcedureDefinitonContract),
+                    ElectronicAuctionWillBeUsed = defenceProcedureDefinitonContract.Element($"AWARD_CRITERIA_CONTRACT{prefix1}_NOTICE_INFORMATION{prefix9}")?.Element($"{prefix8}IS_ELECTRONIC_AUCTION_USABLE")?.Attribute("VALUE")?.Value == "YES" 
+                },
+                
+                ConditionsInformationNational = new ConditionsInformationNational()
+                {
+                    ParticipantSuitabilityCriteria = ParsePElements(ContractRC?.Element("SELECTION_CRITERIA")),
+                    RequiredCertifications = ParsePElements(ContractRC?.Element("SELECTION_CRITERIA_CERTIFICATIONS")),
+                    ReservedForShelteredWorkshopOrProgram = defenceProcedureDefinitonContract?.Element("RESERVED_CONTRACTS")?.Attribute("VALUE").Value == "YES"
+                },
+                ConditionsInformation = new ConditionsInformation(),
+                TenderingInformation = new TenderingInformation()
+                {
+                    TendersOrRequestsToParticipateDueDateTime = ParseDateTimeFromElements(administrativeInformationContractNoticeDefence?.Element("CONTRACT_AWARD_DATE")),
+                    Defence = new DefenceAdministrativeInformation()
+                    {
+                        DocumentPrice = new ValueContract()
+                        {
+                            Currency = administrativeInformationContractNoticeDefence?.Element("CONDITIONS_OBTAINING_SPECIFICATIONS")?.Element("DOCUMENT_COST")?.Attribute("CURRENCY")?.Value,
+                            Value = ParseDecimal(administrativeInformationContractNoticeDefence?.Element("CONDITIONS_OBTAINING_SPECIFICATIONS")?.Element("DOCUMENT_COST")?.Value)
+                        },
+
+                        PreviousPriorInformationNoticeOjsNumber = new OjsNumber() {
+                            Number = previousPublicationExist?.Element("PREVIOUS_PUBLICATION_NOTICE_F18")?.Element("NOTICE_NUMBER_OJ")?.Value,
+                            Date = ParseDateTimeFromElements(previousPublicationExist?.Element("PREVIOUS_PUBLICATION_NOTICE_F18")?.Element("DATE_OJ"))
+                        },
+                       // PreviousContractType = FromTEDFormatPreviousContractType(previousPublicationExist?.Element("PREVIOUS_PUBLICATION_NOTICE_F18")?.Element("PREVIOUS_NOTICE_BUYER_PROFILE_F18")?.Attribute("CHOICE")?.Value),
+
+                        HasPreviousExAnteOjsNumber = previousPublicationExist?.Element("EX_ANTE_NOTICE_INFORMATION")!=null,
+                         PreviousExAnteOjsNumber = new OjsNumber() {
+                             Number= previousPublicationExist?.Element("EX_ANTE_NOTICE_INFORMATION")?.Element("NOTICE_NUMBER_OJ")?.Value,
+                             Date = ParseDateTimeFromElements(previousPublicationExist?.Element("EX_ANTE_NOTICE_INFORMATION")?.Element("DATE_OJ"))
+                         } ,
+                        
+                        HasPreviousContractNoticeOjsNumber = previousPublicationExist?.Element("CNT_NOTICE_INFORMATION_F18") != null,
+                        PreviousContractNoticeOjsNumber = new OjsNumber() {
+                             Number = previousPublicationExist?.Element("CNT_NOTICE_INFORMATION_F18")?.Element("NOTICE_NUMBER_OJ")?.Value,
+                             Date = ParseDateTimeFromElements(previousPublicationExist?.Element("CNT_NOTICE_INFORMATION_F18")?.Element("DATE_OJ"))
+                         },
+
+                        LanguageType = administrativeInformationContractNoticeDefence?.Element("LANGUAGE")?.Element("LANGUAGE_EC") != null ? LanguageType.SelectedEu:
+                                       administrativeInformationContractNoticeDefence?.Element("LANGUAGE")?.Element("LANGUAGE_ANY_EC")?.Attribute("VALUE")?.Value == "YES" ? LanguageType.AnyOfficialEu
+                                       : LanguageType.Undefined,
+                        Languages = ParseLanguages(administrativeInformationContractNoticeDefence),
+                        OtherLanguage = administrativeInformationContractNoticeDefence?.Element("LANGUAGE")?.Element("LANGUAGE_OTHER") != null,
+                        OtherLanguages = administrativeInformationContractNoticeDefence?.Element("LANGUAGE")?.Element("LANGUAGE_OTHER")?.Value,
+                        PayableDocuments = administrativeInformationContractNoticeDefence?.Element("CONDITIONS_OBTAINING_SPECIFICATIONS")?.Element("PAYABLE_DOCUMENTS") != null,
+                        PaymentTermsAndMethods = ParsePElements(administrativeInformationContractNoticeDefence?.Element("CONDITIONS_OBTAINING_SPECIFICATIONS")?.Element("PAYABLE_DOCUMENTS")?.Element("DOCUMENT_METHOD_OF_PAYMENT")),
+                        TimeLimitForReceipt = ParseDateTimeFromElements(administrativeInformationContractNoticeDefence?.Element("PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F18")?.Element("CONDITIONS_OBTAINING_SPECIFICATIONS")?.Element("TIME_LIMIT")),
+                        PreviousPublicationExists = previousPublicationExist != null
+
+                    },
+                    ValidationState = ValidationState.Valid
+                },
+                ProceduresForReview = ParseProceduresForReview(reviewBody, null),
+                ComplementaryInformation = new ComplementaryInformation()
+                {
+                    Defence = new ComplementaryInformationDefence()
+                    {
+                        EmploymentProtection = ParseContractingBodyInformation(_nutsSchema, reviewBody),
+                        EuFunds = new EuFunds() {
+                            ProcurementRelatedToEuProgram = defenceCcomplimentaryInformation?.Element("RELATES_TO_EU_PROJECT_YES")!=null,
+                        }
+                    },
+                     AdditionalInformation = ParsePElements(defenceCcomplimentaryInformation?.Element("ADDITIONAL_INFORMATION")),
+                },
+                LotsInfo = new LotsInfo()
+                {
+                    DivisionLots = descriptionContractInformation?.Element("F17_DIVISION_INTO_LOTS")?.Element("DIV_INTO_LOT_NO") != null ? false : true,
+                    LotsSubmittedFor = descriptionContractInformation?.Element("F17_DIVISION_INTO_LOTS")?.Element("F17_DIV_INTO_LOT_YES")?.Attribute("VALUE")?.Value == "ALL_LOTS" ? LotsSubmittedFor.LotsAll :
+                                       descriptionContractInformation?.Element("F17_DIVISION_INTO_LOTS")?.Element("F17_DIV_INTO_LOT_YES")?.Attribute("VALUE")?.Value == "ONE_OR_MORE_LOT" ? LotsSubmittedFor.LotsMax :
+                                       descriptionContractInformation?.Element("F17_DIVISION_INTO_LOTS")?.Element("F17_DIV_INTO_LOT_YES")?.Attribute("VALUE")?.Value == "ONE_LOT_ONLY" ? LotsSubmittedFor.LotOneOnly :
+                                       LotsSubmittedFor.Undefined
+                },
+                AttachmentInformation = new AttachmentInformation(),
+                Attachments = new string[0],
+                State = PublishState.Published,
+                DatePublished = importedNotice.HilmaPublishedDate,
+                ContractAwardsDefence = ParseContractAwardsDefence(defenceContract?.Descendants("AWARD_OF_CONTRACT_DEFENCE"), defenceContractInformation, _nutsSchema),
+                Annexes = ParseDefenceAnnex(defenceProcedureDefinitonContract?.Element("TYPE_OF_PROCEDURE_CONTRACT_AWARD_DEFENCE")?.Element("F18_PT_NEGOTIATED_WITHOUT_PUBLICATION_CONTRACT_NOTICE"))
+
+            };
+
+            if (notice.Project.Organisation.ContractingAuthorityType == ContractingAuthorityType.OtherType)
+            {
+                if (string.IsNullOrEmpty(notice.Project.Organisation.OtherContractingAuthorityType))
+                {
+                    notice.Project.Organisation.OtherContractingAuthorityType = "Ei määritelty";
+                }
+            }
+            if(noticeType == NoticeType.DefenceContract)
+            {
+                notice.ObjectDescriptions = ParseDefenceObjectDescriptions(_nutsSchema, descriptionContractInformation).ToArray();
+            }
+            if (noticeType == NoticeType.DefenceContractAward)
+            {
+                notice.ObjectDescriptions  = new ObjectDescription[] { };
+            }
+
+            notice.Project.Organisation.Information.NutsCodes = new[]{
+                    descriptionContractInformation?.Element("DOMESTIC_OBJECT_INFORMATION")?.Element(_nutsSchema + "NUTS")?.Attribute("CODE")?.Value
+                   };
+
+            return notice;
+        }
+
+        private bool ParseDefenceAcceleratedProcedure(XElement defenceProcedureDefinitonContract)
+        {
+            var typeOfContractDefence = defenceProcedureDefinitonContract?.Element("TYPE_OF_PROCEDURE_DEFENCE")?.Element("TYPE_OF_PROCEDURE_DETAIL_FOR_CONTRACT_NOTICE_DEFENCE");
+            var typeOfAwardContractDefence = defenceProcedureDefinitonContract?.Element("TYPE_OF_PROCEDURE_CONTRACT_AWARD_DEFENCE");
+
+            if (typeOfContractDefence != null)
+            {
+                if (typeOfContractDefence?.Descendants()?.First()?.Name?.LocalName?.Contains("ACCELERATED") == true)
+                {
+                    return true;
+                }
+            }
+
+            if(typeOfAwardContractDefence != null)
+            {
+                if (typeOfAwardContractDefence?.Descendants()?.First()?.Name?.LocalName?.Contains("ACCELERATED") == true)
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
+        //public static PreviousContractType FromTEDFormatPreviousContractType(string value)
+        //{
+        //    switch (value)
+        //    {
+        //        case "PRIOR_INFORMATION_NOTICE":
+        //            return PreviousContractType.PriorInformation;
+        //        default:
+        //            return PreviousContractType.Undefined;
+        //    }
+        //}
+
+        public static AwardCriteriaDefence ParseDefenceAwardCriteria(XElement defenceProcedureDefinitonContract) {
+
+
+            var awardCriteriaDetail = defenceProcedureDefinitonContract.Element("AWARD_CRITERIA_CONTRACT_NOTICE_INFORMATION")?.Element("AWARD_CRITERIA_DETAIL");
+            var tender = "MOST_ECONOMICALLY_ADVANTAGEOUS_TENDER";
+            if (awardCriteriaDetail == null)
+            {
+                awardCriteriaDetail = defenceProcedureDefinitonContract.Element("AWARD_CRITERIA_CONTRACT_AWARD_NOTICE_INFORMATION_DEFENCE")?.Element("AWARD_CRITERIA_DETAIL_F18");
+                tender = "MOST_ECONOMICALLY_ADVANTAGEOUS_TENDER_SHORT";
+            }
+            
+            return new AwardCriteriaDefence()
+            {
+                EconomicCriteriaTypes = awardCriteriaDetail?.Element("CRITERIA_STATED_BELOW") != null ? AwardCriterionTypeDefence.CriteriaBelow : AwardCriterionTypeDefence.Undefined,
+
+                CriterionTypes = awardCriteriaDetail?.Element("LOWEST_PRICE") != null ? AwardCriterionTypeDefence.LowestPrice :
+                                 awardCriteriaDetail?.Element(tender) != null ? AwardCriterionTypeDefence.EconomicallyAdvantageous :
+                                 AwardCriterionTypeDefence.Undefined,
+            
+                Criteria = ParseNationalAwardCriteria(defenceProcedureDefinitonContract?.Descendants("CRITERIA_DEFINITION"))
+            };
+        }
+
+        private static ContractAwardDefence[] ParseContractAwardsDefence(IEnumerable<XElement> awardOfContractDefence,XElement defenceContractInformation, XNamespace _nutsSchema )
+        {
+            if (awardOfContractDefence == null)
+            {
+                return null;
+            }
+            List<ContractAwardDefence> contractAwardDefence = new List<ContractAwardDefence> { };
+            int i = 1;
+            foreach (var award in awardOfContractDefence)
+            {
+
+
+                contractAwardDefence.Add(new ContractAwardDefence()
+                {
+
+                    LotNumber = i++,
+                    ContractNumber = award.Element("CONTRACT_NUMBER")?.Value,
+                    AllOrCertainSubcontractsWillBeAwarded = award?.Element("MORE_INFORMATION_TO_SUB_CONTRACTED")?.Element("CONTRACT_LIKELY_SUB_CONTRACTED_WITH_DEFENCE")?.Element("SUBCONTRACT_DEFENCE")?.Element("SUBCONTRACT_AWARD_PART") != null,
+                    AnnualOrMonthlyValue = new TimeFrame(),
+                    ContractAwardDecisionDate = ParseDateTimeFromElements(award?.Element("CONTRACT_AWARD_DATE")),
+                    Contractor = ParseContractor(award?.Element("ECONOMIC_OPERATOR_NAME_ADDRESS")),
+                    EstimatedValue = ParseValueContract(award?.Element("CONTRACT_VALUE_INFORMATION")?.Element("INITIAL_ESTIMATED_TOTAL_VALUE_CONTRACT")),
+                    FinalTotalValue = ParseValueContract(award?.Element("TOTAL_FINAL_VALUE")?.Element("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE") != null ?
+                   award?.Element("TOTAL_FINAL_VALUE")?.Element("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE").Element("") : award?.Element("CONTRACT_VALUE_INFORMATION")?.Element("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE")),
+                    LikelyToBeSubcontracted = ParseLikelyToBeSubcontracted(award),
+
+                    ContractValueType = defenceContractInformation?.Element("TOTAL_FINAL_VALUE")?.Element("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE")?.Element("LOW_VALUE") != null ||
+                                       award?.Element("CONTRACT_VALUE_INFORMATION")?.Element("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE")?.Element("RANGE_VALUE_COST")?.Element("LOW_VALUE") != null ? ContractValueType.Range : ContractValueType.Exact,
+
+                    HighestOffer = new ValueContract() { Value = ParseDecimal(defenceContractInformation?.Element("TOTAL_FINAL_VALUE")?.Element("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE")?.Element("RANGE_VALUE_COST")?.Element("HIGH_VALUE")?.Value) },
+                    LowestOffer = new ValueContract() { Value = ParseDecimal(defenceContractInformation?.Element("TOTAL_FINAL_VALUE")?.Element("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE")?.Element("RANGE_VALUE_COST")?.Element("LOW_VALUE")?.Value) },
+                    LotTitle = award?.Element("CONTRACT_TITLE")?.Value,
+                    NumberOfTenders = ParseNumberOfTenders(award),
+                    ProportionOfValue = ParseDecimal(award?.Element("MORE_INFORMATION_TO_SUB_CONTRACTED")?.Element("CONTRACT_LIKELY_SUB_CONTRACTED_WITH_DEFENCE")?.Element("EXCLUDING_VAT_PRCT")?.Value),
+                    ShareOfContractWillBeSubcontracted = award?.Element("MORE_INFORMATION_TO_SUB_CONTRACTED")?.Element("CONTRACT_LIKELY_SUB_CONTRACTED_WITH_DEFENCE")?.Element("SUBCONTRACT_DEFENCE")?.Element("SUBCONTRACT_SHARE") != null,
+
+                    ShareOfContractWillBeSubcontractedMaxPercentage = ParseDecimal(award?.Element("MORE_INFORMATION_TO_SUB_CONTRACTED")?.Element("CONTRACT_LIKELY_SUB_CONTRACTED_WITH_DEFENCE")?.Element("SUBCONTRACT_DEFENCE")?.Element("SUBCONTRACT_SHARE")?.Element("MAX_PERCENTAGE")?.Value),
+                    ShareOfContractWillBeSubcontractedMinPercentage = ParseDecimal(award?.Element("MORE_INFORMATION_TO_SUB_CONTRACTED")?.Element("CONTRACT_LIKELY_SUB_CONTRACTED_WITH_DEFENCE")?.Element("SUBCONTRACT_DEFENCE")?.Element("SUBCONTRACT_SHARE")?.Element("MIN_PERCENTAGE")?.Value),
+                    SubcontractingDescription = ParsePElements(award?.Element("MORE_INFORMATION_TO_SUB_CONTRACTED")?.Element("CONTRACT_LIKELY_SUB_CONTRACTED_WITH_DEFENCE")?.Element("ADDITIONAL_INFORMATION")),
+                    ValueOfSubcontract = ParseValueContract(award?.Element("MORE_INFORMATION_TO_SUB_CONTRACTED")?.Element("CONTRACT_LIKELY_SUB_CONTRACTED_WITH_DEFENCE")?.Element("EXCLUDING_VAT_VALUE")),
+                    ValueOfSubcontractNotKnown = award?.Element("MORE_INFORMATION_TO_SUB_CONTRACTED")?.Element("CONTRACT_LIKELY_SUB_CONTRACTED_WITH_DEFENCE")?.Element("UNKNOWN_VALUE") != null,
+                    ValidationState = ValidationState.Valid
+                });
+            };
+
+            return contractAwardDefence.ToArray();
+
+        }
+
+        private static bool ParseLikelyToBeSubcontracted(XElement award)
+        {
+            if (award?.Element("MORE_INFORMATION_TO_SUB_CONTRACTED") != null) {
+                return award?.Element("MORE_INFORMATION_TO_SUB_CONTRACTED")?.Element("CONTRACT_LIKELY_SUB_CONTRACTED_WITH_DEFENCE") !=null;
+            }
+
+            return false;
+        }
+
+        private static ContractorContactInformation ParseContractor(XElement economicOperatorNameAddress)
+        {
+            XNamespace nutsSchema = "http://publications.europa.eu/resource/schema/ted/2016/nuts";
+            var element = economicOperatorNameAddress;
+            if (economicOperatorNameAddress?.Element("CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME") != null) {
+                element = economicOperatorNameAddress?.Element("CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME");
+            }
+
+            return new ContractorContactInformation() {
+
+                Email= element?.Element("E_MAILS")?.Element("E_MAIL")?.Value,
+                MainUrl = element?.Element("URL")?.Value,
+                NationalRegistrationNumber = element?.Element("ORGANISATION")?.Element("NATIONALID")?.Value ?? element?.Element("NATIONALID")?.Value,
+                OfficialName = element?.Element("ORGANISATION")?.Element("OFFICIALNAME")?.Value ?? element?.Element("OFFICIALNAME")?.Value,
+                PostalAddress = ParsePostalAddress(element),
+                TelephoneNumber = element?.Element("PHONE")?.Value,
+                ValidationState = ValidationState.Valid,
+                NutsCodes = ParseNutsCodes(nutsSchema, element)
+            };
+        }
+
+        private static SubcontractingInformation ParseDefenceSubcontract(XElement descriptionContractInformation)
+        {
+            var subcontracting = descriptionContractInformation?.Element("SUBCONTRACTING");
+            if (subcontracting == null)
+            {
+                return null;
+            }
+            return new SubcontractingInformation()
+            {
+                CaMayOblige = subcontracting.Element("SUBCONTRACT_AWARD_PART")?.Attribute("VALUE")?.Value == "YES",
+                SuccessfulTenderer = subcontracting.Element("SUBCONTRACT_SHARE")?.Attribute("VALUE")?.Value == "YES",
+                SuccessfulTendererMax = ParseDecimal(subcontracting.Element("MAX_PERCENTAGE")?.Value),
+                SuccessfulTendererMin = ParseDecimal(subcontracting.Element("MIN_PERCENTAGE")?.Value),
+                SuccessfulTendererToSpecify= subcontracting.Element("IDENTIFY_SUBCONTRACT")?.Attribute("VALUE")?.Value == "YES",
+                TendererHasToIndicateChange = subcontracting.Element("INDICATE_ANY_CHANGE")?.Attribute("VALUE")?.Value == "YES",
+                TendererHasToIndicateShare = subcontracting.Element("INDICATE_ANY_SHARE")?.Attribute("VALUE")?.Value == "YES"
+
+            };
+        }
+
+        private static ConditionsInformationDefence ParseConditionsInformationDefence(XElement defenceLeftiContract)
+        {
+            var contractRelatingConditions = defenceLeftiContract?.Element("CONTRACT_RELATING_CONDITIONS");
+            var f17ConditionsForParticipation = defenceLeftiContract?.Element("F17_CONDITIONS_FOR_PARTICIPATION");
+
+            return new ConditionsInformationDefence()
+            {
+                DepositsRequired = ParsePElements(contractRelatingConditions?.Element("DEPOSITS_GUARANTEES_REQUIRED")),
+                EconomicCriteriaOfEconomicOperators = ParsePElements(f17ConditionsForParticipation?.Element("F17_ECONOMIC_FINANCIAL_CAPACITY")?.Element("EAF_CAPACITY_INFORMATION")) ,
+                EconomicCriteriaOfEconomicOperatorsMinimum = ParsePElements(f17ConditionsForParticipation?.Element("F17_ECONOMIC_FINANCIAL_CAPACITY")?.Element("EAF_CAPACITY_MIN_LEVEL")),
+                EconomicCriteriaOfSubcontractors = ParsePElements(f17ConditionsForParticipation?.Element("F17_ECONOMIC_FINANCIAL_CAPACITY_SUBCONTRACTORS")?.Element("EAF_CAPACITY_INFORMATION")),
+                EconomicCriteriaOfSubcontractorsMinimum = ParsePElements(f17ConditionsForParticipation?.Element("F17_ECONOMIC_FINANCIAL_CAPACITY_SUBCONTRACTORS")?.Element("EAF_CAPACITY_MIN_LEVEL")),
+                FinancingConditions = ParsePElements(contractRelatingConditions?.Element("MAIN_FINANCING_CONDITIONS")),
+                LegalFormTaken = ParsePElements(contractRelatingConditions?.Element("LEGAL_FORM")),
+                OtherParticularConditions = ParsePElements(contractRelatingConditions?.Element("EXISTENCE_OTHER_PARTICULAR_CONDITIONS")),
+                PersonalSituationOfEconomicOperators = ParsePElements(f17ConditionsForParticipation?.Element("ECONOMIC_OPERATORS_PERSONAL_SITUATION")),
+                PersonalSituationOfSubcontractors = ParsePElements(f17ConditionsForParticipation?.Element("ECONOMIC_OPERATORS_PERSONAL_SITUATION_SUBCONTRACTORS")),
+                RestrictedToParticularProfession = defenceLeftiContract?.Element("SERVICES_CONTRACTS_SPECIFIC_CONDITIONS")?.Element("EXECUTION_SERVICE_RESERVED_PARTICULAR_PROFESSION") !=null,
+                RestrictedToParticularProfessionLaw = ParsePElements(defenceLeftiContract?.Element("SERVICES_CONTRACTS_SPECIFIC_CONDITIONS")?.Element("EXECUTION_SERVICE_RESERVED_PARTICULAR_PROFESSION")),
+                StaffResponsibleForExecution = defenceLeftiContract?.Element("SERVICES_CONTRACTS_SPECIFIC_CONDITIONS")?.Element("REQUESTS_NAMES_PROFESSIONAL_QUALIFICATIONS")?.Attribute("VALUE")?.Value == "YES",
+                TechnicalCriteriaOfEconomicOperators = ParsePElements(f17ConditionsForParticipation?.Element("TECHNICAL_CAPACITY_LEFTI")?.Element("T_CAPACITY_INFORMATION")),
+                TechnicalCriteriaOfEconomicOperatorsMinimum = ParsePElements(f17ConditionsForParticipation?.Element("TECHNICAL_CAPACITY_LEFTI")?.Element("T_CAPACITY_MIN_LEVEL")),
+                TechnicalCriteriaOfSubcontractors = ParsePElements(f17ConditionsForParticipation?.Element("TECHNICAL_CAPACITY_LEFTI_SUBCONTRACTORS")?.Element("T_CAPACITY_INFORMATION")),
+                TechnicalCriteriaOfSubcontractorsMinimum = ParsePElements(f17ConditionsForParticipation?.Element("TECHNICAL_CAPACITY_LEFTI_SUBCONTRACTORS")?.Element("T_CAPACITY_MIN_LEVEL")),
+                ValidationState = ValidationState.Valid
+            };
+        }
+
+        private static FrameworkAgreementInformation ParseDefenceFrameworkAgreement(XElement descriptionContractInformation)
+        {
+            XElement f17Framework = descriptionContractInformation?.Element("F17_FRAMEWORK");
+            if (f17Framework == null)
+            {
+                return null;
+            };
+
+            return new FrameworkAgreementInformation()
+            {
+                IncludesFrameworkAgreement = descriptionContractInformation.Element("NOTICE_INVOLVES_DEFENCE") != null,
+                IncludesConclusionOfFrameworkAgreement = descriptionContractInformation.Element("NOTICE_INVOLVES_DESC_DEFENCE") != null,
+                FrameworkAgreementType = f17Framework.Element("SEVERAL_OPERATORS") != null ? FrameworkAgreementType.FrameworkSeveral :
+                                         f17Framework.Element("SINGLE_OPERATOR") != null ? FrameworkAgreementType.FrameworkSingle :
+                                         FrameworkAgreementType.Undefined,
+                Duration = new TimeFrame() {
+                    Type = f17Framework.Element("DURATION_FRAMEWORK_YEAR") != null ? TimeFrameType.Years:
+                            f17Framework.Element("DURATION_FRAMEWORK_MONTH") != null ? TimeFrameType.Months:
+                            TimeFrameType.Undefined,
+                    Years = ParseInt(f17Framework.Element("DURATION_FRAMEWORK_YEAR")?.Value),
+                    Months = ParseInt(f17Framework.Element("DURATION_FRAMEWORK_MONTH")?.Value),
+                    CanBeRenewed = f17Framework?.Element("RECURRENT_CONTRACT")!=null,
+                    BeginDate = ParseDate(f17Framework.Element("DATE_START")?.Value),
+                    EndDate = ParseDate(f17Framework.Element("DATE_END")?.Value),
+                    
+
+                },
+                EnvisagedNumberOfParticipants =  f17Framework.Element("NUMBER_PARTICIPANTS") !=null ? ParseInt( f17Framework.Element("NUMBER_PARTICIPANTS")?.Value) :
+                                                 f17Framework.Element("MAX_NUMBER_PARTICIPANTS") != null ? ParseInt(f17Framework.Element("MAX_NUMBER_PARTICIPANTS")?.Value) : (int?)null,
+                EstimatedTotalValue = ParseValueRangeContract(f17Framework.Element("TOTAL_ESTIMATED")),
+                FrameworkEnvisagedType = f17Framework.Element("NUMBER_PARTICIPANTS") != null ? FrameworkEnvisagedType.FrameworkEnvisagedExact :
+                                         f17Framework.Element("MAX_NUMBER_PARTICIPANTS") != null ? FrameworkEnvisagedType.FrameworkEnvisagedMax :
+                                         FrameworkEnvisagedType.Undefined,
+                FrequencyAndValue = ParsePElements(f17Framework?.Element("TOTAL_ESTIMATED")?.Element("FREQUENCY_AWARDED_CONTRACTS")),
+                JustificationForDurationOverSevenYears = ParsePElements( f17Framework?.Element("JUSTIFICATION")),
+            };
+
+
+        }
+
         private static Annex ParseAnnex(XElement procedure)
         {
-            var annex = new Annex() {};
-            if(procedure != null)
-            { 
+            var annex = new Annex() { D1 = new AnnexD1() };
+
+            if (procedure != null)
+            {
 
                 XElement ptAwardWithoutCall = procedure.Element("PT_AWARD_CONTRACT_WITHOUT_CALL");
-                XElement ptNegotiatedWithoutpublicataion = procedure.Element("PT_NEGOTIATED_WITHOUT_PUBLICATION");//form15
+                XElement ptNegotiatedWithoutpublicataion = procedure?.Element("DIRECTIVE_2014_24_EU")?.Element("PT_NEGOTIATED_WITHOUT_PUBLICATION");
+                XElement ptAwardWithoutCallElement = null;
+
                 if (ptAwardWithoutCall != null)
+                {
+                    ptAwardWithoutCallElement = ptAwardWithoutCall;
+                }
+                if(ptNegotiatedWithoutpublicataion != null)
+                {
+                    ptAwardWithoutCallElement = ptNegotiatedWithoutpublicataion;
+                }
+
+                if (ptAwardWithoutCallElement != null)
                 {
                     annex.D1 = new Entities.Annexes.AnnexD1()
                     {
-                        Justification = ParsePElements(ptAwardWithoutCall.Element("D_JUSTIFICATION")),
-                        AdvantageousPurchaseReason = ptAwardWithoutCall.Element("D_FROM_LIQUIDATOR_CREDITOR") != null ? AdvantageousPurchaseReason.DFromReceivers :
-                                                     ptAwardWithoutCall.Element("D_FROM_WINDING_PROVIDER") != null ? AdvantageousPurchaseReason.DFromWindingSupplier :
+                        Justification = ParsePElements(ptAwardWithoutCallElement.Element("D_JUSTIFICATION")),
+                        AdvantageousPurchaseReason = ptAwardWithoutCallElement.Element("D_FROM_LIQUIDATOR_CREDITOR") != null ? AdvantageousPurchaseReason.DFromReceivers :
+                                                     ptAwardWithoutCallElement.Element("D_FROM_WINDING_PROVIDER") != null ? AdvantageousPurchaseReason.DFromWindingSupplier :
                                                      AdvantageousPurchaseReason.Undefined,
-                        ExtremeUrgency = ptAwardWithoutCall.Element("D_EXTREME_URGENCY") != null,
-                        ReasonForNoCompetition = ptAwardWithoutCall.Element("D_TECHNICAL") != null ? ReasonForNoCompetition.DTechnical :
-                                                           ptAwardWithoutCall.Element("D_ARTISTIC") != null ? ReasonForNoCompetition.DArtistic :
-                                                           ptAwardWithoutCall.Element("D_PROTECT_RIGHTS") != null ? ReasonForNoCompetition.DProtectRights :
+                        ExtremeUrgency = ptAwardWithoutCallElement.Element("D_EXTREME_URGENCY") != null,
+                        ReasonForNoCompetition = ptAwardWithoutCallElement.Element("D_TECHNICAL") != null ? ReasonForNoCompetition.DTechnical :
+                                                           ptAwardWithoutCallElement.Element("D_ARTISTIC") != null ? ReasonForNoCompetition.DArtistic :
+                                                           ptAwardWithoutCallElement.Element("D_PROTECT_RIGHTS") != null ? ReasonForNoCompetition.DProtectRights :
                                                             ReasonForNoCompetition.Undefined,
-                        ProcedureType = ptAwardWithoutCall.Element("D_PROC_OPEN") !=null ? AnnexProcedureType.DProcOpen :
-                                        ptAwardWithoutCall.Element("D_PROC_RESTRICTED") != null ? AnnexProcedureType.DProcRestricted :
+                        ProcedureType = ptAwardWithoutCallElement.Element("D_PROC_OPEN") != null ? AnnexProcedureType.DProcOpen :
+                                        ptAwardWithoutCallElement.Element("D_PROC_RESTRICTED") != null ? AnnexProcedureType.DProcRestricted :
                                         AnnexProcedureType.Undefined,
-                        RepetitionExisting = ptAwardWithoutCall.Element("D_REPETITION_EXISTING") !=null
+                        RepetitionExisting = ptAwardWithoutCallElement.Element("D_REPETITION_EXISTING") !=null || ptAwardWithoutCallElement?.Element("D_ACCORDANCE_ARTICLE")?.Element("D_REPETITION_EXISTING") != null
                     };
 
-                    if(annex.D1.ProcedureType != AnnexProcedureType.Undefined)
+                    if (annex.D1.ProcedureType != AnnexProcedureType.Undefined)
                     {
                         annex.D1.NoTenders = true;
                     }
@@ -174,10 +868,87 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     {
                         annex.D1.AdvantageousTerms = true;
                     }
-
-
-
                 }
+
+
+            }
+            return annex;
+        }
+
+        private static Annex ParseDefenceAnnex(XElement procedure)
+        {
+            var annex = new Annex() { D3 = new AnnexD3() };
+
+            if (procedure != null)
+            {
+                var annexD = procedure?.Element("ANNEX_D");
+                var justificationChoiceElement = annexD?.Element("JUSTIFICATION_CHOICE_NEGOCIATED_PROCEDURE");
+                var justificationOther = annexD?.Element("OTHER_JUSTIFICATION");
+
+                
+                var procedureType = annexD?.Descendants()?.First()?.Name?.LocalName;
+                switch (procedureType)
+                {
+                    case "JUSTIFICATION_CHOICE_NEGOCIATED_PROCEDURE":
+                        annex.D3.ProcedureType = AnnexProcedureType.DProcNegotiatedPriorCallCompetition;
+                        break;
+                    case "RESTRICTED_PROCEDURE":
+                        annex.D3.ProcedureType = AnnexProcedureType.DProcRestricted;
+                        break;
+                    case "COMPETITIVE_DIALOGUE":
+                        annex.D3.ProcedureType = AnnexProcedureType.DProcCompetitiveDialogue;
+                        break;
+                    default:
+                        annex.D3.ProcedureType = AnnexProcedureType.Undefined;
+                        break;
+                }
+
+                if (annex.D3.ProcedureType != AnnexProcedureType.Undefined)
+                {
+                    annex.D3.NoTenders = true;
+                }
+
+                annex.D3.Justification = ParsePElements(annexD?.Element("REASON_CONTRACT_LAWFUL"));
+                annex.D3.AllTenders = annexD?.Element("ONLY_IRREGULAR_INACCEPTABLE_TENDERERS") != null;
+
+
+
+                annex.D3.ReasonForNoCompetition = justificationChoiceElement?.Element("REASONS_PROVIDED_PARTICULAR_TENDERER")?.Element("REASONS_PROVIDED_PARTICULAR_TENDERER_TECHNICAL") != null ?
+                                                   ReasonForNoCompetition.DTechnical : justificationChoiceElement?.Element("REASONS_PROVIDED_PARTICULAR_TENDERER")?.Element("REASONS_PROVIDED_PARTICULAR_TENDERER_EXCLUSIVE_RIGHTS") != null ?
+                                                   ReasonForNoCompetition.DExistenceExclusive : ReasonForNoCompetition.Undefined;
+
+                annex.D3.ProvidedByOnlyParticularOperator = annex.D3.ReasonForNoCompetition != ReasonForNoCompetition.Undefined;
+
+                annex.D3.ExtremeUrgency = justificationChoiceElement?.Element("EXTREME_URGENCY_EVENTS_UNFORESEEABLE") != null;
+
+                annex.D3.CrisisUrgency = justificationChoiceElement?.Element("PERIOD_FOR_PROCEDURE_INCOMPATIBLE_WITH_CRISIS") != null;
+
+                annex.D3.OtherServices = justificationChoiceElement?.Element("CONTRACT_RESEARCH_DIRECTIVE") !=null;
+
+                annex.D3.ProductsManufacturedForResearch = justificationChoiceElement?.Element("MANUFACTURED_BY_DIRECTIVE") != null;
+
+                annex.D3.AdditionalDeliveries = justificationChoiceElement?.Element("ADDITIONAL_WORKS") != null;
+
+                annex.D3.CommodityMarket = justificationChoiceElement?.Element("SUPPLIES_QUOTED_PURCHASED_COMMODITY_MARKET") != null;
+
+                annex.D3.AdvantageousTerms = justificationChoiceElement?.Element("PURCHASE_SUPPLIES_ADVANTAGEOUS_TERMS") != null;
+
+                annex.D3.AdvantageousPurchaseReason = justificationChoiceElement?.Element("RECEIVERS_ARRANGEMENT_CREDITORS") != null ?
+                                                      AdvantageousPurchaseReason.DFromReceivers : justificationChoiceElement?.Element("SUPPLIER_WINDING_UP_BUSINESS") != null ?
+                                                      AdvantageousPurchaseReason.DFromWindingSupplier : AdvantageousPurchaseReason.Undefined;
+                annex.D3.RepetitionExisting = justificationChoiceElement?.Element("WORKS_REPETITION_EXISTING_WORKS") != null;
+
+                annex.D3.MaritimeService = justificationChoiceElement?.Element("AIR_MARITIME_TRANSPORT_FOR_ARMED_FORCES_DEPLOYMENT") != null;
+
+                if (justificationOther != null)
+                {
+
+                    annex.D3.OtherJustification = justificationOther?.Element("CONTRACT_SERVICES_LISTED_IN_DIRECTIVE") != null ?
+                                                  D3OtherJustificationOptions.ContractServicesListedInDirective :
+                                                  D3OtherJustificationOptions.ContractServicesOutsideDirective;
+                }
+
+
 
             }
             return annex;
@@ -197,15 +968,14 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 {
                     Section = change?.Element("WHERE")?.Element("SECTION")?.Value,
                     Label = change?.Element("WHERE")?.Element("LABEL")?.Value,
-                    LotNumber = ParseInt(change?.Element("WHERE")?.Element("LOT_NO")?.Value),
+                    LotNumber = ParseInt(change?.Element("WHERE")?.Element("LOT_NO")?.Value)
 
-                  
                 };
 
                 var oldValue = change?.Element("OLD_VALUE");
                 var newValue = change?.Element("NEW_VALUE");
 
-                if ( oldValue != null && newValue != null)
+                if (oldValue != null && newValue != null)
                 {
                     var type = oldValue.Descendants().First().Name.LocalName;
                     switch (type)
@@ -249,118 +1019,6 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             return date;
         }
 
-        private NoticeContract ParseNationalNotices(XElement formElement, string noticeNumber, INoticeImportModel importedNotice, NoticeType noticeType, bool isCorrigendum) //Form 99
-        {
-            var domesticContract = formElement.Element("FD_DOMESTIC_CONTRACT");
-            var domesticNoticeType = domesticContract?.Element("DOMESTIC_NOTICE_TYPE");
-
-
-            if (noticeType == NoticeType.Undefined && !isCorrigendum)
-            {
-                throw new NotImplementedException("NoticeType is not supported. Type was " + domesticNoticeType?.Elements().First().Name.LocalName);
-            }
-
-            var domesticAuthorityInformation = domesticContract?.Element("DOMESTIC_AUTHORITY_INFORMATION");
-            var domesticObjectContract = domesticContract?.Element("DOMESTIC_OBJECT_INFORMATION");
-            var domesticContractRC = domesticContract?.Element("DOMESTIC_CONTRACT_RELATING_CONDITIONS");
-            var domesticNameAddresses = domesticContract?.Element("DOMESTIC_AUTHORITY_INFORMATION")?.Element("DOMESTIC_NAME_ADDRESSES");
-            var organisationInformation = ParseContractingBodyInformation(_nutsSchema, domesticNameAddresses);
-
-            var notice = new NoticeContract()
-            {
-                PreviousNoticeOjsNumber = domesticNoticeType?.Element("CORRIGENDUM_NOTICE")?.Element("DOMESTIC_ORIGINAL_NOTICE")?.Attribute("NO_DOC_EXT")?.Value,
-                IsCorrigendum = isCorrigendum,
-                CreatorId = null,
-                NoticeNumber = noticeNumber,
-                Language = "FI",
-                Type = ParseNationalNoticeType(domesticNoticeType.Elements().First().Name.LocalName),
-                ContactPerson = ParseContactPerson(domesticNameAddresses),
-                IsLatest = true,
-                Project = new ProcurementProjectContract()
-                {
-                    Title = domesticObjectContract?.Element("TITLE_CONTRACT")?.Value,
-                    ReferenceNumber = domesticObjectContract?.Element("FILE_REFERENCE_NUMBER")?.Value,
-
-                    Organisation = new OrganisationContract()
-                    {
-                        Information = organisationInformation,
-                        ContractingAuthorityType = FromTEDFormatContractingAuthorityType(domesticAuthorityInformation?.Element("DOMESTIC_TYPE_OF_CONTRACTING").Descendants().First().Name.ToString()),
-                        OtherContractingAuthorityType = domesticAuthorityInformation?.Element("DOMESTIC_TYPE_OF_CONTRACTING")?.Element("OTHER")?.Value,
-
-                    },
-                    ProcurementCategory = ProcurementCategory.Public,
-                    ContractType = ParseContractType(domesticContract.Attribute("DOMESTIC_CTYPE").Value),
-                    CentralPurchasing = domesticAuthorityInformation?.Element("PURCHASING_ON_BEHALF")?.Attribute("VALUE")?.Value == "YES",
-                    ValidationState = ValidationState.Valid,
-                    Publish = PublishType.ToHilma
-                },
-                CommunicationInformation = ParseNationalCommunicationInformation(domesticAuthorityInformation, organisationInformation),
-                ProcurementObject = new ProcurementObject()
-                {
-                    MainCpvCode = new CpvCode
-                    {
-                        Code = domesticObjectContract?.Element("CPV")?.Element("CPV_MAIN").Element("CPV_CODE")?.Attribute("CODE")?.Value,
-                        VocCodes = domesticObjectContract?.Element("CPV")?.Element("CPV_MAIN").Elements("CPV_SUPPLEMENTARY_CODE").Select(s => new VocCode { Code = s.Attribute("CODE")?.Value }).ToArray()
-                    },
-                    EstimatedValue = ParseNationalEstimatedValue(domesticObjectContract),
-                    ValidationState = ValidationState.Valid
-                },
-                ObjectDescriptions = ParseNationalObjectDescriptions(_nutsSchema, domesticContract, domesticContractRC, domesticObjectContract).ToArray(), //ParseObjectDescription(_nutsSchema, domesticObjectContract, null).ToArray(),
-                ProcedureInformation = new ProcedureInformation()
-                {
-                    ProcedureType = ParseNationalProcedureTypes(domesticContract?.Element("DOMESTIC_PROCEDURE_DEFINITION")?.Element("DOMESTIC_TYPE_OF_PROCEDURE")),
-                    FrameworkAgreement = new FrameworkAgreementInformation()
-                    {
-                        IncludesFrameworkAgreement = domesticContract?.Element("DOMESTIC_PROCEDURE_DEFINITION")?.Element("FRAMEWORK_AGREEMENT_IS_ESTABLISH")?.Attribute("VALUE")?.Value == "YES" ? true : false,
-                    },
-                    National = new ProcedureInformationNational()
-                    {
-                        OtherProcedure = ParsePElements(domesticContract?.Element("DOMESTIC_PROCEDURE_DEFINITION")?.Element("DOMESTIC_PROCEDURE_DEFINITION")),
-                        AdditionalProcedureInformation = ParsePElements(domesticContractRC.Element("SELECTION_CRITERIA_INFORMATION"))
-                    }
-                },
-                ConditionsInformationNational = new ConditionsInformationNational()
-                {
-                    ParticipantSuitabilityCriteria = ParsePElements(domesticContractRC.Element("SELECTION_CRITERIA")),
-                    RequiredCertifications = ParsePElements(domesticContractRC.Element("SELECTION_CRITERIA_CERTIFICATIONS")),
-                    ReservedForShelteredWorkshopOrProgram = domesticContract?.Element("DOMESTIC_PROCEDURE_DEFINITION")?.Element("RESERVED_CONTRACTS")?.Attribute("VALUE").Value == "YES"
-                },
-                ConditionsInformation = new ConditionsInformation(),
-                TenderingInformation = new TenderingInformation()
-                {
-                    TendersOrRequestsToParticipateDueDateTime = ParseNationalReceiptLimitDate(domesticContractRC),
-                    ValidationState = ValidationState.Valid
-                },
-                ProceduresForReview = ParseProceduresForReview(domesticContract?.Element("DOMESTIC_ADDRESS_REVIEW_BODY"), null),
-                ComplementaryInformation = new ComplementaryInformation()
-                {
-                    AdditionalInformation = domesticContractRC?.Descendants("ADDITIONAL_INFORMATION")?.SelectMany(i => ParsePElements(i)).ToArray() ?? new string[0],
-                },
-                LotsInfo = new LotsInfo()
-                {
-                    DivisionLots = domesticContract?.Element("DOMESTIC_PROCEDURE_DEFINITION")?.Element("DIVISION_INTO_LOTS")?.Attribute("VALUE").Value == "YES",
-                },
-                AttachmentInformation = new AttachmentInformation(),
-                Attachments = new string[0],
-                State = PublishState.Published,
-                DatePublished = importedNotice.HilmaPublishedDate
-            };
-
-            if (notice.Project.Organisation.ContractingAuthorityType == ContractingAuthorityType.OtherType)
-            {
-                if (string.IsNullOrEmpty(notice.Project.Organisation.OtherContractingAuthorityType))
-                {
-                    notice.Project.Organisation.OtherContractingAuthorityType = "Ei määritelty";
-                }
-            }
-
-            notice.Project.Organisation.Information.NutsCodes = new[]{
-                    domesticContract?.Element("DOMESTIC_OBJECT_INFORMATION")?.Element(_nutsSchema + "NUTS")?.Attribute("CODE")?.Value
-                   };
-
-            return notice;
-        }
-
         private static ProcedureType ParseNationalProcedureTypes(XElement domesticProcedureInformation)
         {
             if (domesticProcedureInformation == null)
@@ -385,6 +1043,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     return ProcedureType.Undefined;
                 case "OTHER":
                     return ProcedureType.ProctypeOther;
+                case "PT_DIRECT_AWARD":
+                    return ProcedureType.ProctypeNationalDirect;
                 default:
                     return ProcedureType.Undefined;
             }
@@ -463,17 +1123,18 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
         }
 
-        private static DateTime? ParseNationalReceiptLimitDate(XElement domesticContractRC)
+        private static DateTime? ParseDateTimeFromElements(XElement timeElement)
         {
-            if (domesticContractRC?.Element("RECEIPT_LIMIT_DATE") == null)
+
+            if (timeElement == null )
             {
                 return null;
             }
 
-            var year = ParseInt(domesticContractRC?.Element("RECEIPT_LIMIT_DATE")?.Element("YEAR")?.Value);
-            var month = ParseInt(domesticContractRC?.Element("RECEIPT_LIMIT_DATE")?.Element("MONTH")?.Value);
-            var day = ParseInt(domesticContractRC?.Element("RECEIPT_LIMIT_DATE")?.Element("DAY")?.Value);
-            var timeString = domesticContractRC?.Element("RECEIPT_LIMIT_DATE")?.Element("TIME")?.Value;
+            var year = ParseInt(timeElement?.Element("YEAR")?.Value);
+            var month = ParseInt(timeElement?.Element("MONTH")?.Value);
+            var day = ParseInt(timeElement?.Element("DAY")?.Value);
+            var timeString = timeElement?.Element("TIME")?.Value;
             var date = new DateTime(year, month, day);
 
             if (!string.IsNullOrEmpty(timeString))
@@ -487,7 +1148,19 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
         private static IEnumerable<ObjectDescription> ParseNationalObjectDescriptions(XNamespace nutsSchema, XElement objectContract, XElement domesticContractRC, XElement domesticObjectContract)
         {
-            return objectContract?.Descendants("DOMESTIC_CONTRACT_RELATING_CONDITIONS").Select((objectDescription, index) =>
+            var childElement = objectContract?.Descendants("DOMESTIC_CONTRACT_RELATING_CONDITIONS");
+
+            if (objectContract?.Descendants("DOMESTIC_CONTRACT_RELATING_CONDITIONS").ToArray().Length == 0)
+            {
+                childElement = objectContract?.Descendants("DOMESTIC_OBJECT_INFORMATION");
+            }
+            if(childElement == null)
+            {
+
+                return Enumerable.Empty<ObjectDescription>();
+            }
+
+            return childElement.Select((objectDescription, index) =>
             {
                 var objectDescriptionModel = new ObjectDescription()
                 {
@@ -505,6 +1178,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                             }
                         } : new AwardCriterionDefinition[0]
                     },
+                    AwardContract = ParseNationalAward(domesticObjectContract),
 
                     TendersMustBePresentedAsElectronicCatalogs = objectDescription.Element("DOMESTIC_ECATALOG_REQUIRED") != null,
                     DescrProcurement = ParsePElements(domesticObjectContract.Element("SHORT_CONTRACT_DESCRIPTION")),
@@ -517,7 +1191,75 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     {
                         Code = domesticObjectContract?.Element("CPV")?.Element("CPV_MAIN").Element("CPV_CODE")?.Attribute("CODE")?.Value,
                         VocCodes = domesticObjectContract?.Element("CPV")?.Element("CPV_MAIN").Elements("CPV_SUPPLEMENTARY_CODE").Select(s => new VocCode { Code = s.Attribute("CODE")?.Value }).ToArray()
-                    }
+                    },
+                    AdditionalCpvCodes = ParseAdditionalCpvCodes(domesticObjectContract?.Element("CPV")),
+                    EuFunds = new EuFunds(){},
+                    
+                };
+                return objectDescriptionModel;
+            });
+
+        }
+
+        private static Award ParseNationalAward(XElement domesticObjectContract)
+        {
+            return new Award() {
+
+                AwardedContract =new ContractAward() {
+                    Contractors = new List<ContractorContactInformation>() {
+                        new ContractorContactInformation(){
+                            OfficialName = domesticObjectContract?.Element("DOMESTIC_CONTRACTOR")?.Element("OFFICIALNAME")?.Value,
+                            NationalRegistrationNumber =domesticObjectContract?.Element("DOMESTIC_CONTRACTOR")?.Element("NATIONALID")?.Value,
+
+                        }
+                    },
+
+
+
+                },
+                
+                
+
+            };
+        }
+
+        private static IEnumerable<ObjectDescription> ParseDefenceObjectDescriptions(XNamespace nutsSchema,  XElement defenceObjectContract)
+        {
+            var defenceContract = defenceObjectContract?.Element("F17_DIVISION_INTO_LOTS");
+            var defenceAward = defenceObjectContract?.Element("F18_DIVISION_INTO_LOTS");
+
+            if (defenceObjectContract == null)
+            {
+                return null;
+            }
+
+            return defenceObjectContract?.Element("F17_DIVISION_INTO_LOTS").Descendants("F17_ANNEX_B")?.Select((objectDescription, index) =>
+            {
+                var objectDescriptionModel = new ObjectDescription()
+                {
+                    
+                    LotNumber = index + 1,
+                    Title = objectDescription?.Element("LOT_TITLE")?.Value,
+                    DescrProcurement = ParsePElements(objectDescription.Element("LOT_DESCRIPTION")),
+                    MainCpvCode = new CpvCode
+                    {
+                        Code = objectDescription?.Element("CPV")?.Element("CPV_MAIN").Element("CPV_CODE")?.Attribute("CODE")?.Value,
+                        VocCodes = objectDescription?.Element("CPV")?.Element("CPV_MAIN").Elements("CPV_SUPPLEMENTARY_CODE").Select(s => new VocCode { Code = s.Attribute("CODE")?.Value }).ToArray()
+                    },
+                    AdditionalCpvCodes = ParseAdditionalCpvCodes(objectDescription?.Element("CPV")),
+                    EstimatedValue = ParseValueRangeContract(objectDescription),
+                    QuantityOrScope = ParsePElements(objectDescription?.Element("NATURE_QUANTITY_SCOPE")?.Element("TOTAL_QUANTITY_OR_SCOPE")),
+                    AwardCriteria = new AwardCriteria()
+                    {
+                        CriterionTypes = ParseNationalCostAndQualityCriteria(objectDescription?.Element("AWARD_CRITERIA")),
+                        QualityCriteria = new List<AwardCriterionDefinition>().ToArray(),
+                        CostCriteria = new AwardCriterionDefinition[]{ }
+                    },
+                    OptionsAndVariants = new OptionsAndVariants()
+                    {
+                        VariantsWillBeAccepted = defenceObjectContract?.Element("ACCEPTED_VARIANTS")?.Attribute("VALUE").Value == "YES"
+                    },
+                    EuFunds = new EuFunds(){}
 
                 };
                 return objectDescriptionModel;
@@ -574,8 +1316,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 awardCriterionDefinitions.Add(
                     new AwardCriterionDefinition()
                     {
-                        Criterion = ac.Element("AC_CRITERION")?.Value,
-                        Weighting = ac.Element("AC_WEIGHTING")?.Value
+                        Criterion = ac.Element("AC_CRITERION")?.Value != null ? ac.Element("AC_CRITERION")?.Value : ac.Element("CRITERIA")?.Value,
+                        Weighting = ac.Element("AC_WEIGHTING")?.Value != null ? ac.Element("AC_WEIGHTING")?.Value : ac.Element("WEIGHTING")?.Value
                     });
             }
 
@@ -603,9 +1345,13 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             {
                 ReviewBody = new ContractBodyContactInformation()
                 {
-                    OfficialName = reviewBodyAddress?.Element("OFFICIALNAME")?.Value,
+                    OfficialName = reviewBodyAddress?.Element("OFFICIALNAME")?.Value !=null? reviewBodyAddress?.Element("OFFICIALNAME")?.Value :
+                    reviewBodyAddress?.Element("ORGANISATION")?.Element("OFFICIALNAME")?.Value,
                     PostalAddress = ParsePostalAddress(reviewBodyAddress),
-                    Email = reviewBodyAddress?.Element("E_MAIL")?.Value != null ? reviewBodyAddress?.Element("E_MAIL")?.Value : "",
+                    Email = reviewBodyAddress.Element("E_MAIL")?.Value != null ?
+                            reviewBodyAddress.Element("E_MAIL")?.Value :
+                            reviewBodyAddress.Element("E_MAILS")?.Element("E_MAIL")?.Value != null ?
+                            reviewBodyAddress.Element("E_MAILS")?.Element("E_MAIL")?.Value : "",
                     MainUrl = reviewBodyAddress?.Element("URL")?.Value,
                     TelephoneNumber = reviewBodyAddress?.Element("PHONE")?.Value,
                 },
@@ -675,6 +1421,50 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             };
 
         }
+
+        private static CommunicationInformation ParseDefenceCommunicationInformation(XNamespace nutsSchema, XElement contractingBody, NoticeType noticeType)
+        {
+            var prefix1 = noticeType == NoticeType.DefenceContractAward ? "_AWARD" : "";
+
+            var nameAddressesContatContract = contractingBody?.Element($"NAME_ADDRESSES_CONTACT_CONTRACT{prefix1}");
+            var specAndAdditionalDocs = nameAddressesContatContract?.Element("SPECIFICATIONS_AND_ADDITIONAL_DOCUMENTS");
+            var internetAddresses = nameAddressesContatContract?.Element($"INTERNET_ADDRESSES_CONTRACT{prefix1}");
+            var addressToSendTenders = nameAddressesContatContract?.Element("TENDERS_REQUESTS_APPLICATIONS_MUST_BE_SENT_TO");
+            var communicationInformation = new CommunicationInformation()
+            {
+                AdditionalInformation = nameAddressesContatContract?.Element("FURTHER_INFORMATION")?.Element("IDEM") != null ?
+                                        AdditionalInformationAvailability.AddressToAbove : contractingBody?.Element("ADDRESS_FURTHER_INFO") != null ?
+                                        AdditionalInformationAvailability.AddressAnother : AdditionalInformationAvailability.Undefined,
+                ElectronicAccess = internetAddresses?.Element("URL_INFORMATION")?.Value,
+
+                SendTendersOption = internetAddresses?.Element("URL_PARTICIPATE") != null &&  addressToSendTenders == null ? 
+                                    TenderSendOptions.AddressSendTenders : 
+                                    addressToSendTenders == null ? 
+                                    TenderSendOptions.Undefined :
+                                    addressToSendTenders?.Element("IDEM") != null ? 
+                                    TenderSendOptions.AddressOrganisation :
+                                    TenderSendOptions.AddressFollowing,
+                ElectronicAddressToSendTenders = internetAddresses?.Element("URL_PARTICIPATE")?.Value,
+                AddressToSendTenders = ParseContractingBodyInformation(nutsSchema, addressToSendTenders),
+                ValidationState = ValidationState.Valid
+
+            };
+
+            if (specAndAdditionalDocs?.Element("IDEM") != null)
+            {
+                communicationInformation.SpecsAndAdditionalDocuments = SpecificationsAndAdditionalDocuments.AddressToAbove;
+                
+            }
+            else if(specAndAdditionalDocs?.Element("CONTACT_DATA")!=null)
+            {
+                communicationInformation.SpecsAndAdditionalDocuments = SpecificationsAndAdditionalDocuments.AddressAnother;
+                communicationInformation.SpecsAndAdditionalDocumentsAddress = ParseContractingBodyInformation(nutsSchema,specAndAdditionalDocs.Element("CONTACT_DATA"));
+            }
+
+            return communicationInformation;
+
+        }
+
 
         private static ConditionsInformation ParseConditionsInformation(XElement lefti)
         {
@@ -757,11 +1547,18 @@ namespace Hilma.Domain.Integrations.HilmaMigration
         {
             List<string> languages = new List<string>();
 
-            if (procedure.Element("LANGUAGES") != null)
+            if (procedure?.Element("LANGUAGES") != null)
             {
                 foreach (var item in procedure.Element("LANGUAGES")?.Elements("LANGUAGE"))
                 {
                     languages.Add(item.Attribute("VALUE")?.Value);
+                }
+            }
+            if(procedure?.Element("LANGUAGE") != null)
+            {
+                foreach(var lang in procedure.Element("LANGUAGE")?.Elements("LANGUAGE_EC"))
+                {
+                    languages.Add(lang.Attribute("VALUE")?.Value);
                 }
             }
 
@@ -815,11 +1612,17 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             if (procedure?.Element("PT_INNOVATION_PARTNERSHIP") != null) return ProcedureType.ProctypeInnovation;
             if (procedure?.Element("PT_INVOLVING_NEGOTIATION") != null) return ProcedureType.ProctypeNegotiationsInvolved;
             if (procedure?.Element("PT_NEGOTIATED_WITH_PRIOR_CALL") != null) return ProcedureType.ProctypeNegotWCall;
-            if (procedure?.Element("PT_AWARD_CONTRACT_WITHOUT_CALL") != null)
+            if (procedure?.Element("DIRECTIVE_2014_24_EU")?.Element("PT_NEGOTIATED_WITHOUT_PUBLICATION") != null) return ProcedureType.AwardWoPriorPubD1;
+            if (procedure?.Element("PT_AWARD_CONTRACT_WITHOUT_CALL") != null || procedure?.Element("DIRECTIVE_2014_24_EU")?.Element("PT_AWARD_CONTRACT_WITHOUT_CALL") != null)
             {
                 if (procedure?.Element("PT_AWARD_CONTRACT_WITHOUT_CALL")?.Element("D_OUTSIDE_SCOPE") != null) return ProcedureType.ProctypeNegotiatedWoNotice;
+                if (procedure?.Element("DIRECTIVE_2014_24_EU")?.Element("PT_AWARD_CONTRACT_WITHOUT_CALL")?.Element("D_OUTSIDE_SCOPE") != null) return ProcedureType.ProctypeNegotiatedWoNotice;
                 return ProcedureType.AwardWoPriorPubD1;
             }
+            if (procedure?.Element("PT_ACCELERATED_RESTRICTED_CHOICE") != null) return ProcedureType.ProctypeRestricted;
+            if (procedure?.Element("PT_ACCELERATED_RESTRICTED") != null) return ProcedureType.ProctypeRestricted;
+            if (procedure?.Element("F18_PT_NEGOTIATED_WITHOUT_PUBLICATION_CONTRACT_NOTICE")?.Element("ANNEX_D")?.Element("JUSTIFICATION_CHOICE_NEGOCIATED_PROCEDURE") != null) return ProcedureType.AwardWoPriorPubD1;
+            if (procedure?.Element("F18_PT_NEGOTIATED_WITHOUT_PUBLICATION_CONTRACT_NOTICE")?.Element("ANNEX_D")?.Element("OTHER_JUSTIFICATION")!=null) return ProcedureType.AwardWoPriorPubD1Other;
 
             return ProcedureType.Undefined;
         }
@@ -883,7 +1686,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 Email = addressContractinBody.Element("E_MAIL")?.Value != null ?
                         addressContractinBody.Element("E_MAIL")?.Value :
                         addressContractinBody?.Element("E_MAILS")?.Element("E_MAIL")?.Value,
-                Name = addressContractinBody.Element("CONTACT_POINT")?.Value,
+                Name =  addressContractinBody.Element("CONTACT_POINT")?.Value,
                 Phone = addressContractinBody.Element("PHONE")?.Value
             };
         }
@@ -906,7 +1709,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     MainsiteplaceWorksDelivery = ParsePElements(objectDescription.Element("MAIN_SITE"), 0),
                     NutsCodes = ParseNutsCodes(nutsSchema, objectDescription),
                     DescrProcurement = ParsePElements(objectDescription?.Element("SHORT_DESCR"), 4000),
-                    AwardCriteria = ParseCriterionTypes(objectDescription?.Element("AC")),
+                    AwardCriteria = ParseCriterionTypes(objectDescription?.Element("AC") ?? objectDescription?.Element("DIRECTIVE_2014_24_EU")?.Element("AC")),
                     EuFunds = ParseEuFunds(objectDescription),
                     TimeFrame = ParseTimeFrame(objectDescription),
                     OptionsAndVariants = ParseOptionsAndVariants(objectDescription),
@@ -915,6 +1718,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     ValidationState = ValidationState.Valid,
                     EstimatedValue = ParseValueRangeContract(objectDescription.Element("VAL_OBJECT"), null),
                     AwardContract = new Award(),
+                    
                     CandidateNumberRestrictions = new CandidateNumberRestrictions()
                     {
                         Selected = objectDescription.Element("NB_ENVISAGED_CANDIDATE") != null ?
@@ -927,7 +1731,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                         EnvisagedNumber = ParseInt(objectDescription.Element("NB_ENVISAGED_CANDIDATE")?.Value),
                         ObjectiveCriteriaForChoosing = ParsePElements(objectDescription.Element("CRITERIA_CANDIDATE"), 0)
                     },
-
+                    
                 };
 
                 if (awardContract != null)
@@ -948,7 +1752,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             {
                 AwardedContract = ParseAwardedContract(awardedContract),
                 ContractAwarded = ParseContractAwardedType(awardContract),
-                NoAwardedContract = ParseNoAwardedContract(noAwardedContract)
+                NoAwardedContract = ParseNoAwardedContract(noAwardedContract),
+                
             };
 
 
@@ -959,6 +1764,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     var addressContractor = item.Element("ADDRESS_CONTRACTOR");
                     award.AwardedContract.Contractors.Add(new ContractorContactInformation()
                     {
+                        
                         OfficialName = addressContractor.Element("OFFICIALNAME")?.Value,
                         NationalRegistrationNumber = addressContractor.Element("NATIONALID")?.Value,
                         PostalAddress = ParsePostalAddress(addressContractor),
@@ -990,8 +1796,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
             var contractAward = new ContractAward()
             {
-                ContractTitle = awardedContract?.Parent?.Element("TITLE").Value,
-
+                ContractTitle = awardedContract?.Parent?.Element("TITLE")?.Value,
+                ContractNumber = awardedContract?.Element("CONTRACT_NO")?.Value?? awardedContract?.Parent?.Element("CONTRACT_NO")?.Value,
                 LikelyToBeSubcontracted = awardedContract?.Element("LIKELY_SUBCONTRACTED") != null ? true : false,
                 ConclusionDate = ParseDate(awardedContract?.Element("DATE_CONCLUSION_CONTRACT")?.Value),
 
@@ -1076,8 +1882,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 Sme = ParseInt(tenders?.Element("NB_TENDERS_RECEIVED_SME")?.Value),
                 OtherEu = ParseInt(tenders?.Element("NB_TENDERS_RECEIVED_SME")?.Value),
                 NonEu = ParseInt(tenders?.Element("NB_TENDERS_RECEIVED_NON_EU")?.Value),
-                Electronic = ParseInt(tenders?.Element("NB_TENDERS_RECEIVED_EMEANS")?.Value),
-                Total = ParseInt(tenders?.Element("NB_TENDERS_RECEIVED")?.Value)
+                Electronic = ParseInt(tenders?.Element("NB_TENDERS_RECEIVED_EMEANS")?.Value != null?  tenders?.Element("NB_TENDERS_RECEIVED_EMEANS")?.Value: tenders?.Element("OFFERS_RECEIVED_NUMBER_MEANING")?.Value),
+                Total = ParseInt(tenders?.Element("NB_TENDERS_RECEIVED")?.Value !=null ? tenders?.Element("NB_TENDERS_RECEIVED")?.Value : tenders?.Element("OFFERS_RECEIVED_NUMBER")?.Value)
             };
         }
 
@@ -1097,6 +1903,11 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
         private static TimeFrame ParseTimeFrame(XElement objectDescription)
         {
+            if (objectDescription == null)
+            {
+                return null;
+            } 
+
             var timeFrame = new TimeFrame()
             {
                 BeginDate = ParseDate(objectDescription.Element("DATE_START")?.Value),
@@ -1108,17 +1919,21 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 Type = objectDescription.Element("DURATION")?.Attribute("TYPE")?.Value == "MONTH" ? TimeFrameType.Months :
                        objectDescription.Element("DURATION")?.Attribute("TYPE")?.Value == "DAY" ? TimeFrameType.Days :
                        objectDescription.Element("DATE_START") != null ? TimeFrameType.BeginAndEndDate :
-                       TimeFrameType.Undefined
+                       objectDescription.Element("MONTHS") !=null ? TimeFrameType.Months :
+                       objectDescription.Element("DAYS") != null ? TimeFrameType.Days :
+                       TimeFrameType.Undefined,
+                
             };
 
             if (timeFrame.Type == TimeFrameType.Months)
             {
-                timeFrame.Months = ParseInt(objectDescription.Element("DURATION")?.Value);
+                timeFrame.Months = ParseInt(objectDescription.Element("DURATION")?.Value !=null? objectDescription.Element("DURATION")?.Value : objectDescription.Element("MONTHS")?.Value);
             }
             if (timeFrame.Type == TimeFrameType.Days)
             {
-                timeFrame.Days = ParseInt(objectDescription.Element("DURATION")?.Value);
+                timeFrame.Days = ParseInt(objectDescription.Element("DURATION")?.Value != null ? objectDescription.Element("DURATION")?.Value : objectDescription.Element("DAYS")?.Value);
             }
+
 
             return timeFrame;
         }
@@ -1154,12 +1969,13 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
         private static ValueContract ParseValueContract(XElement valueElement)
         {
+            
             if (valueElement != null)
             {
                 return new ValueContract()
                 {
-                    Currency = valueElement.Attribute("CURRENCY")?.Value,
-                    Value = ParseDecimal(valueElement.Value)
+                    Currency = valueElement.Attribute("CURRENCY")?.Value !=null ? valueElement.Attribute("CURRENCY")?.Value : string.Empty,
+                    Value = ParseDecimal(valueElement.Value != null ? valueElement.Value : valueElement?.Element("VALUE_COST")?.Value)
                 };
             }
             return new ValueContract();
@@ -1171,18 +1987,21 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             {
                 return new ValueRangeContract()
                 {
-                    Currency = valueElement.Attribute("CURRENCY")?.Value,
-                    Value = ParseDecimal(valueElement.Value),
-                    Type = valueElement.Name.LocalName == "VAL_TOTAL" ? ContractValueType.Exact : ContractValueType.Undefined,
-                    DisagreeToBePublished = valueElement?.Attribute("PUBLICATION")?.Value == "NO" ? true : false ,
+                    Currency = valueElement.Attribute("CURRENCY")?.Value !=null? valueElement.Attribute("CURRENCY")?.Value :
+                               valueElement?.Element("COSTS_RANGE_AND_CURRENCY")?.Attribute("CURRENCY")?.Value,
+                    MinValue = ParseDecimal(valueElement?.Element("COSTS_RANGE_AND_CURRENCY")?.Element("RANGE_VALUE_COST")?.Element("LOW_VALUE")?.Value),
+                    MaxValue = ParseDecimal(valueElement?.Element("COSTS_RANGE_AND_CURRENCY")?.Element("RANGE_VALUE_COST")?.Element("HIGH_VALUE")?.Value),
+                    Value = ParseDecimal(valueElement.Value != null ? valueElement.Value : valueElement?.Element("VALUE_COST")?.Value),
+                    Type = valueElement.Name.LocalName == "VAL_TOTAL" || valueElement?.Element("VALUE_COST")!=null ? ContractValueType.Exact : valueElement?.Element("COSTS_RANGE_AND_CURRENCY")?.Element("RANGE_VALUE_COST")?.Name.LocalName == "RANGE_VALUE_COST"? ContractValueType.Range: ContractValueType.Undefined,
+                    DisagreeToBePublished = valueElement?.Attribute("PUBLICATION")?.Value == "NO" ? true : false,
                 };
             }else if (rangeElement != null)
             {
               return new ValueRangeContract()
               {
                 Currency = rangeElement?.Attribute("CURRENCY")?.Value,
-                MaxValue = ParseDecimal(rangeElement?.Element("HIGH")?.Value),
-                MinValue = ParseDecimal(rangeElement?.Element("LOW")?.Value),
+                MaxValue = ParseDecimal(rangeElement?.Element("HIGH")?.Value !=null ? rangeElement?.Element("HIGH")?.Value : rangeElement?.Element("RANGE_VALUE_COST")?.Element("HIGH_VALUE")?.Value),
+                MinValue = ParseDecimal(rangeElement?.Element("LOW")?.Value != null ? rangeElement?.Element("LOW")?.Value : rangeElement?.Element("RANGE_VALUE_COST")?.Element("LOW_VALUE")?.Value),
                 Type = ContractValueType.Range,
                 DisagreeToBePublished = rangeElement?.Attribute("PUBLICATION")?.Value == "NO" ? true : false,
               };
@@ -1281,64 +2100,56 @@ namespace Hilma.Domain.Integrations.HilmaMigration
         private static OrganisationContract ParseOrganisation(XNamespace nutsSchema, XElement addressContractinBody,
           XElement contractingBody, NoticeType noticeType)
         {
-          var organisationContract = new OrganisationContract()
-          {
-            Information = ParseContractingBodyInformation(nutsSchema, addressContractinBody),
+            var organisationContract = new OrganisationContract()
+            {
+                Information = ParseContractingBodyInformation(nutsSchema, addressContractinBody),
 
+            };
+            
+            ParseCeActivity(contractingBody, organisationContract);
+        
+            ParseCaTypeAndActivity(contractingBody, organisationContract);
 
-          };
+            return organisationContract;
+        }
 
-          if (noticeType.IsUtilities())
-          {
-
-            if (contractingBody.Element("CE_ACTIVITY_OTHER") != null)
+        private static void ParseCaTypeAndActivity(XElement contractingBody, OrganisationContract organisationContract)
+        {
+            if (contractingBody.Element("CA_TYPE") != null)
             {
-              organisationContract.MainActivityUtilities = MainActivityUtilities.OtherActivity;
-              organisationContract.OtherMainActivity = contractingBody.Element("CE_ACTIVITY_OTHER")?.Value;
+                organisationContract.ContractingAuthorityType =
+                    FromTEDFormatContractingAuthorityType(contractingBody.Element("CA_TYPE")?.Attribute("VALUE")?.Value);
             }
-            else if (contractingBody.Element("CE_ACTIVITY") != null)
+            else if (contractingBody.Element("CA_TYPE_OTHER") != null)
             {
-              organisationContract.MainActivityUtilities =
-                FromTEDFormat(contractingBody.Element("CE_ACTIVITY")?.Attribute("VALUE")?.Value);
-            }
-            else if (contractingBody.Element("CA_ACTIVITY_OTHER") != null)
-            {
-              organisationContract.MainActivity = MainActivity.OtherActivity;
-              organisationContract.OtherMainActivity = contractingBody.Element("CA_ACTIVITY_OTHER")?.Value;
-            }
-            else
-            {
-              organisationContract.MainActivity =
-                FromTEDFormatMainActivity(contractingBody.Element("CA_ACTIVITY")?.Attribute("VALUE")?.Value);
-            }
-          }
-          else
-          {
-            if (contractingBody.Element("CA_TYPE_OTHER") != null)
-            {
-              organisationContract.ContractingAuthorityType = ContractingAuthorityType.OtherType;
-              organisationContract.OtherContractingAuthorityType = contractingBody.Element("CA_TYPE_OTHER")?.Value;
-            }
-            else if (contractingBody.Element("CA_TYPE") != null)
-            {
-              organisationContract.ContractingAuthorityType =
-                FromTEDFormatContractingAuthorityType(contractingBody.Element("CA_TYPE")?.Attribute("VALUE")?.Value);
+                organisationContract.ContractingAuthorityType = ContractingAuthorityType.OtherType;
+                organisationContract.OtherContractingAuthorityType = contractingBody.Element("CA_TYPE_OTHER")?.Value;
             }
 
             if (contractingBody.Element("CA_ACTIVITY_OTHER") != null)
             {
-              organisationContract.MainActivity = MainActivity.OtherActivity;
-              organisationContract.OtherMainActivity = contractingBody.Element("CA_ACTIVITY_OTHER")?.Value;
+                organisationContract.MainActivity = MainActivity.OtherActivity;
+                organisationContract.OtherMainActivity = contractingBody.Element("CA_ACTIVITY_OTHER")?.Value;
             }
-            else
+            else if (contractingBody.Element("CA_ACTIVITY") != null)
             {
-              organisationContract.MainActivity =
-                FromTEDFormatMainActivity(contractingBody.Element("CA_ACTIVITY")?.Attribute("VALUE")?.Value);
+                organisationContract.MainActivity =
+                    FromTEDFormatMainActivity(contractingBody.Element("CA_ACTIVITY")?.Attribute("VALUE")?.Value);
             }
+        }
 
-          }
-
-          return organisationContract;
+        private static void ParseCeActivity(XElement contractingBody, OrganisationContract organisationContract)
+        {
+            if (contractingBody.Element("CE_ACTIVITY_OTHER") != null)
+            {
+                organisationContract.MainActivityUtilities = MainActivityUtilities.OtherActivity;
+                organisationContract.OtherMainActivity = contractingBody.Element("CE_ACTIVITY_OTHER")?.Value;
+            }
+            else if (contractingBody.Element("CE_ACTIVITY") != null)
+            {
+                organisationContract.MainActivityUtilities =
+                    FromTEDFormat(contractingBody.Element("CE_ACTIVITY")?.Attribute("VALUE")?.Value);
+            }
         }
 
 
@@ -1464,6 +2275,25 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             }
         }
 
+        public static Supplies ParseSuppliesTEDFormat(string supplies )
+        {
+            switch (supplies)
+            {
+                case "COMBINATION_THESE":
+                    return Supplies.Combination;
+                case "HIRE_PURCHASE":
+                    return Supplies.HirePurchase;
+                case "LEASE":
+                    return Supplies.Lease;
+                case "PURCHASE":
+                    return Supplies.Purchase;
+                case "RENTAL":
+                    return Supplies.Rental;
+                default:
+                    return Supplies.Undefined;
+            }
+        }
+
         private static DateTime? ParseDate(string date)
         {
             if (string.IsNullOrEmpty(date))
@@ -1475,6 +2305,9 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
         private static ContractBodyContactInformation ParseContractingBodyInformation(XNamespace nutsSchema, XElement addressContractinBody)
         {
+            if (addressContractinBody == null) {
+                return null;
+            }
             return new ContractBodyContactInformation()
             {
                 OfficialName = addressContractinBody.Element("OFFICIALNAME")?.Value != null ?
@@ -1491,8 +2324,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 NutsCodes = new[] {
                     addressContractinBody.Element(nutsSchema + "NUTS")?.Attribute("CODE")?.Value
                 },
-                MainUrl = addressContractinBody.Element("URL_GENERAL")?.Value,
-                BuyerProfileUrl = addressContractinBody.Element("URL_BUYER")?.Value,
+                MainUrl = addressContractinBody.Element("URL_GENERAL")?.Value != null ? addressContractinBody.Element("URL_GENERAL")?.Value : addressContractinBody?.Parent.Element("INTERNET_ADDRESSES_CONTRACT")?.Element("URL_GENERAL")?.Value !=null ? addressContractinBody?.Parent.Element("INTERNET_ADDRESSES_CONTRACT")?.Element("URL_GENERAL")?.Value:
+                addressContractinBody?.Parent.Element("INTERNET_ADDRESSES_CONTRACT_AWARD")?.Element("URL_GENERAL")?.Value,
                 ValidationState = ValidationState.Valid
             };
         }
@@ -1560,6 +2393,18 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     noticeType = NoticeType.Undefined;
                     isCorrigendum = true;
                     break;
+                case "15":
+                    noticeType = NoticeType.ExAnte;
+                    break;
+                case "17":
+                    noticeType = NoticeType.DefenceContract;
+                    break;
+                case "18":
+                    noticeType = NoticeType.DefenceContractAward;
+                    break;
+                case "20":
+                    noticeType = NoticeType.Modification;
+                    break;
                 case "99":
                     switch (editaNotice.NoticeType)
                     {
@@ -1580,6 +2425,9 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                             noticeType = NoticeType.Undefined;
                             break;
                     }
+                    break;
+                case "93":
+                    noticeType = NoticeType.NationalDirectAward;
                     break;
                 case "21":
                     switch (editaNotice.NoticeType)
@@ -1620,13 +2468,23 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     return formSection?.Element("F05_2014");
                 case NoticeType.ContractAwardUtilities:
                     return formSection?.Element("F06_2014");
+                case NoticeType.ExAnte:
+                    return formSection?.Element("F15_2014");
+                case NoticeType.Modification:
+                    return formSection?.Element("F20_2014");
                 case NoticeType.SocialContract:
                 case NoticeType.SocialPriorInformation:
                 case NoticeType.SocialContractAward:
                     return formSection?.Element("F21_2014");
+                case NoticeType.DefenceContract:
+                    return formSection?.Element("CONTRACT_DEFENCE"); //17
+                case NoticeType.DefenceContractAward:
+                    return formSection?.Element("CONTRACT_AWARD_DEFENCE"); //18
                 case NoticeType.NationalContract:
                 case NoticeType.NationalPriorInformation:
                     return formSection?.Element("DOMESTIC_CONTRACT"); //form 99
+                case NoticeType.NationalDirectAward:
+                    return formSection?.Element("DOMESTIC_DIRECT_AWARD");
                 default:
                     throw new NotSupportedException($"Notice type: {noticeType} , noticeNumber:{form.NoticeNumber}, formNumber:{form.FormNumber}");
             }

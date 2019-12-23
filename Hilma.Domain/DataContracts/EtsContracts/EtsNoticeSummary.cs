@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
 
@@ -8,6 +9,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
     /// <summary>
     /// Summary of a notice posted to hilma for Ets API.
     /// </summary>
+    [Contract]
     public class EtsNoticeSummary
     {
         public EtsNoticeSummary() { }
@@ -25,12 +27,14 @@ namespace Hilma.Domain.DataContracts.EtsContracts
 
             OrganisationId = dbo.Project.Organisation.Information.NationalRegistrationNumber;
 
-            CreationDate = dbo.DateCreated.Value;
+            CreationDate = dbo.DateCreated;
+            ModificationDate = dbo.DateModified;
             HilmaStatus = dbo.State;
             HilmaPublicationDate = dbo.DatePublished;
             TedStatus = dbo.TedPublishState;
             TedSubmissionId = dbo.TedSubmissionId;
             NoticeOjsNumber = dbo.NoticeOjsNumber;
+            NoticeNumber = dbo.NoticeNumber;
             TedValidationReport = dbo.TedValidationErrors;
 
             if (dbo.TedPublicationInfo != null)
@@ -48,15 +52,25 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         }
 
         /// <summary>
-        /// OJS Number for published Ted notices.
-        /// <example>2019/S 001-999999</example>
+        /// Hilma notice number, formatting [year]-[id].
+        /// Assigned by Hilma. Used as TED No Doc Ext.
         /// </summary>
+        public string NoticeNumber { get; set; }
+
+        /// <summary>
+        /// OJS Number for published Ted notices.
+        /// </summary>
+        /// <example>2019/S 001-999999</example>
         public string NoticeOjsNumber { get; set; }
 
         /// <summary>
         /// The datetime at which this notice was first sent to EtsApi.
         /// </summary>
         public DateTime? CreationDate { get; set; }
+        /// <summary>
+        /// Datetime at which this notice was modified the last time.
+        /// </summary>
+        public DateTime? ModificationDate { get; set; }
         /// <summary>
         /// Status of publication to Hilma.
         /// </summary>

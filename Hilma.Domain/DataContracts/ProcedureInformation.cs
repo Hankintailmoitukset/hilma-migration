@@ -101,6 +101,12 @@ namespace Hilma.Domain.DataContracts
         public string[] CriteriaForEvaluationOfProjects { get; set; }
 
         /// <summary>
+        /// Disagree to publish whatever is in CriteriaForEvaluationOfProjects
+        /// </summary>
+        [CorrigendumLabel("H_agree_to_publish", "IV.1.9")]
+        public bool DisagreeCriteriaForEvaluationOfProjectsPublish { get; set; }
+
+        /// <summary>
         /// IV.1.10 Identification of the national rules applicable to the procedure
         /// </summary>
         [CorrigendumLabel("national_rules", "IV.1.10")]

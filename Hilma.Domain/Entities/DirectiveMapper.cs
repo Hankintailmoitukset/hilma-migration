@@ -8,11 +8,6 @@ namespace Hilma.Domain.Integrations.General
     {
         public static string GetDirective(NoticeContract notice, NoticeContract parent)
         {
-            if( !string.IsNullOrEmpty( notice?.LegalBasis) )
-            {
-                return notice.LegalBasis;
-            }
-
             switch (notice.Type)
             {
                 case NoticeType.PriorInformation:
@@ -22,16 +17,18 @@ namespace Hilma.Domain.Integrations.General
                     return notice.Project.Organisation.ContractingAuthorityType == ContractingAuthorityType.MaintypeEu
                         || notice.Project.Organisation.ContractingAuthorityType == ContractingAuthorityType.OtherType ? "32018R1046" : "32014L0024";
                 case NoticeType.PeriodicIndicativeUtilities:
-                    return "32014L0025";
+                case NoticeType.PeriodicIndicativeUtilitiesReduceTimeLimits:
                 case NoticeType.ContractUtilities:
                 case NoticeType.ContractAwardUtilities:
                 case NoticeType.QualificationSystemUtilities:
                 case NoticeType.SocialUtilities:
                 case NoticeType.SocialUtilitiesPriorInformation:
+                case NoticeType.SocialUtilitiesContractAward:
+                case NoticeType.SocialUtilitiesQualificationSystem:
                     return "32014L0025";
                 case NoticeType.DesignContest:
                 case NoticeType.DesignContestResults:
-                    return notice.Project.Organisation.MainActivity != MainActivity.Undefined ? "32014L0024" : "32014L0025";
+                    return notice.Project.ProcurementCategory == ProcurementCategory.Public ? "32014L0024" : "32014L0025";
                 case NoticeType.SocialPriorInformation:
                 case NoticeType.SocialContract:
                 case NoticeType.SocialContractAward:
@@ -79,6 +76,13 @@ namespace Hilma.Domain.Integrations.General
                         return GetDirectiveByProcurementCategory(notice);
                     }
                 case NoticeType.BuyerProfile:   // Killed with holy fire
+                case NoticeType.DpsAward:
+                    // Copied from Contract award and contract award utilities based on procurement category
+                    return notice.Project.ProcurementCategory == ProcurementCategory.Public ?
+                    notice.Project.Organisation.ContractingAuthorityType == ContractingAuthorityType.MaintypeEu
+                        || notice.Project.Organisation.ContractingAuthorityType == ContractingAuthorityType.OtherType ? "32018R1046" : "32014L0024"
+                    :
+                    "32014L0025";
                 default:
                     return null;
             }

@@ -44,6 +44,7 @@ namespace Hilma.Domain.Integrations.Configuration
         public ProcedureInformationConfiguration ProcedureInformation {get; set;} = new ProcedureInformationConfiguration();
         public TenderingInformationConfiguration TenderingInformation {get; set;} = new TenderingInformationConfiguration();
         public RewardsAndJuryConfiguration RewardsAndJury {get; set;} = new RewardsAndJuryConfiguration();
+        public ResultsOfContestConfiguration ResultsOfContest {get; set;} = new ResultsOfContestConfiguration();
         public bool TedNoDocExt {get; set;} = false;
         public bool Links {get; set;} = false;
         public bool Attachments {get; set;} = false;
@@ -60,5 +61,6 @@ namespace Hilma.Domain.Integrations.Configuration
         public ContractAwardDefenceConfiguration ContractAwardsDefence {get; set;} = new ContractAwardDefenceConfiguration();
         public HilmaStatisticsConfiguration HilmaStatistics {get; set;} = new HilmaStatisticsConfiguration();
         public AnnexConfiguration Annexes {get; set;} = new AnnexConfiguration();
+        public ModifierConfiguration Modifiers {get; set;} = new ModifierConfiguration();
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
@@ -26,7 +25,7 @@ namespace Hilma.Domain.Validators
         private static readonly XNamespace XmlnsGeneral = "http://publications.europa.eu/resource/schema/ted/R2.0.9/reception";
         private static readonly XNamespace XmlnsDefence = "http://publications.europa.eu/resource/schema/ted/R2.0.8/reception";
         private readonly IMapper _mapper;
-        private ITranslationProvider _translationProvider;
+        private readonly ITranslationProvider _translationProvider;
 
         /// <summary>
         /// The notice validator constructor
@@ -43,33 +42,10 @@ namespace Hilma.Domain.Validators
 
         public bool Validate(bool publishToTed, out string tedXml)
         {
-            var noticeValid = Valid(_notice.CreatorId != null || _notice.EtsCreatorId != null, "Creator") &&
-                              Valid(_notice.Type != NoticeType.Undefined, "NoticeType");
-
-            var communicationInformationNotRequired = _notice.Type.IsContractAward()
-                || _notice.Type == NoticeType.ContractAwardUtilities
-                || _notice.Type == NoticeType.Modification
-                || _notice.Type == NoticeType.DefenceContractAward
-                || _notice.Type == NoticeType.ExAnte
-                || _notice.Type == NoticeType.NationalDirectAward;
-
-            var hilmaValidation = ValidateAll(noticeValid,
-                               Validate(_notice.Project, _notice.Type),
-                               Validate(_notice.ContactPerson),
-                               (communicationInformationNotRequired || Validate(_notice.CommunicationInformation)),
-                               Validate(_notice.LotsInfo),
-                               Validate(_notice.ProcurementObject),
-                               Validate(_notice.TenderingInformation),
-                               Validate(_notice.ConditionsInformation),
-                               Validate(_notice.ProcedureInformation),
-                               ValidateObjectDescriptions(_notice),
-                               Validate(_notice.Modifications));
-
-            // If Hilma validation fails, return that first.
-            if (!hilmaValidation || _notice.Project.Publish != PublishType.ToTed)
+            if (_notice.Project.Publish != PublishType.ToTed)
             {
                 tedXml = null;
-                return hilmaValidation;
+                return true;
             }
 
             var path = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory);
@@ -85,9 +61,8 @@ namespace Hilma.Domain.Validators
                 schema.Add(XmlnsGeneral.ToString(), Path.Combine(path, "Validators", "TedSchema", "209General", "TED_ESENDERS.xsd"));
             }
             schema.Compile();
-            var translations = _translationProvider.GetDynamicObject(CancellationToken.None).Result;
 
-            var xDoc = new TedNoticeFactory(_mapper.Map<NoticeContract>(_notice), _notice.Parent != null ? _mapper.Map<NoticeContract>(_notice.Parent) : new NoticeContract(), "Validator", "validator@validator.com", "TEDEXXXX", Convert.ToString(translations), publishToTed).CreateDocument();
+            var xDoc = new TedNoticeFactory(_mapper.Map<NoticeContract>(_notice), _notice.Parent != null ? _mapper.Map<NoticeContract>(_notice.Parent) : new NoticeContract(), "Validator", "validator@validator.com", "TEDEXXXX", _translationProvider, publishToTed).CreateDocument();
             xDoc.Validate(schema, (sender, e) => { _validationErrors.Add(e.Message + "\n"); });
 
             // We don't want to send the login part in the response.
@@ -180,7 +155,11 @@ namespace Hilma.Domain.Validators
 
         public bool Validate(ContactPerson person)
         {
-            return person != null && !string.IsNullOrWhiteSpace(person.Email);
+            if (_notice.Type == NoticeType.ConcessionAward)
+            {
+                return true;
+            }
+            return Valid(person != null && !string.IsNullOrWhiteSpace(person.Email), "ContactPerson");
         }
 
         public bool ValidateObjectDescriptions(Notice notice)
@@ -201,7 +180,12 @@ namespace Hilma.Domain.Validators
                       || _notice.Type == NoticeType.NationalDesignContest
                       || _notice.Type == NoticeType.NationalAgricultureContract, "ObjectDescription.NutsCodes"),
                 Valid(!objectDescription.TimeFrame.CanBeRenewed || (objectDescription.TimeFrame.CanBeRenewed && (objectDescription.TimeFrame?.RenewalDescription).HasAnyContent()), "ObjectDescription.TimeFrame.RenewalDescription"),
-                Valid(!(objectDescription.AwardCriteria.CriterionTypes == AwardCriterionType.DescriptiveCriteria && _notice.Type == NoticeType.ContractAward), "Award criteria cannot be descriptive for contract award."));
+                Valid(!(objectDescription.AwardCriteria.CriterionTypes == AwardCriterionType.DescriptiveCriteria && _notice.Type == NoticeType.ContractAward), "Award criteria cannot be descriptive for contract award."),
+                Valid((_notice.ProcedureInformation.ProcedureType == ProcedureType.AwardWoPriorPubD1 ||
+                    _notice.ProcedureInformation.ProcedureType == ProcedureType.AwardWoPriorPubD1Other ||
+                    _notice.ProcedureInformation.ProcedureType == ProcedureType.AwardWoPriorPubD4 ||
+                    _notice.ProcedureInformation.ProcedureType == ProcedureType.AwardWoPriorPubD4Other) ? objectDescription.AwardContract?.ContractAwarded == ContractAwarded.AwardedContract : true, "Contract must be awarded if procedure type = awarded without prior publication")
+            );
 
         public bool Validate(ProcurementProjectContract project, NoticeType type)
         {

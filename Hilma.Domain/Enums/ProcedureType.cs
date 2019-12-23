@@ -39,8 +39,12 @@ namespace Hilma.Domain.Entities
         AwardWoPriorPubD4 = 16,
         ProctypeNationalDirect = 17,
         /// <summary>
-        /// TEF F21 Annex D1 - 2. Other justification...
+        /// Annex D1-3 - 2. Other justification...
         /// </summary>
-        AwardWoPriorPubD1Other = 18
+        AwardWoPriorPubD1Other = 18,
+        /// <summary>
+        /// TED F25 Annex D4 - 2- Other justification
+        /// </summary>
+        AwardWoPriorPubD4Other = 19
     }
 }

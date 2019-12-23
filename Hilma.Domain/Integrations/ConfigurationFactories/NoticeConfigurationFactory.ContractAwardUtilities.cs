@@ -17,7 +17,6 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 ProcurementLaw = true,
                 CoPurchasers = new ContractBodyContactInformationConfiguration()
                 {
-                    BuyerProfileUrl = true,
                     ContactPerson = true,
                     Department = true,
                     Email = true,
@@ -41,7 +40,6 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                     OtherContractingAuthorityType = false,
                     Information = new ContractBodyContactInformationConfiguration()
                     {
-                        BuyerProfileUrl = true,
                         ContactPerson = true,
                         Department = true,
                         Email = true,
@@ -151,11 +149,11 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 },
                 CandidateNumberRestrictions = new CandidateNumberRestrictionsConfiguration
                 {
-                    EnvisagedNumber = true,
-                    EnvisagedMinimumNumber = true,
-                    EnvisagedMaximumNumber = true,
-                    ObjectiveCriteriaForChoosing = true,
-                    Selected = true
+                    EnvisagedNumber = false,
+                    EnvisagedMinimumNumber = false,
+                    EnvisagedMaximumNumber = false,
+                    ObjectiveCriteriaForChoosing = false,
+                    Selected = false
                 },
                 OptionsAndVariants = new OptionsAndVariantsConfiguration
                 {
@@ -219,6 +217,23 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 {
                     Description = true,
                     Url = true
+                }
+            },
+            Annexes = new AnnexConfiguration()
+            {
+                D2 = new AnnexD2Configuration()
+                {
+                    NoTenders = true,
+                    PureResearch = true,
+                    ProvidedByOnlyParticularOperator = true,
+                    ReasonForNoCompetition = true,
+                    ExtremeUrgency = true,
+                    RepetitionExisting = true,
+                    AdvantageousTerms = true,
+                    AdvantageousPurchaseReason = true,
+                    BargainPurchase = true,
+
+                    Justification = true
                 }
             }
         };

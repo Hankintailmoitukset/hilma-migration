@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using AutoMapper;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Enums;
+using Hilma.Domain.Exceptions;
 using Hilma.Domain.Validators;
 using Newtonsoft.Json;
 
@@ -154,8 +155,8 @@ namespace Hilma.Domain.Entities
 
         /// <summary>
         /// OJS Number for published Ted notices.
-        /// <example>2019/S 001-999999</example>
         /// </summary>
+        /// <example>2019/S 001-999999</example>
         [RegularExpression(@"^(19|20)\d{2}/S (((00)?[1-9])|([0]?[1-9][0-9])|(1[0-9][0-9])|(2[0-5][0-9]))-\d{6}$",
             ErrorMessage = "Notice OJS Number must be correctly formatted")]
         public string NoticeOjsNumber { get; set; }
@@ -163,8 +164,8 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// If parent is set, should match the NoticeOjsNumber of the parent
         /// Previous submission to TED regarding the same procurement.
-        /// <example>2019/S 001-999999</example>
         /// </summary>
+        /// <example>2019/S 001-999999</example>
         [RegularExpression(@"^(19|20)\d{2}/S (((00)?[1-9])|([0]?[1-9][0-9])|(1[0-9][0-9])|(2[0-5][0-9]))-\d{6}$",
             ErrorMessage = "Previous notice OJS Number must be correctly formatted")]
         public string PreviousNoticeOjsNumber { get; set; }
@@ -188,6 +189,11 @@ namespace Hilma.Domain.Entities
         /// </summary>
         public void UpdateNoticeNumber()
         {
+            if (!string.IsNullOrEmpty(NoticeNumber))
+            {
+                throw new HilmaException("Notice number cannot be updated when it is set");
+            }
+
             NoticeNumber = $"{DateCreated?.Year}-{(Id % 1000000):D6}";
         }
 
@@ -236,8 +242,7 @@ namespace Hilma.Domain.Entities
         public ProcedureInformation ProcedureInformation { get; set; } = new ProcedureInformation();
 
         /// <summary>
-        /// IV.2
-        /// Information regarding tendering process
+        ///     IV.2) Administrative information
         /// </summary>
         public TenderingInformation TenderingInformation { get; set; } = new TenderingInformation();
 
@@ -245,6 +250,11 @@ namespace Hilma.Domain.Entities
         /// IV.3) Rewards and jury
         /// </summary>
         public RewardsAndJury RewardsAndJury { get; set; } = new RewardsAndJury();
+
+        /// <summary>
+        /// V: Results of contest
+        /// </summary>
+        public ResultsOfContest ResultsOfContest { get; set; } = new ResultsOfContest();
 
         /// <summary>
         ///    Section VI: Miscellaneous information about the notice.
@@ -293,10 +303,15 @@ namespace Hilma.Domain.Entities
         public Annex Annexes { get; set; }
 
         /// <summary>
+        /// Modification information. For Hilma use only
+        /// </summary>
+        public Modifier[] Modifiers { get; set; }
+
+        /// <summary>
         ///     If this notice could be published.
         /// </summary>
         [NotMapped]
-        public bool CanEdit => State != PublishState.Published;
+        public bool CanEdit => !(State == PublishState.Published || State == PublishState.NotPublic);
 
         
         /// <summary>

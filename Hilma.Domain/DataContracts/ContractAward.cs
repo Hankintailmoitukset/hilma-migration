@@ -14,7 +14,7 @@ namespace Hilma.Domain.DataContracts {
         /// <summary>
         ///     Date of conclusion of the contract.
         /// </summary>
-        [CorrigendumLabel("date_conclusion_contract", "V.2.1")]
+        [CorrigendumLabel("date_award", "V.2.1")]
         public DateTime? ConclusionDate { get; set; }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Hilma.Domain.DataContracts {
         /// <summary>
         ///     Initial estimated total value of the contract / lot
         /// </summary>
-        [CorrigendumLabel("val_estimated_total", "V.2.4.2")]
+        [CorrigendumLabel("value_estim_total_contract", "V.2.4.2")]
         public ValueContract InitialEstimatedValueOfContract { get; set; } = new ValueContract();
         /// <summary>
         ///     Total final value of the contract or lot.
@@ -103,5 +103,23 @@ namespace Hilma.Domain.DataContracts {
         /// Required but not public fields
         /// </summary>
         public ContractAwardNotPublicFields NotPublicFields { get; set; } = new ContractAwardNotPublicFields();
+
+        /// <summary>
+        /// Revenue from the payment of fees and fines by the users - concession award notices
+        /// </summary>
+        [CorrigendumLabel("concess_fees_prices", "V.2.4")]
+        public ValueContract ConcessionRevenue { get; set; }
+
+        /// <summary>
+        /// Prices, payments or other financial advantages provided by the contracting authority - concession award notices
+        /// </summary>
+        [CorrigendumLabel("concess_fees_prices", "V.2.4")]
+        public ValueContract PricesAndPayments { get; set; }
+
+        /// <summary>
+        /// Any other details relevant to the value of the concession according to Art. 8(3) of the Directive - concession award notices
+        /// </summary>
+        [CorrigendumLabel("concess_other_details", "V.2.4")]
+        public string[] ConcessionValueAdditionalInformation { get; set; }
     }
 }

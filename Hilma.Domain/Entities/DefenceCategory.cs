@@ -17,11 +17,13 @@ namespace Hilma.Domain.Entities
         /// </summary>
         [RegularExpression("[3-9]|1[0-9]?|2[0-6]?")]
         [Required]
+        [CorrigendumLabel("service_category", "II.2")]
         public string Code { get; set; }
 
         /// <summary>
         ///     Clear text explanation for the code.
         /// </summary>
+        [CorrigendumLabel("service_category", "II.2")]
         public string Name { get; set; }
     }
 }

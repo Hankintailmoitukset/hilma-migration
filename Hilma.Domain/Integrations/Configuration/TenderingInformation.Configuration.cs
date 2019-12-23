@@ -18,6 +18,7 @@ namespace Hilma.Domain.Integrations.Configuration
         public TenderOpeningConditionsConfiguration TenderOpeningConditions {get; set;} = new TenderOpeningConditionsConfiguration();
         public DefenceAdministrativeInformationConfiguration Defence {get; set;} = new DefenceAdministrativeInformationConfiguration();
         public TimeFrameConfiguration EstimatedExecutionTimeFrame {get; set;} = new TimeFrameConfiguration();
+        public bool ScheduledStartDateOfAwardProcedures {get; set;} = false;
         public bool ValidationState {get; set;} = false;
     }
 }

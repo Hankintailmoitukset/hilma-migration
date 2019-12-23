@@ -46,7 +46,7 @@ namespace Hilma.Domain.Integrations.General
         public static List<XElement> LegalBasis(NoticeContract notice, NoticeContract parent = null)
         {
 
-            string directive = DirectiveMapper.GetDirective(notice, parent);
+            string directive = string.IsNullOrEmpty( notice.LegalBasis ) ? DirectiveMapper.GetDirective(notice, parent) : notice.LegalBasis;
             return new List<XElement>
             {
                 ElementWithAttribute("LEGAL_BASIS", "VALUE", directive),
@@ -88,19 +88,23 @@ namespace Hilma.Domain.Integrations.General
         /// <returns>Xelement</returns>
             public static XElement ADDRS1(string elementName, OrganisationContract organisation, ContactPerson contactPerson)
         {
+            if (organisation == null)
+            {
+                return null;
+            }
+            
             return Element(elementName,
-                    Element("OFFICIALNAME", organisation.Information.OfficialName),
-                    Element("NATIONALID", organisation.Information.NationalRegistrationNumber),
-                    Element("ADDRESS", organisation.Information.PostalAddress.StreetAddress),
-                    Element("TOWN", organisation.Information.PostalAddress.Town),
-                    Element("POSTAL_CODE", organisation.Information.PostalAddress.PostalCode),
-                    ElementWithAttribute("COUNTRY", "VALUE", organisation.Information.PostalAddress.Country),
-                    !string.IsNullOrEmpty(contactPerson.Name) ? Element("CONTACT_POINT", contactPerson.Name) : null,
-                    Element("PHONE", contactPerson.Phone),
-                    Element("E_MAIL", contactPerson.Email),
-                    organisation.Information.NutsCodes.ToList().Select(x => new XElement(n2016 + "NUTS", new XAttribute("CODE", x))),
-                    Element("URL_GENERAL", organisation.Information.MainUrl),
-                    Element("URL_BUYER", organisation.Information.BuyerProfileUrl)
+                    Element("OFFICIALNAME", organisation.Information?.OfficialName),
+                    Element("NATIONALID", organisation.Information?.NationalRegistrationNumber),
+                    Element("ADDRESS", organisation.Information?.PostalAddress?.StreetAddress),
+                    Element("TOWN", organisation.Information?.PostalAddress?.Town),
+                    Element("POSTAL_CODE", organisation.Information?.PostalAddress?.PostalCode),
+                    ElementWithAttribute("COUNTRY", "VALUE", organisation.Information?.PostalAddress?.Country),
+                    !string.IsNullOrEmpty(contactPerson?.Name) ? Element("CONTACT_POINT", contactPerson?.Name) : null,
+                    Element("PHONE", contactPerson?.Phone),
+                    Element("E_MAIL", contactPerson?.Email),
+                    organisation?.Information?.NutsCodes.ToList().Select(x => new XElement(n2016 + "NUTS", new XAttribute("CODE", x))),
+                    Element("URL_GENERAL", organisation.Information?.MainUrl)
                 );
         }
 
@@ -119,14 +123,13 @@ namespace Hilma.Domain.Integrations.General
             return Element(elementName,
                 Element("OFFICIALNAME", information.OfficialName),
                 Element("NATIONALID", information.NationalRegistrationNumber),
-                Element("ADDRESS", information.PostalAddress.StreetAddress),
-                Element("TOWN", information.PostalAddress.Town),
-                Element("POSTAL_CODE", information.PostalAddress.PostalCode),
-                ElementWithAttribute("COUNTRY", "VALUE", information.PostalAddress.Country),
+                Element("ADDRESS", information.PostalAddress?.StreetAddress),
+                Element("TOWN", information.PostalAddress?.Town),
+                Element("POSTAL_CODE", information.PostalAddress?.PostalCode),
+                ElementWithAttribute("COUNTRY", "VALUE", information.PostalAddress?.Country),
                 Element("E_MAIL", information.Email),
-                information.NutsCodes.ToList().Select(x => new XElement(n2016 + "NUTS", new XAttribute("CODE", x))),
-                Element("URL_GENERAL", information.MainUrl),
-                Element("URL_BUYER", information.BuyerProfileUrl)
+                information.NutsCodes?.ToList().Select(x => new XElement(n2016 + "NUTS", new XAttribute("CODE", x))),
+                Element("URL_GENERAL", information.MainUrl)
             );
         }
 
@@ -134,19 +137,20 @@ namespace Hilma.Domain.Integrations.General
         /// Address (section 5)
         /// </summary>
         /// <param name="contractor">Contractor contat information</param>
+        /// <param name="rootElement">Root element</param>
         /// <returns>Xelement</returns>
-        public static XElement ADDRS5(ContractorContactInformation contractor)
+        public static XElement ADDRS5(ContractorContactInformation contractor, string rootElement = "ADDRESS_CONTRACTOR")
         {
             if (contractor == null)
                 return null;
 
-            return Element("ADDRESS_CONTRACTOR",
+            return Element(rootElement,
                     Element("OFFICIALNAME", contractor.OfficialName),
                     Element("NATIONALID", contractor.NationalRegistrationNumber),
-                    Element("ADDRESS", contractor.PostalAddress.StreetAddress),
-                    Element("TOWN", contractor.PostalAddress.Town),
-                    Element("POSTAL_CODE", contractor.PostalAddress.PostalCode),
-                    ElementWithAttribute("COUNTRY", "VALUE", contractor.PostalAddress.Country),
+                    Element("ADDRESS", contractor.PostalAddress?.StreetAddress),
+                    Element("TOWN", contractor.PostalAddress?.Town),
+                    Element("POSTAL_CODE", contractor.PostalAddress?.PostalCode),
+                    ElementWithAttribute("COUNTRY", "VALUE", contractor.PostalAddress?.Country),
                     Element("PHONE", contractor.TelephoneNumber),
                     Element("E_MAIL", contractor.Email),
                     contractor.NutsCodes.ToList().Select(x => new XElement(n2016 + "NUTS", new XAttribute("CODE", x))),
@@ -166,27 +170,16 @@ namespace Hilma.Domain.Integrations.General
 
             return Element(elementName,
                 Element("OFFICIALNAME", information.OfficialName),
-                Element("ADDRESS", information.PostalAddress.StreetAddress),
-                Element("TOWN", information.PostalAddress.Town),
-                Element("POSTAL_CODE", information.PostalAddress.PostalCode),
-                ElementWithAttribute("COUNTRY", "VALUE", information.PostalAddress.Country),
+                Element("ADDRESS", information.PostalAddress?.StreetAddress),
+                Element("TOWN", information.PostalAddress?.Town),
+                Element("POSTAL_CODE", information.PostalAddress?.PostalCode),
+                ElementWithAttribute("COUNTRY", "VALUE", information.PostalAddress?.Country),
                 Element("PHONE", information.TelephoneNumber),
                 Element("E_MAIL", information.Email),
                 Element("URL", information.MainUrl)
             );
         }
-              
 
-        /// <summary>
-        /// 2019-000000-000 	vuosi-id-lot
-        /// </summary>
-        /// <param name="notice">Notice conrtact</param>
-        /// <param name="lotNumber">lot number</param>
-        /// <returns></returns>
-        public static string GetContractNumber(NoticeContract notice, int lotNumber)
-        {
-            return $"{DateTime.Now.Year}-{(notice.Id % 1000000):D6}-{(lotNumber % 1000):D3}";
-        }
 
         /// <summary>
         /// 
@@ -282,12 +275,12 @@ namespace Hilma.Domain.Integrations.General
         /// <returns></returns>
         public static XElement PElement(string name, string[] value)
         {
-            if (value == null || !value.Any())
+            if (value == null || !value.Any() || value.All(string.IsNullOrEmpty))
             {
                 return null;
             }
 
-            return new XElement(Xmlns + name.ToUpper(), value.Select(p => new XElement(Xmlns + "P", p)));
+            return new XElement(Xmlns + name.ToUpper(), value.Where(x => x.Length > 0).Select(p => new XElement(Xmlns + "P", p)));
         }
 
         /// <summary>
@@ -302,6 +295,20 @@ namespace Hilma.Domain.Integrations.General
                 return null;
 
             return new XElement(Xmlns + name.ToUpper(), new XElement(Xmlns + "P", value));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="elementName"></param>
+        /// <param name="attributeName"></param>
+        /// <param name="attributeValue"></param>
+        /// <param name="elementValue"></param>
+        /// <returns></returns>
+        public static XElement PElementWithAttribute(string elementName, string attributeName, string attributeValue, string[] elementValue = null)
+        {
+            return !string.IsNullOrWhiteSpace(attributeValue)
+                ? new XElement(Xmlns + elementName.ToUpper(), new XAttribute(attributeName.ToUpper(), attributeValue), elementValue.Where(x => x.Length > 0).Select(p => new XElement(Xmlns + "P", p))) : null;
         }
 
         /// <summary>
@@ -357,6 +364,10 @@ namespace Hilma.Domain.Integrations.General
         /// <returns></returns>
         public static XElement Element(string name)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentOutOfRangeException(nameof(name));
+            }
             return new XElement(Xmlns + name.ToUpper());
         }
 

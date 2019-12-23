@@ -3,10 +3,7 @@ using Hilma.Domain.Entities;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Xml.Linq;
-using Hilma.Domain.Integrations.General;
 using Hilma.Domain.Extensions;
 
 namespace Hilma.Domain.Integrations.Extensions
@@ -16,6 +13,10 @@ namespace Hilma.Domain.Integrations.Extensions
     /// </summary>
     public static class ListExtensions
     {
+        public static JObject Translations { get; set; }
+
+        public static string NoticeLanguage { get; set; }
+
         /// <summary>
         /// Adds an XElement to the list, if there is a change.
         /// </summary>
@@ -26,7 +27,8 @@ namespace Hilma.Domain.Integrations.Extensions
         /// <param name="property">Property</param>
         /// <param name="lotNum">Lot number</param>
         /// <param name="section">Overload for section</param>
-        public static void Add(this List<XElement> list, string originalValue, string newValue, Type type, string property, int? lotNum = null, string section = null, string translationKey = null)
+        /// <param name="translationKey"></param>
+        public static void Add(this List<Change> list, string originalValue, string newValue, Type type, string property, int? lotNum = null, string section = null, string translationKey = null)
         {
             if (originalValue == newValue || (string.IsNullOrEmpty(originalValue) && string.IsNullOrEmpty(newValue)))
             {
@@ -36,7 +38,111 @@ namespace Hilma.Domain.Integrations.Extensions
             list.Add(ChangeText(new string[] { originalValue }, new string[] { newValue }, type, property, lotNum, section, translationKey));
         }
 
-        public static void Add(this List<XElement> list, string[] originalValue, string[] newValue, Type type, string property, int? lotNum = null, string section = null, string translationKey = null)
+        /// <summary>
+        /// Adds an XElement to the list, if there is a change.
+        /// </summary>
+        /// <param name="list">The list</param>
+        /// <param name="originalValue">Original value</param>
+        /// <param name="newValue">New value</param>
+        /// <param name="type">Type</param>
+        /// <param name="property">Property</param>
+        /// <param name="lotNum">Lot number</param>
+        /// <param name="section">Overload for section</param>
+        /// <param name="translationKey"></param>
+        public static void Add(this List<Change> list, bool originalValue, bool newValue, Type type, string property, int? lotNum = null, string section = null, string translationKey = null)
+        {
+            if (originalValue == newValue)
+            {
+                return;
+            }
+
+            list.Add(ChangeText(new string[] { originalValue.ToYesNo(NoticeLanguage) }, new string[] { newValue.ToYesNo(NoticeLanguage) }, type, property, lotNum, section, translationKey));
+        }
+
+        /// <summary>
+        /// Adds an XElement to the list, if there is a change.
+        /// </summary>
+        /// <param name="list">The list</param>
+        /// <param name="originalValue">Original value</param>
+        /// <param name="newValue">New value</param>
+        /// <param name="type">Type</param>
+        /// <param name="property">Property</param>
+        /// <param name="lotNum">Lot number</param>
+        /// <param name="section">Overload for section</param>
+        /// <param name="translationKey"></param>
+        public static void Add(this List<Change> list, int originalValue, int newValue, Type type, string property, int? lotNum = null, string section = null, string translationKey = null)
+        {
+            if (originalValue.ToString() == newValue.ToString())
+            {
+                return;
+            }
+
+            list.Add(ChangeText(new string[] { originalValue.ToString() }, new string[] { newValue.ToString() }, type, property, lotNum, section, translationKey));
+        }
+        /// <summary>
+        /// Adds an XElement to the list, if there is a change.
+        /// </summary>
+        /// <param name="list">The list</param>
+        /// <param name="originalValue">Original value</param>
+        /// <param name="newValue">New value</param>
+        /// <param name="type">Type</param>
+        /// <param name="property">Property</param>
+        /// <param name="lotNum">Lot number</param>
+        /// <param name="section">Overload for section</param>
+        /// <param name="translationKey"></param>
+        public static void Add(this List<Change> list, int? originalValue, int? newValue, Type type, string property, int? lotNum = null, string section = null, string translationKey = null)
+        {
+            if (originalValue.ToString() == newValue.ToString())
+            {
+                return;
+            }
+
+            list.Add(ChangeText(new string[] { originalValue.ToString() }, new string[] { newValue.ToString() }, type, property, lotNum, section, translationKey));
+        }
+
+        /// <summary>
+        /// Adds an XElement to the list, if there is a change.
+        /// </summary>
+        /// <param name="list">The list</param>
+        /// <param name="originalValue">Original value</param>
+        /// <param name="newValue">New value</param>
+        /// <param name="type">Type</param>
+        /// <param name="property">Property</param>
+        /// <param name="lotNum">Lot number</param>
+        /// <param name="section">Overload for section</param>
+        /// <param name="translationKey"></param>
+        public static void Add(this List<Change> list, decimal? originalValue, decimal? newValue, Type type, string property, int? lotNum = null, string section = null, string translationKey = null)
+        {
+            if (originalValue.ToString("F2") == newValue.ToString("F2"))
+            {
+                return;
+            }
+
+            list.Add(ChangeText(new string[] { originalValue.ToString("F2") }, new string[] { newValue.ToString("F2") }, type, property, lotNum, section, translationKey));
+        }
+
+        /// <summary>
+        /// Adds an XElement to the list, if there is a change.
+        /// </summary>
+        /// <param name="list">The list</param>
+        /// <param name="originalValue">Original value</param>
+        /// <param name="newValue">New value</param>
+        /// <param name="type">Type</param>
+        /// <param name="property">Property</param>
+        /// <param name="lotNum">Lot number</param>
+        /// <param name="section">Overload for section</param>
+        /// <param name="translationKey"></param>
+        public static void Add(this List<Change> list, bool? originalValue, bool? newValue, Type type, string property, int? lotNum = null, string section = null, string translationKey = null)
+        {
+            if (originalValue == newValue)
+            {
+                return;
+            }
+
+            list.Add(ChangeText(new string[] { originalValue.HasValue ? originalValue.Value.ToYesNo(NoticeLanguage) : "" }, new string[] { newValue.HasValue ? newValue.Value.ToYesNo(NoticeLanguage) : "" }, type, property, lotNum, section, translationKey));
+        }
+
+        public static void Add(this List<Change> list, string[] originalValue, string[] newValue, Type type, string property, int? lotNum = null, string section = null, string translationKey = null)
         {
             string oldValueString = originalValue?.ToParagraphedString();
             string newValueString = newValue?.ToParagraphedString();
@@ -49,9 +155,17 @@ namespace Hilma.Domain.Integrations.Extensions
             list.Add(ChangeText(originalValue, newValue, type, property, lotNum, section, translationKey));
         }
 
-        public static string GetTranslation(this string value)
+        public static void AddNuts(this List<Change> list, string[] originalValue, string[] newValue, Type type, string property, int? lotNum = null, string section = null, string translationKey = null)
         {
-            return string.IsNullOrEmpty(value) ? string.Empty : (string)TedNoticeFactory.Translations[TedNoticeFactory.NoticeLanguage?.ToLongLang()]?[value]??value;
+            string oldValueString = originalValue?.ToParagraphedString();
+            string newValueString = newValue?.ToParagraphedString();
+
+            if (oldValueString == newValueString || (originalValue == null && newValue == null) || !originalValue.HasAnyContent() && !newValue.HasAnyContent())
+            {
+                return;
+            }
+
+            list.Add(ChangeText(originalValue, newValue, type, property, lotNum, section, translationKey));
         }
 
         /// <summary>
@@ -63,26 +177,32 @@ namespace Hilma.Domain.Integrations.Extensions
         /// <param name="type">Type</param>
         /// <param name="property">Property</param>
         /// <param name="lotNum">Lot number</param>
-        public static void AddEnum(this List<XElement> list, string originalValue, string newValue, Type type, string property, int? lotNum = null)
+        /// <param name="section"></param>
+        public static void AddEnum<T>(this List<Change> list, T originalValue, T newValue, Type type, string property, int? lotNum = null, string section = null) where T : struct, IConvertible
         {
-            if (originalValue == newValue)
+            if (!typeof(T).IsEnum)
+            {
+                throw new ArgumentException("T must be an enumerated type");
+            }
+
+            if (originalValue.ToTedChangeFormatGeneric() == newValue.ToTedChangeFormatGeneric())
             {
                 return;
             }
+
             var tedAttribute = type.GetProperty(property).GetCustomAttributes(false).FirstOrDefault(x => x.GetType() == typeof(CorrigendumLabelAttribute)) as CorrigendumLabelAttribute;
 
-            var oldTranslated = string.IsNullOrEmpty(originalValue) ? string.Empty : (string)TedNoticeFactory.Translations[TedNoticeFactory.NoticeLanguage?.ToLongLang()][originalValue];
-            var newTranslated = string.IsNullOrEmpty(newValue) ? string.Empty : (string)TedNoticeFactory.Translations[TedNoticeFactory.NoticeLanguage?.ToLongLang()][newValue];
+            var oldTranslated = string.IsNullOrEmpty(originalValue.ToTedChangeFormatGeneric()) ? string.Empty : (string)Translations[NoticeLanguage?.ToLongLang()][originalValue.ToTedChangeFormatGeneric()];
+            var newTranslated = string.IsNullOrEmpty(newValue.ToTedChangeFormatGeneric()) ? string.Empty : (string)Translations[NoticeLanguage?.ToLongLang()][newValue.ToTedChangeFormatGeneric()];
 
-            list.Add(Element("CHANGE",
-                        Element("WHERE",
-                            Element("SECTION", tedAttribute?.Section),
-                            Element("LOT_NO", lotNum?.ToString()),
-                            Element("LABEL", (string)TedNoticeFactory.Translations[TedNoticeFactory.NoticeLanguage?.ToLongLang()][tedAttribute.Label])),
-                        Element("OLD_VALUE",
-                            string.IsNullOrEmpty(oldTranslated) ? new XElement(TedHelpers.Xmlns + "NOTHING") : PElement("TEXT", oldTranslated)),
-                        Element("NEW_VALUE",
-                            string.IsNullOrEmpty(newTranslated) ? new XElement(TedHelpers.Xmlns + "NOTHING") : PElement("TEXT", newTranslated))));
+            list.Add(new Change
+            {
+                Section = section ?? tedAttribute?.Section,
+                LotNumber = lotNum,
+                Label = (string)Translations[NoticeLanguage?.ToLongLang()][tedAttribute.Label],
+                OldText = new string[] { oldTranslated },
+                NewText = new string[] { newTranslated }
+            });
         }
 
         /// <summary>
@@ -94,7 +214,8 @@ namespace Hilma.Domain.Integrations.Extensions
         /// <param name="type">Type</param>
         /// <param name="property">Property</param>
         /// <param name="lotNum">Lot number</param>
-        public static void AddDate(this List<XElement> list, DateTime? originalValue, DateTime? newValue, Type type, string property, int? lotNum = null, string section = null)
+        /// <param name="section">Section override</param>
+        public static void AddDate(this List<Change> list, DateTime? originalValue, DateTime? newValue, Type type, string property, int? lotNum = null, string section = null)
         {
             if (originalValue.GetValueOrDefault().Date == newValue.GetValueOrDefault().Date
                 && originalValue.GetValueOrDefault().Hour == newValue.GetValueOrDefault().Hour
@@ -114,10 +235,9 @@ namespace Hilma.Domain.Integrations.Extensions
         /// <param name="newValue">New value</param>
         /// <param name="type">Type</param>
         /// <param name="property">Property</param>
-        /// <param name="isMainCpv">Is main CPV?</param>
         /// <param name="lotNum">Lot number</param>
         /// <param name="section">Section overload</param>
-        public static void AddCpv(this List<XElement> list, CpvCode originalValue, CpvCode newValue, Type type, string property, bool isMainCpv, int? lotNum = null, string section = null)
+        public static void AddCpv(this List<Change> list, CpvCode originalValue, CpvCode newValue, Type type, string property, int? lotNum = null, string section = null)
         {
             var originalVocs = originalValue.VocCodes?.Select(x => x.Code) ?? new string[0];
             var newVocs = newValue.VocCodes?.Select(x => x.Code) ?? new string[0];
@@ -126,7 +246,32 @@ namespace Hilma.Domain.Integrations.Extensions
                 return;
             }
 
-            list.Add(ChangeCpv(originalValue, newValue, type, property, isMainCpv, lotNum, section));
+            list.Add(ChangeCpv(originalValue, newValue, type, property, lotNum, section));
+        }
+
+        /// <summary>
+        /// Adds a CPV XElement to the list, if there is a change.
+        /// </summary>
+        /// <param name="list">The list</param>
+        /// <param name="originalValue">Original value</param>
+        /// <param name="newValue">New value</param>
+        /// <param name="type">Type</param>
+        /// <param name="property">Property</param>
+        /// <param name="lotNum">Lot number</param>
+        /// <param name="section">Section overload</param>
+        public static void AddAdditionalCpv(this List<Change> list, List<CpvCode> originalValue, List<CpvCode> newValue, Type type, string property, int? lotNum = null, string section = null)
+        {
+            if (originalValue.All(origCpv => newValue.Any(newCpv => newCpv.Code.Equals(origCpv.Code)
+            &&
+            (origCpv.VocCodes != null && newCpv.VocCodes != null &&
+            !(origCpv.VocCodes.Select(origVoc => origVoc.Code).Except(newCpv.VocCodes.Select(newVoc => newVoc.Code)).Any() ||
+                newCpv.VocCodes.Select(newVoc => newVoc.Code).Except(origCpv.VocCodes.Select(origVoc => origVoc.Code)).Any()))
+            )))
+            {
+                return;
+            }
+
+            list.Add(ChangeAdditionalCpv(originalValue, newValue, type, property, lotNum, section));
         }
 
         /// <summary>
@@ -135,122 +280,104 @@ namespace Hilma.Domain.Integrations.Extensions
         /// <param name="list"></param>
         /// <param name="oldValue"></param>
         /// <param name="newValue"></param>
-        /// <param name="type"></param>
-        /// <param name="property"></param>
-        /// <param name="notNum"></param>
+        /// <param name="lotNum"></param>
         /// <param name="section"></param>
         /// <param name="translationKey"></param>
-        public static void AddRaw(this List<XElement> list, string[] oldValue, string[] newValue, int? notNum = null, string section = null, string translationKey = null, bool translateValues = false)
+        /// <param name="translateValues"></param>
+        public static void AddRaw(this List<Change> list, string[] oldValue, string[] newValue, int? lotNum = null, string section = null, string translationKey = null, bool translateValues = false)
         {
-            var dictionary = TedNoticeFactory.Translations[TedNoticeFactory.NoticeLanguage?.ToLongLang()];
+            var dictionary = Translations[NoticeLanguage?.ToLongLang()];
             var translation = (string)dictionary[translationKey];
 
             var translatedOldValues = oldValue?.Select(x => translateValues ? (string) dictionary[x] : x).ToArray();
             var translatedNewValues = newValue?.Select(x => translateValues ? (string) dictionary[x] : x).ToArray();
 
-            list.Add(Element("CHANGE",
-                Element("WHERE",
-                    Element("SECTION", section),
-                    Element("LOT_NO", notNum?.ToString()),
-                    Element("LABEL", translation)),
-                Element("OLD_VALUE",
-                    // Can be NOTHING, CPV_MAIN, CPV_ADDITIONAL, TEXT or DATE
-                    translatedOldValues?.Any() == true ? PElement("TEXT", translatedOldValues) : new XElement(TedHelpers.Xmlns + "NOTHING")),
-                Element("NEW_VALUE",
-                    translatedNewValues?.Any() == true ? PElement("TEXT", translatedNewValues) : new XElement(TedHelpers.Xmlns + "NOTHING"))));
+            list.Add(new Change
+            {
+                Section = section ?? section,
+                LotNumber = lotNum,
+                Label = translation,
+                OldText = translatedOldValues,
+                NewText = translatedNewValues
+            });
         }
 
-        private static XElement ChangeText(string[] oldValue, string[] newValue, Type type, string property, int? notNum = null, string section = null, string translationKey = null)
+        private static Change ChangeNuts(string[] oldValue, string[] newValue, Type type, string property, int? lotNum = null, string section = null, string translationKey = null)
         {
             var tedAttribute = type.GetProperty(property).GetCustomAttributes(false).FirstOrDefault(x => x.GetType() == typeof(CorrigendumLabelAttribute)) as CorrigendumLabelAttribute;
-            JToken languageTranslations = TedNoticeFactory.Translations[TedNoticeFactory.NoticeLanguage?.ToLongLang()];
+            JToken languageTranslations = Translations[NoticeLanguage?.ToLongLang()];
+            translationKey = translationKey ?? tedAttribute.Label;
+
+            var translation = languageTranslations != null ? (string)languageTranslations[translationKey] : translationKey;
+
+            return new Change
+            {
+                Section = section ?? tedAttribute?.Section,
+                LotNumber = lotNum,
+                Label = (string)Translations[NoticeLanguage?.ToLongLang()][tedAttribute.Label],
+                OldNutsCodes = oldValue,
+                NewNutsCodes = newValue
+            };
+        }
+
+        private static Change ChangeText(string[] oldValue, string[] newValue, Type type, string property, int? lotNum = null, string section = null, string translationKey = null)
+        {
+            var tedAttribute = type.GetProperty(property).GetCustomAttributes(false).FirstOrDefault(x => x.GetType() == typeof(CorrigendumLabelAttribute)) as CorrigendumLabelAttribute;
+            JToken languageTranslations = Translations[NoticeLanguage?.ToLongLang()];
             translationKey = translationKey ?? tedAttribute.Label;
             
             var translation = languageTranslations != null ? (string)languageTranslations[translationKey] : translationKey;
 
-            return Element("CHANGE",
-                    Element("WHERE",
-                        Element("SECTION", section ?? tedAttribute?.Section),
-                        Element("LOT_NO", notNum?.ToString()),
-                        Element("LABEL", translation)),
-                    Element("OLD_VALUE",
-                        // Can be NOTHING, CPV_MAIN, CPV_ADDITIONAL, TEXT or DATE
-                        oldValue == null || oldValue.Any() ? PElement("TEXT", oldValue) : new XElement(TedHelpers.Xmlns + "NOTHING")),
-                    Element("NEW_VALUE",
-                        newValue == null || newValue.Any() ? PElement("TEXT", newValue) : new XElement(TedHelpers.Xmlns + "NOTHING")));
+            return new Change
+            {
+                Section = section ?? tedAttribute?.Section,
+                LotNumber = lotNum,
+                Label = (string)Translations[NoticeLanguage?.ToLongLang()][tedAttribute.Label],
+                OldText = oldValue,
+                NewText = newValue
+            };
         }
 
-        private static XElement ChangeDate(DateTime? oldValue, DateTime? newValue, Type type, string property, int? lotNo = null, string section = null)
+        private static Change ChangeDate(DateTime? oldValue, DateTime? newValue, Type type, string property, int? lotNo = null, string section = null)
         {
             var tedAttribute = type.GetProperty(property).GetCustomAttributes(false).FirstOrDefault(x => x.GetType() == typeof(CorrigendumLabelAttribute)) as CorrigendumLabelAttribute;
 
-            return Element("CHANGE",
-                    Element("WHERE",
-                        Element("SECTION", section ?? tedAttribute?.Section),
-                        Element("LOT_NO", lotNo?.ToString()),
-                        Element("LABEL", (string)TedNoticeFactory.Translations[TedNoticeFactory.NoticeLanguage?.ToLongLang()][tedAttribute.Label])),
-                    Element("OLD_VALUE",
-                        oldValue == null ? new List<XElement>() { new XElement(TedHelpers.Xmlns + "NOTHING") } :
-                            new List<XElement>() {
-                                Element("DATE", oldValue.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)),
-                                Element("TIME", oldValue.Value.ToString("hh:mm", CultureInfo.InvariantCulture))
-                            }),
-                    Element("NEW_VALUE",
-                        newValue == null ? new List<XElement>() { new XElement(TedHelpers.Xmlns + "NOTHING") } :
-                            new List<XElement>() {
-                                Element("DATE", newValue.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)),
-                                Element("TIME", newValue.Value.ToString("hh:mm", CultureInfo.InvariantCulture))
-                            }));
+            return new Change
+            {
+                Section = section ?? tedAttribute?.Section,
+                LotNumber = lotNo,
+                Label = (string)Translations[NoticeLanguage?.ToLongLang()][tedAttribute.Label],
+                OldDate = oldValue,
+                NewDate = newValue
+            };
         }
 
-        private static XElement ChangeCpv(CpvCode oldValue, CpvCode newValue, Type type, string property, bool isMainCpv, int? lotNo = null, string section = null)
+        private static Change ChangeCpv(CpvCode oldValue, CpvCode newValue, Type type, string property, int? lotNo = null, string section = null)
         {
             var tedAttribute = type.GetProperty(property).GetCustomAttributes(false).FirstOrDefault(x => x.GetType() == typeof(CorrigendumLabelAttribute)) as CorrigendumLabelAttribute;
 
-            return Element("CHANGE",
-                    Element("WHERE",
-                        Element("SECTION", section ?? tedAttribute?.Section),
-                        Element("LOT_NO", lotNo?.ToString()),
-                        Element("LABEL", (string)TedNoticeFactory.Translations[TedNoticeFactory.NoticeLanguage?.ToLongLang()][tedAttribute.Label])),
-                    Element("OLD_VALUE",
-                        string.IsNullOrEmpty(oldValue.Code) ? new XElement(TedHelpers.Xmlns + "NOTHING") :
-                        Element(isMainCpv ? "CPV_MAIN" : "CPV_ADDITIONAL",
-                            ElementWithAttribute("CPV_CODE", "CODE", oldValue.Code),
-                            oldValue.VocCodes?.Select(x => ElementWithAttribute("CPV_SUPPLEMENTARY_CODE", "CODE", x.Code)))),
-                    Element("NEW_VALUE",
-                        string.IsNullOrEmpty(newValue.Code) ? new XElement(TedHelpers.Xmlns + "NOTHING") :
-                        Element(isMainCpv ? "CPV_MAIN" : "CPV_ADDITIONAL",
-                            ElementWithAttribute("CPV_CODE", "CODE", newValue.Code),
-                            newValue.VocCodes?.Select(x => ElementWithAttribute("CPV_SUPPLEMENTARY_CODE", "CODE", x.Code)))));
+            return new Change
+            {
+                Section = section ?? tedAttribute?.Section,
+                LotNumber = lotNo,
+                Label = (string)Translations[NoticeLanguage?.ToLongLang()][tedAttribute.Label],
+                OldMainCpvCode = oldValue,
+                NewMainCpvCode = newValue
+            };
         }
 
-        private static XElement Element(string name, params object[] value)
+        private static Change ChangeAdditionalCpv(List<CpvCode> oldValue, List<CpvCode> newValue, Type type, string property, int? lotNo = null, string section = null)
         {
-            return value != null && value.Any(a => a != null) ? new XElement(TedHelpers.Xmlns + name.ToUpper(), value.Where(a => a != null)) : null;
-        }
+            var tedAttribute = type.GetProperty(property).GetCustomAttributes(false).FirstOrDefault(x => x.GetType() == typeof(CorrigendumLabelAttribute)) as CorrigendumLabelAttribute;
 
-        private static XElement Element(string name, string value)
-        {
-            return !string.IsNullOrEmpty(value?.Trim()) ? new XElement(TedHelpers.Xmlns + name.ToUpper(), value) : null;
-        }
-
-        private static XElement ElementWithAttribute(string elementName, string attributeName, string attributeValue, string elementValue = null)
-        {
-            return !string.IsNullOrWhiteSpace(attributeValue)
-                ? new XElement(TedHelpers.Xmlns + elementName.ToUpper(), new XAttribute(attributeName.ToUpper(), attributeValue), elementValue) : null;
-        }
-        private static XElement PElement(string name, string value)
-        {
-            return !string.IsNullOrEmpty(value?.Trim()) ? new XElement(TedHelpers.Xmlns + name.ToUpper(), new XElement(TedHelpers.Xmlns + "P", value)) : null;
-        }
-
-
-        private static XElement PElement(string name, string[] value)
-        {
-            if (value == null || !value.Any())
-                return null;
-
-            return new XElement(TedHelpers.Xmlns + name.ToUpper(), value.Select(p => new XElement(TedHelpers.Xmlns + "P", p)));
+            return new Change
+            {
+                Section = section ?? tedAttribute?.Section,
+                LotNumber = lotNo,
+                Label = (string)Translations[NoticeLanguage?.ToLongLang()][tedAttribute.Label],
+                OldAdditionalCpvCodes = oldValue,
+                NewAdditionalCpvCodes = newValue
+            };
         }
     }
 }

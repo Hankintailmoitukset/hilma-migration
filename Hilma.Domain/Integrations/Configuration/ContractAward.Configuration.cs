@@ -23,5 +23,8 @@ namespace Hilma.Domain.Integrations.Configuration
         public ExAnteSubcontractingConfiguration ExAnteSubcontracting {get; set;} = new ExAnteSubcontractingConfiguration();
         public ValueContractConfiguration PricePaidForBargainPurchases {get; set;} = new ValueContractConfiguration();
         public ContractAwardNotPublicFieldsConfiguration NotPublicFields {get; set;} = new ContractAwardNotPublicFieldsConfiguration();
+        public ValueContractConfiguration ConcessionRevenue {get; set;} = new ValueContractConfiguration();
+        public ValueContractConfiguration PricesAndPayments {get; set;} = new ValueContractConfiguration();
+        public bool ConcessionValueAdditionalInformation {get; set;} = false;
     }
 }

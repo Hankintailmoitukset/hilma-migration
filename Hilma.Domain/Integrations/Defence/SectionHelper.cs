@@ -19,6 +19,7 @@ namespace Hilma.Domain.Integrations.Defence
         private readonly NoticeContract _notice;
         private readonly NoticeContractConfiguration _configuration;
         private static string _noticeType;
+        private readonly AnnexHelper _annexHelper;
 
         /// <summary>
         /// Constructor
@@ -29,12 +30,13 @@ namespace Hilma.Domain.Integrations.Defence
         {
             _notice = notice;
             _configuration = configuration;
+            _annexHelper = new AnnexHelper(_notice, _configuration.Annexes);
 
             _noticeType = "PRIOR_INFORMATION";
             if (_notice.Type == NoticeType.DefenceContract)
             {
                 _noticeType = "CONTRACT";
-        }
+            }
             if (_notice.Type == NoticeType.DefenceContractAward)
             {
                 _noticeType = "CONTRACT_AWARD";
@@ -112,7 +114,7 @@ namespace Hilma.Domain.Integrations.Defence
 
             if (organisation.ContractingAuthorityType == ContractingAuthorityType.OtherType)
             {
-                typeElement = ElementWithAttribute("TYPE_OF_CONTRACTING_AUTHORITY_OTHER", "VALUE", organisation.OtherContractingAuthorityType);
+                typeElement = ElementWithAttribute("TYPE_OF_CONTRACTING_AUTHORITY_OTHER", "VALUE", "OTHER", organisation.OtherContractingAuthorityType);
             }
             else
             {
@@ -125,7 +127,7 @@ namespace Hilma.Domain.Integrations.Defence
             {
                 if (organisation.ContractingAuthorityType == ContractingAuthorityType.OtherType)
                 {
-                    activityElement = ElementWithAttribute("ACTIVITY_OF_CONTRACTING_ENTITY_OTHER", "VALUE", organisation.OtherMainActivity);
+                    activityElement = ElementWithAttribute("ACTIVITY_OF_CONTRACTING_ENTITY_OTHER", "VALUE", "OTHER", organisation.OtherMainActivity);
                 }
                 else
                 {
@@ -137,9 +139,9 @@ namespace Hilma.Domain.Integrations.Defence
             }
             else
             {
-                if (organisation.ContractingAuthorityType == ContractingAuthorityType.OtherType)
+                if (organisation.OtherMainActivity!=null)
                 {
-                    activityElement = ElementWithAttribute("TYPE_OF_ACTIVITY_OTHER", "VALUE", organisation.OtherMainActivity);
+                    activityElement = ElementWithAttribute("TYPE_OF_ACTIVITY_OTHER", "VALUE", "OTHER", organisation.OtherMainActivity);
                 }
                 else
                 {
@@ -158,11 +160,10 @@ namespace Hilma.Domain.Integrations.Defence
         private IEnumerable<XElement> InternetAddresses(CommunicationInformation communication)
         {
             var config = _configuration.CommunicationInformation;
-            
-            if (config.AdditionalInformation)
+
+            if (config.AdditionalInformationAddress.MainUrl)
             {
                 yield return Element("URL_GENERAL", _notice.Project.Organisation.Information.MainUrl);
-                // yield return Element("URL_BUYER", communication.AdditionalInformationAddress.BuyerProfileUrl);
             }
 
             if (config.ElectronicAccess)
@@ -199,7 +200,7 @@ namespace Hilma.Domain.Integrations.Defence
                 {
                     yield return Element("SPECIFICATIONS_AND_ADDITIONAL_DOCUMENTS", Element("IDEM"));
                 }
-                else
+                else if(communicationInformation.SpecsAndAdditionalDocuments == SpecificationsAndAdditionalDocuments.AddressAnother)
                 {
                     yield return Element("SPECIFICATIONS_AND_ADDITIONAL_DOCUMENTS", INC_04(communicationInformation.SpecsAndAdditionalDocumentsAddress));
                 }
@@ -209,7 +210,9 @@ namespace Hilma.Domain.Integrations.Defence
             {
                 yield return communicationInformation.SendTendersOption == TenderSendOptions.AddressFollowing
                     ? Element("TENDERS_REQUESTS_APPLICATIONS_MUST_BE_SENT_TO", INC_04(communicationInformation.AddressToSendTenders))
-                    : Element("TENDERS_REQUESTS_APPLICATIONS_MUST_BE_SENT_TO", Element("IDEM"));
+                    : communicationInformation.SendTendersOption == TenderSendOptions.AddressOrganisation
+                    ? Element("TENDERS_REQUESTS_APPLICATIONS_MUST_BE_SENT_TO", Element("IDEM")):
+                    null;
             }
         }
         #endregion
@@ -246,24 +249,25 @@ namespace Hilma.Domain.Integrations.Defence
             }
             else
             {
+
                 return Element(rootElement,
                         Element(descriptionElement,
                             NoticeObject()),
-                            configuration.Defence.TotalQuantityOrScope.Value ? ScopeAndOptions() : null,
-                            configuration.Defence.TimeFrame.Type ? Element("PERIOD_WORK_DATE_STARTING", Duration(_notice.ProcurementObject.Defence.TimeFrame)) : null,
-                            _configuration.ContractAwardsDefence != null && _notice.ContractAwardsDefence.Any(x => x.ContractValueType != ContractValueType.Undefined) ?
-                                _notice.ContractAwardsDefence.FirstOrDefault(x => x.FinalTotalValue.Value != null) != null ?
+                            configuration.Defence.TotalQuantityOrScope.Value && _notice.ProcurementObject.Defence.TotalQuantityOrScope.Type != ContractValueType.Undefined ?
+                                ScopeAndOptions() : null,
+
+                            configuration.Defence.TimeFrame.Type && _notice.ProcurementObject.Defence.TimeFrame.Type != TimeFrameType.Undefined ?
+
+                                Element("PERIOD_WORK_DATE_STARTING", Duration(_notice.ProcurementObject.Defence.TimeFrame)) : null,
+                            configuration.TotalValue.Type && _notice.ProcurementObject.TotalValue.Type != ContractValueType.Undefined ?
                                 Element("TOTAL_FINAL_VALUE",
-                                    ElementWithAttribute("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE", "CURRENCY", _notice.ContractAwardsDefence.FirstOrDefault(x => x.FinalTotalValue != null)?.FinalTotalValue?.Currency, _notice.ContractAwardsDefence.Sum(x => x.FinalTotalValue?.Value)),
-                                    Element("EXCLUDING_VAT"))
-                                :
-                                Element("TOTAL_FINAL_VALUE",
-                                    ElementWithAttribute("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE", "CURRENCY", _notice.ContractAwardsDefence.FirstOrDefault(x => x.LowestOffer != null)?.LowestOffer?.Currency,
-                                    Element("LOW", _notice.ContractAwardsDefence.Any(x => x.LowestOffer?.Value > 0) ? _notice.ContractAwardsDefence.Min(x => x.LowestOffer?.Value) : null),
-                                    Element("HIGH", _notice.ContractAwardsDefence.Any(x => x.HighestOffer?.Value > 0) ? _notice.ContractAwardsDefence.Max(x => x.HighestOffer?.Value) : null)),
-                                    Element("EXCLUDING_VAT"))
-                            : null
-                        );
+                                    ElementWithAttribute("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE", "CURRENCY", _notice.ProcurementObject.TotalValue.Currency,
+                                    _notice.ProcurementObject.TotalValue.Type == ContractValueType.Range ?
+                                        Element("RANGE_VALUE_COST",
+                                            Element("LOW_VALUE", _notice.ProcurementObject.TotalValue.MinValue),
+                                            Element("HIGH_VALUE", _notice.ProcurementObject.TotalValue.MaxValue)) :
+                                        Element("VALUE_COST", _notice.ProcurementObject.TotalValue.Value),
+                                        Element("EXCLUDING_VAT"))) : null);
             }
         }
 
@@ -278,7 +282,6 @@ namespace Hilma.Domain.Integrations.Defence
                 yield return PElement("TITLE_CONTRACT", _notice.Project.Title);
             }
 
-            // Contract type
             if (_notice.Type == NoticeType.DefencePriorInformation)
             {
                 yield return Element("TYPE_CONTRACT_PLACE_DELIVERY_DEFENCE",
@@ -313,19 +316,20 @@ namespace Hilma.Domain.Integrations.Defence
             yield return FrameworkAgreementType(defObject.FrameworkAgreement);
             yield return FrameworkAgreement(defObject.FrameworkAgreement);
 
-            if (configuration.ShortDescription)
+            if (_notice.Type != NoticeType.DefencePriorInformation)
             {
                 yield return PElement("SHORT_CONTRACT_DESCRIPTION", _notice.ProcurementObject.ShortDescription);
             }
 
-            if(_notice.Type == NoticeType.DefencePriorInformation)
+            if (_notice.Type == NoticeType.DefencePriorInformation)
             {
                 yield return Element("QUANTITY_SCOPE_WORKS_DEFENCE",
-                    PElement("TOTAL_QUANTITY_OR_SCOPE", defObject.TotalQuantity),
-                    ElementWithAttribute("COSTS_RANGE_AND_CURRENCY", "CURRENCY", defObject.TotalQuantityOrScope.Currency,
-                        defObject.TotalQuantityOrScope.Type == ContractValueType.Range ?
-                        Element("RANGE_VALUE_COST", Element("LOW_VALUE", defObject.TotalQuantityOrScope.MinValue), Element("HIGH_VALUE", defObject.TotalQuantityOrScope.MaxValue)) :
-                        Element("VALUE_COST", defObject.TotalQuantityOrScope.Value)),
+                    PElement("TOTAL_QUANTITY_OR_SCOPE", _notice.ProcurementObject.ShortDescription),
+                    _notice.ProcurementObject.EstimatedValue.Type != ContractValueType.Undefined ?
+                    ElementWithAttribute("COSTS_RANGE_AND_CURRENCY", "CURRENCY", _notice.ProcurementObject.EstimatedValue.Currency,
+                        _notice.ProcurementObject.EstimatedValue.Type == ContractValueType.Range ?
+                        Element("RANGE_VALUE_COST", Element("LOW_VALUE", _notice.ProcurementObject.EstimatedValue.MinValue), Element("HIGH_VALUE", _notice.ProcurementObject.EstimatedValue.MaxValue)) :
+                        Element("VALUE_COST", _notice.ProcurementObject.EstimatedValue.Value)) : null,
                     LotDivision(_notice.LotsInfo));
             }
 
@@ -333,13 +337,10 @@ namespace Hilma.Domain.Integrations.Defence
                         CpvCodeElement("CPV_MAIN", new CpvCode[] { _notice.ProcurementObject.MainCpvCode }),
                         CpvCodeElement("CPV_ADDITIONAL", defObject.AdditionalCpvCodes));
 
-            if (configuration.Defence.Subcontract.CaMayOblige)
-            {
-                yield return SubContracting(defObject.Subcontract);
-            }
-
             if (_notice.Type == NoticeType.DefenceContract)
             {
+                yield return SubContracting(defObject.Subcontract);
+
                 yield return LotDivision(_notice.LotsInfo);
             }
 
@@ -354,7 +355,7 @@ namespace Hilma.Domain.Integrations.Defence
                 yield return Element("SCHEDULED_DATE_PERIOD",
                     DateElement("PROCEDURE_DATE_STARTING", defObject.TimeFrame.ScheduledStartDateOfAwardProcedures),
                     defObject.TimeFrame.Type != TimeFrameType.Undefined ? Element("PERIOD_WORK_DATE_STARTING", Duration(defObject.TimeFrame)) : null);
-        }
+            }
 
             if (configuration.Defence.AdditionalInformation)
             {
@@ -373,47 +374,56 @@ namespace Hilma.Domain.Integrations.Defence
                                                 defObj.TotalQuantityOrScope.Type == ContractValueType.Range ?
                                                 Element("RANGE_VALUE_COST", Element("LOW_VALUE", defObj.TotalQuantityOrScope.MinValue), Element("HIGH_VALUE", defObj.TotalQuantityOrScope.MaxValue)) :
                                                 Element("VALUE_COST", defObj.TotalQuantityOrScope.Value))),
-                    Element("OPTIONS",
-                        PElement("OPTION_DESCRIPTION", defObj.OptionsAndVariants.OptionsDescription),
-                        defObj.OptionsAndVariants.OptionType == TimeFrameType.Months ?
-                        Element("PROVISIONAL_TIMETABLE_MONTH", defObj.OptionsAndVariants.OptionsMonths) :
-                        Element("PROVISIONAL_TIMETABLE_DAY", defObj.OptionsAndVariants.OptionsDays)),
+
+                    defObj.OptionsAndVariants.Options ?
+                        Element("OPTIONS",
+                            PElement("OPTION_DESCRIPTION", defObj.OptionsAndVariants.OptionsDescription),
+                            defObj.OptionsAndVariants.OptionType == TimeFrameType.Months ?
+                                Element("PROVISIONAL_TIMETABLE_MONTH", defObj.OptionsAndVariants.OptionsMonths) :
+                                Element("PROVISIONAL_TIMETABLE_DAY", defObj.OptionsAndVariants.OptionsDays))
+                        :Element("NO_OPTIONS"),
+
                     defObj.Renewals.CanBeRenewed ?
-                    Element("RECURRENT_CONTRACT",
-                        defObj.Renewals.Amount.Type == ContractValueType.Range ?
-                        Element("NUMBER_POSSIBLE_RENEWALS_RANGE",
-                            Element("NUMBER_POSSIBLE_RENEWALS_RANGE_MIN", defObj.Renewals.Amount.MinValue),
-                            Element("NUMBER_POSSIBLE_RENEWALS_RANGE_MAX", defObj.Renewals.Amount.MaxValue))
-                        : Element("NUMBER_POSSIBLE_RENEWALS", defObj.Renewals.Amount.Value),
-                        defObj.Renewals.SubsequentContract.Type == TimeFrameType.Days ?
-                        Element("TIME_FRAME_SUBSEQUENT_CONTRACTS_DAY", defObj.Renewals.SubsequentContract.Days) :
-                        Element("TIME_FRAME_SUBSEQUENT_CONTRACTS_MONTH", defObj.Renewals.SubsequentContract.Months)
-                        ) :
-                    Element("NO_RECURRENT_CONTRACT"));
+                        Element("RECURRENT_CONTRACT",
+                            defObj.Renewals.Amount.Type == ContractValueType.Range ?
+                                Element("NUMBER_POSSIBLE_RENEWALS_RANGE",
+                                    Element("NUMBER_POSSIBLE_RENEWALS_RANGE_MIN", (int)defObj.Renewals.Amount.MinValue),
+                                    Element("NUMBER_POSSIBLE_RENEWALS_RANGE_MAX", (int)defObj.Renewals.Amount.MaxValue))
+                                :Element("NUMBER_POSSIBLE_RENEWALS", (int)defObj.Renewals.Amount.Value),
+                            defObj.Renewals.SubsequentContract.Type == TimeFrameType.Days ?
+                                Element("TIME_FRAME_SUBSEQUENT_CONTRACTS_DAY", defObj.Renewals.SubsequentContract.Days) :
+                                Element("TIME_FRAME_SUBSEQUENT_CONTRACTS_MONTH", defObj.Renewals.SubsequentContract.Months)
+                            ) :
+                        Element("NO_RECURRENT_CONTRACT"));
         }
 
         private XElement SubContracting(SubcontractingInformation subcontract)
         {
             return Element("SUBCONTRACTING",
-                    subcontract.TendererHasToIndicateShare ? Element("INDICATE_ANY_SHARE") : null,
-                    subcontract.TendererHasToIndicateChange ? Element("INDICATE_ANY_CHANGE") : null,
-                    subcontract.CaMayOblige ? Element("SUBCONTRACT_AWARD_PART") : null,
+                     ElementWithAttribute("INDICATE_ANY_SHARE", "VALUE", subcontract.TendererHasToIndicateShare ? "YES":"NO"),
+                     ElementWithAttribute("INDICATE_ANY_CHANGE", "VALUE",subcontract.TendererHasToIndicateChange ? "YES" : "NO"),
+                     ElementWithAttribute("SUBCONTRACT_AWARD_PART","VALUE", subcontract.CaMayOblige ? "YES" : "NO"),
                     subcontract.SuccessfulTenderer ?
                         Element("SUBCONTRACT_SHARE",
                             Element("MIN_PERCENTAGE", subcontract.SuccessfulTendererMin),
                             Element("MAX_PERCENTAGE", subcontract.SuccessfulTendererMax)
                         ) : null,
-                    subcontract.SuccessfulTendererToSpecify ? Element("IDENTIFY_SUBCONTRACT") : null
+                    ElementWithAttribute("IDENTIFY_SUBCONTRACT", "VALUE", subcontract.SuccessfulTendererToSpecify ? "YES" : "NO")
                     );
         }
 
         private XElement FrameworkAgreementType(FrameworkAgreementInformation agreement)
         {
+            if(agreement == null)
+            {
+                return null;
+            }
+
             if (agreement.IncludesFrameworkAgreement)
             {
                 if (_notice.Type == NoticeType.DefencePriorInformation)
                 {
-                    return ElementWithAttribute("FRAMEWORK_AGREEMENT", "VALUE", "YES");
+                    return ElementWithAttribute("FRAMEWORK_AGREEMENT", "VALUE", agreement.IncludesFrameworkAgreement ? "YES" : "NO");
                 }
                 if (_notice.Type == NoticeType.DefenceContract && agreement.IncludesFrameworkAgreement)
                 {
@@ -434,22 +444,41 @@ namespace Hilma.Domain.Integrations.Defence
 
             if (config.FrameworkAgreementType && agreement.FrameworkAgreementType != Entities.FrameworkAgreementType.Undefined)
             {
-                return Element("F17_FRAMEWORK", agreement.FrameworkAgreementType == Entities.FrameworkAgreementType.FrameworkSeveral ?
-                       Element("SEVERAL_OPERATORS", agreement.FrameworkEnvisagedType == FrameworkEnvisagedType.FrameworkEnvisagedExact ?
-                       Element("NUMBER_PARTICIPANTS", agreement.EnvisagedNumberOfParticipants) :
-                       Element("MAX_NUMBER_PARTICIPANTS", agreement.EnvisagedNumberOfParticipants)) :
-                       Element("SINGLE_OPERATOR"), agreement.Duration.Type == TimeFrameType.Years ?
-                       Element("DURATION_FRAMEWORK_YEAR", agreement.Duration.Years) :
-                       Element("DURATION_FRAMEWORK_MONTH", agreement.Duration.Months),
+                var frameworkOperators = agreement.FrameworkAgreementType == Entities.FrameworkAgreementType.FrameworkSeveral ?
+                       SeveralOperators(agreement) :
+                       Element("SINGLE_OPERATOR");
+
+
+                return Element("F17_FRAMEWORK",
+                       frameworkOperators,
+                       agreement.Duration.Type == TimeFrameType.Years ?
+                          Element("DURATION_FRAMEWORK_YEAR", agreement.Duration.Years) :
+                          Element("DURATION_FRAMEWORK_MONTH", agreement.Duration.Months),
                        PElement("JUSTIFICATION", agreement.JustificationForDurationOverSevenYears),
+
+                       agreement.EstimatedTotalValue.Type == ContractValueType.Range?
                        Element("TOTAL_ESTIMATED",
-                       ElementWithAttribute("COSTS_RANGE_AND_CURRENCY", "CURRENCY", agreement.EstimatedTotalValue.Currency, agreement.EstimatedTotalValue.Type == ContractValueType.Range ?
+                       ElementWithAttribute("COSTS_RANGE_AND_CURRENCY", "CURRENCY", agreement.EstimatedTotalValue.Currency,
+                       agreement.EstimatedTotalValue.Type == ContractValueType.Range ?
                        Element("RANGE_VALUE_COST", Element("LOW_VALUE", agreement.EstimatedTotalValue.MinValue), Element("HIGH_VALUE", agreement.EstimatedTotalValue.MaxValue)) :
                        Element("VALUE_COST", agreement.EstimatedTotalValue.Value)),
-                       PElement("FREQUENCY_AWARDED_CONTRACTS", agreement.FrequencyAndValue)));
+
+                       PElement("FREQUENCY_AWARDED_CONTRACTS", agreement.FrequencyAndValue)):
+                       null
+
+                       );
             }
 
             return null;
+        }
+
+        private static XElement SeveralOperators(FrameworkAgreementInformation agreement)
+        {
+            var several = Element("SEVERAL_OPERATORS", agreement.FrameworkEnvisagedType == FrameworkEnvisagedType.FrameworkEnvisagedExact ?
+                                   Element("NUMBER_PARTICIPANTS", agreement.EnvisagedNumberOfParticipants) :
+                                   Element("MAX_NUMBER_PARTICIPANTS", agreement.EnvisagedNumberOfParticipants));
+
+            return several ?? Element("SEVERAL_OPERATORS");
         }
 
         private XElement TypeContract(ProcurementProjectContract project)
@@ -464,7 +493,14 @@ namespace Hilma.Domain.Integrations.Defence
                 case ContractType.Supplies:
                     return ElementWithAttribute("TYPE_SUPPLIES_CONTRACT", "VALUE", project.DefenceSupplies.ToTEDFormat());
                 case ContractType.Services:
-                    return Element("SERVICE_CATEGORY_DEFENCE", project.DefenceCategory.Code);
+                    if(_notice.Type == NoticeType.DefenceContractAward){
+                        var codeInt = int.Parse(project.DefenceCategory.Code);
+                        return Element("SERVICE_CATEGORY_PUB_DEFENCE", codeInt > 20 ? project.DefenceCategory.Code + (project.DisagreeToPublishNoticeBasedOnDefenceServiceCategory4 == true ? "N" : "Y") : project.DefenceCategory.Code);
+                    }
+                    else
+                    {
+                        return Element("SERVICE_CATEGORY_DEFENCE", project.DefenceCategory.Code);
+                    }
             }
 
             return null;
@@ -514,7 +550,7 @@ namespace Hilma.Domain.Integrations.Defence
         /// <summary>
         /// Lot
         /// </summary>
-        private XElement ObjectDescription(ObjectDescription objectDescription)
+        private XElement ObjectDescription(int index, ObjectDescription objectDescription)
         {
             var config = _configuration.ObjectDescriptions;
 
@@ -526,38 +562,39 @@ namespace Hilma.Domain.Integrations.Defence
                 additionalElement = "ADDITIONAL_INFORMATION_ABOUT_LOTS";
             }
 
-            return Element(rootElement, new XAttribute("ITEM", objectDescription.LotNumber),
+            return Element(rootElement, new XAttribute("ITEM", index + 1),
                 config.LotNumber ? Element("LOT_NUMBER", objectDescription.LotNumber) : null,
                 config.Title ? Element("LOT_TITLE", objectDescription.Title) : null,
                 config.DescrProcurement ? PElement("LOT_DESCRIPTION", objectDescription.DescrProcurement) : null,
                 config.MainCpvCode.Code ? Element("CPV",
                                             CpvCodeElement("CPV_MAIN", new CpvCode[] { objectDescription.MainCpvCode }),
                                             CpvCodeElement("CPV_ADDITIONAL", objectDescription.AdditionalCpvCodes)) : null,
-                config.QuantityOrScope ? Element("NATURE_QUANTITY_SCOPE",
+                config.QuantityOrScope && objectDescription.EstimatedValue.Type != ContractValueType.Undefined ?
+                                        Element("NATURE_QUANTITY_SCOPE",
                                             PElement("TOTAL_QUANTITY_OR_SCOPE", objectDescription.QuantityOrScope),
                                             ElementWithAttribute("COSTS_RANGE_AND_CURRENCY", "CURRENCY", objectDescription.EstimatedValue.Currency,
                                                 objectDescription.EstimatedValue.Type == ContractValueType.Range ?
-                                                Element("RANGE_VALUE_COST", Element("LOW_VALUE", objectDescription.EstimatedValue.MinValue), Element("HIGH_VALUE", objectDescription.EstimatedValue.MaxValue)) :
+                                                Element("RANGE_VALUE_COST",
+                                                    Element("LOW_VALUE", objectDescription.EstimatedValue.MinValue),
+                                                    Element("HIGH_VALUE", objectDescription.EstimatedValue.MaxValue)) :
                                                 Element("VALUE_COST", objectDescription.EstimatedValue.Value))) : null,
 
                 // Prior information is a special bird
-                config.TimeFrame.ScheduledStartDateOfAwardProcedures ? Element("SCHEDULED_DATE_PERIOD",
-                    DateElement("PROCEDURE_DATE_STARTING", objectDescription.TimeFrame.ScheduledStartDateOfAwardProcedures),
-                    objectDescription.TimeFrame.Type != TimeFrameType.Undefined ? Element("PERIOD_WORK_DATE_STARTING", Duration(objectDescription.TimeFrame)) : null)
-                 : null,
+                config.TimeFrame.ScheduledStartDateOfAwardProcedures ?
+                    Element("SCHEDULED_DATE_PERIOD",
+                        DateElement("PROCEDURE_DATE_STARTING", objectDescription.TimeFrame.ScheduledStartDateOfAwardProcedures),
+                        objectDescription.TimeFrame.Type != TimeFrameType.Undefined ?
+                            Element("PERIOD_WORK_DATE_STARTING", Duration(objectDescription.TimeFrame)) : null)
+                    : null,
                 PElement(additionalElement, objectDescription.AdditionalInformation)
               );
         }
 
         private IEnumerable<XElement> ObjectDescriptions(ObjectDescription[] objectDescriptions)
         {
-            foreach (var description in objectDescriptions)
-            {
-                yield return ObjectDescription(description);
-            }
+            return objectDescriptions.Select((description,i) => ObjectDescription(i, description));
         }
-
-
+        
         private XElement Duration(TimeFrame timeFrame)
         {
             switch (timeFrame.Type)
@@ -579,6 +616,9 @@ namespace Hilma.Domain.Integrations.Defence
 
         private IEnumerable<XElement> NutsCodes(string[] nutsCodes)
         {
+            if (nutsCodes == null) {
+                return null;
+            }
             return nutsCodes.Select(n => ElementWithAttribute("NUTS", "CODE", n));
         }
 
@@ -600,7 +640,7 @@ namespace Hilma.Domain.Integrations.Defence
         {
             var config = _configuration.ConditionsInformationDefence;
 
-            if(config == null)
+            if (config == null)
             {
                 return null;
             }
@@ -608,7 +648,7 @@ namespace Hilma.Domain.Integrations.Defence
             var section3 = Element("LEFTI_" + _noticeType + (_notice.Type == NoticeType.DefenceContract ? "_DEFENCE" : null));
 
             // Can't use config, because directive is crap.
-            if(_notice.Type == NoticeType.DefencePriorInformation)
+            if (_notice.Type == NoticeType.DefencePriorInformation)
             {
                 section3.Add(PElement("MAIN_FINANCING_CONDITIONS", conditions.FinancingConditions));
                 section3.Add(Element("RESERVED_CONTRACTS",
@@ -626,23 +666,26 @@ namespace Hilma.Domain.Integrations.Defence
             {
                 conditionsElement.Add(PElement("DEPOSITS_GUARANTEES_REQUIRED", conditions.DepositsRequired));
             }
+
                 conditionsElement.Add(PElement("MAIN_FINANCING_CONDITIONS", conditions.FinancingConditions));
+
             if (config.LegalFormTaken)
             {
                 conditionsElement.Add(PElement("LEGAL_FORM", conditions.LegalFormTaken));
             }
-                if((conditions.OtherParticularConditions).HasAnyContent())
-                {
-                    conditionsElement.Add(Element("NO_EXISTENCE_OTHER_PARTICULAR_CONDITIONS"));
-                }
-                else
-                {
-                    conditionsElement.Add(PElement("EXISTENCE_OTHER_PARTICULAR_CONDITIONS", conditions.OtherParticularConditions));
-                }
 
-                conditionsElement.Add(DateElement("CLEARING_LAST_DATE", conditions.SecurityClearanceDate));
+            if(!conditions.OtherParticularConditions.HasAnyContent())
+            {
+                conditionsElement.Add(Element("NO_EXISTENCE_OTHER_PARTICULAR_CONDITIONS"));
+            }
+            else
+            {
+                conditionsElement.Add(PElement("EXISTENCE_OTHER_PARTICULAR_CONDITIONS", conditions.OtherParticularConditions));
+            }
 
-                section3.Add(conditionsElement);
+            conditionsElement.Add(DateElement("CLEARING_LAST_DATE", conditions.SecurityClearanceDate));
+
+            section3.Add(conditionsElement);
 
 
             // Section III.2) Conditions for participation
@@ -693,14 +736,9 @@ namespace Hilma.Domain.Integrations.Defence
                     serviceContractsElement.Add(Element("NO_EXEC_SERVICE_RESERVED_PARTICULAR_PROFESSION"));
                 }
 
-                if (conditions.StaffResponsibleForExecution)
-                {
-                    serviceContractsElement.Add(ElementWithAttribute("REQUESTS_NAMES_PROFESSIONAL_QUALIFICATIONS", "VALUE", "YES"));
-                }
-                else
-                {
-                    serviceContractsElement.Add(ElementWithAttribute("REQUESTS_NAMES_PROFESSIONAL_QUALIFICATIONS", "VALUE", "NO"));
-                }
+                serviceContractsElement.Add(
+                    ElementWithAttribute("REQUESTS_NAMES_PROFESSIONAL_QUALIFICATIONS", "VALUE", conditions.StaffResponsibleForExecution ? "YES" : "NO"));
+
                 section3.Add(serviceContractsElement);
             }
 
@@ -723,14 +761,12 @@ namespace Hilma.Domain.Integrations.Defence
                 return null;
             }
 
-            var previousElement = "PRIOR_INFORMATION_NOTICE_F17";
             var noticeType = "CONTRACT_NOTICE";
             var form = "F17";
             if (_notice.Type == NoticeType.DefenceContractAward)
             {
                 noticeType = "CONTRACT_AWARD";
                 form = "F18";
-                previousElement = "PREVIOUS_NOTICE_BUYER_PROFILE_F18";
             }
 
             if (configuration == null)
@@ -741,37 +777,27 @@ namespace Hilma.Domain.Integrations.Defence
             var type = procedureInformation.ProcedureType;
 
             // IV.1) Type of procedure
-            var procedureType = Element("TYPE_OF_PROCEDURE_DEFENCE",
-                    Element("TYPE_OF_PROCEDURE_DETAIL_FOR_" + noticeType + "_DEFENCE",
-                        procedureInformation.AcceleratedProcedure && type == ProcedureType.ProctypeRestricted ?
-                            Element("PT_ACCELERATED_RESTRICTED_CHOICE",
-                                PElement("PTAR_JUSTIFICATION", procedureInformation.JustificationForAcceleratedProcedure)) : 
-                        procedureInformation.AcceleratedProcedure && type == ProcedureType.ProctypeNegotiation ?
-                             Element(form + "_PT_ACCELERATED_NEGOTIATED",
-                                PElement("PTAN_JUSTIFICATION", procedureInformation.JustificationForAcceleratedProcedure)) :
-                        Element(procedureInformation.ProcedureType.ToTEDFormat())
-                    ),
-                    Element("MAXIMUM_NUMBER_INVITED",
-                        Candidates(procedureInformation.Defence.CandidateNumberRestrictions)),
-                    procedureInformation.ReductionRecourseToReduceNumberOfSolutions ? ElementWithAttribute("REDUCTION_OF_THE_NUMBER", "VALUE", "YES") : null
-                    );
+            var procedureType = TypeOfProcedureContract(procedureInformation, noticeType, type, form);
 
             // AWARD_CRITERIA_CONTRACT_AWARD_NOTICE_INFORMATION_DEFENCE/F18_IS_ELECTRONIC_AUCTION_USABLE/@VALUE
             // IV.2) Award criteria
-            XElement awardCriteria;
-            if(_notice.Type == NoticeType.DefenceContractAward)
+            XElement awardCriteria = null;
+            if (procedureInformation.Defence.AwardCriteria.CriterionTypes != AwardCriterionTypeDefence.Undefined)
             {
-                awardCriteria = Element("AWARD_CRITERIA_CONTRACT_AWARD_NOTICE_INFORMATION_DEFENCE",
-                Element("AWARD_CRITERIA_DETAIL_F18",
-                   procedureInformation.Defence.AwardCriteria.CriterionTypes == AwardCriterionTypeDefence.LowestPrice ?
-                   Element("LOWEST_PRICE") :
-                   Element("MOST_ECONOMICALLY_ADVANTAGEOUS_TENDER_SHORT",
-                    procedureInformation.Defence.AwardCriteria.Criteria.Select((x, i) => Element("CRITERIA_DEFINITION", Element("ORDER_C", i + 1), Element("CRITERIA", x.Criterion), Element("WEIGHTING", x.Weighting))))),
-                ElementWithAttribute("F18_IS_ELECTRONIC_AUCTION_USABLE", "VALUE", procedureInformation.ElectronicAuctionWillBeUsed ? "YES" : "NO"));
-            }
-            else
-            {
-                awardCriteria = Element("AWARD_CRITERIA_CONTRACT_NOTICE_INFORMATION",
+                if (_notice.Type == NoticeType.DefenceContractAward)
+                {
+                    awardCriteria = Element("AWARD_CRITERIA_CONTRACT_AWARD_NOTICE_INFORMATION_DEFENCE",
+                        Element("AWARD_CRITERIA_DETAIL_F18",
+                           procedureInformation.Defence.AwardCriteria.CriterionTypes == AwardCriterionTypeDefence.LowestPrice ?
+                           Element("LOWEST_PRICE") :
+                           Element("MOST_ECONOMICALLY_ADVANTAGEOUS_TENDER_SHORT",
+                            procedureInformation.Defence.AwardCriteria.Criteria.Select((x, i) => Element("CRITERIA_DEFINITION", Element("ORDER_C", i + 1), Element("CRITERIA", x.Criterion), Element("WEIGHTING", x.Weighting))))),
+                        ElementWithAttribute("F18_IS_ELECTRONIC_AUCTION_USABLE", "VALUE", procedureInformation.ElectronicAuctionWillBeUsed ? "YES" : "NO"));
+
+                }
+                else
+                {
+                    awardCriteria = Element("AWARD_CRITERIA_CONTRACT_NOTICE_INFORMATION",
                     Element("AWARD_CRITERIA_DETAIL",
                        procedureInformation.Defence.AwardCriteria.CriterionTypes == AwardCriterionTypeDefence.LowestPrice ?
                        Element("LOWEST_PRICE") : Element("MOST_ECONOMICALLY_ADVANTAGEOUS_TENDER",
@@ -780,6 +806,8 @@ namespace Hilma.Domain.Integrations.Defence
                             procedureInformation.Defence.AwardCriteria.Criteria.Select((x, i) => Element("CRITERIA_DEFINITION", Element("ORDER_C", i + 1), Element("CRITERIA", x.Criterion), Element("WEIGHTING", x.Weighting))))
                         : Element("CRITERIA_STATED_IN_OTHER_DOCUMENT"))),
                     Element("IS_ELECTRONIC_AUCTION_USABLE", procedureInformation.ElectronicAuctionWillBeUsed ? PElement("USE_ELECTRONIC_AUCTION", procedureInformation.AdditionalInformationAboutElectronicAuction) : Element("NO_USE_ELECTRONIC_AUCTION")));
+
+                }
             }
 
             // IV.3) Administrative information
@@ -788,10 +816,11 @@ namespace Hilma.Domain.Integrations.Defence
                 Element("PREVIOUS_PUBLICATION_INFORMATION_NOTICE_" + form,
                     !_notice.TenderingInformation.Defence.PreviousPublicationExists ? Element("NO_PREVIOUS_PUBLICATION_EXISTS_" + form) :
                     Element("PREVIOUS_PUBLICATION_EXISTS_" + form,
-                        Element("PREVIOUS_PUBLICATION_NOTICE_" + form,
-                            ElementWithAttribute(previousElement, "CHOICE", _notice.TenderingInformation.Defence.PreviousContractType.ToTEDFormat()),
-                            Element("NOTICE_NUMBER_OJ", _notice.TenderingInformation.Defence.PreviousNoticeOjsNumber.Number),
-                            DateElement("DATE_OJ", _notice.TenderingInformation.Defence.PreviousNoticeOjsNumber.Date)),
+                        _configuration.TenderingInformation.Defence.PreviousPriorInformationNoticeOjsNumber.Number
+                        ? Element("PREVIOUS_PUBLICATION_NOTICE_" + form,
+                            ElementWithAttribute("PRIOR_INFORMATION_NOTICE_" + form, "CHOICE", "PRIOR_INFORMATION_NOTICE"),
+                            Element("NOTICE_NUMBER_OJ", _notice.TenderingInformation.Defence.PreviousPriorInformationNoticeOjsNumber.Number),
+                            DateElement("DATE_OJ", _notice.TenderingInformation.Defence.PreviousPriorInformationNoticeOjsNumber.Date)) : null,
                         _notice.TenderingInformation.Defence.HasPreviousContractNoticeOjsNumber && _configuration.TenderingInformation.Defence.HasPreviousContractNoticeOjsNumber
                         ? Element("CNT_NOTICE_INFORMATION_" + form,
                             ElementWithAttribute("CNT_NOTICE_INFORMATION_S_" + form, "VALUE", "CONTRACT_NOTICE"),
@@ -799,7 +828,7 @@ namespace Hilma.Domain.Integrations.Defence
                             DateElement("DATE_OJ", _notice.TenderingInformation.Defence.PreviousContractNoticeOjsNumber.Date)) : null,
                         _notice.TenderingInformation.Defence.HasPreviousExAnteOjsNumber && _configuration.TenderingInformation.Defence.HasPreviousExAnteOjsNumber
                         ? Element("EX_ANTE_NOTICE_INFORMATION",
-                            ElementWithAttribute("EX_ANTE_NOTICE_INFORMATION_S", "VALUE", "CONTRACT_NOTICE"),
+                            ElementWithAttribute("EX_ANTE_NOTICE_INFORMATION_S", "VALUE", "VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE"),
                             Element("NOTICE_NUMBER_OJ", _notice.TenderingInformation.Defence.PreviousExAnteOjsNumber.Number),
                             DateElement("DATE_OJ", _notice.TenderingInformation.Defence.PreviousExAnteOjsNumber.Date)) : null,
                         Element("NO_OTHER_PREVIOUS_PUBLICATION"))),
@@ -809,19 +838,76 @@ namespace Hilma.Domain.Integrations.Defence
                         !_notice.TenderingInformation.Defence.PayableDocuments ? Element("NO_PAYABLE_DOCUMENTS") :
                         Element("PAYABLE_DOCUMENTS",
                             ElementWithAttribute("DOCUMENT_COST", "CURRENCY", _notice.TenderingInformation.Defence.DocumentPrice.Currency, _notice.TenderingInformation.Defence.DocumentPrice.Value),
-                            PElement("DOCUMENT_METHOD_OF_PAYMENT", _notice.TenderingInformation.Defence.PaymentTermsAndMethods))) : null,
-                tenderConfig.TendersOrRequestsToParticipateDueDateTime ? DateElement("RECEIPT_LIMIT_DATE", _notice.TenderingInformation.TendersOrRequestsToParticipateDueDateTime) : null,
+                            PElement("DOCUMENT_METHOD_OF_PAYMENT", _notice.TenderingInformation.Defence.PaymentTermsAndMethods))) :
+                            null,
+                
+                tenderConfig.TendersOrRequestsToParticipateDueDateTime ? DateTimeElement("RECEIPT_LIMIT_DATE", _notice.TenderingInformation.TendersOrRequestsToParticipateDueDateTime) : null,
+
                 tenderConfig.EstimatedDateOfInvitations ? DateElement("DISPATCH_INVITATIONS_DATE", _notice.TenderingInformation.EstimatedDateOfInvitations) : null,
+
                 tenderConfig.Defence.Languages ? Element("LANGUAGE",
-                    _notice.TenderingInformation.Defence.LanguageType == LanguageType.AnyOfficialEu ? new List<XElement>() { ElementWithAttribute("LANGUAGE_ANY_EC", "VALUE", "YES") } :
-                    _notice.TenderingInformation.Defence.Languages.Select(x => ElementWithAttribute("LANGUAGE_EC", "VALUE", x)).ToList(),
+                    new List<XElement>() { ElementWithAttribute("LANGUAGE_ANY_EC", "VALUE", _notice.TenderingInformation.Defence.LanguageType == LanguageType.AnyOfficialEu ? "YES" : "NO") },
+                    _notice.TenderingInformation.Defence.LanguageType == LanguageType.SelectedEu ? _notice.TenderingInformation.Defence.Languages.Select(x => ElementWithAttribute("LANGUAGE_EC", "VALUE", x)).ToList() : null,
                     _notice.TenderingInformation.Defence.OtherLanguage ? PElement("LANGUAGE_OTHER", _notice.TenderingInformation.Defence.OtherLanguages) : null
                     ) : null);
 
-            return Element("PROCEDURE_DEFINITION_" + noticeType + "_DEFENCE",
+            return Element("PROCEDURE_DEFINITION_" + noticeType + (_notice.Type == NoticeType.DefenceContractAward ? "_NOTICE" : null) + "_DEFENCE",
                     procedureType,
                     awardCriteria,
                     administrativeInfo);
+        }
+
+        private XElement TypeOfProcedureContract(ProcedureInformation procedureInformation, string noticeType, ProcedureType type, string form)
+        {
+            if (_notice.Type == NoticeType.DefenceContractAward)
+            {
+                var procedure = Element("TYPE_OF_PROCEDURE_CONTRACT_AWARD_DEFENCE");
+
+                switch (type)
+                {
+                    case ProcedureType.ProctypeRestricted when procedureInformation.AcceleratedProcedure:
+                        procedure.Add(Element("PT_ACCELERATED_RESTRICTED"));
+                        break;
+                    case ProcedureType.ProctypeNegotiation when procedureInformation.AcceleratedProcedure:
+                        procedure.Add(Element("PT_ACCELERATED_NEGOTIATED"));
+                        break;
+                    case ProcedureType.ProctypeRestricted:
+                        procedure.Add(Element("PT_RESTRICTED"));
+                        break;
+                    case ProcedureType.ProctypeCompDialogue:
+                        procedure.Add(Element("PT_COMPETITIVE_DIALOGUE"));
+                        break;
+                    case ProcedureType.ProctypeNegotiation:
+                        procedure.Add(Element("PT_NEGOTIATED_WITH_PUBLICATION_CONTRACT_NOTICE"));
+                        break;
+                    case ProcedureType.AwardWoPriorPubD1:
+                    case ProcedureType.AwardWoPriorPubD1Other:
+                        procedure.Add(Element("F18_PT_NEGOTIATED_WITHOUT_PUBLICATION_CONTRACT_NOTICE", Element("ANNEX_D", _annexHelper.SelectAnnexD())));
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                }
+
+                return procedure;
+            }
+            else
+            { 
+                return Element("TYPE_OF_PROCEDURE_DEFENCE",
+                    Element("TYPE_OF_PROCEDURE_DETAIL_FOR_" + noticeType + "_DEFENCE",
+                        procedureInformation.AcceleratedProcedure && type == ProcedureType.ProctypeRestricted ?
+                            Element("PT_ACCELERATED_RESTRICTED_CHOICE",
+                                PElement("PTAR_JUSTIFICATION", procedureInformation.JustificationForAcceleratedProcedure)) :
+                            procedureInformation.AcceleratedProcedure && type == ProcedureType.ProctypeNegotiation ?
+                                Element(form + "_PT_ACCELERATED_NEGOTIATED",
+                                    PElement("PTAN_JUSTIFICATION", procedureInformation.JustificationForAcceleratedProcedure)) :
+                                Element(procedureInformation.ProcedureType.ToTEDFormat())
+                    ),
+                    procedureInformation.Defence.CandidateNumberRestrictions.Selected != EnvisagedParticipantsOptions.Undefined ?
+                        Element("MAXIMUM_NUMBER_INVITED",
+                            Candidates(procedureInformation.Defence.CandidateNumberRestrictions)) : null,
+                    ElementWithAttribute("REDUCTION_OF_THE_NUMBER", "VALUE", procedureInformation.ReductionRecourseToReduceNumberOfSolutions ? "YES" : "NO")
+                );
+            }
         }
 
         private IEnumerable<XElement> Candidates(CandidateNumberRestrictions candidates)
@@ -847,54 +933,60 @@ namespace Hilma.Domain.Integrations.Defence
         internal IEnumerable<XElement> ContractAward(ContractAwardDefence[] awards)
         {
             return awards.Select((award, i) => Element("AWARD_OF_CONTRACT_DEFENCE",
-                Element("CONTRACT_NUMBER", GetContractNumber(_notice, award.LotNumber)),
+                Element("CONTRACT_NUMBER", award.ContractNumber), 
                 _notice.LotsInfo.DivisionLots ? Element("LOT_NUMBER", award.LotNumber.ToString()) : null,
                 PElement("CONTRACT_TITLE", award.LotTitle),
-                DateElement("CONTRACT_AWARD_DATE", award.ContractAwardDecisionDate <= DateTime.Now ? award.ContractAwardDecisionDate : DateTime.Now),
-                Element("OFFERS_RECEIVED_NUMBER", award.NumberOfTenders.Total),
-                Element("OFFERS_RECEIVED_NUMBER_MEANING", award.NumberOfTenders.Electronic ?? 0),
+
+                DateElement("CONTRACT_AWARD_DATE",  award.ContractAwardDecisionDate),
+
+                award.NumberOfTenders.Total != 0 ?
+                Element("OFFERS_RECEIVED_NUMBER", award.NumberOfTenders.Total): null,
+
+                award.NumberOfTenders.Electronic != 0 ?
+                Element("OFFERS_RECEIVED_NUMBER_MEANING", award.NumberOfTenders.Electronic): null,
+
                 Element("ECONOMIC_OPERATOR_NAME_ADDRESS",
                     INC_05(award.Contractor)),
 
                 // V.4
+
                 Element("CONTRACT_VALUE_INFORMATION",
                     award.EstimatedValue.Value != null ?
                         ElementWithAttribute("INITIAL_ESTIMATED_TOTAL_VALUE_CONTRACT", "CURRENCY", award.EstimatedValue.Currency,
                             Element("VALUE_COST", award.EstimatedValue.Value),
                             Element("EXCLUDING_VAT")) : null,
 
-                    
+                    award.FinalTotalValue.Value != null || award.HighestOffer.Value  != null || award.LowestOffer.Value != null ?
                         ElementWithAttribute("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE", "CURRENCY", award.FinalTotalValue.Currency,
                         award.ContractValueType == ContractValueType.Range ?
                             Element("RANGE_VALUE_COST",
                                 Element("LOW_VALUE", award.LowestOffer.Value),
                                 Element("HIGH_VALUE", award.HighestOffer.Value)) :
                             Element("VALUE_COST", award.FinalTotalValue.Value),
-                            Element("EXCLUDING_VAT")),
-                        ElementWithAttribute("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE", "CURRENCY", award.FinalTotalValue.Currency,
-                            
-                            Element("EXCLUDING_VAT")),
+                            Element("EXCLUDING_VAT")) : null,
+
                     award.AnnualOrMonthlyValue.Type != TimeFrameType.Undefined ?
                         Element("MORE_INFORMATION_IF_ANNUAL_MONTHLY",
                             award.AnnualOrMonthlyValue.Type == TimeFrameType.Months ?
                                 Element("NUMBER_OF_MONTHS", award.AnnualOrMonthlyValue.Months) :
                                 Element("NUMBER_OF_YEARS", award.AnnualOrMonthlyValue.Years)) : null),
 
+
                 // V.5
                 Element("MORE_INFORMATION_TO_SUB_CONTRACTED",
                     award.LikelyToBeSubcontracted ?
-                            Element("CONTRACT_LIKELY_SUB_CONTRACTED_WITH_DEFENCE",
-                                award.ValueOfSubcontractNotKnown ? Element("UNKNOWN_VALUE") :
+                            Element("CONTRACT_LIKELY_SUB_CONTRACTED_WITH_DEFENCE", award.ValueOfSubcontractNotKnown ? Element("UNKNOWN_VALUE") :
                                 ElementWithAttribute("EXCLUDING_VAT_VALUE", "CURRENCY", award.ValueOfSubcontract.Currency, award.ValueOfSubcontract.Value),
                                 Element("EXCLUDING_VAT_PRCT", award.ProportionOfValue),
                                 Element("ADDITIONAL_INFORMATION", award.SubcontractingDescription),
                                 Element("SUBCONTRACT_DEFENCE",
-                                    award.AllOrCertainSubcontractsWillBeAwarded ? ElementWithAttribute("SUBCONTRACT_AWARD_PART", "VALUE", "YES") : null,
+                                    ElementWithAttribute("SUBCONTRACT_AWARD_PART", "VALUE", award.AllOrCertainSubcontractsWillBeAwarded ? "YES" : "NO"),
                                     award.ShareOfContractWillBeSubcontracted ?
                                     Element("SUBCONTRACT_SHARE",
                                         Element("MIN_PERCENTAGE", award.ShareOfContractWillBeSubcontractedMinPercentage),
                                         Element("MAX_PERCENTAGE", award.ShareOfContractWillBeSubcontractedMaxPercentage)
-                                    ) : null))
+                                    )
+                            : null))
                             : Element("NO_CONTRACT_LIKELY_SUB_CONTRACTED")
                     )
                 ));
@@ -914,7 +1006,7 @@ namespace Hilma.Domain.Integrations.Defence
             {
                 rootElement = "COMPLEMENTARY_INFORMATION_CONTRACT_AWARD";
             }
-            if(_notice.Type == NoticeType.DefencePriorInformation)
+            if (_notice.Type == NoticeType.DefencePriorInformation)
             {
                 rootElement = "OTH_INFO_PRIOR_INFORMATION";
             }
@@ -947,7 +1039,7 @@ namespace Hilma.Domain.Integrations.Defence
             {
                 complementaryInfo.Add(Element("PROCEDURES_FOR_APPEAL",
                     Element("APPEAL_PROCEDURE_BODY_RESPONSIBLE",
-                        INC_01("CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME", _notice.ProceduresForReview.ReviewBody)
+                        INC_05( _notice.ProceduresForReview.ReviewBody)
                     ),
                     Element("LODGING_OF_APPEALS",
                         PElement("LODGING_OF_APPEALS_PRECISION", _notice.ProceduresForReview?.ReviewProcedure))));

@@ -39,6 +39,14 @@ namespace Hilma.Domain.DataContracts
         public string OtherContractingAuthorityType { get; set; }
 
         /// <summary>
+        /// Used in F24 and F25 to determine type of main activity:
+        ///  (in the case of a notice published by a contracting authority)
+        ///  or
+        ///  (in the case of a notice published by a contracting entity)
+        /// </summary>
+        public ContractingType ContractingType { get; set; }
+
+        /// <summary>
         ///     Primary field of operations of the organisation.
         /// </summary>
         [CorrigendumLabel("mainactivity", "I.5")]

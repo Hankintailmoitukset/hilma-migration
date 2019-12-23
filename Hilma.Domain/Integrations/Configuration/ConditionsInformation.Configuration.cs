@@ -22,6 +22,7 @@ namespace Hilma.Domain.Integrations.Configuration
         public bool DepositsRequired {get; set;} = false;
         public bool FinancingConditions {get; set;} = false;
         public bool LegalFormTaken {get; set;} = false;
+        public QualificationSystemConditionConfiguration QualificationSystemConditions {get; set;} = new QualificationSystemConditionConfiguration();
         public bool CiriteriaForTheSelectionOfParticipants {get; set;} = false;
         public bool ExecutionOfServiceIsReservedForProfession {get; set;} = false;
         public bool ReferenceToRelevantLawRegulationOrProvision {get; set;} = false;

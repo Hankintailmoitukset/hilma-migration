@@ -110,6 +110,13 @@ namespace Hilma.Domain.Entities.Annexes {
         public bool MaritimeService { get; set; }
 
         /// <summary>
+        /// Other justification
+        /// D.13/D.14
+        /// </summary>
+        [CorrigendumLabel("d_just_other_defence", "AD3.1")]
+        public D3OtherJustificationOptions OtherJustification { get; set; }
+
+        /// <summary>
         ///     AD3.3.1) Please explain in a clear and comprehensive manner why the award of the
         ///     contract without prior publication in the Official Journal of the European
         ///     Union is lawful

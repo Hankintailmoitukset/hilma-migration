@@ -1,3 +1,4 @@
+using System;
 using AutoMapper.Attributes;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
@@ -16,5 +17,9 @@ namespace Hilma.Domain.DataContracts
         ///     User inputted email (login) from AADB2C policy
         /// </summary>
         public string ContactEmail { get; set; }
+        /// <summary>
+        ///     Identifier of the user represented by the contract.
+        /// </summary>
+        public Guid Id { get; set; }
     }
 }

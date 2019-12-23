@@ -43,6 +43,14 @@ namespace Hilma.Domain.Entities
         /// </summary>
         public ValidationState ValidationState { get; set; }
 
+        /// <summary>
+        /// Used in F24 and F25 to determine type of main activity:
+        ///  (in the case of a notice published by a contracting authority)
+        ///  or
+        ///  (in the case of a notice published by a contracting entity)
+        /// </summary>
+        public ContractingType ContractingType { get; set; }
+
         public MainActivity MainActivity { get; set; }
 
         public MainActivityUtilities MainActivityUtilities { get; set; }
@@ -62,6 +70,16 @@ namespace Hilma.Domain.Entities
         ///     Applications to the organisation.
         /// </summary>
         public List<OrganisationMembershipApplication> MembershipApplications { get; set; }
+
+        /// <summary>
+        /// Pending invites for this organisation.
+        /// </summary>
+        public List<PendingInvite> PendingInvites { get; set; }
+
+        /// <summary>
+        /// Procurements belonging to this organisation
+        /// </summary>
+        public List<ProcurementProject> ProcurementProjects { get; set; }
         #endregion
 
         #region Methods
@@ -101,6 +119,7 @@ namespace Hilma.Domain.Entities
             Information = dto.Information;
             ContractingAuthorityType = dto.ContractingAuthorityType;
             OtherContractingAuthorityType = dto.ContractingAuthorityType == ContractingAuthorityType.OtherType ? dto.OtherContractingAuthorityType : null;
+            ContractingType = dto.ContractingType;
             MainActivity = dto.MainActivity;
             MainActivityUtilities = dto.MainActivityUtilities;
             OtherMainActivity = (dto.MainActivity == MainActivity.OtherActivity || dto.MainActivityUtilities == MainActivityUtilities.OtherActivity) ? dto.OtherMainActivity : null;

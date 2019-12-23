@@ -19,11 +19,16 @@ namespace Hilma.Domain.DataContracts
         /// <summary>
         /// Lot title (not required, if lotinfo.divisionlots = false)
         /// </summary>
+        [CorrigendumLabel("title", "V")]
         public string LotTitle { get; set; }
-
+        /// <summary>
+        /// Contract number
+        /// </summary>
+        public string ContractNumber { get; set; }
         /// <summary>
         ///     V.1) Date of contract award decision
         /// </summary>
+        [CorrigendumLabel("date_award_exante", "V.1")]
         public DateTime? ContractAwardDecisionDate { get; set; }
 
         /// <summary>
@@ -43,6 +48,7 @@ namespace Hilma.Domain.DataContracts
         /// <summary>
         /// V.4) Information on value of contract
         /// </summary>
+        [CorrigendumLabel("value_estim_total_contract", "V.4")]
         public ValueContract EstimatedValue { get; set; } = new ValueContract();
 
         /// <summary>
@@ -53,16 +59,19 @@ namespace Hilma.Domain.DataContracts
         /// <summary>
         ///     Total final value of the contract or lot.
         /// </summary>
+        [CorrigendumLabel("value_total_final", "V.4")]
         public ValueContract FinalTotalValue { get; set; } = new ValueContract();
 
         /// <summary>
         ///     Lowest offer received excluding VAT.
         /// </summary>
+        [CorrigendumLabel("lowest_offer", "V.4")]
         public ValueContract LowestOffer { get; set; } = new ValueContract();
 
         /// <summary>
         ///     Highest offer received excluding VAT.
         /// </summary>
+        [CorrigendumLabel("highest_offer", "V.4")]
         public ValueContract HighestOffer { get; set; } = new ValueContract();
 
         /// <summary>
@@ -75,46 +84,55 @@ namespace Hilma.Domain.DataContracts
         /// <summary>
         ///     The contract is likely to be subcontracted to third parties.
         /// </summary>
+        [CorrigendumLabel("subcontr_likely", "V.5")]
         public bool LikelyToBeSubcontracted { get; set; }
 
         /// <summary>
         ///     The value of likely subcontracted part.
         /// </summary>
+        [CorrigendumLabel("subcontr_proportion_likely", "V.5")]
         public ValueContract ValueOfSubcontract { get; set; } = new ValueContract();
 
         /// <summary>
         ///     Proportion of the contract likely to be subcontracted, 0-100 (%)
         /// </summary>
+        [CorrigendumLabel("proportion", "V.5")]
         public decimal? ProportionOfValue { get; set; }
 
         /// <summary>
         /// Not known
         /// </summary>
+        [CorrigendumLabel("not_known", "V.5")]
         public bool ValueOfSubcontractNotKnown { get; set; }
 
         /// <summary>
         ///     Short description of the part of the contract to be subcontracted.
         /// </summary>
+        [CorrigendumLabel("subcontr_descr_short", "V.5")]
         public string[] SubcontractingDescription { get; set; }
 
         /// <summary>
         /// All or certain subcontracts will be awarded through a competitive procedure (see Title III of Directive 2009/81/EC)
         /// </summary>
+        [CorrigendumLabel("subcontr_all_competitive", "V.5")]
         public bool AllOrCertainSubcontractsWillBeAwarded { get; set; }
 
         /// <summary>
         /// A share of the contract will be subcontracted through a competitive procedure (see Title III of Directive 2009/81/EC)
         /// </summary>
+        [CorrigendumLabel("subcontr_share_competitive", "V.5")]
         public bool ShareOfContractWillBeSubcontracted { get; set; }
 
         /// <summary>
         /// minimum percentage
         /// </summary>
+        [CorrigendumLabel("min_percentage", "V.5")]
         public decimal? ShareOfContractWillBeSubcontractedMinPercentage { get; set; }
 
         /// <summary>
         /// maximum percentage
         /// </summary>
+        [CorrigendumLabel("max_percentage", "V.5")]
         public decimal? ShareOfContractWillBeSubcontractedMaxPercentage { get; set; }
         #endregion
 

@@ -1,14 +1,14 @@
-using System;
 using System.Collections.Generic;
+using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
-using Newtonsoft.Json.Serialization;
 
 namespace Hilma.Domain.DataContracts.EtsContracts
 {
     /// <summary>
     ///     Contract for creating notices via Ets API
     /// </summary>
+    [Contract]
     public class EtsNoticeContract
     {
         /// <summary>
@@ -35,6 +35,8 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             ContactPerson = dbo.ContactPerson;
             EstimatedValue = dbo.ProcurementObject.EstimatedValue;
             TotalValue = dbo.ProcurementObject.TotalValue;
+            EstimatedValueCalculationMethod = dbo.ProcurementObject.EstimatedValueCalculationMethod;
+            TotalValue = dbo.ProcurementObject.TotalValue;
             LotsInfo = dbo.LotsInfo;
             MainCpvCode = dbo.ProcurementObject.MainCpvCode;
             ObjectDescriptions = dbo.ObjectDescriptions;
@@ -47,6 +49,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
                 Title = dbo.Project.Title,
                 CentralPurchasing = dbo.Project.CentralPurchasing,
                 DefenceCategory = dbo.Project.DefenceCategory,
+                DisagreeToPublishNoticeBasedOnDefenceServiceCategory4 = dbo.Project.DisagreeToPublishNoticeBasedOnDefenceServiceCategory4,
                 DefenceSupplies = dbo.Project.DefenceSupplies,
                 DefenceWorks = dbo.Project.DefenceWorks,
                 JointProcurement = dbo.Project.JointProcurement,
@@ -59,6 +62,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             {
                 Information = dbo.Project.Organisation.Information,
                 ContractingAuthorityType = dbo.Project.Organisation.ContractingAuthorityType,
+                ContractingType = dbo.Project.Organisation.ContractingType,
                 MainActivity = dbo.Project.Organisation.MainActivity,
                 OtherContractingAuthorityType = dbo.Project.Organisation.OtherContractingAuthorityType,
                 OtherMainActivity = dbo.Project.Organisation.OtherMainActivity
@@ -66,6 +70,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             ShortDescription = dbo.ProcurementObject.ShortDescription;
             TenderingInformation = dbo.TenderingInformation;
             RewardsAndJury = dbo.RewardsAndJury;
+            ResultsOfContest = dbo.ResultsOfContest;
             ProcedureInformation = dbo.ProcedureInformation;
             ProceduresForReview = dbo.ProceduresForReview;
             Modifications = dbo.Modifications;
@@ -113,6 +118,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
                 Title = dto.Project.Title,
                 CentralPurchasing = dto.Project.CentralPurchasing,
                 DefenceCategory = dto.Project.DefenceCategory,
+                DisagreeToPublishNoticeBasedOnDefenceServiceCategory4 = dto.Project.DisagreeToPublishNoticeBasedOnDefenceServiceCategory4,
                 DefenceSupplies = dto.Project.DefenceSupplies,
                 DefenceWorks = dto.Project.DefenceWorks,
                 JointProcurement = dto.Project.JointProcurement,
@@ -124,6 +130,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             {
                 Information = dto.Project.Organisation.Information,
                 ContractingAuthorityType = dto.Project.Organisation.ContractingAuthorityType,
+                ContractingType = dto.Project.Organisation.ContractingType,
                 MainActivity = dto.Project.Organisation.MainActivity,
                 OtherContractingAuthorityType = dto.Project.Organisation.OtherContractingAuthorityType,
                 OtherMainActivity = dto.Project.Organisation.OtherMainActivity
@@ -131,6 +138,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             ShortDescription = dto.ProcurementObject.ShortDescription;
             TenderingInformation = dto.TenderingInformation;
             RewardsAndJury = dto.RewardsAndJury;
+            ResultsOfContest = dto.ResultsOfContest;
             ProcedureInformation = dto.ProcedureInformation;
             ProceduresForReview = dto.ProceduresForReview;
             Modifications = dto.Modifications;
@@ -196,6 +204,11 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         public ValueRangeContract EstimatedValue { get; set; } = new ValueRangeContract();
 
         /// <summary>
+        /// II.1.5.3 Method used for calculating the estimated value of the concession
+        /// </summary>
+        public string[] EstimatedValueCalculationMethod { get; set; } = new string[0];
+
+        /// <summary>
         ///     List of link URLs, including protocol. Displayed in attachments section
         ///     of the notice as links to external resource.
         /// </summary>
@@ -231,18 +244,18 @@ namespace Hilma.Domain.DataContracts.EtsContracts
 
         /// <summary>
         /// OJS Number for published Ted notices.
-        /// <example>2019/S 001-999999</example>
         /// Can be null. 
         /// </summary>
+        /// <example>2019/S 001-999999</example>
         public string NoticeOjsNumber { get; set; }
 
         /// <summary>
         ///     IV.2.1) Previous publication concerning this procedure
-        ///     If this tender is related to a tender previously published in TED, the TED submissionId
+        ///     If this tender is related to a tender previously published in TED, the TED OJS number
         ///     of that previous TED must be given.
         ///     If tender is not related, leave as null. If the previous tender was described by a notice
         ///     published via new Hilma or Hilma Ets API, parenting the new notice to that notice
-        ///     will take care of filling the submission ID automatically.
+        ///     will take care of filling the previous notice OJS number automatically.
         /// </summary>
         public string PreviousNoticeOjsNumber { get; set; }
 
@@ -278,6 +291,11 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         public RewardsAndJury RewardsAndJury { get; set; } = new RewardsAndJury();
 
         /// <summary>
+        /// Section V: Results of contest
+        /// </summary>
+        public ResultsOfContest ResultsOfContest { get; set; } = new ResultsOfContest();
+
+        /// <summary>
         /// Language in which the notice is published. Works with FI, SV or EN
         /// </summary>
         public string Language { get; set; }
@@ -310,13 +328,13 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         public bool IsCorrigendum { get; set; }
 
         /// <summary>
-        /// If the national notice should be cancelled
+        /// If the national procurement should be cancelled
         /// Provide parent id
         /// </summary>
         public bool IsCancelled { get; set; }
 
         /// <summary>
-        /// Why the national notice has been cancelled
+        /// Why the national procurement has been cancelled
         /// </summary>
         public string[] CancelledReason { get; set; }
 

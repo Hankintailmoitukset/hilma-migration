@@ -10,6 +10,7 @@ namespace Hilma.Domain.Integrations.Configuration
         
         public bool LotNumber {get; set;} = false;
         public bool LotTitle {get; set;} = false;
+        public bool ContractNumber {get; set;} = false;
         public bool ContractAwardDecisionDate {get; set;} = false;
         public NumberOfTendersConfiguration NumberOfTenders {get; set;} = new NumberOfTendersConfiguration();
         public ContractorContactInformationConfiguration Contractor {get; set;} = new ContractorContactInformationConfiguration();

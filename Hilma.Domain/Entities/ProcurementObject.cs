@@ -29,6 +29,12 @@ namespace Hilma.Domain.Entities
         public ValueRangeContract EstimatedValue { get; set; } = new ValueRangeContract();
 
         /// <summary>
+        /// II.1.5.3 Method used for calculating the estimated value of the concession
+        /// </summary>
+        [CorrigendumLabel("concession_method_calculate", "II.1.5")]
+        public string[] EstimatedValueCalculationMethod { get; set; }
+
+        /// <summary>
         /// II.1.2) Main CPV code
         /// </summary>
         [Required]

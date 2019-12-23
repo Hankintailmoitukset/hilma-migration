@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using Hilma.Domain.Configuration;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Enums;
 using Hilma.Domain.Integrations.Configuration;
@@ -19,6 +20,7 @@ namespace Hilma.Domain.Integrations.General
         private readonly NoticeContractConfiguration _configuration;
         private readonly SectionHelper _helper;
         private readonly AnnexHelper _annexHelper;
+        private readonly ITranslationProvider _translationProvider;
 
         /// <summary>
         /// F15 Contract Notice factory constructor.
@@ -27,15 +29,17 @@ namespace Hilma.Domain.Integrations.General
         /// <param name="eSenderLogin">The TED esender login</param>
         /// <param name="tedESenderOrganisation">Organisation that sends notices to eSender api</param>
         /// <param name="tedContactEmail">Contact email for technical</param>
+        /// <param name="translationProvider"></param>
         public F15Factory(NoticeContract notice, string eSenderLogin, string tedESenderOrganisation,
-            string tedContactEmail)
+            string tedContactEmail, ITranslationProvider translationProvider)
         {
             _notice = notice;
             _eSenderLogin = eSenderLogin;
             _tedContactEmail = tedContactEmail;
             _tedESenderOrganisation = tedESenderOrganisation;
             _configuration = NoticeConfigurationFactory.CreateConfiguration(notice);
-            _helper = new SectionHelper(_notice, _configuration, eSenderLogin);
+            _translationProvider = translationProvider;
+            _helper = new SectionHelper(_notice, _configuration, eSenderLogin, _translationProvider);
             _annexHelper = new AnnexHelper(_notice, _configuration.Annexes);
         }
 
@@ -111,10 +115,10 @@ namespace Hilma.Domain.Integrations.General
                 configuration.ShortDescription
                     ? TedHelpers.PElement("SHORT_DESCR", procuremenObject.ShortDescription)
                     : null,
-                procuremenObject.TotalValue.Type == ContractValueType.Exact
+                procuremenObject.TotalValue != null ? procuremenObject.TotalValue.Type == ContractValueType.Exact
                     ? TedHelpers.Element("VAL_TOTAL",
                         _notice.Project.ProcurementCategory == ProcurementCategory.Utility
-                            ? new XAttribute("PUBLICATION", (!procuremenObject.TotalValue.DisagreeToBePublished ?? false).ToYesNo("EN").ToUpperInvariant())
+                            ? new XAttribute("PUBLICATION", (!procuremenObject.TotalValue?.DisagreeToBePublished ?? false).ToYesNo("EN").ToUpperInvariant())
                             : null,
                         new XAttribute("CURRENCY", procuremenObject.TotalValue.Currency),
                         procuremenObject.TotalValue.Value)
@@ -124,7 +128,7 @@ namespace Hilma.Domain.Integrations.General
                             : null,
                         new XAttribute("CURRENCY", procuremenObject.TotalValue.Currency),
                         TedHelpers.Element("LOW", procuremenObject.TotalValue.MinValue),
-                        TedHelpers.Element("HIGH", procuremenObject.TotalValue.MaxValue)),
+                        TedHelpers.Element("HIGH", procuremenObject.TotalValue.MaxValue)) : null ,
                 _helper.LotDivision(_notice.LotsInfo),
                 _helper.ObjectDescriptions(_notice.ObjectDescriptions)
             );

@@ -1,25 +1,88 @@
 using Hilma.Domain.Attributes;
+using Hilma.Domain.DataContracts;
 using Hilma.Domain.Enums;
+using System.Collections.Generic;
 
 namespace Hilma.Domain.Entities
 {
     /// <summary>
-    ///     VII.2) Information about modifications
+    ///     Section VII: Modifications to the contract/concession
     /// </summary>
     [Contract]
     public class Modifications
     {
+        /// <summary>
+        /// VII.1.1) Main CPV code
+        /// </summary>
+        [CorrigendumLabel("cpv_main", "VII.1.1")]
+        public CpvCode MainCpvCode { get; set; }
+
+        /// <summary>
+        /// VII.1.2) Additional CPV code(s)
+        /// </summary>
+        [CorrigendumLabel("cpv_supplem", "VII.1.2")]
+        public CpvCode[] AdditionalCpvCodes { get; set; } = new CpvCode[0];
+
+        /// <summary>
+        ///     VII.1.3) Place of performance
+        /// </summary>
+        [CorrigendumLabel("nutscode", "VII.1.3")]
+        public string[] NutsCodes { get; set; } = new string[0];
+
+        /// <summary>
+        ///     VII.1.3) Place of performance
+        /// </summary>
+        [CorrigendumLabel("mainsiteplace_works_delivery", "VII.1.3")]
+        public string[] MainsiteplaceWorksDelivery { get; set; }
+
+        /// <summary>
+        ///     VII.1.4) Description of the procurement:
+        ///     (nature and quantity of works, supplies or services)
+        /// </summary>
+        [CorrigendumLabel("descr_procurement", "VII.1.4")]
+        public string[] DescrProcurement { get; set; }
+
+        /// <summary>
+        ///     VII.1.5) Duration of the contract, framework agreement, dynamic purchasing system or concession
+        /// </summary>
+        [CorrigendumLabel("duration_contract_framework_dps", "VI.1.5")]
+        public TimeFrame TimeFrame { get; set; } = new TimeFrame();
+
+        /// <summary>
+        /// Directive 2014/24/EU – In the case of framework agreements, provide justification for any duration exceeding 4 years
+        /// </summary>
+        [CorrigendumLabel("framework_just_four", "VII.1.5")]
+        public string[] JustificationForDurationOverFourYears { get; set; }
+
+        /// <summary>
+        /// Directive 2014/25/EU – In the case of framework agreements, provide justification for any duration exceeding 8 years:
+        /// </summary>
+        [CorrigendumLabel("framework_just_eight", "VII.1.5")]
+        public string[] JustificationForDurationOverEightYears { get; set; }
+
+        /// <summary>
+        ///     VII.1.6) Information on value of the contract/lot/concession (excluding VAT)
+        /// </summary>
+        [CorrigendumLabel("value_total_final_contract_concess", "VII.1.6")]
+        public ValueContract TotalValue { get; set; } = new ValueContract();
+
+        /// <summary>
+        /// The contract/concession has been awarded to a group of economic operators ◯ yes ◯ no
+        /// </summary>
+        [CorrigendumLabel("awarded_to_group_of_economic_operators", "VII.1.7")]
+        public bool AwardedToGroupOfEconomicOperators { get; set; }
+
+        /// <summary>
+        ///     VII.1.7) Name and address of the contractor/concessionaire 
+        /// </summary>
+        public List<ContractorContactInformation> Contractors { get; set; } = new List<ContractorContactInformation>();
+
         /// <summary>
         /// Description of the modifications
         /// Nature and extent of the modifications (with indication of possible earlier changes to the contract)
         /// </summary>
         [CorrigendumLabel("mod_descr_mod", "VII.2.1")]
         public string[] Description { get; set; }
-
-        /// <summary>
-        /// Affected lot number. The lot number will fill in II.2) Description and Section V: Award of contract/concession
-        /// </summary>
-        public int AffectedLot { get; set; }
 
         /// <summary>
         /// Reasons for modification

@@ -1,7 +1,6 @@
 using Hilma.Domain.Attributes;
 using Hilma.Domain.DataContracts;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Hilma.Domain.Entities
 {
@@ -27,19 +26,25 @@ namespace Hilma.Domain.Entities
         public string[] NutsCodes { get; set; } = new string[0];
 
         /// <summary>
-        /// II.1.3 - II.1.4
+        /// II.3 for prior info and award
+        /// II.1.3 - II.1.4 for contracts
         /// Information about a framework agreement or a dynamic purchasing systemInformation about 
         /// </summary>
+        [CorrigendumLabel("framework_info", "II.3")]
         public FrameworkAgreementInformation FrameworkAgreement { get; set; }
 
         /// <summary>
-        /// II.1.6
+        /// II.5 for prior
+        /// II.1.6 for contract
+        /// II.1.5 for award
         /// </summary>
+        [CorrigendumLabel("framework_info", "II.5")]
         public CpvCode[] AdditionalCpvCodes { get; set; }
 
         /// <summary>
         /// II.1.7) Information about subcontracting (if applicable)
         /// </summary>
+        [CorrigendumLabel("subcontr_info", "II.1.7")]
         public SubcontractingInformation Subcontract { get; set; } = new SubcontractingInformation();
 
         /// <summary>
@@ -53,17 +58,19 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// II.2.1) Total quantity or scope
         /// </summary>
+        [CorrigendumLabel("quantity_scope", "II.2.1")]
         public ValueRangeContract TotalQuantityOrScope { get; set; } = new ValueRangeContract();
 
         /// <summary>
-        ///  Total quantity or scope
+        ///  Total quantity or scope (text)
         /// </summary>
-        [CorrigendumLabel("currency", "II.2.1")]
+        [CorrigendumLabel("quantity_scope", "II.2.1")]
         public string[] TotalQuantity { get; set; }
 
         /// <summary>
         /// II.2.3) Information about renewals 
         /// </summary>
+        [CorrigendumLabel("renewals_info", "II.2.3")]
         public DefenceRenewals Renewals { get; set; } = new DefenceRenewals();
 
         /// <summary>
@@ -76,6 +83,7 @@ namespace Hilma.Domain.Entities
         /// Prior information!
         /// II.7) Additional information
         /// </summary>
+        [CorrigendumLabel("additional_information", "II.7")]
         public string[] AdditionalInformation { get; set; }
     }
 }

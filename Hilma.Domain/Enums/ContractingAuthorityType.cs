@@ -13,8 +13,8 @@ namespace Hilma.Domain.Enums
         MaintypeLocalagency = 1 << 3,
         MaintypePublicbody = 1 << 4,
         MaintypeEu = 1 << 5,
-        MaintypeChurch = 1 << 6,
-        OtherType = 1 << 7,
+        OtherType = 1 << 6,
+        MaintypeChurch = 1 << 7,
         MaintypeFarmer = 1 << 8
     }
 }

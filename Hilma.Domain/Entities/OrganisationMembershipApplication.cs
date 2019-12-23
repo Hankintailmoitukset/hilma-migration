@@ -5,12 +5,13 @@ using Hilma.Domain.Enums;
 
 namespace Hilma.Domain.Entities
 {
-    public class OrganisationMembershipApplication
+    public class OrganisationMembershipApplication : BaseEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
+        public OrganisationMembershipApplicationType ApplicationType { get; set; }
         public OrganisationMembershipApplicationStatus ApplicationStatus { get; set; }
 
         public Guid OrganisationId { get; set; }

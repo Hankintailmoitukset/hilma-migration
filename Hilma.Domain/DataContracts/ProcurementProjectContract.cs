@@ -105,6 +105,10 @@ namespace Hilma.Domain.DataContracts
         /// </summary>
         public DefenceCategory DefenceCategory { get; set; }
         /// <summary>
+        /// If defence contract award and DefenceCategory > 20, this should to be set.
+        /// </summary>
+        public bool? DisagreeToPublishNoticeBasedOnDefenceServiceCategory4 { get; set; }
+        /// <summary>
         /// If notices under this project should be published to TED as well.
         /// </summary>
         public PublishType Publish { get; set; }
@@ -112,5 +116,20 @@ namespace Hilma.Domain.DataContracts
         /// If NoticeType == NationalAgricultureContract and ContractType == Works
         /// </summary>
         public AgricultureWorks AgricultureWorks { get; set; }
+
+        /// <summary>
+        /// Used by Hilma App.
+        /// If project is private (salainen)
+        /// Normally projects that have not been published can be viewed by all employees.
+        /// Not published notices is still limited to collabs only.
+        /// Private projects are visible only to collaborators, until a notice is published.
+        /// </summary>
+        public bool IsPrivate { get; set; }
+
+        /// <summary>
+        /// Is procurement concluded
+        /// Affects how the procurement is shown to the user
+        /// </summary>
+        public bool IsConcluded { get; set; }
     }
 }

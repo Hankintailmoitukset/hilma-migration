@@ -1,8 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Hilma.Domain.Configuration;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Entities;
+using Hilma.Domain.Enums;
+using Hilma.Domain.Integrations.Defence;
 using Hilma.Domain.Integrations.Extensions;
 
 namespace Hilma.Domain.Integrations.General
@@ -17,6 +21,9 @@ namespace Hilma.Domain.Integrations.General
         private readonly string _eSenderLogin;
         private readonly string _tedSenderOrganisation;
         private readonly string _tedContactEmail;
+        private readonly ITranslationProvider _translationProvider;
+
+        private static readonly XNamespace xmlns = "http://publications.europa.eu/resource/schema/ted/R2.0.9/reception";
 
         /// <summary>
         /// F02 Corrigendum Notice factory constructor.
@@ -26,14 +33,16 @@ namespace Hilma.Domain.Integrations.General
         /// <param name="eSenderLogin">The TED esender login</param>
         /// <param name="tedSenderOrganisation"></param>
         /// <param name="tedContactEmail"></param>
+        /// <param name="translationProvider"></param>
         public F14Factory(NoticeContract notice, NoticeContract parent, string eSenderLogin,
-            string tedSenderOrganisation, string tedContactEmail)
+            string tedSenderOrganisation, string tedContactEmail, ITranslationProvider translationProvider)
         {
             _notice = notice;
             _eSenderLogin = eSenderLogin;
             _tedSenderOrganisation = tedSenderOrganisation;
             _tedContactEmail = tedContactEmail;
             _parent = parent;
+            _translationProvider = translationProvider;
         }
 
         /// <summary>
@@ -47,7 +56,7 @@ namespace Hilma.Domain.Integrations.General
                     new XAttribute(XNamespace.Xmlns + nameof(TedHelpers.n2016), TedHelpers.n2016),
                     new XAttribute("VERSION", "R2.0.9.S03"),
                     new XAttribute(XNamespace.Xmlns + nameof(TedHelpers.xs), TedHelpers.xs),
-                    TedHelpers.LoginPart(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail ),
+                    TedHelpers.LoginPart(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail),
                     NoticeBody()));
         }
 
@@ -67,8 +76,101 @@ namespace Hilma.Domain.Integrations.General
                     ObjectContract(),
                     ComplementaryInformation(),
                     TedHelpers.Element("CHANGES",
-                        NoticeChangesFactory.Changes(_notice, _parent),
+                        ChangesToXml(new NoticeChangesFactory(_notice, _parent, _translationProvider).Changes()),
                         TedHelpers.PElement("INFO_ADD", _notice.CorrigendumAdditionalInformation))));
+        }
+
+        private List<XElement> ChangesToXml(List<Change> changes)
+        {
+            var result = new List<XElement>
+            {
+                new XElement(xmlns + "MODIFICATION_ORIGINAL", new XAttribute("PUBLICATION", "NO"))
+            };
+
+            foreach (var change in changes)
+            {
+                // Can be NOTHING, CPV_MAIN, CPV_ADDITIONAL, TEXT or DATE
+                result.Add(
+                    TedHelpers.Element("CHANGE",
+                        TedHelpers.Element("WHERE",
+                            TedHelpers.Element("SECTION", change.Section),
+                            TedHelpers.Element("LOT_NO", change.LotNumber),
+                            TedHelpers.Element("LABEL", change.Label)),
+                    TedHelpers.Element("OLD_VALUE",
+                        OldValue(change)
+                    ),
+                    TedHelpers.Element("NEW_VALUE",
+                        NewValue(change)
+                    )));
+            }
+
+            return result;
+        }
+
+        private static List<XElement> OldValue(Change change)
+        {
+            List<XElement> oldValue;
+            if (change.OldText != null && change.OldText.Length > 0 && !string.IsNullOrEmpty(change.OldText[0]))
+            {
+                oldValue = new List<XElement> { TedHelpers.PElement("TEXT", change.OldText) };
+            }
+            else if (change.OldDate != null && change.OldDate != DateTime.MinValue)
+            {
+                oldValue = new List<XElement> { TedHelpers.DateElement("DATE", change.OldDate) };
+            }
+            else if (change.OldMainCpvCode != null && !string.IsNullOrEmpty(change.OldMainCpvCode.Code))
+            {
+                oldValue = new List<XElement> { TedHelpers.Element("CPV_MAIN",
+                                TedHelpers.ElementWithAttribute("CPV_CODE", "CODE", change.OldMainCpvCode.Code),
+                                change.OldMainCpvCode.VocCodes?.Select(x => TedHelpers.ElementWithAttribute("CPV_SUPPLEMENTARY_CODE", "CODE", x.Code))) };
+            }
+            else if (change.OldAdditionalCpvCodes != null && change.OldAdditionalCpvCodes.Count > 0)
+            {
+                oldValue = change.OldAdditionalCpvCodes.Select(x =>
+                             TedHelpers.Element("CPV_ADDITIONAL",
+                                 TedHelpers.ElementWithAttribute("CPV_CODE", "CODE", x.Code),
+                                 x.VocCodes?.Select(y => TedHelpers.ElementWithAttribute("CPV_SUPPLEMENTARY_CODE", "CODE", y.Code)))
+                        ).ToList();
+            }
+            else
+            {
+                oldValue = new List<XElement> { TedHelpers.Element("NOTHING") };
+            }
+
+            return oldValue;
+        }
+
+        private static List<XElement> NewValue(Change change)
+        {
+            List<XElement> newValue;
+            if (change.NewText != null && change.NewText.Length > 0 && !string.IsNullOrEmpty(change.NewText[0]))
+            {
+                newValue = new List<XElement> { TedHelpers.PElement("TEXT", change.NewText) };
+            }
+            else if (change.NewDate != null && change.NewDate != DateTime.MinValue)
+            {
+                newValue = new List<XElement> { TedHelpers.DateElement("DATE", change.NewDate) };
+            }
+            else if (change.NewMainCpvCode != null && !string.IsNullOrEmpty(change.NewMainCpvCode.Code))
+            {
+                newValue = new List<XElement> { TedHelpers.Element("CPV_MAIN",
+                                TedHelpers.ElementWithAttribute("CPV_CODE", "CODE", change.NewMainCpvCode.Code),
+                                change.NewMainCpvCode.VocCodes?.Select(x => TedHelpers.ElementWithAttribute("CPV_SUPPLEMENTARY_CODE", "CODE", x.Code))) };
+            }
+            else if (change.NewAdditionalCpvCodes != null && change.NewAdditionalCpvCodes.Count > 0)
+            {
+                newValue = change.NewAdditionalCpvCodes.Select(x =>
+                             TedHelpers.Element("CPV_ADDITIONAL",
+                                 TedHelpers.ElementWithAttribute("CPV_CODE", "CODE", x.Code),
+                                 x.VocCodes?.Select(y => TedHelpers.ElementWithAttribute("CPV_SUPPLEMENTARY_CODE", "CODE", y.Code)))
+                        ).ToList();
+            }
+            else
+            {
+                newValue = new List<XElement> { TedHelpers.Element("NOTHING") };
+            }
+
+            return newValue;
         }
 
         #region Section I: Contracting authority
@@ -81,10 +183,10 @@ namespace Hilma.Domain.Integrations.General
         /// <returns>CONTRACTING_BODY XElement</returns>
         private XElement ContractingBody(OrganisationContract organisation, ContactPerson contactPerson, CommunicationInformation communicationInformation)
         {
-                return TedHelpers.Element("CONTRACTING_BODY",
-                        CAFields("ADDRESS_CONTRACTING_BODY", organisation, contactPerson),
-                        CAFields("ADDRESS_CONTRACTING_BODY_ADDITIONAL", organisation, contactPerson)
-                    );
+            return TedHelpers.Element("CONTRACTING_BODY",
+                    CAFields("ADDRESS_CONTRACTING_BODY", organisation, contactPerson),
+                    CAFields("ADDRESS_CONTRACTING_BODY_ADDITIONAL", organisation, contactPerson)
+                );
         }
 
         private XElement CAFields(string elementName, OrganisationContract organisation, ContactPerson contactPerson)
@@ -114,9 +216,14 @@ namespace Hilma.Domain.Integrations.General
             var shortDescr = _notice.ProcurementObject.ShortDescription;
 
             // Using object description in design contest, because it cannot be lotted and doesn't have ShortDescription
-            if (_notice.Type == Enums.NoticeType.DesignContest || _notice.Type == Enums.NoticeType.DesignContestResults)
+            if (_notice.Type == NoticeType.DesignContest || _notice.Type == NoticeType.DesignContestResults)
             {
                 shortDescr = _notice.ObjectDescriptions.FirstOrDefault().DescrProcurement;
+            }
+
+            if(_notice.Type == NoticeType.DefencePriorInformation)
+            {
+                shortDescr = _notice.ProcurementObject.Defence.TotalQuantity;
             }
 
             var contract = TedHelpers.Element("OBJECT_CONTRACT",

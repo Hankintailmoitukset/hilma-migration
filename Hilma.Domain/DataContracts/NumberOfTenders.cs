@@ -15,7 +15,7 @@ namespace Hilma.Domain.DataContracts {
         /// <summary>
         ///     Total number of tenders received.
         /// </summary>
-        [CorrigendumLabel("nb_tenders_received", "V.2.2")]
+        [CorrigendumLabel("offers_received", "V.2.2")]
         public int Total { get; set; }
 
         /// <summary>

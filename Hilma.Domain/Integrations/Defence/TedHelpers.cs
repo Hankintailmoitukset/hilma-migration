@@ -65,9 +65,9 @@ namespace Hilma.Domain.Integrations.Defence
                     Element("POSTAL_CODE", organisation.Information.PostalAddress.PostalCode),
                     ElementWithAttribute("COUNTRY", "VALUE", organisation.Information.PostalAddress.Country),
                     !string.IsNullOrEmpty(contactPerson.Name) ? Element("CONTACT_POINT", contactPerson.Name) : null,
-                    Element("PHONE", organisation.Information.TelephoneNumber),
+                    Element("PHONE", contactPerson.Phone),
                     Element("E_MAILS",
-                        Element("E_MAIL", organisation.Information.Email)
+                        Element("E_MAIL", contactPerson.Email)
                     )
                 );
         }
@@ -118,48 +118,6 @@ namespace Hilma.Domain.Integrations.Defence
         }
 
         /// <summary>
-        /// ADDR-S1
-        /// </summary>
-        /// <param name="elementName">Name of element(ADDRESS_CONTRACTING_BODY or ADDRESS_CONTRACTING_BODY_ADDITIONAL)</param>
-        /// <param name="information">Contract body contact</param>
-        /// <returns>XElement</returns>
-        public static XElement ADDRS1(string elementName, ContractBodyContactInformation information)
-        {
-            return Element(elementName,
-                Element("OFFICIALNAME", information.OfficialName),
-                Element("NATIONALID", information.NationalRegistrationNumber),
-                Element("ADDRESS", information.PostalAddress.StreetAddress),
-                Element("TOWN", information.PostalAddress.Town),
-                Element("POSTAL_CODE", information.PostalAddress.PostalCode),
-                ElementWithAttribute("COUNTRY", "VALUE", information.PostalAddress.Country),
-                Element("E_MAIL", information.Email),
-                information.NutsCodes.ToList().Select(x => new XElement(n2016 + "NUTS", new XAttribute("CODE", x))),
-                Element("URL_GENERAL", information.MainUrl),
-                Element("URL_BUYER", information.BuyerProfileUrl)
-            );
-        }
-
-        /// <summary>
-        /// INC01 without contact person and emails
-        /// </summary>
-        /// <param name="elementName">Name of element</param>
-        /// <param name="organisation">Organisation</param>
-        /// <returns>Xelement</returns>
-        public static XElement INC_01(string elementName, ContractBodyContactInformation organisation)
-        {
-            return Element(elementName,
-                    Element("ORGANISATION",
-                        Element("OFFICIALNAME", organisation.OfficialName),
-                        Element("NATIONALID", organisation.NationalRegistrationNumber)
-                    ),
-                    Element("ADDRESS", organisation.PostalAddress.StreetAddress),
-                    Element("TOWN", organisation.PostalAddress.Town),
-                    Element("POSTAL_CODE", organisation.PostalAddress.PostalCode),
-                    ElementWithAttribute("COUNTRY", "VALUE", organisation.PostalAddress.Country)
-                );
-        }
-
-        /// <summary>
         /// Address (section 5)
         /// </summary>
         /// <param name="contractor">Contractor contat information</param>
@@ -167,34 +125,43 @@ namespace Hilma.Domain.Integrations.Defence
         public static XElement INC_05(ContractorContactInformation contractor)
         {
             return Element("CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME",
-                    Element("OFFICIALNAME", contractor.OfficialName),
+                   Element("ORGANISATION",
+                        Element("OFFICIALNAME", contractor.OfficialName),
+                        Element("NATIONALID", contractor.NationalRegistrationNumber)
+                    ),
                     Element("ADDRESS", contractor.PostalAddress.StreetAddress),
                     Element("TOWN", contractor.PostalAddress.Town),
                     Element("POSTAL_CODE", contractor.PostalAddress.PostalCode),
                     ElementWithAttribute("COUNTRY", "VALUE", contractor.PostalAddress.Country),
+                    Element("E_MAILS",
+                         Element("E_MAIL", contractor.Email)
+                    ),
                     Element("PHONE", contractor.TelephoneNumber),
-                    Element("E_MAIL", contractor.Email),
                     Element("URL", contractor.MainUrl)
                 );
         }
         /// <summary>
-        /// ADDR-S6 Review body
+        /// Address (section 5)
         /// </summary>
-        /// <param name="elementName"></param>
-        /// <param name="information"></param>
-        /// <returns></returns>
-        public static XElement ADDRS6(string elementName, ContractBodyContactInformation information)
+        /// <param name="organisation">Contractor contat information</param>
+        /// <returns>Xelement</returns>
+        public static XElement INC_05(ContractBodyContactInformation organisation)
         {
-            return Element(elementName,
-                Element("OFFICIALNAME", information.OfficialName),
-                Element("ADDRESS", information.PostalAddress.StreetAddress),
-                Element("TOWN", information.PostalAddress.Town),
-                Element("POSTAL_CODE", information.PostalAddress.PostalCode),
-                ElementWithAttribute("COUNTRY", "VALUE", information.PostalAddress.Country),
-                Element("PHONE", information.TelephoneNumber),
-                Element("E_MAIL", information.Email),
-                Element("URL", information.MainUrl)
-            );
+            return Element("CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME",
+                   Element("ORGANISATION",
+                        Element("OFFICIALNAME", organisation.OfficialName),
+                        Element("NATIONALID", organisation.NationalRegistrationNumber)
+                    ),
+                    Element("ADDRESS", organisation.PostalAddress.StreetAddress),
+                    Element("TOWN", organisation.PostalAddress.Town),
+                    Element("POSTAL_CODE", organisation.PostalAddress.PostalCode),
+                    ElementWithAttribute("COUNTRY", "VALUE", organisation.PostalAddress.Country),
+                    Element("E_MAILS",
+                         Element("E_MAIL", organisation.Email)
+                    ),
+                    Element("PHONE", organisation.TelephoneNumber),
+                    Element("URL", organisation.MainUrl)
+                );
         }
 
         private static string FormatNoticeTedId(DateTime dateCreated, int noticeId)
@@ -307,10 +274,10 @@ namespace Hilma.Domain.Integrations.Defence
         /// <returns></returns>
         public static XElement PElement(string name, string[] value)
         {
-            if (value == null || !value.Any())
+            if (value == null || !value.Any() || value.All( string.IsNullOrEmpty ))
                 return null;
 
-            return new XElement(name.ToUpper(), value.Select( p => new XElement("P", p)));
+            return new XElement(name.ToUpper(), value.Where( v => !string.IsNullOrEmpty(v)).Select( p => new XElement("P", p)));
         }
 
         /// <summary>
@@ -381,6 +348,10 @@ namespace Hilma.Domain.Integrations.Defence
         /// <returns></returns>
         public static XElement Element(string name)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentOutOfRangeException(nameof(name));
+            }
             return new XElement(name.ToUpper());
         }
 

@@ -26,7 +26,10 @@ namespace Hilma.Domain.Integrations.Configuration
         public bool DefenceWorks {get; set;} = false;
         public bool DefenceSupplies {get; set;} = false;
         public DefenceCategoryConfiguration DefenceCategory {get; set;} = new DefenceCategoryConfiguration();
+        public bool DisagreeToPublishNoticeBasedOnDefenceServiceCategory4 {get; set;} = false;
         public bool Publish {get; set;} = false;
         public bool AgricultureWorks {get; set;} = false;
+        public bool IsPrivate {get; set;} = false;
+        public bool IsConcluded {get; set;} = false;
     }
 }

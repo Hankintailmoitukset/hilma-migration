@@ -10,6 +10,7 @@ namespace Hilma.Domain.Integrations.Configuration
         
         public bool ShortDescription {get; set;} = false;
         public ValueRangeContractConfiguration EstimatedValue {get; set;} = new ValueRangeContractConfiguration();
+        public bool EstimatedValueCalculationMethod {get; set;} = false;
         public CpvCodeConfiguration MainCpvCode {get; set;} = new CpvCodeConfiguration();
         public ValueRangeContractConfiguration TotalValue {get; set;} = new ValueRangeContractConfiguration();
         public ProcurementObjectDefenceConfiguration Defence {get; set;} = new ProcurementObjectDefenceConfiguration();

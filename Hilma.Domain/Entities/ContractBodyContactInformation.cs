@@ -13,9 +13,9 @@ namespace Hilma.Domain.Entities
     public class ContractBodyContactInformation
     {
         /// <summary>
-        /// Official name of the contracting body
-        /// <example>Innofactor Oyj</example>
+        /// Official name of the contracting body 
         /// </summary>
+        /// <example>Innofactor Oyj</example>
         [Required]
         [CorrigendumLabel("name_official", "I.3")]
         [MaxLength(300)]
@@ -30,8 +30,8 @@ namespace Hilma.Domain.Entities
 
         /// <summary>
         /// National registration number of the contracting body
-        /// <example>1732626-9</example>
         /// </summary>
+        /// <example>1732626-9</example>
         [CorrigendumLabel("national_id", "I.3")]
         [MaxLength(100)]
         public string NationalRegistrationNumber { get; set; }
@@ -87,13 +87,6 @@ namespace Hilma.Domain.Entities
         [MaxLength(200)]
         [CorrigendumLabel("url_general", "I.3")]
         public string MainUrl { get; set; }
-
-        /// <summary>
-        /// Address of the buyer profile
-        /// </summary>
-        [CorrigendumLabel("url_buyerprofile", "I.3")]
-        [MaxLength(200)]
-        public string BuyerProfileUrl { get; set; }
 
         /// <summary>
         ///     Vuejs application persistent validation state.

@@ -20,6 +20,7 @@ namespace Hilma.Domain.SearchContracts
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<NoticeContract, NoticeSearchContract>()
                                 .ForMember(d => d.DatePublished, opt => opt.MapFrom(x => x.DatePublished))
+                                .ForMember(d => d.DateModified, opt => opt.MapFrom(x => x.DateModified))
                                 .ForMember(d => d.NoticeOjsNumber, opt => opt.MapFrom(x => x.NoticeOjsNumber))
                                 .ForMember(d => d.IsCorrigendum, opt => opt.MapFrom(x => x.IsCorrigendum))
                                 .ForMember(d => d.IsCancelled, opt => opt.MapFrom(x => x.IsCancelled))
@@ -39,13 +40,13 @@ namespace Hilma.Domain.SearchContracts
                                                                       string.Join(" ", x.ObjectDescriptions?.SelectMany(l => l.AdditionalCpvCodes).Union(new List<CpvCode> { x.ProcurementObject.MainCpvCode }).Select(o => $"{o?.Code} {o?.Name}"))))
                                 .ForMember(d => d.NutsCodes, d => d.MapFrom((x,s) => string.Join(" ",
                                     x.Project?.Organisation?.Information?.NutsCodes.Aggregate("", (current, next) => current + " " + next),
-                                    string.Join(" ", x.ObjectDescriptions.Select(l => $"{l.NutsCodes.Aggregate("", (current, next) => current + " " + next)}")))))
+                                    string.Join(" ", x.ObjectDescriptions?.Select(l => $"{l.NutsCodes.Aggregate("", (current, next) => current + " " + next)}")??new string[0]))))
                                 .ForMember(d => d.TendersOrRequestsToParticipateDueDateTime, d => d.MapFrom((x,s) => x.TenderingInformation?.TendersOrRequestsToParticipateDueDateTime))
                                 .ForMember(d => d.IncludesDynamicPurcharingSystem, d => d.MapFrom((n, s) => n.ProcedureInformation?.FrameworkAgreement?.IncludesDynamicPurchasingSystem ?? false))
                                 .ForMember(d => d.IncludesFrameworkAgreement, d => d.MapFrom((n, s) => n.ProcedureInformation?.FrameworkAgreement?.IncludesFrameworkAgreement ?? false))
-                                .ForMember(d => d.IsNationalProcurement, d => d.MapFrom( (n,s) => n.Project.Publish == PublishType.ToHilma ))
+                                .ForMember(d => d.IsNationalProcurement, d => d.MapFrom( (n,s) => n.Type.IsNational() ))
                                 .ForMember(d => d.ObjectDescriptions,
-                                           d => d.MapFrom((x,s) => string.Join(" ", x.ObjectDescriptions.Select(l => $"{l.Title ?? ""} {string.Join(' ', l.DescrProcurement??new[] { "" })}"))))
+                                           d => d.MapFrom((x,s) => string.Join(" ", x.ObjectDescriptions?.Select(l => $"{l.Title ?? ""} {string.Join(' ', l.DescrProcurement??new[] { "" })}")??new string[0])))
                                 );
             return config.CreateMapper();
         }

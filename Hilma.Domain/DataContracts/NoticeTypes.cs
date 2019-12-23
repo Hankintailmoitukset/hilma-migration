@@ -20,10 +20,12 @@ namespace Hilma.Domain.DataContracts
             NoticeType.ContractAward,
 
             NoticeType.PeriodicIndicativeUtilities,
+            NoticeType.PeriodicIndicativeUtilitiesReduceTimeLimits,
             NoticeType.ContractUtilities,
             NoticeType.ContractAwardUtilities,
 
             NoticeType.DesignContest,
+            NoticeType.DesignContestResults,
 
             NoticeType.ExAnte,
 
@@ -39,8 +41,11 @@ namespace Hilma.Domain.DataContracts
 
             NoticeType.SocialUtilitiesPriorInformation,
             NoticeType.SocialUtilities,
+            NoticeType.SocialUtilitiesContractAward,
+            NoticeType.SocialUtilitiesQualificationSystem,
 
             NoticeType.Concession,
+            NoticeType.ConcessionAward,
 
             // Nationals below
             NoticeType.NationalPriorInformation,
@@ -72,7 +77,6 @@ namespace Hilma.Domain.DataContracts
             NoticeType.NationalContract,
             NoticeType.NationalDesignContest,
             NoticeType.NationalDirectAward,
-            NoticeType.NationalExAnte,
             NoticeType.NationalDefencePriorInformation,
             NoticeType.NationalDefenceContract,
             NoticeType.NationalAgricultureContract,
@@ -86,6 +90,7 @@ namespace Hilma.Domain.DataContracts
             NoticeType.PriorInformation,
             NoticeType.PriorInformationReduceTimeLimits,
             NoticeType.PeriodicIndicativeUtilities,
+            NoticeType.PeriodicIndicativeUtilitiesReduceTimeLimits,
             NoticeType.DefencePriorInformation,
             NoticeType.SocialPriorInformation,
             NoticeType.SocialUtilitiesPriorInformation,
@@ -102,7 +107,8 @@ namespace Hilma.Domain.DataContracts
             NoticeType.SocialContract,
             NoticeType.SocialUtilities,
             NoticeType.NationalContract,
-            NoticeType.NationalAgricultureContract
+            NoticeType.NationalAgricultureContract,
+            NoticeType.SocialUtilitiesQualificationSystem
         };
 
         /// <summary>
@@ -113,7 +119,9 @@ namespace Hilma.Domain.DataContracts
             NoticeType.ContractAwardUtilities,
             NoticeType.SocialContractAward,
             NoticeType.DefenceContractAward,
-            NoticeType.ConcessionAward
+            NoticeType.ConcessionAward,
+            NoticeType.SocialUtilitiesContractAward,
+            NoticeType.DpsAward
         };
 
         /// <summary>
@@ -126,7 +134,9 @@ namespace Hilma.Domain.DataContracts
             NoticeType.ContractUtilities,
             NoticeType.QualificationSystemUtilities,
             NoticeType.SocialUtilities,
-            NoticeType.SocialUtilitiesPriorInformation
+            NoticeType.SocialUtilitiesPriorInformation,
+            NoticeType.SocialUtilitiesContractAward,
+            NoticeType.SocialUtilitiesQualificationSystem
         };
 
         /// <summary>
@@ -138,7 +148,9 @@ namespace Hilma.Domain.DataContracts
             NoticeType.SocialPriorInformation,
             NoticeType.SocialContractAward,
             NoticeType.SocialConcessions,
-            NoticeType.SocialUtilitiesPriorInformation
+            NoticeType.SocialUtilitiesPriorInformation,
+            NoticeType.SocialUtilitiesContractAward,
+            NoticeType.SocialUtilitiesQualificationSystem
         };
 
         /// <summary>
@@ -176,8 +188,7 @@ namespace Hilma.Domain.DataContracts
         public NoticeType[] NationalPublicCategories { get; } = new[] {
             NoticeType.NationalPriorInformation,
             NoticeType.NationalContract,
-            NoticeType.NationalDesignContest,
-            NoticeType.NationalDirectAward
+            NoticeType.NationalDesignContest
         };
 
         /// <summary>
@@ -209,7 +220,9 @@ namespace Hilma.Domain.DataContracts
             NoticeType.Modification,
             NoticeType.PeriodicIndicativeUtilitiesReduceTimeLimits,
             NoticeType.SocialUtilities,
-            NoticeType.SocialUtilitiesPriorInformation
+            NoticeType.SocialUtilitiesPriorInformation,
+            NoticeType.SocialUtilitiesContractAward,
+            NoticeType.SocialUtilitiesQualificationSystem
         };
 
         /// <summary>

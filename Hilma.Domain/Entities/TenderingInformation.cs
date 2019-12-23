@@ -70,6 +70,12 @@ namespace Hilma.Domain.Entities
         [CorrigendumLabel("estimated_execution_timeframe", "")]
         public TimeFrame EstimatedExecutionTimeFrame { get; set; } = new TimeFrame() { Type = TimeFrameType.BeginAndEndDate };
 
+        /// <summary>
+        /// Scheduled date for start of award procedures
+        /// </summary>
+        [CorrigendumLabel("award_scheduled", "IV.2.5")]
+        public DateTime? ScheduledStartDateOfAwardProcedures { get; set; }
+
         public ValidationState ValidationState { get; set; } 
     }
 

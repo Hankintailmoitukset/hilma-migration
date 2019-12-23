@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Hilma.Domain.Configuration;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
@@ -17,30 +18,30 @@ namespace Hilma.Domain.Integrations.General
     public class F03Factory
     {
         private readonly NoticeContract _notice;
-        private readonly NoticeContract _parent;
         private readonly string _eSenderLogin;
         private readonly string _tedContactEmail;
         private readonly string _tedSenderOrganisation;
         private readonly NoticeContractConfiguration _configuration;
         private readonly SectionHelper _helper;
+        private readonly ITranslationProvider _translationProvider;
 
         /// <summary>
         /// F03 Contract Award Notice factory constructor.
         /// </summary>
         /// <param name="notice">The notice</param>
-        /// <param name="parent">The parent notice</param>
         /// <param name="eSenderLogin">The TED esender login</param>
         /// <param name="tedContactEmail"></param>
+        /// <param name="translationProvider"></param>
         /// <param name="tedSenderOrganisation"></param>
-        public F03Factory(NoticeContract notice, NoticeContract parent, string eSenderLogin, string tedSenderOrganisation, string tedContactEmail)
+        public F03Factory(NoticeContract notice, string eSenderLogin, string tedSenderOrganisation, string tedContactEmail, ITranslationProvider translationProvider)
         {
             _notice = notice;
-            _parent = parent;
             _eSenderLogin = eSenderLogin;
             _tedContactEmail = tedContactEmail;
             _tedSenderOrganisation = tedSenderOrganisation;
             _configuration = NoticeConfigurationFactory.CreateConfiguration(notice);
-            _helper = new SectionHelper(_notice, _configuration, eSenderLogin);
+            _translationProvider = translationProvider;
+            _helper = new SectionHelper(_notice, _configuration, eSenderLogin, _translationProvider);
         }
 
         /// <summary>

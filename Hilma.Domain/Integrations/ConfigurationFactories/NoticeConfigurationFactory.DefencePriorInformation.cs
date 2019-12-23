@@ -89,7 +89,7 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 Phone = true
             },
             ProcurementObject = new ProcurementObjectConfiguration {
-                ShortDescription = false,
+                ShortDescription = true,
                 EstimatedValue = new ValueRangeContractConfiguration { Currency = true, Value = true },
                 MainCpvCode = new CpvCodeConfiguration { Code = true, VocCodes = new VocCodeConfiguration { Code = true } },
                 Defence = new ProcurementObjectDefenceConfiguration {
@@ -101,11 +101,7 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                     {
                         ScheduledStartDateOfAwardProcedures = true
                     },
-                    AdditionalInformation = true,
-                    TotalQuantityOrScope = new ValueRangeContractConfiguration
-                    {
-                        Type = true
-                    }
+                    AdditionalInformation = true
                 }
             },
             ProcedureInformation = null,

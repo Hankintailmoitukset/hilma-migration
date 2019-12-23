@@ -181,6 +181,11 @@ namespace Hilma.Domain.DataContracts
         public RewardsAndJury RewardsAndJury { get; set; }
 
         /// <summary>
+        /// Section V: Results of contest
+        /// </summary>
+        public ResultsOfContest ResultsOfContest { get; set; }
+
+        /// <summary>
         /// Another TED assigned identifier. They never end.
         /// </summary>
         public string TedNoDocExt { get; set; }
@@ -262,6 +267,9 @@ namespace Hilma.Domain.DataContracts
         /// </summary>
         public Annex Annexes { get; set; }
 
-       
+        /// <summary>
+        /// Modification information. For Hilma use only
+        /// </summary>
+        public Modifier[] Modifiers { get; set; }
     }
 }

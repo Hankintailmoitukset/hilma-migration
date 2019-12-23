@@ -20,7 +20,6 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                     ContractingAuthorityType = true,
                     Information = new ContractBodyContactInformationConfiguration()
                     {
-                        BuyerProfileUrl = true,
                         ContactPerson = true,
                         Department = true,
                         Email = true,

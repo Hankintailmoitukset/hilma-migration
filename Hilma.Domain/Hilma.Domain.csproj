@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -253,8 +253,6 @@
     <PackageReference Include="Innofactor.EfCoreJsonValueConverter" Version="1.29.0" />
     <PackageReference Include="Innofactor.EfCoreJsonValueConverter.Attributes" Version="1.23.0" />
     <PackageReference Include="Microsoft.Azure.Search" Version="10.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -376,6 +374,21 @@
     <Compile Update="Integrations\Configuration\Esender.Configuration.cs">
       <CustomToolNamespace>DataContracts\Esender.cs</CustomToolNamespace>
     </Compile>
+    <Compile Update="Integrations\Configuration\EtsNoticeContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\EtsContracts\EtsNoticeContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\EtsNoticeSummary.Configuration.cs">
+      <CustomToolNamespace>DataContracts\EtsContracts\EtsNoticeSummary.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\EtsOrganisationContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\EtsContracts\EtsOrganisationContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\EtsProjectContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\EtsContracts\EtsProjectContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\EtsTedPublicationInfo.Configuration.cs">
+      <CustomToolNamespace>DataContracts\EtsContracts\EtsTedPublicationInfo.cs</CustomToolNamespace>
+    </Compile>
     <Compile Update="Integrations\Configuration\EuFunds.Configuration.cs">
       <CustomToolNamespace>DataContracts\EuFunds.cs</CustomToolNamespace>
     </Compile>
@@ -397,6 +410,12 @@
     <Compile Update="Integrations\Configuration\HilmaStatistics.Configuration.cs">
       <CustomToolNamespace>DataContracts\HilmaStatistics.cs</CustomToolNamespace>
     </Compile>
+    <Compile Update="Integrations\Configuration\InviteContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\InviteContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\InviteHandlingContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\InviteHandlingContract.cs</CustomToolNamespace>
+    </Compile>
     <Compile Update="Integrations\Configuration\Link.Configuration.cs">
       <CustomToolNamespace>Entities\Link.cs</CustomToolNamespace>
     </Compile>
@@ -408,6 +427,9 @@
     </Compile>
     <Compile Update="Integrations\Configuration\Modifications.Configuration.cs">
       <CustomToolNamespace>Entities\Modifications.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\Modifier.Configuration.cs">
+      <CustomToolNamespace>DataContracts\Modifier.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Integrations\Configuration\NonAward.Configuration.cs">
       <CustomToolNamespace>DataContracts\NonAward.cs</CustomToolNamespace>
@@ -436,8 +458,14 @@
     <Compile Update="Integrations\Configuration\OrganisationContract.Configuration.cs">
       <CustomToolNamespace>DataContracts\OrganisationContract.cs</CustomToolNamespace>
     </Compile>
+    <Compile Update="Integrations\Configuration\OrganisationInviteSummary.Configuration.cs">
+      <CustomToolNamespace>DataContracts\OrganisationInviteSummary.cs</CustomToolNamespace>
+    </Compile>
     <Compile Update="Integrations\Configuration\OrganisationMembershipApplication.Configuration.cs">
       <CustomToolNamespace>DataContracts\OrganisationMembershipApplication.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\OrganisationMembershipApplicationSummary.Configuration.cs">
+      <CustomToolNamespace>DataContracts\OrganisationMembershipApplicationSummary.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Integrations\Configuration\PostalAddress.Configuration.cs">
       <CustomToolNamespace>DataContracts\PostalAddress.cs</CustomToolNamespace>
@@ -463,8 +491,17 @@
     <Compile Update="Integrations\Configuration\ProcurementProjectContract.Configuration.cs">
       <CustomToolNamespace>DataContracts\ProcurementProjectContract.cs</CustomToolNamespace>
     </Compile>
+    <Compile Update="Integrations\Configuration\QualificationSystemCondition.Configuration.cs">
+      <CustomToolNamespace>DataContracts\QualificationSystemCondition.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\QualificationSystemDuration.Configuration.cs">
+      <CustomToolNamespace>DataContracts\QualificationSystemDuration.cs</CustomToolNamespace>
+    </Compile>
     <Compile Update="Integrations\Configuration\RemoveUserContract.Configuration.cs">
       <CustomToolNamespace>DataContracts\RemoveUserContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ResultsOfContest.Configuration.cs">
+      <CustomToolNamespace>Entities\ResultsOfContest.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Integrations\Configuration\ReviewBodyConfigurationContract.Configuration.cs">
       <CustomToolNamespace>Configuration\ReviewBodyConfigurationContract.cs</CustomToolNamespace>

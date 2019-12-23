@@ -21,6 +21,7 @@ namespace Hilma.Domain.Integrations.Configuration
         public bool NamesOfParticipantsAlreadySelected {get; set;} = false;
         public bool ProcurementGovernedByGPA {get; set;} = false;
         public bool CriteriaForEvaluationOfProjects {get; set;} = false;
+        public bool DisagreeCriteriaForEvaluationOfProjectsPublish {get; set;} = false;
         public bool UrlNationalProcedure {get; set;} = false;
         public bool MainFeaturesAward {get; set;} = false;
         public ProcedureInformationDefenceConfiguration Defence {get; set;} = new ProcedureInformationDefenceConfiguration();
