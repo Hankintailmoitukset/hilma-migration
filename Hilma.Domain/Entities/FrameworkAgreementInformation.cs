@@ -66,7 +66,7 @@ namespace Hilma.Domain.Entities
         /// Directive 2009/81/EC (Defence contracts)
         /// In the case of framework agreements, provide justification for any duration exceeding 7 years
         /// </summary>
-        [CorrigendumLabel("framework_just_seven", "IV.1.3")]
+        [CorrigendumLabel("framework_just_seven", "II.1.4")]
         //[StringMaxLength(2000)]
         public string[] JustificationForDurationOverSevenYears { get; set; }
 
@@ -87,6 +87,7 @@ namespace Hilma.Domain.Entities
         /// Directive 2009/81/EC (Defence contracts)
         /// II.1.4) Estimated total value of purchases for the entire duration of the framework agreement
         /// </summary>
+        [CorrigendumLabel("est_total_value_of_frm", "II.1.4")]
         public ValueRangeContract EstimatedTotalValue { get; set; } = new ValueRangeContract();
 
 

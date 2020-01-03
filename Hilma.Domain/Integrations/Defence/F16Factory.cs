@@ -25,8 +25,7 @@ namespace Hilma.Domain.Integrations.Defence
         /// <param name="eSenderLogin">The TED esender login</param>
         /// <param name="tedESenderOrganisation">Organisation that sends notices to eSender api</param>
         /// <param name="tedContactEmail">Contact email for technical</param>
-        public F16Factory(NoticeContract notice, string eSenderLogin, string tedESenderOrganisation,
-            string tedContactEmail)
+        public F16Factory(NoticeContract notice, string eSenderLogin, string tedESenderOrganisation, string tedContactEmail)
         {
             _notice = notice;
             _eSenderLogin = eSenderLogin;

@@ -1,0 +1,843 @@
+{
+  "id": 34893,
+  "procurementProjectId": 27988,
+  "noticeNumber": "2020-034893",
+  "reducedTimeLimitsForReceiptOfTenders": false,
+  "corrigendumAdditionalInformation": [],
+  "type": 9902,
+  "project": {
+    "id": 27988,
+    "title": "Yhdistelmäkaivurin hankinta",
+    "contractType": 1,
+    "procurementCategory": 1,
+    "referenceNumber": "",
+    "jointProcurement": false,
+    "procurementLaw": [],
+    "centralPurchasing": false,
+    "coPurchasers": [],
+    "creatorId": "02495231-bf75-47da-becd-ffc0862901fc",
+    "validationState": 2,
+    "organisation": {
+      "id": "9f17f2a4-93e0-4773-7ec7-08d78e01a173",
+      "information": {
+        "officialName": "Porvoon seurakuntayhtymä",
+        "department": "Hautaustoimi",
+        "nationalRegistrationNumber": "0203446-6",
+        "nutsCodes": [
+          "FI1B1"
+        ],
+        "postalAddress": {
+          "streetAddress": "PL 140",
+          "postalCode": "06101",
+          "town": "Porvoo",
+          "country": "FI"
+        },
+        "telephoneNumber": "+358 1966111",
+        "email": "sari.mankinen@evl.fi",
+        "contactPerson": "Porvoon seurakuntayhtymä",
+        "mainUrl": "https://www.porvoonseurakunnat.fi/",
+        "validationState": 2
+      },
+      "contractingAuthorityType": 128,
+      "contractingType": 0,
+      "mainActivity": 1,
+      "mainActivityUtilities": 0,
+      "validationState": 2
+    },
+    "state": 1,
+    "defenceWorks": 0,
+    "defenceSupplies": 0,
+    "defenceCategory": {
+      "code": "",
+      "name": ""
+    },
+    "disagreeToPublishNoticeBasedOnDefenceServiceCategory4": false,
+    "publish": 2,
+    "agricultureWorks": 0,
+    "isPrivate": false,
+    "isConcluded": false,
+    "dateCreated": "2020-01-02T09:07:08.864741",
+    "dateModified": "2020-01-02T09:44:48.7901877"
+  },
+  "lotsInfo": {
+    "divisionLots": false,
+    "lotsSubmittedFor": 0,
+    "lotsSubmittedForQuantity": 0,
+    "lotsMaxAwarded": false,
+    "lotsMaxAwardedQuantity": 0,
+    "lotCombinationPossible": false,
+    "lotCombinationPossibleDescription": [],
+    "validationState": 2
+  },
+  "objectDescriptions": [
+    {
+      "title": "",
+      "lotNumber": "1",
+      "mainCpvCode": {
+        "code": "",
+        "name": "",
+        "vocCodes": []
+      },
+      "quantityOrScope": [],
+      "additionalCpvCodes": [
+        {
+          "code": "43251000",
+          "name": "Kuokkakauhalla varustetut etukuormaajat",
+          "vocCodes": []
+        }
+      ],
+      "nutsCodes": [
+        "FI1B"
+      ],
+      "mainsiteplaceWorksDelivery": [],
+      "descrProcurement": [
+        "Yhdistelmäkaivuri hautausmaakäyttöön, hautojen kaivutyöhön.",
+        "Tarjouspyynnössä ja liitteessä on tarkempia tietoja hankinnasta."
+      ],
+      "disagreeAwardCriteriaToBePublished": false,
+      "awardCriteria": {
+        "criterionTypes": 4,
+        "qualityCriteria": [
+          {
+            "criterion": "",
+            "weighting": ""
+          }
+        ],
+        "costCriteria": [
+          {
+            "criterion": "",
+            "weighting": ""
+          }
+        ],
+        "priceCriterion": {
+          "criterion": "",
+          "weighting": ""
+        },
+        "criterion": [
+          ""
+        ],
+        "criteriaStatedInProcurementDocuments": false
+      },
+      "estimatedValue": {
+        "type": 0,
+        "currency": "EUR",
+        "disagreeToBePublished": false,
+        "doesNotExceedNationalThreshold": false
+      },
+      "timeFrame": {
+        "type": 2,
+        "days": 0,
+        "months": 6,
+        "beginDate": "2020-01-30T00:00:00",
+        "canBeRenewed": false,
+        "renewalDescription": []
+      },
+      "candidateNumberRestrictions": {
+        "envisagedNumber": 0,
+        "envisagedMinimumNumber": 0,
+        "envisagedMaximumNumber": 0,
+        "objectiveCriteriaForChoosing": [],
+        "selected": 0
+      },
+      "optionsAndVariants": {
+        "variantsWillBeAccepted": false,
+        "partialOffersWillBeAccepted": false,
+        "options": false,
+        "optionsDescription": [],
+        "optionType": 0
+      },
+      "tendersMustBePresentedAsElectronicCatalogs": false,
+      "euFunds": {
+        "procurementRelatedToEuProgram": false,
+        "projectIdentification": []
+      },
+      "additionalInformation": [],
+      "awardContract": {
+        "contractAwarded": 0,
+        "noAwardedContract": {
+          "failureReason": 0,
+          "originalNoticeSentVia": 0,
+          "originalEsender": {
+            "login": "",
+            "customerLogin": "",
+            "tedNoDocExt": ""
+          },
+          "originalNoticeSentViaOther": ""
+        },
+        "awardedContract": {
+          "contractNumber": "",
+          "contractTitle": "",
+          "numberOfTenders": {
+            "disagreeTenderInformationToBePublished": false,
+            "total": 0
+          },
+          "disagreeContractorInformationToBePublished": false,
+          "contractors": [],
+          "initialEstimatedValueOfContract": {
+            "currency": ""
+          },
+          "finalTotalValue": {
+            "type": 0,
+            "currency": "",
+            "disagreeToBePublished": false,
+            "doesNotExceedNationalThreshold": false
+          },
+          "likelyToBeSubcontracted": false,
+          "valueOfSubcontract": {
+            "currency": ""
+          },
+          "subcontractingDescription": [],
+          "exAnteSubcontracting": {
+            "allOrCertainSubcontractsWillBeAwarded": false,
+            "shareOfContractWillBeSubcontracted": false
+          },
+          "pricePaidForBargainPurchases": {
+            "currency": ""
+          },
+          "notPublicFields": {
+            "communityOrigin": false,
+            "nonCommunityOrigin": false,
+            "countries": [],
+            "awardedToTendererWithVariant": false,
+            "abnormallyLowTendersExcluded": false
+          },
+          "concessionRevenue": {
+            "currency": ""
+          },
+          "pricesAndPayments": {
+            "currency": ""
+          },
+          "concessionValueAdditionalInformation": []
+        }
+      },
+      "qualificationSystemDuration": {
+        "type": 0,
+        "renewal": false,
+        "necessaryFormalities": []
+      },
+      "validationState": 2
+    }
+  ],
+  "communicationInformation": {
+    "procurementDocumentsAvailable": 1,
+    "procurementDocumentsUrl": "https://www.hankintailmoitukset.fi/fi/public/procurement/27988/notice/34893",
+    "additionalInformation": 1,
+    "additionalInformationAddress": {
+      "officialName": "",
+      "department": "",
+      "nationalRegistrationNumber": "",
+      "nutsCodes": [],
+      "postalAddress": {
+        "streetAddress": "",
+        "postalCode": "",
+        "town": "",
+        "country": ""
+      },
+      "telephoneNumber": "",
+      "email": "",
+      "contactPerson": "",
+      "mainUrl": "",
+      "validationState": 0
+    },
+    "otherAddressForProcurementDocuments": {
+      "officialName": "",
+      "department": "",
+      "nationalRegistrationNumber": "",
+      "nutsCodes": [],
+      "postalAddress": {
+        "streetAddress": "",
+        "postalCode": "",
+        "town": "",
+        "country": ""
+      },
+      "telephoneNumber": "",
+      "email": "",
+      "contactPerson": "",
+      "mainUrl": "",
+      "validationState": 0
+    },
+    "sendTendersOption": 8,
+    "electronicAddressToSendTenders": "",
+    "addressToSendTenders": {
+      "officialName": "",
+      "department": "",
+      "nationalRegistrationNumber": "",
+      "nutsCodes": [],
+      "postalAddress": {
+        "streetAddress": "",
+        "postalCode": "",
+        "town": "",
+        "country": ""
+      },
+      "telephoneNumber": "",
+      "email": "markku.blom@evl.fi",
+      "contactPerson": "",
+      "mainUrl": "",
+      "validationState": 0
+    },
+    "electronicCommunicationRequiresSpecialTools": false,
+    "electronicCommunicationInfoUrl": "",
+    "documentsEntirelyInHilma": true,
+    "specsAndAdditionalDocuments": 0,
+    "specsAndAdditionalDocumentsAddress": {
+      "officialName": "",
+      "department": "",
+      "nationalRegistrationNumber": "",
+      "nutsCodes": [],
+      "postalAddress": {
+        "streetAddress": "",
+        "postalCode": "",
+        "town": "",
+        "country": ""
+      },
+      "telephoneNumber": "",
+      "email": "",
+      "contactPerson": "",
+      "mainUrl": "",
+      "validationState": 0
+    },
+    "electronicAccess": "",
+    "validationState": 2
+  },
+  "contactPerson": {
+    "name": "Porvoon seurakuntayhtymä",
+    "email": "markku.blom@evl.fi",
+    "phone": "+358 400494694"
+  },
+  "procurementObject": {
+    "shortDescription": [
+      "Porvoon seurakuntayhtymä pyytää tarjousta hautojen kaivuuseen soveltuvasta yhdistelmäkaivurista (1 kpl)"
+    ],
+    "estimatedValue": {
+      "type": 2,
+      "minValue": 60000.0,
+      "maxValue": 80000.0,
+      "currency": "EUR",
+      "disagreeToBePublished": false,
+      "doesNotExceedNationalThreshold": false
+    },
+    "estimatedValueCalculationMethod": [],
+    "mainCpvCode": {
+      "code": "43251000",
+      "name": "Kuokkakauhalla varustetut etukuormaajat",
+      "vocCodes": []
+    },
+    "totalValue": {
+      "type": 0,
+      "currency": "",
+      "disagreeToBePublished": false,
+      "doesNotExceedNationalThreshold": false
+    },
+    "defence": {
+      "mainsiteplaceWorksDelivery": [],
+      "nutsCodes": [],
+      "frameworkAgreement": {
+        "includesFrameworkAgreement": false,
+        "includesConclusionOfFrameworkAgreement": false,
+        "frameworkAgreementType": 0,
+        "frameworkEnvisagedType": 0,
+        "includesDynamicPurchasingSystem": false,
+        "dynamicPurchasingSystemInvolvesAdditionalPurchasers": false,
+        "justificationForDurationOverFourYears": [],
+        "justificationForDurationOverSevenYears": [],
+        "justificationForDurationOverEightYears": [],
+        "dynamicPurchasingSystemWasTerminated": false,
+        "estimatedTotalValue": {
+          "type": 0,
+          "currency": "",
+          "disagreeToBePublished": false,
+          "doesNotExceedNationalThreshold": false
+        },
+        "duration": {
+          "type": 0,
+          "canBeRenewed": false,
+          "renewalDescription": []
+        },
+        "frequencyAndValue": []
+      },
+      "additionalCpvCodes": [],
+      "subcontract": {
+        "tendererHasToIndicateShare": false,
+        "tendererHasToIndicateChange": false,
+        "caMayOblige": false,
+        "successfulTenderer": false,
+        "successfulTendererToSpecify": false
+      },
+      "optionsAndVariants": {
+        "variantsWillBeAccepted": false,
+        "partialOffersWillBeAccepted": false,
+        "options": false,
+        "optionsDescription": [],
+        "optionType": 0
+      },
+      "totalQuantityOrScope": {
+        "type": 0,
+        "currency": "",
+        "disagreeToBePublished": false,
+        "doesNotExceedNationalThreshold": false
+      },
+      "totalQuantity": [],
+      "renewals": {
+        "canBeRenewed": false,
+        "amount": {
+          "type": 0,
+          "currency": "",
+          "disagreeToBePublished": false,
+          "doesNotExceedNationalThreshold": false
+        },
+        "subsequentContract": {
+          "type": 0,
+          "canBeRenewed": false,
+          "renewalDescription": []
+        }
+      },
+      "timeFrame": {
+        "type": 0,
+        "canBeRenewed": false,
+        "renewalDescription": []
+      },
+      "additionalInformation": []
+    },
+    "validationState": 2
+  },
+  "conditionsInformation": {
+    "professionalSuitabilityRequirements": [],
+    "economicCriteriaToParticipate": false,
+    "economicCriteriaDescription": [],
+    "economicRequiredStandards": [],
+    "technicalCriteriaToParticipate": false,
+    "technicalCriteriaDescription": [],
+    "technicalRequiredStandards": [],
+    "rulesForParticipation": [],
+    "restrictedToShelteredWorkshop": false,
+    "restrictedToShelteredProgram": false,
+    "reservedOrganisationServiceMission": false,
+    "depositsRequired": [],
+    "financingConditions": [],
+    "legalFormTaken": [],
+    "qualificationSystemConditions": [],
+    "ciriteriaForTheSelectionOfParticipants": [],
+    "executionOfServiceIsReservedForProfession": false,
+    "referenceToRelevantLawRegulationOrProvision": [],
+    "participationIsReservedForProfession": false,
+    "indicateProfession": [],
+    "contractPerformanceConditions": [],
+    "obligationToIndicateNamesAndProfessionalQualifications": false,
+    "validationState": 0
+  },
+  "conditionsInformationDefence": {
+    "depositsRequired": [],
+    "financingConditions": [],
+    "legalFormTaken": [],
+    "otherParticularConditions": [],
+    "personalSituationOfEconomicOperators": [],
+    "personalSituationOfSubcontractors": [],
+    "economicCriteriaOfEconomicOperators": [],
+    "economicCriteriaOfEconomicOperatorsMinimum": [],
+    "economicCriteriaOfSubcontractors": [],
+    "economicCriteriaOfSubcontractorsMinimum": [],
+    "technicalCriteriaOfEconomicOperators": [],
+    "technicalCriteriaOfEconomicOperatorsMinimum": [],
+    "technicalCriteriaOfSubcontractors": [],
+    "technicalCriteriaOfSubcontractorsMinimum": [],
+    "restrictedToShelteredWorkshops": false,
+    "restrictedToShelteredProgrammes": false,
+    "restrictedToParticularProfession": false,
+    "restrictedToParticularProfessionLaw": [],
+    "staffResponsibleForExecution": false,
+    "validationState": 0
+  },
+  "conditionsInformationNational": {
+    "participantSuitabilityCriteria": [
+      "kts. tarjouspyyntö"
+    ],
+    "requiredCertifications": [
+      "kts. tarjouspyyntö"
+    ],
+    "additionalInformation": [],
+    "validationState": 2,
+    "reservedForShelteredWorkshopOrProgram": false
+  },
+  "complementaryInformation": {
+    "isRecurringProcurement": false,
+    "estimatedTimingForFurtherNoticePublish": [],
+    "electronicOrderingUsed": false,
+    "electronicInvoicingUsed": false,
+    "electronicPaymentUsed": false,
+    "additionalInformation": [],
+    "defence": {
+      "euFunds": {
+        "procurementRelatedToEuProgram": false,
+        "projectIdentification": []
+      },
+      "taxLegislationUrl": "",
+      "taxLegislationInfoProvided": false,
+      "taxLegislation": {
+        "officialName": "",
+        "department": "",
+        "nationalRegistrationNumber": "",
+        "nutsCodes": [],
+        "postalAddress": {
+          "streetAddress": "",
+          "postalCode": "",
+          "town": "",
+          "country": ""
+        },
+        "telephoneNumber": "",
+        "email": "",
+        "contactPerson": "",
+        "mainUrl": "",
+        "validationState": 0
+      },
+      "environmentalProtectionUrl": "",
+      "environmentalProtectionInfoProvided": false,
+      "environmentalProtection": {
+        "officialName": "",
+        "department": "",
+        "nationalRegistrationNumber": "",
+        "nutsCodes": [],
+        "postalAddress": {
+          "streetAddress": "",
+          "postalCode": "",
+          "town": "",
+          "country": ""
+        },
+        "telephoneNumber": "",
+        "email": "",
+        "contactPerson": "",
+        "mainUrl": "",
+        "validationState": 0
+      },
+      "employmentProtectionUrl": "",
+      "employmentProtectionInfoProvided": false,
+      "employmentProtection": {
+        "officialName": "",
+        "department": "",
+        "nationalRegistrationNumber": "",
+        "nutsCodes": [],
+        "postalAddress": {
+          "streetAddress": "",
+          "postalCode": "",
+          "town": "",
+          "country": ""
+        },
+        "telephoneNumber": "",
+        "email": "",
+        "contactPerson": "",
+        "mainUrl": "",
+        "validationState": 0
+      }
+    },
+    "validationState": 0
+  },
+  "datePublished": "2020-01-02T10:15:18.8981444",
+  "state": 2,
+  "tedPublishState": 0,
+  "tedValidationErrors": [],
+  "previousNoticeOjsNumber": "",
+  "procedureInformation": {
+    "procedureType": 1,
+    "acceleratedProcedure": false,
+    "justificationForAcceleratedProcedure": [],
+    "contestType": 0,
+    "contestParticipants": {
+      "type": 0,
+      "currency": "",
+      "disagreeToBePublished": false,
+      "doesNotExceedNationalThreshold": false
+    },
+    "frameworkAgreement": {
+      "includesFrameworkAgreement": false,
+      "includesConclusionOfFrameworkAgreement": false,
+      "frameworkAgreementType": 0,
+      "frameworkEnvisagedType": 0,
+      "includesDynamicPurchasingSystem": false,
+      "dynamicPurchasingSystemInvolvesAdditionalPurchasers": false,
+      "justificationForDurationOverFourYears": [],
+      "justificationForDurationOverSevenYears": [],
+      "justificationForDurationOverEightYears": [],
+      "dynamicPurchasingSystemWasTerminated": false,
+      "estimatedTotalValue": {
+        "type": 0,
+        "currency": "",
+        "disagreeToBePublished": false,
+        "doesNotExceedNationalThreshold": false
+      },
+      "duration": {
+        "type": 0,
+        "canBeRenewed": false,
+        "renewalDescription": []
+      },
+      "frequencyAndValue": []
+    },
+    "reductionRecourseToReduceNumberOfSolutions": false,
+    "reserveRightToAwardWithoutNegotiations": false,
+    "electronicAuctionWillBeUsed": false,
+    "additionalInformationAboutElectronicAuction": [],
+    "namesOfParticipantsAlreadySelected": [],
+    "procurementGovernedByGPA": false,
+    "criteriaForEvaluationOfProjects": [],
+    "disagreeCriteriaForEvaluationOfProjectsPublish": false,
+    "urlNationalProcedure": "",
+    "mainFeaturesAward": [],
+    "defence": {
+      "candidateNumberRestrictions": {
+        "envisagedNumber": 0,
+        "envisagedMinimumNumber": 0,
+        "envisagedMaximumNumber": 0,
+        "objectiveCriteriaForChoosing": [],
+        "selected": 0
+      },
+      "awardCriteria": {
+        "criterionTypes": 0,
+        "economicCriteriaTypes": 0,
+        "criteria": []
+      }
+    },
+    "national": {
+      "otherProcedure": [],
+      "additionalProcedureInformation": [],
+      "transparencyType": 0,
+      "limitedNumberOfParticipants": false,
+      "numberOfParticipants": 0,
+      "selectionCriteria": []
+    },
+    "validationState": 2
+  },
+  "tenderingInformation": {
+    "tendersOrRequestsToParticipateDueDateTime": "2020-01-21T12:00:00",
+    "languages": [
+      "FI"
+    ],
+    "tendersMustBeValidOption": 1,
+    "tendersMustBeValidUntil": "2020-05-30T00:00:00",
+    "tenderOpeningConditions": {
+      "openingDateAndTime": "2020-01-22T10:00:00",
+      "place": [],
+      "informationAboutAuthorisedPersons": []
+    },
+    "defence": {
+      "previousPublicationExists": false,
+      "previousPriorInformationNoticeOjsNumber": {
+        "number": ""
+      },
+      "hasPreviousContractNoticeOjsNumber": false,
+      "previousContractNoticeOjsNumber": {
+        "number": ""
+      },
+      "hasPreviousExAnteOjsNumber": false,
+      "previousExAnteOjsNumber": {
+        "number": ""
+      },
+      "payableDocuments": false,
+      "documentPrice": {
+        "currency": ""
+      },
+      "paymentTermsAndMethods": [],
+      "languageType": 0,
+      "languages": [],
+      "otherLanguage": false,
+      "otherLanguages": ""
+    },
+    "estimatedExecutionTimeFrame": {
+      "type": 0,
+      "canBeRenewed": false,
+      "renewalDescription": []
+    },
+    "validationState": 2
+  },
+  "rewardsAndJury": {
+    "prizeAwarded": false,
+    "numberAndValueOfPrizes": [],
+    "detailsOfPayments": [],
+    "serviceContractAwardedToWinner": false,
+    "decisionOfTheJuryIsBinding": false,
+    "namesOfSelectedMembersOfJury": [],
+    "validationState": 0
+  },
+  "resultsOfContest": {
+    "contestWasTerminated": false,
+    "noPrizeType": 0,
+    "originalNoticeSentVia": 0,
+    "originalEsender": {
+      "login": "",
+      "customerLogin": "",
+      "tedNoDocExt": ""
+    },
+    "originalNoticeSentViaOther": "",
+    "participantsContemplated": 0,
+    "participantsSme": 0,
+    "participantsForeign": 0,
+    "disagreeParticipantCountPublish": false,
+    "winners": [],
+    "disagreeWinnersPublish": false,
+    "valueOfPrize": {
+      "currency": ""
+    },
+    "disagreeValuePublish": false,
+    "validationState": 0
+  },
+  "attachments": [
+    {
+      "url": "https://hnshilmaprodsa.blob.core.windows.net/attachments/f5fc9502-6090-40c6-b106-08d78f672a4f?sv=2018-03-28&sr=b&sig=GEPuBAOvx8gdOjrcxkgaxUJz10RcvQqtdm9zEsLyfzI%3D&st=2020-01-02T09%3A35%3A56Z&se=9999-12-31T23%3A59%3A59Z&sp=r&rscd=attachment%3B%20filename%3DTarjouspyynt%C3%B6%20Yhdistelm%C3%A4kaivuri%202020.pdf",
+      "status": 10
+    },
+    {
+      "url": "https://hnshilmaprodsa.blob.core.windows.net/attachments/ccdb2213-9ea0-4d8d-8036-08d78f673949?sv=2018-03-28&sr=b&sig=YDNat3AAjC00U3vD%2B8yGoZCWa%2FIwmGbgaNFz7mLlJeM%3D&st=2020-01-02T09%3A35%3A56Z&se=9999-12-31T23%3A59%3A59Z&sp=r&rscd=attachment%3B%20filename%3DLiite%201%20-%20tarjouslomake%20-%20yhdistelm%C3%A4kaivuri.pdf",
+      "status": 10
+    }
+  ],
+  "changes": [],
+  "isCorrigendum": false,
+  "isMigrated": false,
+  "isCancelled": false,
+  "cancelledReason": [],
+  "isLatest": true,
+  "language": "",
+  "proceduresForReview": {
+    "reviewBody": {
+      "officialName": "Markkinaoikeus",
+      "department": "",
+      "nationalRegistrationNumber": "",
+      "nutsCodes": [],
+      "postalAddress": {
+        "streetAddress": "Radanrakentajantie 5",
+        "postalCode": "00520",
+        "town": "Helsinki",
+        "country": "FI"
+      },
+      "telephoneNumber": "+358 295643300",
+      "email": "markkinaoikeus@oikeus.fi",
+      "contactPerson": "",
+      "mainUrl": "http://www.oikeus.fi/markkinaoikeus",
+      "validationState": 0
+    },
+    "reviewProcedure": [
+      "Jos hankinnassa on menetelty julkisista hankinnoista ja käyttöoikeussopimuksista annetun lain vastaisesti, voi tarjoaja, osallistumishakemuksen tehnyt ehdokas tai muu taho, jota asia koskee, saattaa asian markkinaoikeuden käsiteltäväksi valituksella. Asia voidaan saattaa markkinaoikeuden käsiteltäväksi myös, jos hankinnassa on menetelty Euroopan yhteisön lainsäädännön taikka Maailman kauppajärjestön julkisia hankintoja koskevan sopimuksen vastaisesti. ",
+      "",
+      "Jollei toisin säädetä, valitus on tehtävä kirjallisesti 14 päivän kuluessa siitä, kun ehdokas tai tarjoaja on saanut kirjallisen päätöksen asemaansa vaikuttavasta ratkaisusta tai tarjousmenettelyn ratkaisusta perusteluineen ja valitusosoituksineen. ",
+      "",
+      "Valitus on tehtävä 30 päivän kuluessa päätöksen tiedoksisaannista, jos hankintayksikkö on tehnyt hankintasopimuksen julkisista hankinnoista ja käyttöoikeussopimuksista annetun lain 130 §:n 1 tai 3 kohdan nojalla noudattamatta odotusaikaa.",
+      "",
+      "Valitus on tehtävä kuuden kuukauden kuluessa hankintapäätöksen tekemisestä siinä tapauksessa, että ehdokas tai tarjoaja on saanut tiedon hankintapäätöksestä valitusosoituksineen ja hankintapäätös tai valitusosoitus on ollut olennaisesti puutteellinen.",
+      "",
+      "Sähköistä tiedoksiantoa käytettäessä hankintapäätös oheisasiakirjoineen katsotaan saaduksi tiedoksi sinä päivänä, jolloin mainitut asiakirjat sisältävä sähköinen viesti on vastaanottajan käytettävissä tämän vastaanottolaitteessa siten, että viestiä voidaan käsitellä. Tällaisena ajankohtana pidetään viestin lähettämispäivää, jollei asiassa esitetä luotettavaa selvitystä tietoliikenneyhteyksien toimimattomuudesta tai vastaavasta muusta seikasta, jonka johdosta sähköinen viesti on saapunut vastaanottajalle myöhemmin. Jos päätös annetaan tiedoksi tavallisena kirjeenä, asiakirja katsotaan saaduksi tiedoksi seitsemäntenä päivänä sen lähettämisestä, jollei tiedoksiannon näytetä tapahtuneen myöhemmin. Todisteellisen tiedoksiannon katsotaan tapahtuneeksi saantitodistuksen osoittamana aikana tai erilliseen tiedoksisaantitodistukseen merkittynä aikana.",
+      "",
+      ""
+    ],
+    "validationState": 2
+  },
+  "attachmentInformation": {
+    "description": [
+      "Liitteenä",
+      "Tarjouspyyntö",
+      "Liite 1 - tekniset vaatimukset"
+    ],
+    "links": [],
+    "validationState": 2
+  },
+  "modifications": {
+    "mainCpvCode": {
+      "code": "",
+      "name": "",
+      "vocCodes": []
+    },
+    "additionalCpvCodes": [],
+    "nutsCodes": [],
+    "mainsiteplaceWorksDelivery": [],
+    "descrProcurement": [],
+    "timeFrame": {
+      "type": 0,
+      "canBeRenewed": false,
+      "renewalDescription": []
+    },
+    "justificationForDurationOverFourYears": [],
+    "justificationForDurationOverEightYears": [],
+    "totalValue": {
+      "currency": ""
+    },
+    "awardedToGroupOfEconomicOperators": false,
+    "contractors": [],
+    "description": [],
+    "reason": 0,
+    "reasonDescriptionEconomic": [],
+    "reasonDescriptionCircumstances": [],
+    "increaseBeforeModifications": {
+      "currency": ""
+    },
+    "increaseAfterModifications": {
+      "currency": ""
+    },
+    "validationState": 0
+  },
+  "contractAwardsDefence": [],
+  "hilmaStatistics": {
+    "energyEfficiencyConsidered": false,
+    "innovationConsidered": false,
+    "smeParticipationConsidered": true,
+    "validationState": 2
+  },
+  "annexes": {
+    "d1": {
+      "noTenders": false,
+      "procedureType": 0,
+      "suppliesManufacturedForResearch": false,
+      "providedByOnlyParticularOperator": false,
+      "reasonForNoCompetition": 0,
+      "extremeUrgency": false,
+      "additionalDeliveries": false,
+      "repetitionExisting": false,
+      "designContestAward": false,
+      "commodityMarket": false,
+      "advantageousTerms": false,
+      "advantageousPurchaseReason": 0,
+      "justification": []
+    },
+    "d2": {
+      "noTenders": false,
+      "pureResearch": false,
+      "providedByOnlyParticularOperator": false,
+      "reasonForNoCompetition": 0,
+      "extremeUrgency": false,
+      "additionalDeliveries": false,
+      "repetitionExisting": false,
+      "designContestAward": false,
+      "commodityMarket": false,
+      "advantageousTerms": false,
+      "advantageousPurchaseReason": 0,
+      "bargainPurchase": false,
+      "justification": []
+    },
+    "d3": {
+      "noTenders": false,
+      "procedureType": 0,
+      "otherServices": false,
+      "productsManufacturedForResearch": false,
+      "allTenders": false,
+      "providedByOnlyParticularOperator": false,
+      "reasonForNoCompetition": 0,
+      "crisisUrgency": false,
+      "extremeUrgency": false,
+      "additionalDeliveries": false,
+      "repetitionExisting": false,
+      "commodityMarket": false,
+      "advantageousTerms": false,
+      "advantageousPurchaseReason": 0,
+      "maritimeService": false,
+      "otherJustification": 0,
+      "justification": []
+    },
+    "d4": {
+      "noTenders": false,
+      "providedByOnlyParticularOperator": false,
+      "reasonForNoCompetition": 0,
+      "justification": []
+    },
+    "directNational": {
+      "purchaseType": 0,
+      "justification": []
+    }
+  },
+  "dateCreated": "2020-01-02T09:12:12.654962",
+  "dateModified": "2020-01-02T10:15:18.8999577"
+}

@@ -1,11 +1,17 @@
 using System;
+using Hilma.Domain.Attributes;
 
 namespace Hilma.Domain.DataContracts.EtsContracts {
     /// <summary>
     ///     Information about TED publication process, if successful available.
     /// </summary>
+    [Contract]
     public class EtsTedPublicationInfo
     {
+        public EtsTedPublicationInfo()
+        {
+        }
+
         /// <summary>
         ///     Map TED model into human readable.
         /// </summary>

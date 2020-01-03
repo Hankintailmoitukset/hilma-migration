@@ -60,7 +60,6 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                     ProcurementLaw = true,
                     CoPurchasers = new ContractBodyContactInformationConfiguration()
                     {
-                        BuyerProfileUrl = true,
                         ContactPerson = true,
                         Department = true,
                         Email = true,
@@ -83,7 +82,6 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                         ContractingAuthorityType = true,
                         Information = new ContractBodyContactInformationConfiguration()
                         {
-                            BuyerProfileUrl = true,
                             ContactPerson = true,
                             Department = true,
                             Email = true,
@@ -122,6 +120,8 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                     return priorNoticeReducedTime;
                 case Enums.NoticeType.PeriodicIndicativeUtilities:
                     return priorNoticeUtilities;
+                case Enums.NoticeType.PeriodicIndicativeUtilitiesReduceTimeLimits:
+                    return priorNoticeReducedTimeUtilities;
                 case Enums.NoticeType.SocialUtilitiesPriorInformation:
                     return priorNoticeSocialUtilities;
                 case Enums.NoticeType.Contract:
@@ -134,6 +134,8 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                     return socialContractAward;
                 case Enums.NoticeType.DefenceContract:
                     return defenceContractNotice;
+                case Enums.NoticeType.ContractUtilities:
+                    return contractNoticeUtilities;
                 case Enums.NoticeType.SocialUtilities:
                     return socialUtilities;
                 case Enums.NoticeType.DefencePriorInformation:
@@ -148,8 +150,18 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                     return ExAnte(notice);
                 case Enums.NoticeType.DesignContest:
                     return designContest;
+                case Enums.NoticeType.DesignContestResults:
+                    return designContestResults;
                 case Enums.NoticeType.Concession:
                     return concession;
+                case Enums.NoticeType.ConcessionAward:
+                    return concessionAward;
+                case Enums.NoticeType.SocialUtilitiesContractAward:
+                    return socialUtilitiesContractAward;
+                case Enums.NoticeType.DpsAward:
+                    return notice.Project.ProcurementCategory == Enums.ProcurementCategory.Public ? contractAward : contractAwardUtilities;
+                case Enums.NoticeType.SocialUtilitiesQualificationSystem:
+                    return socialUtilitiesQualificationSystem;
                 default:
                     break;
             }

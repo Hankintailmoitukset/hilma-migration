@@ -5,7 +5,7 @@ using Hilma.Domain.Validators;
 namespace Hilma.Domain.Entities
 {
     /// <summary>
-    ///     Information about partitioning of the notice.
+    ///     Information about partitioning of the notice. On corrigendum notices, none of these fields should be changed.
     /// </summary>
     [Contract]
     public class LotsInfo

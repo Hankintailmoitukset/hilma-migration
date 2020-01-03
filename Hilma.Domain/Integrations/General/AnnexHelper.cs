@@ -51,12 +51,27 @@ namespace Hilma.Domain.Integrations.General
                 return WrapAnnex(AnnexD1());
             }
 
-            if (_notice.Type == NoticeType.SocialContractAward &&
+            if ((_notice.Type == NoticeType.SocialContractAward || _notice.Type == NoticeType.ContractAward) &&
                 (_notice.ProcedureInformation.ProcedureType == ProcedureType.AwardWoPriorPubD1 ||
                 _notice.ProcedureInformation.ProcedureType == ProcedureType.AwardWoPriorPubD1Other))
             {
                 // Annex D1
                 return WrapAnnex(AnnexD1(), ProcedureType.AwardWoPriorPubD1, "PT_AWARD_CONTRACT_WITHOUT_CALL", ProcedureType.AwardWoPriorPubD1Other, "PT_AWARD_CONTRACT_WITHOUT_CALL");
+            }
+
+            if ((_notice.Type == NoticeType.SocialUtilitiesContractAward || _notice.Type == NoticeType.ContractAwardUtilities) &&
+                (_notice.ProcedureInformation.ProcedureType == ProcedureType.AwardWoPriorPubD1 ||
+                _notice.ProcedureInformation.ProcedureType == ProcedureType.AwardWoPriorPubD1Other))
+            {
+                // Annex D2
+                return WrapAnnex(AnnexD2(), ProcedureType.AwardWoPriorPubD1, "PT_AWARD_CONTRACT_WITHOUT_CALL", ProcedureType.AwardWoPriorPubD1Other, "PT_AWARD_CONTRACT_WITHOUT_CALL");
+            }
+
+            if (_notice.Type == NoticeType.ConcessionAward &&
+                (_notice.ProcedureInformation.ProcedureType == ProcedureType.AwardWoPriorPubD4 ||
+                _notice.ProcedureInformation.ProcedureType == ProcedureType.AwardWoPriorPubD4Other))
+            {
+                return WrapAnnex(AnnexD4(), ProcedureType.AwardWoPriorPubD4, "PT_AWARD_CONTRACT_WITHOUT_PUBLICATION", ProcedureType.AwardWoPriorPubD4Other, "PT_AWARD_CONTRACT_WITHOUT_PUBLICATION");
             }
 
             return null;
@@ -82,7 +97,8 @@ namespace Hilma.Domain.Integrations.General
                     TedHelpers.PElement("D_JUSTIFICATION", SelectJustification().Justification));
             }
 
-            throw new ArgumentOutOfRangeException();
+            return null;
+
         }
 
         private IJustifiable SelectJustification()
@@ -406,7 +422,7 @@ namespace Hilma.Domain.Integrations.General
         {
             if (repeatExisting)
             {
-                var showCtype = _notice.Type != NoticeType.SocialContractAward;
+                var showCtype = _notice.Type != NoticeType.SocialContractAward && _notice.Type != NoticeType.SocialUtilitiesContractAward;
                 switch (_notice.Project.ContractType)
                 {
                     case ContractType.Services:
@@ -432,7 +448,7 @@ namespace Hilma.Domain.Integrations.General
                 var servOrSupp = _notice.Project.ContractType == ContractType.Supplies
                     ? "SUPPLIES"
                     : "SERVICES";
-                var showCtype = _notice.Type != NoticeType.SocialContractAward;
+                var showCtype = _notice.Type != NoticeType.SocialContractAward && _notice.Type != NoticeType.SocialUtilitiesContractAward;
                 switch (reason)
                 {
                     case AdvantageousPurchaseReason.DFromWindingSupplier:

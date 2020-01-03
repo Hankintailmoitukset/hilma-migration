@@ -14,7 +14,6 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 ProcurementLaw = true,
                 CoPurchasers = new ContractBodyContactInformationConfiguration()
                 {
-                    BuyerProfileUrl = true,
                     ContactPerson = true,
                     Department = true,
                     Email = true,
@@ -37,7 +36,6 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                     ContractingAuthorityType = true,
                     Information = new ContractBodyContactInformationConfiguration()
                     {
-                        BuyerProfileUrl = true,
                         ContactPerson = true,
                         Department = true,
                         Email = true,

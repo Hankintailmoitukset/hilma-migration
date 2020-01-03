@@ -1,6 +1,5 @@
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Enums;
-using Hilma.Domain.Validators;
 
 namespace Hilma.Domain.Entities
 {
@@ -23,9 +22,9 @@ namespace Hilma.Domain.Entities
         /// </summary>
         [CorrigendumLabel("further_notices_timing", "VI.1")]
         //[StringMaxLength(400)]
-        public string[] EstimatedTimingForFurtherNoticePublish { get; set; }
+        public string[] EstimatedTimingForFurtherNoticePublish { get; set; } = new string[0];
 
-        /// <summary>
+    /// <summary>
         ///     Appears only for <see cref="NoticeType" />=2.
         ///     Specified if electronic ordering is used for the procurement.
         /// </summary>
@@ -52,14 +51,14 @@ namespace Hilma.Domain.Entities
         /// </summary>
         [CorrigendumLabel("info_additional", "VI.3")]
         //[StringMaxLength(10000)]
-        public string[] AdditionalInformation { get; set; }
+        public string[] AdditionalInformation { get; set; } = new string[0];
 
         /// <summary>
         ///     Directive 2009/81/EC (Defence notices) 
         ///     Additional fields related to defence notices
         /// </summary>
         [CorrigendumLabel("eu_progr_info", "VI.2")]
-        public ComplementaryInformationDefence Defence { get; set; }
+        public ComplementaryInformationDefence Defence { get; set; } 
 
         /// <summary>
         ///     Vuejs application form validation sate for corresponding section.

@@ -18,6 +18,13 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         /// </summary>
         public ContractingAuthorityType ContractingAuthorityType { get; set; }
         /// <summary>
+        /// Used in F24 and F25 to determine type of main activity:
+        ///  (in the case of a notice published by a contracting authority)
+        ///  or
+        ///  (in the case of a notice published by a contracting entity)
+        /// </summary>
+        public ContractingType ContractingType { get; set; }
+        /// <summary>
         ///     Eu classification for organisations primary domain of operation.
         /// </summary>
         public MainActivity MainActivity { get; set; }

@@ -21,7 +21,6 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                     ContractingAuthorityType = true,
                     Information = new ContractBodyContactInformationConfiguration
                     {
-                        BuyerProfileUrl = true,
                         ContactPerson = true,
                         Department = true,
                         Email = true,
@@ -44,6 +43,7 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                     OtherContractingAuthorityType = true
                 }
             },
+            
             LotsInfo = new LotsInfoConfiguration // Ok
             {
                 DivisionLots = true,
@@ -86,6 +86,7 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                     ContractAwarded = true,
                     AwardedContract = new ContractAwardConfiguration
                     {
+                        ContractTitle = true,
                         ConclusionDate = true, // V.2.1
                         DisagreeContractorInformationToBePublished = true, // V.2.3.1
                         Contractors = new ContractorContactInformationConfiguration // V.2.3

@@ -10,5 +10,6 @@ namespace Hilma.Domain.Integrations.Configuration
         
         public bool Name {get; set;} = false;
         public bool ContactEmail {get; set;} = false;
+        public bool Id {get; set;} = false;
     }
 }

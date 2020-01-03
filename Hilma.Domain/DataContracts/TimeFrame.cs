@@ -1,5 +1,6 @@
 using System;
 using Hilma.Domain.Attributes;
+using Newtonsoft.Json;
 
 namespace Hilma.Domain.DataContracts
 {
@@ -7,7 +8,7 @@ namespace Hilma.Domain.DataContracts
     ///     Describes time frame selection from vuejs application.
     /// </summary>
     [Contract]
-    public class TimeFrame  
+    public class TimeFrame
     {
         /// <summary>
         ///     Type of time frame user wishes to select.
@@ -62,6 +63,47 @@ namespace Hilma.Domain.DataContracts
         /// Directive 2009/81/EC (Defence prior information)
         /// Scheduled date for start of award procedures
         /// </summary>
+        [CorrigendumLabel("award_start", "II.6")]
         public DateTime? ScheduledStartDateOfAwardProcedures { get; set; }
+
+        [JsonIgnore]
+        public bool IsOverFourYears{
+            get {
+                double years = 0;
+
+                switch( Type ) {
+                    case TimeFrameType.BeginAndEndDate:
+                        years = (EndDate - BeginDate ).Value.TotalDays / 365d;
+                        break;
+                    case TimeFrameType.Months:
+                        years = Months.GetValueOrDefault() / 12d;
+                        break;
+                    case TimeFrameType.Years:
+                        years = Years.GetValueOrDefault();
+                        break;
+                }
+                return years > 4d;
+            }
+         }
+
+        [JsonIgnore]
+        public bool IsOverEightYears{
+            get {
+                double years = 0;
+
+                switch( Type ) {
+                    case TimeFrameType.BeginAndEndDate:
+                        years = (EndDate - BeginDate ).Value.TotalDays / 365d;
+                        break;
+                    case TimeFrameType.Months:
+                        years = Months.GetValueOrDefault() / 12d;
+                        break;
+                    case TimeFrameType.Years:
+                        years = Years.GetValueOrDefault();
+                        break;
+                }
+                return years > 8d;
+            }
+        }
     }
 }

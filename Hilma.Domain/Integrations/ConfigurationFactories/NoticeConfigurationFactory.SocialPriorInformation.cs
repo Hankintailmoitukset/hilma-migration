@@ -26,12 +26,6 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 MainsiteplaceWorksDelivery = true,
                 DescrProcurement = true,
                 EstimatedValue = new ValueRangeContractConfiguration { Currency = false, Value = false },
-                /*AwardCriteria = new AwardCriteriaConfiguration {
-                    CriterionTypes = true,
-                    QualityCriteria = new AwardCriterionDefinitionConfiguration { Criterion = true, Weighting = true } ,
-                    CostCriteria = new AwardCriterionDefinitionConfiguration { Criterion = true, Weighting = true },
-                    PriceCriterion = new AwardCriterionDefinitionConfiguration { Weighting = true }
-                },*/
                 TimeFrame = new TimeFrameConfiguration {
                     Type = false,
                     BeginDate = true,
@@ -41,18 +35,6 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                     Months = true,
                     RenewalDescription = true
                 },
-                /*CandidateNumberRestrictions = new CandidateNumberRestrictionsConfiguration {
-                    EnvisagedNumber = true,
-                    EnvisagedMinimumNumber = true,
-                    EnvisagedMaximumNumber = true,
-                    ObjectiveCriteriaForChoosing = true,
-                    Selected = true
-                },*/
-                /*OptionsAndVariants = new OptionsAndVariantsConfiguration {
-                    Options = true,
-                    OptionsDescription = true,
-                    VariantsWillBeAccepted = true
-                },*/
                 TendersMustBePresentedAsElectronicCatalogs = false,
                 EuFunds = new EuFundsConfiguration {
                     ProcurementRelatedToEuProgram = false,
@@ -80,7 +62,6 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 },
                 ElectronicCommunicationRequiresSpecialTools = true,
                 ElectronicCommunicationInfoUrl = true,
-                SendTendersOption = true,
                 AddressToSendTenders = ContractBodyContactInformationConfigurationDefault,
             },
             ContactPerson = new ContactPersonConfiguration {

@@ -17,11 +17,11 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 EstimatedValue = new ValueRangeContractConfiguration { Currency = true, Value = true },
                 AwardCriteria = new AwardCriteriaConfiguration {
                     CriterionTypes = true,
-                    QualityCriteria = new AwardCriterionDefinitionConfiguration { Criterion = true, Weighting = true } ,
+                    QualityCriteria = new AwardCriterionDefinitionConfiguration { Criterion = true, Weighting = true },
                     CostCriteria = new AwardCriterionDefinitionConfiguration { Criterion = true, Weighting = true },
                     PriceCriterion = new AwardCriterionDefinitionConfiguration { Weighting = true }
                 },
-                AwardContract = new AwardConfiguration{},
+                AwardContract = new AwardConfiguration(),
                 TimeFrame = new TimeFrameConfiguration {
                     Type = true,
                     BeginDate = true,
@@ -94,7 +94,8 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                     {
                         IncludesFrameworkAgreement = true,
                     }
-                }
+                },
+                TotalValue = new ValueRangeContractConfiguration { Currency = true, Value = true, Type = true, MaxValue = true, MinValue = true },
             },
             ProcedureInformation = new ProcedureInformationConfiguration {
                 ProcedureType = true,
@@ -106,19 +107,16 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 ReductionRecourseToReduceNumberOfSolutions = true,
                 ReserveRightToAwardWithoutNegotiations = true,
                 FrameworkAgreement = new FrameworkAgreementInformationConfiguration {
-                    DynamicPurchasingSystemInvolvesAdditionalPurchasers = true,
                     EnvisagedNumberOfParticipants = true,
                     FrameworkAgreementType = true,
-                    IncludesDynamicPurchasingSystem = true,
-                    IncludesFrameworkAgreement = true,
-                    JustificationForDurationOverFourYears = true
+                    IncludesFrameworkAgreement = true
                 }
             },
             TenderingInformation = new TenderingInformationConfiguration {
                 TendersMustBeValidForMonths = true,
                 TendersMustBeValidUntil = true,
                 TendersOrRequestsToParticipateDueDateTime = false,
-                TendersMustBeValidOption = true, 
+                TendersMustBeValidOption = true,
                 EstimatedDateOfInvitations = false,
                 Languages = true,
                 TenderOpeningConditions = new TenderOpeningConditionsConfiguration {
@@ -129,7 +127,9 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 Defence = new DefenceAdministrativeInformationConfiguration
                 {
                     HasPreviousContractNoticeOjsNumber = true,
+                    PreviousContractNoticeOjsNumber = new OjsNumberConfiguration { Number = true, Date = true },
                     HasPreviousExAnteOjsNumber = true,
+                    PreviousExAnteOjsNumber = new OjsNumberConfiguration { Number = true, Date = true },
                     Languages = false
                 }
             },
@@ -157,7 +157,102 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                     Url = true
                 }
             },
-            ContractAwardsDefence = new ContractAwardDefenceConfiguration { }
+            ContractAwardsDefence = new ContractAwardDefenceConfiguration {
+
+                AllOrCertainSubcontractsWillBeAwarded = true,
+                AnnualOrMonthlyValue = new TimeFrameConfiguration {
+                    BeginDate = true,
+                    Type = true,
+                    Years = true,
+                    ScheduledStartDateOfAwardProcedures = true,
+                    CanBeRenewed = true,
+                    Days = true,
+                    EndDate = true,
+                    Months = true,
+                    RenewalDescription = true
+                },
+                ContractAwardDecisionDate = true,
+                ContractNumber = true,
+                Contractor = new ContractorContactInformationConfiguration() {
+                ContractId  =true,
+                Email = true,
+                PostalAddress = new PostalAddressConfiguration() {
+                    Country = true,
+                    PostalCode = true,
+                    Town = true,
+                    StreetAddress = true
+                },
+                IsSmallMediumEnterprise = true,
+                MainUrl = true,
+                NationalRegistrationNumber = true,
+                NutsCodes = true,
+                OfficialName = true,
+                TelephoneNumber = true,
+                ValidationState = true
+                },
+                ContractValueType = true,
+                EstimatedValue = new ValueContractConfiguration() {
+                Currency = true,
+                Value = true
+                },
+                FinalTotalValue = new ValueContractConfiguration() {
+                    Currency = true,
+                    Value = true
+                },
+                HighestOffer = new ValueContractConfiguration() {
+                    Currency = true,
+                    Value = true
+                },
+                LikelyToBeSubcontracted = true,
+                LotNumber = true,
+                LotTitle = true,
+                LowestOffer = new ValueContractConfiguration() {
+                    Currency = true,
+                    Value = true
+                },
+                NumberOfTenders = new NumberOfTendersConfiguration() {
+                    DisagreeTenderInformationToBePublished = true,
+                    Electronic = true,
+                    NonEu = true,
+                    OtherEu = true,
+                    Sme = true,
+                    Total = true
+                },
+                ProportionOfValue = true,
+                ShareOfContractWillBeSubcontracted = true,
+                ShareOfContractWillBeSubcontractedMaxPercentage =  true,
+                ShareOfContractWillBeSubcontractedMinPercentage = true,
+                SubcontractingDescription = true,
+                ValidationState = true,
+                ValueOfSubcontract = new ValueContractConfiguration() {
+                    Currency = true,
+                    Value = true
+                },
+                ValueOfSubcontractNotKnown = true
+            },
+            Annexes = new AnnexConfiguration
+            {
+                D3 = new AnnexD3Configuration
+                {
+                    NoTenders = true,
+                    ProductsManufacturedForResearch = true,
+                    ProvidedByOnlyParticularOperator = true,
+                    ExtremeUrgency = true,
+                    AdditionalDeliveries = true,
+                    RepetitionExisting = true,
+                    AdvantageousPurchaseReason = true,
+                    AllTenders = true,
+                    CrisisUrgency = true,
+                    Justification = true,
+                    MaritimeService = true,
+                    OtherJustification = true,
+                    OtherServices = true,
+                    ProcedureType = true,
+                    ReasonForNoCompetition = true,
+                    CommodityMarket = true,
+                    AdvantageousTerms = true
+                }
+            }
         };
     }
 

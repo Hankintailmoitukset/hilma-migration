@@ -37,6 +37,12 @@ namespace Hilma.Domain.Enums
         ContractAward = 300,
 
         /// <summary>
+        /// F03_2014 or F06_2014 depending on organisation. Used by Hilma app, not ETS.
+        /// DPS award, when parent project != project
+        /// </summary>
+        DpsAward = 301,
+
+        /// <summary>
         /// F04_2014
         /// Periodic indicative notice - utilities
         /// </summary>
@@ -152,13 +158,13 @@ namespace Hilma.Domain.Enums
 
         /// <summary>
         /// F21_2014
-        /// Social and other specific services - public contracts  
+        /// Social and other specific services - prior information notice
         /// </summary>
         SocialPriorInformation = 2101,
 
         /// <summary>
         /// F21_2014
-        /// Social and other specific services - public contracts  
+        /// Social and other specific services - contract award  
         /// </summary>
         SocialContractAward = 2102,
 
@@ -173,6 +179,18 @@ namespace Hilma.Domain.Enums
         /// Prior information notice for Social and other specific services - utilities
         /// </summary>
         SocialUtilitiesPriorInformation = 2201,
+
+        /// <summary>
+        /// F22_2014
+        /// Contract award notice for Social and other specific services - utilities
+        /// </summary>
+        SocialUtilitiesContractAward = 2202,
+
+        /// <summary>
+        /// F22_2014
+        /// Qualification system notice for Social and other specific services - utilities
+        /// </summary>
+        SocialUtilitiesQualificationSystem = 2203,
 
         /// <summary>
         /// F23_2014
@@ -208,14 +226,14 @@ namespace Hilma.Domain.Enums
         NationalAgricultureContract = 9903,
 
         /// <summary>
-        /// National contract notice for agriculture
+        /// National transparency notice
         /// </summary>
-        NationalExAnte = 9904, // TODO(Tuomas): eikö nämä ole sama asia?
+        NationalTransparency = 9904,
 
         /// <summary>
         /// National direct contract award
         /// </summary>
-        NationalDirectAward = 9905, // TODO(Tuomas): eikö nämä ole sama asia?
+        NationalDirectAward = 9905,
 
         /// <summary>
         /// National design contest
@@ -232,10 +250,7 @@ namespace Hilma.Domain.Enums
         /// </summary>
         NationalDefenceContract = 9911,
 
-        /// <summary>
-        /// National transparency notice
-        /// </summary>
-        NationalTransparency = 9920
+        
     }
 
 }

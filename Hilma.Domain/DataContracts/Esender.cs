@@ -18,6 +18,7 @@ namespace Hilma.Domain.DataContracts {
         /// <summary>
         /// 
         /// </summary>
+        [CorrigendumLabel("no_doc_ext", "V")]
         public string TedNoDocExt { get; set; }
     }
 }

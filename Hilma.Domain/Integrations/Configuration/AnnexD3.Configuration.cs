@@ -23,6 +23,7 @@ namespace Hilma.Domain.Integrations.Configuration
         public bool AdvantageousTerms {get; set;} = false;
         public bool AdvantageousPurchaseReason {get; set;} = false;
         public bool MaritimeService {get; set;} = false;
+        public bool OtherJustification {get; set;} = false;
         public bool Justification {get; set;} = false;
     }
 }

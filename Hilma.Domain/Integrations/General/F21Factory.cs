@@ -1,5 +1,6 @@
 using System;
 using System.Xml.Linq;
+using Hilma.Domain.Configuration;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Integrations.Configuration;
 using Hilma.Domain.Integrations.ConfigurationFactories;
@@ -17,6 +18,7 @@ namespace Hilma.Domain.Integrations.General
         private readonly string _tedSenderOrganisation;
         private readonly NoticeContractConfiguration _configuration;
         private readonly SectionHelper _helper;
+        private readonly ITranslationProvider _translationProvider;
 
         /// <summary>
         /// F01 Contract Notice factory constructor.
@@ -24,15 +26,17 @@ namespace Hilma.Domain.Integrations.General
         /// <param name="notice">The notice</param>
         /// <param name="eSenderLogin">The TED esender login</param>
         /// <param name="tedContactEmail"></param>
+        /// <param name="translationProvider"></param>
         /// <param name="tedSenderOrganisation"></param>
-        public F21Factory(NoticeContract notice, string eSenderLogin, string tedSenderOrganisation, string tedContactEmail)
+        public F21Factory(NoticeContract notice, string eSenderLogin, string tedSenderOrganisation, string tedContactEmail, ITranslationProvider translationProvider)
         {
             _notice = notice;
             _eSenderLogin = eSenderLogin;
             _tedContactEmail = tedContactEmail;
             _tedSenderOrganisation = tedSenderOrganisation;
             _configuration = NoticeConfigurationFactory.CreateConfiguration(notice);
-            _helper = new SectionHelper(_notice, _configuration, eSenderLogin);
+            _translationProvider = translationProvider;
+            _helper = new SectionHelper(_notice, _configuration, eSenderLogin, _translationProvider);
         }
 
         public XDocument CreateForm() =>
@@ -48,7 +52,7 @@ namespace Hilma.Domain.Integrations.General
                     _helper.ContractingBody(_notice.Project, _notice.ContactPerson, _notice.CommunicationInformation, _notice.Type),
                     _helper.ObjectContract(),
                     _helper.ConditionsInformation(),
-                    _helper.Procedure(),
+                    _configuration.ProcedureInformation != null ? _helper.Procedure() : null,
                     _notice.Type == Enums.NoticeType.SocialContractAward ? _helper.ContractAward() : null,
                     _helper.ComplementaryInformation()));
 

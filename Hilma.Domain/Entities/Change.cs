@@ -24,6 +24,7 @@ namespace Hilma.Domain.Entities
     [Contract]
     public class Change
     {
+
         /// <summary>
         /// Section from Ted attribute. Eg. I.1
         /// </summary>
@@ -55,9 +56,9 @@ namespace Hilma.Domain.Entities
         public CpvCode NewMainCpvCode { get; set; }
 
         /// <summary>
-        /// Main cpv code changes - old
+        /// Nuts codes (used in defence corrigendums) - new
         /// </summary>
-        public CpvCode OldMainCpvCode { get; set; }
+        public string[] NewNutsCodes { get; set; }
 
         /// <summary>
         /// Additional cpv code changes - new
@@ -65,9 +66,19 @@ namespace Hilma.Domain.Entities
         public List<CpvCode> NewAdditionalCpvCodes { get; set; }
 
         /// <summary>
+        /// Main cpv code changes - old
+        /// </summary>
+        public CpvCode OldMainCpvCode { get; set; }
+
+        /// <summary>
         /// Additional cpv code changes - old
         /// </summary>
         public List<CpvCode> OldAdditionalCpvCodes { get; set; }
+
+        /// <summary>
+        /// Nuts codes (used in defence corrigendums) - old
+        /// </summary>
+        public string[] OldNutsCodes { get; set; }
 
         /// <summary>
         /// Date changes - new

@@ -24,6 +24,7 @@ namespace Hilma.Domain.Entities
         ///     VI.3) Information on general regulatory framework
         ///     Tax legislation
         /// </summary>
+        [CorrigendumLabel("tax_legislation", "VI.3")]
         public string TaxLegislationUrl { get; set; }
 
         /// <summary>
@@ -36,6 +37,7 @@ namespace Hilma.Domain.Entities
         ///     VI.3) Information on general regulatory framework
         ///     Annex A II)
         /// </summary>
+        [CorrigendumLabel("tax_legislation_additional_info_provided", "VI.3")]
         public ContractBodyContactInformation TaxLegislation { get; set; }
 
         /// <summary>
@@ -43,6 +45,7 @@ namespace Hilma.Domain.Entities
         ///     VI.3) Information on general regulatory framework
         ///     Environmental protection legislation
         /// </summary>
+        [CorrigendumLabel("environmental_protection", "VI.3")]
         public string EnvironmentalProtectionUrl { get; set; }
 
         /// <summary>
@@ -56,6 +59,7 @@ namespace Hilma.Domain.Entities
         ///     Environmental protection legislation
         ///     Annex A III)
         /// </summary>
+        [CorrigendumLabel("environmental_protection_additional_info_provided", "VI.3")]
         public ContractBodyContactInformation EnvironmentalProtection { get; set; }
 
         /// <summary>
@@ -63,6 +67,7 @@ namespace Hilma.Domain.Entities
         ///     VI.3) Information on general regulatory framework
         ///     Employment protection and working conditions
         /// </summary>
+        [CorrigendumLabel("employment_protection", "VI.3")]
         public string EmploymentProtectionUrl { get; set; }
 
         /// <summary>
@@ -76,6 +81,7 @@ namespace Hilma.Domain.Entities
         ///     Employment protection and working conditions
         ///     Annex A IV)
         /// </summary>
+        [CorrigendumLabel("employment_protection_additional_info_provided", "VI.3")]
         public ContractBodyContactInformation EmploymentProtection { get; set; }
     }
 }

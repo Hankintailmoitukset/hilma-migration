@@ -72,6 +72,12 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         /// </summary>
         public DefenceCategory DefenceCategory { get; set; }
         /// <summary>
+        /// If defence contract award and DefenceCategory > 20, this should to be set.
+        /// true sets for eg. 21N
+        /// false or null sets for eg. 21Y
+        /// </summary>
+        public bool? DisagreeToPublishNoticeBasedOnDefenceServiceCategory4 { get; set; }
+        /// <summary>
         /// If NoticeType == NationalAgricultureContract and ContractType == Works
         /// </summary>
         public AgricultureWorks AgricultureWorks { get; set; }

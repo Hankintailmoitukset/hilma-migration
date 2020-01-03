@@ -26,6 +26,7 @@ namespace Hilma.Domain.Integrations.Configuration
         public EuFundsConfiguration EuFunds {get; set;} = new EuFundsConfiguration();
         public bool AdditionalInformation {get; set;} = false;
         public AwardConfiguration AwardContract {get; set;} = new AwardConfiguration();
+        public QualificationSystemDurationConfiguration QualificationSystemDuration {get; set;} = new QualificationSystemDurationConfiguration();
         public bool ValidationState {get; set;} = false;
     }
 }

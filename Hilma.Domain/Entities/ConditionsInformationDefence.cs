@@ -119,12 +119,14 @@ namespace Hilma.Domain.Entities
         /// III.2.4) Information about reserved contracts
         /// The contract is restricted to sheltered workshops
         /// </summary>
+        [CorrigendumLabel("restricted_sheltered_workshops", "III.2.4")]
         public bool RestrictedToShelteredWorkshops { get; set; }
 
         /// <summary>
         /// III.2.4) Information about reserved contracts
         /// The execution of the contract is restricted to the framework of sheltered employment programmes
         /// </summary>
+        [CorrigendumLabel("restricted_sheltered_program", "III.2.4")]
         public bool RestrictedToShelteredProgrammes { get; set; }
         #endregion
 

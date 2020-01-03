@@ -108,6 +108,23 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                         OptionsMonths = true,
                         OptionType = true,
                         VariantsWillBeAccepted = true
+                    },
+                    TotalQuantityOrScope = new ValueRangeContractConfiguration()
+                    {
+                        Value = true
+                    },
+                    TimeFrame= new TimeFrameConfiguration() {
+                        Type = true
+                    },
+                    Subcontract = new SubcontractingInformationConfiguration()
+                    {
+                        CaMayOblige = true,
+                        SuccessfulTenderer = true,
+                        SuccessfulTendererMax = true,
+                        SuccessfulTendererMin = true,
+                        SuccessfulTendererToSpecify = true,
+                        TendererHasToIndicateChange = true,
+                        TendererHasToIndicateShare = true
                     }
                 }
             },
@@ -121,12 +138,9 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 ReductionRecourseToReduceNumberOfSolutions = true,
                 ReserveRightToAwardWithoutNegotiations = true,
                 FrameworkAgreement = new FrameworkAgreementInformationConfiguration {
-                    DynamicPurchasingSystemInvolvesAdditionalPurchasers = true,
                     EnvisagedNumberOfParticipants = true,
                     FrameworkAgreementType = true,
-                    IncludesDynamicPurchasingSystem = true,
-                    IncludesFrameworkAgreement = true,
-                    JustificationForDurationOverFourYears = true
+                    IncludesFrameworkAgreement = true
                 }
             },
             TenderingInformation = new TenderingInformationConfiguration {
@@ -143,8 +157,7 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 },
                 Defence = new DefenceAdministrativeInformationConfiguration
                 {
-                    HasPreviousContractNoticeOjsNumber = true,
-                    HasPreviousExAnteOjsNumber = true,
+                    PreviousPriorInformationNoticeOjsNumber = new OjsNumberConfiguration { Number = true, Date = true },
                     Languages = true
                 }
             },

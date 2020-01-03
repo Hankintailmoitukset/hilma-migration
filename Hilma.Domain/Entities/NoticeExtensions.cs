@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.DataContracts.EtsContracts;
 using Hilma.Domain.Enums;
@@ -15,8 +19,10 @@ namespace Hilma.Domain.Entities
         /// <returns></returns>
         public static Notice CreateNotice(this EtsNoticeContract dto, string etsId)
         {
+            // NOTE(JanneF): If you edit this functionality, please also update /common/services/documentation.ts documentation generator!
             var rv = new Notice
             {
+                // 1:1
                 Type = dto.Type,
                 LegalBasis = dto.LegalBasis,
                 EtsIdentifier = etsId,
@@ -28,59 +34,89 @@ namespace Hilma.Domain.Entities
                 NoticeOjsNumber = dto.NoticeOjsNumber,
                 TenderingInformation = dto.TenderingInformation,
                 RewardsAndJury = dto.RewardsAndJury,
+                ResultsOfContest = dto.ResultsOfContest,
                 ProcedureInformation = dto.ProcedureInformation,
                 CommunicationInformation = dto.CommunicationInformation,
                 ContactPerson = dto.ContactPerson,
+
+                LotsInfo = dto.LotsInfo,
+                ObjectDescriptions = dto.ObjectDescriptions ?? new ObjectDescription[0],
+                IsCorrigendum = dto.IsCorrigendum,
+                Annexes = dto.Annexes,
+                CorrigendumAdditionalInformation = dto.CorrigendumAdditionalInformation,
+                Language = dto.Language,
+                ProceduresForReview = dto.ProceduresForReview,
+
+                // Flattened stuff
                 ProcurementObject = new ProcurementObject
                 {
                     ShortDescription = dto.ShortDescription,
                     EstimatedValue = dto.EstimatedValue,
+                    EstimatedValueCalculationMethod = dto.EstimatedValueCalculationMethod,
                     TotalValue = dto.TotalValue,
                     MainCpvCode = dto.MainCpvCode,
                     Defence = dto.Defence
                 },
-                LotsInfo = dto.LotsInfo,
-                ObjectDescriptions = dto.ObjectDescriptions,
                 Project = new ProcurementProjectContract
                 {
-                    Title = dto.Project.Title,
-                    ContractType = dto.Project.ContractType,
-                    ReferenceNumber = dto.Project.ReferenceNumber,
+                    Title = dto.Project?.Title,
+                    ContractType = dto.Project?.ContractType ?? ContractType.Undefined,
+                    ReferenceNumber = dto.Project?.ReferenceNumber,
                     State = PublishState.Draft,
-                    CoPurchasers = dto.Project.CoPurchasers,
+                    CoPurchasers = dto.Project?.CoPurchasers,
                     Organisation = new OrganisationContract
                     {
-                        Information = dto.Organisation.Information,
-                        ContractingAuthorityType = dto.Organisation.ContractingAuthorityType,
-                        OtherContractingAuthorityType = dto.Organisation.OtherContractingAuthorityType,
-                        MainActivity = dto.Organisation.MainActivity,
-                        OtherMainActivity = dto.Organisation.OtherMainActivity,
+                        Information = dto.Organisation?.Information,
+                        ContractingAuthorityType = dto.Organisation?.ContractingAuthorityType ?? ContractingAuthorityType.Undefined,
+                        OtherContractingAuthorityType = dto.Organisation?.OtherContractingAuthorityType,
+                        ContractingType = dto.Organisation?.ContractingType ?? ContractingType.Undefined,
+                        MainActivity = dto.Organisation?.MainActivity ?? MainActivity.Undefined,
+                        OtherMainActivity = dto.Organisation?.OtherMainActivity,
+                        MainActivityUtilities = dto.Organisation?.MainActivityUtilities ?? MainActivityUtilities.Undefined
                     },
-                    DefenceCategory = dto.Project.DefenceCategory,
-                    DefenceSupplies = dto.Project.DefenceSupplies,
-                    DefenceWorks = dto.Project.DefenceWorks,
-                    ProcurementCategory = dto.Project.ProcurementCategory,
-                    ProcurementLaw = dto.Project.ProcurementLaw,
-                    CentralPurchasing = dto.Project.CentralPurchasing,
-                    JointProcurement = dto.Project.JointProcurement,
-                    Publish = NoticeTypeExtensions.IsNational(dto.Type) ? PublishType.ToHilma : PublishType.ToTed,
+                    DefenceCategory = dto.Project?.DefenceCategory,
+                    DisagreeToPublishNoticeBasedOnDefenceServiceCategory4 = dto.Project?.DisagreeToPublishNoticeBasedOnDefenceServiceCategory4,
+                    DefenceSupplies = dto.Project?.DefenceSupplies ?? Supplies.Undefined,
+                    DefenceWorks = dto.Project?.DefenceWorks ?? Works.Undefined,
+                    ProcurementCategory = GetProcurementCategory( dto.LegalBasis, dto.Project?.ProcurementCategory ?? ProcurementCategory.Undefined ),
+                    ProcurementLaw = dto.Project?.ProcurementLaw ?? new string[0],
+                    CentralPurchasing = dto.Project?.CentralPurchasing ?? false,
+                    JointProcurement = dto.Project?.JointProcurement ?? false,
+                    Publish = dto.Type.IsNational() ? PublishType.ToHilma : PublishType.ToTed,
                     AgricultureWorks = dto.Project.AgricultureWorks
                 },
-                ProceduresForReview = dto.ProceduresForReview,
-                State = PublishState.Draft,
-                TedPublishState = TedPublishState.Undefined,
-                IsLatest = true,
                 AttachmentInformation = new AttachmentInformation()
                 {
                     Links = dto.Links ?? new Link[0]
                 },
-                IsCorrigendum = dto.IsCorrigendum,
-                Annexes = dto.Annexes,
-                CorrigendumAdditionalInformation = dto.CorrigendumAdditionalInformation,
-                Language = dto.Language
+
+                // mandatory setup
+                State = PublishState.Draft,
+                TedPublishState = TedPublishState.Undefined,
+                IsLatest = true,
             };
 
             return rv;
+        }
+
+        private static ProcurementCategory GetProcurementCategory(string legalBasis, ProcurementCategory procurementCategory)
+        {
+            if (procurementCategory != ProcurementCategory.Undefined)
+                return procurementCategory;
+            
+            switch (legalBasis)
+            {
+                case "32009L0081":
+                    return  ProcurementCategory.Defence;
+                case "32014L0023":
+                    return ProcurementCategory.Lisence;
+                case "32014L0025":
+                    return ProcurementCategory.Utility;
+                case "32014L0024":
+                    return ProcurementCategory.Public;
+                default:
+                    return ProcurementCategory.Public;
+            }
         }
 
         /// <summary>
@@ -114,7 +150,7 @@ namespace Hilma.Domain.Entities
             noticeEntity.ProcurementObject = dto.ProcurementObject;
             noticeEntity.ComplementaryInformation = dto.ComplementaryInformation;
             noticeEntity.TedPublishState = dto.TedPublishState;
-            noticeEntity.ObjectDescriptions = dto.ObjectDescriptions;
+            noticeEntity.ObjectDescriptions = dto.ObjectDescriptions ?? new ObjectDescription[0];
 
             noticeEntity.ConditionsInformation = dto.ConditionsInformation;
             noticeEntity.ConditionsInformationDefence = dto.ConditionsInformationDefence;
@@ -131,6 +167,7 @@ namespace Hilma.Domain.Entities
             noticeEntity.RewardsAndJury = dto.RewardsAndJury;
             noticeEntity.AttachmentInformation = dto.AttachmentInformation;
             noticeEntity.ContractAwardsDefence = dto.ContractAwardsDefence;
+            noticeEntity.ResultsOfContest = dto.ResultsOfContest;
             noticeEntity.HilmaStatistics = dto.HilmaStatistics;
             noticeEntity.Annexes = dto.Annexes;
  

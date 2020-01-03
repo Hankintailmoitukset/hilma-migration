@@ -17,7 +17,6 @@ namespace Hilma.Domain.Integrations.Configuration
         public bool Email {get; set;} = false;
         public bool ContactPerson {get; set;} = false;
         public bool MainUrl {get; set;} = false;
-        public bool BuyerProfileUrl {get; set;} = false;
         public bool ValidationState {get; set;} = false;
     }
 }

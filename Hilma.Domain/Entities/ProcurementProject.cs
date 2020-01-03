@@ -61,6 +61,11 @@ namespace Hilma.Domain.Entities
         public DefenceCategory DefenceCategory { get; set; }
 
         /// <summary>
+        /// If defence contract award and DefenceCategory > 20, this should to be set.
+        /// </summary>
+        public bool? DisagreeToPublishNoticeBasedOnDefenceServiceCategory4 {get; set;}
+
+        /// <summary>
         /// I.2.1) The contract involves join purchase.
         /// </summary>
         public bool JointProcurement { get; set; }
@@ -97,12 +102,29 @@ namespace Hilma.Domain.Entities
         [CorrigendumLabel("agriculture_works", "")]
         public AgricultureWorks AgricultureWorks { get; set; }
 
+        /// <summary>
+        /// If project is private (salainen)
+        /// Normally projects that have not been published can be viewed by all employees.
+        /// Not published notices still cannot be viewed by all employees (collabs only).
+        /// Private projects are visible only to collaborators, until a notice is published.
+        /// </summary>
+        public bool IsPrivate { get; set; }
+
+        /// <summary>
+        /// Is procurement concluded
+        /// Affects how the procurement is shown to the user
+        /// </summary>
+        public bool IsConcluded { get; set; }
+
         #region Navigation
         public User Creator { get; set; }
         public Guid? CreatorId { get; set; }
 
         public EtsUser EtsCreator { get; set; }
         public Guid? EtsCreatorId { get; set; }
+
+        public Organisation OwningOrganisation { get; set; }
+        public Guid? OwningOrganisationId { get; set; }
         #endregion
 
         #region Methods
@@ -136,6 +158,10 @@ namespace Hilma.Domain.Entities
             Title = dto.Title; 
             ReferenceNumber = dto.ReferenceNumber;
             Organisation = dto.Organisation;
+
+            if (dto.Organisation?.Id != Guid.Empty) {
+                OwningOrganisationId = dto.Organisation?.Id;
+            }
             CoPurchasers = dto.CoPurchasers;
             CentralPurchasing = dto.CentralPurchasing;
             ProcurementLaw = dto.ProcurementLaw;
@@ -143,10 +169,13 @@ namespace Hilma.Domain.Entities
             ContractType = dto.ContractType;
             ProcurementCategory = dto.ProcurementCategory;
             DefenceCategory = dto.DefenceCategory;
+            DisagreeToPublishNoticeBasedOnDefenceServiceCategory4 = dto.DisagreeToPublishNoticeBasedOnDefenceServiceCategory4;
             DefenceSupplies = dto.DefenceSupplies;
             DefenceWorks = dto.DefenceWorks;
             Publish = dto.Publish;
             AgricultureWorks = dto.AgricultureWorks;
+            IsPrivate = dto.IsPrivate;
+            IsConcluded = dto.IsConcluded;
 
             return this;
         }

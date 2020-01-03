@@ -17,6 +17,8 @@ namespace Hilma.Domain.SearchContracts
 
         [IsSortable, IsFilterable]
         public DateTime? DatePublished { get; set; }
+        [IsSortable, IsFilterable]
+        public DateTime? DateModified { get; set; }
 
         [IsFilterable]
         public int? ProcurementProjectId { get; set; }

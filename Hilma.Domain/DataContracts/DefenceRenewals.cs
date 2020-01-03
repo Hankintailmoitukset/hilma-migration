@@ -18,6 +18,7 @@ namespace Hilma.Domain.DataContracts
         /// <summary>
         /// If number of renewals is set exactly or by range
         /// </summary>
+        [CorrigendumLabel("possible_renewals", "II.2.3")]
         public ValueRangeContract Amount { get; set; }
 
         /// <summary>

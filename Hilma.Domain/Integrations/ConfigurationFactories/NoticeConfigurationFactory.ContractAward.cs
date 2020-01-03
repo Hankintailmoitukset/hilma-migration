@@ -87,11 +87,11 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 },
                 CandidateNumberRestrictions = new CandidateNumberRestrictionsConfiguration
                 {
-                    EnvisagedNumber = true,
-                    EnvisagedMinimumNumber = true,
-                    EnvisagedMaximumNumber = true,
-                    ObjectiveCriteriaForChoosing = true,
-                    Selected = true
+                    EnvisagedNumber = false,
+                    EnvisagedMinimumNumber = false,
+                    EnvisagedMaximumNumber = false,
+                    ObjectiveCriteriaForChoosing = false,
+                    Selected = false
                 },
                 OptionsAndVariants = new OptionsAndVariantsConfiguration
                 {
@@ -148,6 +148,24 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 {
                     Description = true,
                     Url = true
+                }
+            },
+            Annexes = new AnnexConfiguration
+            {
+                D1 = new AnnexD1Configuration
+                {
+                    NoTenders = true,
+                    SuppliesManufacturedForResearch = true,
+                    ProvidedByOnlyParticularOperator = true,
+                    ExtremeUrgency = true,
+                    AdditionalDeliveries = true,
+                    RepetitionExisting = true,
+                    DesignContestAward = true,
+                    CommodityMarket = true,
+                    AdvantageousTerms = true,
+                    AdvantageousPurchaseReason = true,
+                    Justification = true,
+                    ReasonForNoCompetition = true
                 }
             }
         };

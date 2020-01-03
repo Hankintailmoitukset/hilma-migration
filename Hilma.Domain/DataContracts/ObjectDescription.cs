@@ -128,6 +128,11 @@ namespace Hilma.Domain.DataContracts
         public Award AwardContract { get; set; }
 
         /// <summary>
+        /// Duration of the qualification system
+        /// </summary>
+        public QualificationSystemDuration QualificationSystemDuration { get; set; }
+
+        /// <summary>
         ///     Validation state 
         /// </summary>
         public ValidationState ValidationState { get; set; }

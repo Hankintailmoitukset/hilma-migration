@@ -9,19 +9,6 @@ namespace Hilma.Domain.Integrations.Extensions
 {
     public static class EnumExtensions
     {
-        public static string ToTEDFormat(this PreviousContractType type)
-        {
-            switch (type)
-            {
-                case PreviousContractType.BuyerProfile:
-                    return "NOTICE_BUYER_PROFILE";
-                case PreviousContractType.PriorInformation:
-                    return "PRIOR_INFORMATION_NOTICE";
-                default:
-                    return "";
-            }
-        }
-
         public static string ToTEDFormat(this ContractingAuthorityType type)
         {
             switch (type)
@@ -171,72 +158,7 @@ namespace Hilma.Domain.Integrations.Extensions
             }
         }
 
-        public static string ToTEDChangeFormat(this LotsSubmittedFor type)
-        {
-            switch (type)
-            {
-                case LotsSubmittedFor.LotsAll:
-                    return "lots_all";
-                case LotsSubmittedFor.LotsMax:
-                    return "lots_max";
-                case LotsSubmittedFor.LotOneOnly:
-                    return "lot_one_only";
-                default:
-                    return "";
-            }
-        }
-        public static string ToTEDChangeFormat(this AwardCriterionType type)
-        {
-            switch (type)
-            {
-                case AwardCriterionType.QualityCriterion:
-                    return "quality_criterion";
-                case AwardCriterionType.CostCriterion:
-                    return "cost_criterion";
-                case AwardCriterionType.CostAndQualityCriteria:
-                    return "cost_and_quality_criteria";
-                case AwardCriterionType.PriceCriterion:
-                    return "price_criterion";
-                case AwardCriterionType.PriceAndQualityCriteria:
-                    return "price_and_quality_criteria";
-                case AwardCriterionType.DescriptiveCriteria:
-                    return "descriptive_criteria";
-                case AwardCriterionType.AwardCriteriaDescrBelow:
-                    return "award_criteria_descr_below";
-                case AwardCriterionType.AwardCriteriaInDocs:
-                    return "award_criteria_in_docs";
-                default:
-                    return "";
-            }
-        }
-        public static string ToTEDChangeFormat(this ProcurementDocumentAvailability type)
-        {
-            switch (type)
-            {
-                case ProcurementDocumentAvailability.AddressObtainDocs:
-                    return "address_obtain_docs";
-                case ProcurementDocumentAvailability.DocsRestricted:
-                    return "docs_restricted";
-                case ProcurementDocumentAvailability.OrganisationAddress:
-                    return "organisation_address";
-                case ProcurementDocumentAvailability.OtherAddress:
-                    return "other_address";
-                default:
-                    return "";
-            }
-        }
-        public static string ToTEDChangeFormat(this AdditionalInformationAvailability type)
-        {
-            switch (type)
-            {
-                case AdditionalInformationAvailability.AddressToAbove:
-                    return "address_to_above";
-                case AdditionalInformationAvailability.AddressAnother:
-                    return "address_another";
-                default:
-                    return "";
-            }
-        }
+
         public static string ToTEDChangeFormat(this TenderSendOptions type)
         {
             switch (type)
@@ -253,117 +175,7 @@ namespace Hilma.Domain.Integrations.Extensions
                     return "";
             }
         }
-        public static string ToTEDChangeFormat(this ContractType type)
-        {
-            switch (type)
-            {
-                case ContractType.Supplies:
-                    return "supplies";
-                case ContractType.SocialServices:
-                case ContractType.Services:
-                    return "services";
-                case ContractType.Works:
-                    return "works";
-                default:
-                    return "";
-            }
-        }
-        public static string ToTEDChangeFormat(this ContractingAuthorityType type)
-        {
-            switch (type)
-            {
-                case ContractingAuthorityType.MaintypeMinistry:
-                    return "maintype_ministry";
-                case ContractingAuthorityType.MaintypeNatagency:
-                    return "maintype_natagency";
-                case ContractingAuthorityType.MaintypeLocalauth:
-                    return "maintype_localauth";
-                case ContractingAuthorityType.MaintypeLocalagency:
-                    return "maintype_localagency";
-                case ContractingAuthorityType.MaintypePublicbody:
-                    return "maintype_publicbody";
-                case ContractingAuthorityType.MaintypeEu:
-                    return "maintype_eu";
-                case ContractingAuthorityType.OtherType:
-                    return "other_type";
-                default:
-                    return "";
-            }
-        }
 
-        public static string ToTEDChangeFormat(this MainActivity activity)
-        {
-            switch (activity)
-            {
-                case MainActivity.MainactivGeneral:
-                    return "mainactiv_general";
-                case MainActivity.MainactivDefence:
-                    return "mainactiv_defence";
-                case MainActivity.MainactivEconomic:
-                    return "mainactiv_economic";
-                case MainActivity.MainactivEducation:
-                    return "mainactiv_education";
-                case MainActivity.MainactivEnvironment:
-                    return "mainactiv_environment";
-                case MainActivity.MainactivHealth:
-                    return "mainactiv_health";
-                case MainActivity.MainactivHousing:
-                    return "mainactiv_housing";
-                case MainActivity.MainactivSafety:
-                    return "mainactiv_safety";
-                case MainActivity.MainactivCulture:
-                    return "mainactiv_culture";
-                case MainActivity.MainactivSocial:
-                    return "mainactiv_social";
-                case MainActivity.OtherActivity:
-                    return "other_activity";
-                default:
-                    return "";
-            }
-        }
-        public static string ToTEDChangeFormat(this MainActivityUtilities activity)
-        {
-            switch (activity)
-            {
-                case MainActivityUtilities.MainactivGasProduct:
-                    return "mainactiv_gas_product";
-                case MainActivityUtilities.MainactivElectricity:
-                    return "mainactiv_electricity";
-                case MainActivityUtilities.MainactivGasExplor:
-                    return "mainactiv_gas_explor";
-                case MainActivityUtilities.MainactivCoal:
-                    return "mainactiv_coal";
-                case MainActivityUtilities.MainactivWater:
-                    return "mainactiv_water";
-                case MainActivityUtilities.MainactivPostal:
-                    return "mainactiv_postal";
-                case MainActivityUtilities.MainactivRailway:
-                    return "mainactiv_railway";
-                case MainActivityUtilities.MainactivBus:
-                    return "mainactiv_bus";
-                case MainActivityUtilities.MainactivPort:
-                    return "mainactiv_port";
-                case MainActivityUtilities.MainactivAirportrelated:
-                    return "mainactiv_airportrelated";
-                case MainActivityUtilities.OtherActivity:
-                    return "other_activity";
-                default:
-                    return "";
-            }
-        }
-
-        public static string ToTEDChangeFormat(this ModificationReason reason)
-        {
-            switch (reason)
-            {
-                case ModificationReason.ModNeedByCircums:
-                    return "mod_need_by_circums";
-                case ModificationReason.ModNeedForAdditional:
-                    return "mod_need_for_additional";
-                default:
-                    return "";
-            }
-        }
         public static string ToTEDChangeFormat(this ContractAwarded type)
         {
             switch (type)
@@ -372,58 +184,6 @@ namespace Hilma.Domain.Integrations.Extensions
                     return "yes";
                 case ContractAwarded.NoAwardedContract:
                     return "no";
-                default:
-                    return "";
-            }
-        }
-        public static string ToTEDChangeFormat(this ProcurementFailureReason type)
-        {
-            switch (type)
-            {
-                case ProcurementFailureReason.AwardDiscontinued:
-                    return "award_discontinued";
-                case ProcurementFailureReason.AwardNoTenders:
-                    return "award_no_tenders";
-                default:
-                    return "";
-            }
-        }
-
-        /// <summary>
-        /// Reason/Justification for advantageous purchase on F15.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static string ToTedChangeFormat(this AdvantageousPurchaseReason type)
-        {
-            switch (type)
-            {
-                case AdvantageousPurchaseReason.DFromWindingSupplier:
-                    return "d_from_winding_provider";
-                case AdvantageousPurchaseReason.DFromReceivers:
-                    return "d_from_liquidator_creditor";
-                default:
-                    return "";
-            }
-        }
-
-        /// <summary>
-        /// Enumeration for annex reasons for no competition.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static string ToTEDChangeFormat(this ReasonForNoCompetition type)
-        {
-            switch (type)
-            {
-                case ReasonForNoCompetition.DTechnical:
-                    return "d_technical";
-                case ReasonForNoCompetition.DArtistic:
-                    return "d_artistic";
-                case ReasonForNoCompetition.DExistenceExclusive:
-                    return "d_exclusive_rights";
-                case ReasonForNoCompetition.DProtectRights:
-                    return "d_protect_rights";
                 default:
                     return "";
             }

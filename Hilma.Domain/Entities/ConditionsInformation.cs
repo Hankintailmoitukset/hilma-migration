@@ -1,4 +1,5 @@
 using Hilma.Domain.Attributes;
+using Hilma.Domain.DataContracts;
 using Hilma.Domain.Enums;
 
 namespace Hilma.Domain.Entities
@@ -121,6 +122,11 @@ namespace Hilma.Domain.Entities
         //[StringMaxLength(1500)]
         public string[] LegalFormTaken { get; set; }
         #endregion
+
+        /// <summary>
+        /// III.1.9) Qualification for the system (summary of the main conditions and methods)
+        /// </summary>
+        public QualificationSystemCondition[] QualificationSystemConditions { get; set; }
 
         #region III.1.10) Criteria for the selection of participants: 2 (in the case of a restricted contest)
         /// <summary>

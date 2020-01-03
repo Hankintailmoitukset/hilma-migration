@@ -9,8 +9,7 @@ namespace Hilma.Domain.Integrations.Configuration
         
         
         public bool PreviousPublicationExists {get; set;} = false;
-        public bool PreviousContractType {get; set;} = false;
-        public OjsNumberConfiguration PreviousNoticeOjsNumber {get; set;} = new OjsNumberConfiguration();
+        public OjsNumberConfiguration PreviousPriorInformationNoticeOjsNumber {get; set;} = new OjsNumberConfiguration();
         public bool HasPreviousContractNoticeOjsNumber {get; set;} = false;
         public OjsNumberConfiguration PreviousContractNoticeOjsNumber {get; set;} = new OjsNumberConfiguration();
         public bool HasPreviousExAnteOjsNumber {get; set;} = false;
