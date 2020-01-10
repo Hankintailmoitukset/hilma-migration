@@ -40,7 +40,8 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             ObjectDescriptions = dbo.ObjectDescriptions;
             NoticeOjsNumber = dbo.NoticeOjsNumber;
             PreviousNoticeOjsNumber = dbo.PreviousNoticeOjsNumber;
-            Project = new EtsProjectContract {
+            Project = new EtsProjectContract
+            {
                 Id = dbo.Project.Id,
                 ContractType = dbo.Project.ContractType,
                 ReferenceNumber = dbo.Project.ReferenceNumber,
@@ -82,7 +83,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             CorrigendumAdditionalInformation = dbo.CorrigendumAdditionalInformation;
             ContractAwardsDefence = dbo.ContractAwardsDefence;
         }
-      
+
         /// <summary>
         /// Total value of the procurement
         /// </summary>
@@ -131,7 +132,9 @@ namespace Hilma.Domain.DataContracts.EtsContracts
                 ContractingType = dto.Project.Organisation.ContractingType,
                 MainActivity = dto.Project.Organisation.MainActivity,
                 OtherContractingAuthorityType = dto.Project.Organisation.OtherContractingAuthorityType,
-                OtherMainActivity = dto.Project.Organisation.OtherMainActivity
+                OtherMainActivity = dto.Project.Organisation.OtherMainActivity,
+                MainActivityUtilities = dto.Project.Organisation.MainActivityUtilities
+
             };
             ShortDescription = dto.ProcurementObject.ShortDescription;
             TenderingInformation = dto.TenderingInformation;
