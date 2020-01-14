@@ -22,7 +22,7 @@ namespace Hilma.Domain.DataContracts
         /// Lot number. Needed for corrigendums
         /// </summary>
         [CorrigendumLabel("lot_number", "II.2.1")]
-        public int LotNumber { get; set; }
+        public string LotNumber { get; set; }
 
         /// <summary>
         /// Directive 2009/81/EC

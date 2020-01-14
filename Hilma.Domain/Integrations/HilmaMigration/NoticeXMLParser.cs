@@ -37,7 +37,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
                 if (formElement == null)
                 {
-                  throw new Exception("Form element could not be resolved");
+                    throw new Exception("Form element could not be resolved");
                 }
 
                 var noticeNumber = importedNotice.NoticeNumber;
@@ -119,7 +119,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 CorrigendumPreviousNoticeNumber = complementaryInfo?.Element("NO_DOC_EXT")?.Value,
                 IsCorrigendum = isCorrigendum,
                 Annexes = ParseAnnex(procedure),
-                Modifications = ParseEuModifications(formElement?.Element("MODIFICATIONS_CONTRACT"),_nutsSchema)
+                Modifications = ParseEuModifications(formElement?.Element("MODIFICATIONS_CONTRACT"), _nutsSchema)
 
             };
 
@@ -140,13 +140,14 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             return new Modifications()
             {
                 AdditionalCpvCodes = ParseAdditionalCpvCodes(descriptionProcurement),
-                AwardedToGroupOfEconomicOperators = descriptionProcurement?.Element("CONTRACTORS")?.Element("AWARDED_TO_GROUP") !=null,
+                AwardedToGroupOfEconomicOperators = descriptionProcurement?.Element("CONTRACTORS")?.Element("AWARDED_TO_GROUP") != null,
                 Contractors = new List<ContractorContactInformation> {
                      ParseContractor(descriptionProcurement?.Element("CONTRACTORS")?.Element("CONTRACTOR")?.Element("ADDRESS_CONTRACTOR"))
                 },
                 Description = ParsePElements(modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("SHORT_DESCR")),
-                DescrProcurement = ParsePElements(descriptionProcurement?.Element("SHORT_DESCR")) ,
-                IncreaseBeforeModifications = new ValueContract() {
+                DescrProcurement = ParsePElements(descriptionProcurement?.Element("SHORT_DESCR")),
+                IncreaseBeforeModifications = new ValueContract()
+                {
                     Currency = modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("VALUES")?.Element("VAL_TOTAL_BEFORE")?.Attribute("CURRENCY")?.Value,
                     Value = ParseDecimal(modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("VALUES")?.Element("VAL_TOTAL_BEFORE")?.Value)
                 },
@@ -158,13 +159,14 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 JustificationForDurationOverEightYears = ParsePElements(descriptionProcurement?.Element("JUSTIFICATION")),
                 JustificationForDurationOverFourYears = ParsePElements(descriptionProcurement?.Element("JUSTIFICATION")),
                 MainCpvCode = ParseCpvCode(descriptionProcurement),
-                MainsiteplaceWorksDelivery =ParsePElements(descriptionProcurement?.Element("MAIN_SITE")),
-                NutsCodes= ParseNutsCodes(nutsSchema, descriptionProcurement),
-                Reason = modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("ADDITIONAL_NEED") !=null? ModificationReason.ModNeedForAdditional: ModificationReason.ModNeedByCircums,
-                ReasonDescriptionCircumstances = ParsePElements(modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("UNFORESEEN_CIRCUMSTANCE")) ,
+                MainsiteplaceWorksDelivery = ParsePElements(descriptionProcurement?.Element("MAIN_SITE")),
+                NutsCodes = ParseNutsCodes(nutsSchema, descriptionProcurement),
+                Reason = modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("ADDITIONAL_NEED") != null ? ModificationReason.ModNeedForAdditional : ModificationReason.ModNeedByCircums,
+                ReasonDescriptionCircumstances = ParsePElements(modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("UNFORESEEN_CIRCUMSTANCE")),
                 ReasonDescriptionEconomic = ParsePElements(modificationsContract?.Element("INFO_MODIFICATIONS")?.Element("ADDITIONAL_NEED")),
                 TimeFrame = ParseTimeFrame(descriptionProcurement),
-                TotalValue = new ValueContract() {
+                TotalValue = new ValueContract()
+                {
                     Currency = descriptionProcurement?.Element("VALUES")?.Element("VAL_TOTAL")?.Attribute("CURRENCY")?.Value,
                     Value = ParseDecimal(descriptionProcurement?.Element("VALUES")?.Element("VAL_TOTAL")?.Value)
                 },
@@ -197,7 +199,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 CreatorId = null,
                 NoticeNumber = noticeNumber,
                 Language = "FI",
-                Type = noticeType == NoticeType.NationalDirectAward? noticeType:  ParseNationalNoticeType(domesticNoticeType.Elements().First().Name.LocalName),
+                Type = noticeType == NoticeType.NationalDirectAward ? noticeType : ParseNationalNoticeType(domesticNoticeType.Elements().First().Name.LocalName),
                 ContactPerson = ParseContactPerson(domesticNameAddresses),
                 IsLatest = true,
                 Project = new ProcurementProjectContract()
@@ -229,7 +231,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     EstimatedValue = ParseNationalEstimatedValue(domesticObjectContract),
                     ValidationState = ValidationState.Valid
                 },
-                ObjectDescriptions =  ParseNationalObjectDescriptions(_nutsSchema, domesticContract, domesticContractRC, domesticObjectContract).ToArray(), 
+                ObjectDescriptions = ParseNationalObjectDescriptions(_nutsSchema, domesticContract, domesticContractRC, domesticObjectContract).ToArray(),
                 ProcedureInformation = new ProcedureInformation()
                 {
                     ProcedureType = ParseNationalProcedureTypes(domesticProcedureDefinition?.Element("DOMESTIC_TYPE_OF_PROCEDURE")),
@@ -240,7 +242,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     National = new ProcedureInformationNational()
                     {
                         OtherProcedure = ParsePElements(domesticProcedureDefinition?.Element("DOMESTIC_PROCEDURE_DEFINITION")),
-                        AdditionalProcedureInformation = ParsePElements(domesticContractRC?.Element("SELECTION_CRITERIA_INFORMATION")?? domesticProcedureDefinition?.Element("ADDITIONAL_INFORMATION")),
+                        AdditionalProcedureInformation = ParsePElements(domesticContractRC?.Element("SELECTION_CRITERIA_INFORMATION") ?? domesticProcedureDefinition?.Element("ADDITIONAL_INFORMATION")),
                     }
                 },
                 ConditionsInformationNational = new ConditionsInformationNational()
@@ -301,7 +303,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
         private NoticeContract ParseDefenceNotices(XElement formElement, string noticeNumber, INoticeImportModel importedNotice, NoticeType noticeType, bool isCorrigendum)
         {
             var prefix = noticeType == NoticeType.DefenceContract ? "_CONTRACT" : "_CONTRACT_AWARD";
-            var prefix1 = noticeType == NoticeType.DefenceContractAward ? "_AWARD": "";
+            var prefix1 = noticeType == NoticeType.DefenceContractAward ? "_AWARD" : "";
             var prefix2 = noticeType == NoticeType.DefenceContractAward ? "_CONTRACT_AWARD" : "";
             var prefix3 = noticeType == NoticeType.DefenceContractAward ? "_CONTRACT_AWARD_NOTICE" : "";
             var prefix4 = noticeType == NoticeType.DefenceContractAward ? "AWARD" : "NOTICE";
@@ -311,7 +313,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             var prefix8 = noticeType == NoticeType.DefenceContractAward ? "F18_" : "";
             var prefix9 = noticeType == NoticeType.DefenceContractAward ? "_DEFENCE" : "";
 
-            
+
             var defenceContract = formElement.Element($"FD{prefix}_DEFENCE");
             var defenceAuthorityInformation = defenceContract?.Element($"CONTRACTING_AUTHORITY_INFORMATION{prefix2}_DEFENCE");
             var defenceNameAdress = defenceAuthorityInformation?.Element($"NAME_ADDRESSES_CONTACT_CONTRACT{prefix1}");
@@ -320,7 +322,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             var defenceProcedureDefinitonContract = defenceContract?.Element($"PROCEDURE_DEFINITION_CONTRACT{prefix1}_NOTICE_DEFENCE");
             var defenceCcomplimentaryInformation = defenceContract?.Element($"COMPLEMENTARY_INFORMATION_CONTRACT_{prefix4}");
             var reviewBody = defenceCcomplimentaryInformation?.Element("PROCEDURES_FOR_APPEAL")?.Element("APPEAL_PROCEDURE_BODY_RESPONSIBLE")?.Element("CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME");
-            var administrativeInformationContractNoticeDefence = defenceProcedureDefinitonContract?.Element($"ADMINISTRATIVE_INFORMATION_CONTRACT_{prefix4}_DEFENCE");            
+            var administrativeInformationContractNoticeDefence = defenceProcedureDefinitonContract?.Element($"ADMINISTRATIVE_INFORMATION_CONTRACT_{prefix4}_DEFENCE");
             var concessionaireProfile = defenceNameAdress?.Element("CA_CE_CONCESSIONAIRE_PROFILE");
             var organisationInformation = ParseContractingBodyInformation(_nutsSchema, concessionaireProfile);
             var ContractRC = defenceLeftiContract?.Element("CONTRACT_RELATING_CONDITIONS");
@@ -329,7 +331,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             var typeAndActivities = defenceAuthorityInformation?.Element("TYPE_AND_ACTIVITIES_OR_CONTRACTING_ENTITY_AND_PURCHASING_ON_BEHALF")?.Element("TYPE_AND_ACTIVITIES");
             var typeOfProcedure = defenceProcedureDefinitonContract?.Element($"TYPE_OF_PROCEDURE{prefix2}_DEFENCE");
             var awardOfContractDefence = defenceContract?.Element("AWARD_OF_CONTRACT_DEFENCE");
-            var previousPublicationExist =  administrativeInformationContractNoticeDefence?.Element("PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F18")?.Element("PREVIOUS_PUBLICATION_EXISTS_F18");
+            var previousPublicationExist = administrativeInformationContractNoticeDefence?.Element("PREVIOUS_PUBLICATION_INFORMATION_NOTICE_F18")?.Element("PREVIOUS_PUBLICATION_EXISTS_F18");
 
 
             var notice = new NoticeContract()
@@ -353,16 +355,16 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     {
                         Information = organisationInformation,
                         ContractingAuthorityType = FromTEDFormatContractingAuthorityType(typeAndActivities?.Element("TYPE_OF_CONTRACTING_AUTHORITY")?.Attribute("VALUE")?.Value != null ?
-                        typeAndActivities?.Element("TYPE_OF_CONTRACTING_AUTHORITY")?.Attribute("VALUE")?.Value: typeAndActivities?.Element("TYPE_OF_CONTRACTING_AUTHORITY_OTHER")?.Attribute("VALUE")?.Value),
+                        typeAndActivities?.Element("TYPE_OF_CONTRACTING_AUTHORITY")?.Attribute("VALUE")?.Value : typeAndActivities?.Element("TYPE_OF_CONTRACTING_AUTHORITY_OTHER")?.Attribute("VALUE")?.Value),
 
                         OtherContractingAuthorityType = defenceAuthorityInformation?.Element("TYPE_OF_CONTRACTING_AUTHORITY")?.Element("OTHER")?.Value != null ?
-                                                        defenceAuthorityInformation?.Element("TYPE_OF_CONTRACTING_AUTHORITY")?.Element("OTHER")?.Value:
+                                                        defenceAuthorityInformation?.Element("TYPE_OF_CONTRACTING_AUTHORITY")?.Element("OTHER")?.Value :
                                                         typeAndActivities?.Element("TYPE_OF_CONTRACTING_AUTHORITY_OTHER")?.Value,
 
                         MainActivity = FromTEDFormatMainActivity(typeAndActivities?.Element("TYPE_OF_ACTIVITY") != null ? typeAndActivities?.Element("TYPE_OF_ACTIVITY")?.Attribute("VALUE")?.Value : typeAndActivities?.Element("TYPE_OF_ACTIVITY_OTHER")?.Attribute("VALUE")?.Value),
 
                         OtherMainActivity = typeAndActivities?.Element("TYPE_OF_ACTIVITY_OTHER")?.Value,
-                        
+
                         ValidationState = ValidationState.Valid
                     },
                     ProcurementCategory = ProcurementCategory.Defence,
@@ -397,7 +399,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     EstimatedValue = ParseNationalEstimatedValue(descriptionContractInformation),
 
                     TotalValue = ParseValueRangeContract(
-                        valueElement: defenceContractInformation?.Element("TOTAL_FINAL_VALUE")?.Element("VALUE_COST") !=null ?
+                        valueElement: defenceContractInformation?.Element("TOTAL_FINAL_VALUE")?.Element("VALUE_COST") != null ?
                             defenceContractInformation?.Element("TOTAL_FINAL_VALUE")?.Element("VALUE_COST") :
                             defenceContractInformation?.Element("TOTAL_FINAL_VALUE")?.Element("COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE"),
                         rangeElement:
@@ -462,7 +464,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     Defence = new ProcedureInformationDefence()
                     {
                         AwardCriteria = ParseDefenceAwardCriteria(defenceProcedureDefinitonContract),
-                        CandidateNumberRestrictions = new CandidateNumberRestrictions() {
+                        CandidateNumberRestrictions = new CandidateNumberRestrictions()
+                        {
                             EnvisagedMaximumNumber = ParseInt(defenceProcedureDefinitonContract?.Element("TYPE_OF_PROCEDURE_DEFENCE")?.Element("MAXIMUM_NUMBER_INVITED")?.Element("OPE_MAXIMUM_NUMBER")?.Value),
                             EnvisagedMinimumNumber = ParseInt(defenceProcedureDefinitonContract?.Element("TYPE_OF_PROCEDURE_DEFENCE")?.Element("MAXIMUM_NUMBER_INVITED")?.Element("OPE_MINIMUM_NUMBER")?.Value),
                             EnvisagedNumber = ParseInt(defenceProcedureDefinitonContract?.Element("TYPE_OF_PROCEDURE_DEFENCE")?.Element("MAXIMUM_NUMBER_INVITED")?.Element("OPE_ENVISAGED_NUMBER")?.Value),
@@ -477,9 +480,9 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     },
                     JustificationForAcceleratedProcedure = ParsePElements(defenceProcedureDefinitonContract?.Element("TYPE_OF_PROCEDURE_DEFENCE")?.Element("TYPE_OF_PROCEDURE_DETAIL_FOR_CONTRACT_NOTICE_DEFENCE")?.Element("PT_ACCELERATED_RESTRICTED_CHOICE")?.Element("PTAR_JUSTIFICATION")),
                     AcceleratedProcedure = ParseDefenceAcceleratedProcedure(defenceProcedureDefinitonContract),
-                    ElectronicAuctionWillBeUsed = defenceProcedureDefinitonContract.Element($"AWARD_CRITERIA_CONTRACT{prefix1}_NOTICE_INFORMATION{prefix9}")?.Element($"{prefix8}IS_ELECTRONIC_AUCTION_USABLE")?.Attribute("VALUE")?.Value == "YES" 
+                    ElectronicAuctionWillBeUsed = defenceProcedureDefinitonContract.Element($"AWARD_CRITERIA_CONTRACT{prefix1}_NOTICE_INFORMATION{prefix9}")?.Element($"{prefix8}IS_ELECTRONIC_AUCTION_USABLE")?.Attribute("VALUE")?.Value == "YES"
                 },
-                
+
                 ConditionsInformationNational = new ConditionsInformationNational()
                 {
                     ParticipantSuitabilityCriteria = ParsePElements(ContractRC?.Element("SELECTION_CRITERIA")),
@@ -498,25 +501,28 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                             Value = ParseDecimal(administrativeInformationContractNoticeDefence?.Element("CONDITIONS_OBTAINING_SPECIFICATIONS")?.Element("DOCUMENT_COST")?.Value)
                         },
 
-                        PreviousPriorInformationNoticeOjsNumber = new OjsNumber() {
+                        PreviousPriorInformationNoticeOjsNumber = new OjsNumber()
+                        {
                             Number = previousPublicationExist?.Element("PREVIOUS_PUBLICATION_NOTICE_F18")?.Element("NOTICE_NUMBER_OJ")?.Value,
                             Date = ParseDateTimeFromElements(previousPublicationExist?.Element("PREVIOUS_PUBLICATION_NOTICE_F18")?.Element("DATE_OJ"))
                         },
-                       // PreviousContractType = FromTEDFormatPreviousContractType(previousPublicationExist?.Element("PREVIOUS_PUBLICATION_NOTICE_F18")?.Element("PREVIOUS_NOTICE_BUYER_PROFILE_F18")?.Attribute("CHOICE")?.Value),
+                        // PreviousContractType = FromTEDFormatPreviousContractType(previousPublicationExist?.Element("PREVIOUS_PUBLICATION_NOTICE_F18")?.Element("PREVIOUS_NOTICE_BUYER_PROFILE_F18")?.Attribute("CHOICE")?.Value),
 
-                        HasPreviousExAnteOjsNumber = previousPublicationExist?.Element("EX_ANTE_NOTICE_INFORMATION")!=null,
-                         PreviousExAnteOjsNumber = new OjsNumber() {
-                             Number= previousPublicationExist?.Element("EX_ANTE_NOTICE_INFORMATION")?.Element("NOTICE_NUMBER_OJ")?.Value,
-                             Date = ParseDateTimeFromElements(previousPublicationExist?.Element("EX_ANTE_NOTICE_INFORMATION")?.Element("DATE_OJ"))
-                         } ,
-                        
+                        HasPreviousExAnteOjsNumber = previousPublicationExist?.Element("EX_ANTE_NOTICE_INFORMATION") != null,
+                        PreviousExAnteOjsNumber = new OjsNumber()
+                        {
+                            Number = previousPublicationExist?.Element("EX_ANTE_NOTICE_INFORMATION")?.Element("NOTICE_NUMBER_OJ")?.Value,
+                            Date = ParseDateTimeFromElements(previousPublicationExist?.Element("EX_ANTE_NOTICE_INFORMATION")?.Element("DATE_OJ"))
+                        },
+
                         HasPreviousContractNoticeOjsNumber = previousPublicationExist?.Element("CNT_NOTICE_INFORMATION_F18") != null,
-                        PreviousContractNoticeOjsNumber = new OjsNumber() {
-                             Number = previousPublicationExist?.Element("CNT_NOTICE_INFORMATION_F18")?.Element("NOTICE_NUMBER_OJ")?.Value,
-                             Date = ParseDateTimeFromElements(previousPublicationExist?.Element("CNT_NOTICE_INFORMATION_F18")?.Element("DATE_OJ"))
-                         },
+                        PreviousContractNoticeOjsNumber = new OjsNumber()
+                        {
+                            Number = previousPublicationExist?.Element("CNT_NOTICE_INFORMATION_F18")?.Element("NOTICE_NUMBER_OJ")?.Value,
+                            Date = ParseDateTimeFromElements(previousPublicationExist?.Element("CNT_NOTICE_INFORMATION_F18")?.Element("DATE_OJ"))
+                        },
 
-                        LanguageType = administrativeInformationContractNoticeDefence?.Element("LANGUAGE")?.Element("LANGUAGE_EC") != null ? LanguageType.SelectedEu:
+                        LanguageType = administrativeInformationContractNoticeDefence?.Element("LANGUAGE")?.Element("LANGUAGE_EC") != null ? LanguageType.SelectedEu :
                                        administrativeInformationContractNoticeDefence?.Element("LANGUAGE")?.Element("LANGUAGE_ANY_EC")?.Attribute("VALUE")?.Value == "YES" ? LanguageType.AnyOfficialEu
                                        : LanguageType.Undefined,
                         Languages = ParseLanguages(administrativeInformationContractNoticeDefence),
@@ -536,11 +542,12 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     Defence = new ComplementaryInformationDefence()
                     {
                         EmploymentProtection = ParseContractingBodyInformation(_nutsSchema, reviewBody),
-                        EuFunds = new EuFunds() {
-                            ProcurementRelatedToEuProgram = defenceCcomplimentaryInformation?.Element("RELATES_TO_EU_PROJECT_YES")!=null,
+                        EuFunds = new EuFunds()
+                        {
+                            ProcurementRelatedToEuProgram = defenceCcomplimentaryInformation?.Element("RELATES_TO_EU_PROJECT_YES") != null,
                         }
                     },
-                     AdditionalInformation = ParsePElements(defenceCcomplimentaryInformation?.Element("ADDITIONAL_INFORMATION")),
+                    AdditionalInformation = ParsePElements(defenceCcomplimentaryInformation?.Element("ADDITIONAL_INFORMATION")),
                 },
                 LotsInfo = new LotsInfo()
                 {
@@ -566,13 +573,13 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     notice.Project.Organisation.OtherContractingAuthorityType = "Ei määritelty";
                 }
             }
-            if(noticeType == NoticeType.DefenceContract)
+            if (noticeType == NoticeType.DefenceContract)
             {
                 notice.ObjectDescriptions = ParseDefenceObjectDescriptions(_nutsSchema, descriptionContractInformation).ToArray();
             }
             if (noticeType == NoticeType.DefenceContractAward)
             {
-                notice.ObjectDescriptions  = new ObjectDescription[] { };
+                notice.ObjectDescriptions = new ObjectDescription[] { };
             }
 
             notice.Project.Organisation.Information.NutsCodes = new[]{
@@ -595,7 +602,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 }
             }
 
-            if(typeOfAwardContractDefence != null)
+            if (typeOfAwardContractDefence != null)
             {
                 if (typeOfAwardContractDefence?.Descendants()?.First()?.Name?.LocalName?.Contains("ACCELERATED") == true)
                 {
@@ -617,7 +624,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
         //    }
         //}
 
-        public static AwardCriteriaDefence ParseDefenceAwardCriteria(XElement defenceProcedureDefinitonContract) {
+        public static AwardCriteriaDefence ParseDefenceAwardCriteria(XElement defenceProcedureDefinitonContract)
+        {
 
 
             var awardCriteriaDetail = defenceProcedureDefinitonContract.Element("AWARD_CRITERIA_CONTRACT_NOTICE_INFORMATION")?.Element("AWARD_CRITERIA_DETAIL");
@@ -627,7 +635,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 awardCriteriaDetail = defenceProcedureDefinitonContract.Element("AWARD_CRITERIA_CONTRACT_AWARD_NOTICE_INFORMATION_DEFENCE")?.Element("AWARD_CRITERIA_DETAIL_F18");
                 tender = "MOST_ECONOMICALLY_ADVANTAGEOUS_TENDER_SHORT";
             }
-            
+
             return new AwardCriteriaDefence()
             {
                 EconomicCriteriaTypes = awardCriteriaDetail?.Element("CRITERIA_STATED_BELOW") != null ? AwardCriterionTypeDefence.CriteriaBelow : AwardCriterionTypeDefence.Undefined,
@@ -635,12 +643,12 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 CriterionTypes = awardCriteriaDetail?.Element("LOWEST_PRICE") != null ? AwardCriterionTypeDefence.LowestPrice :
                                  awardCriteriaDetail?.Element(tender) != null ? AwardCriterionTypeDefence.EconomicallyAdvantageous :
                                  AwardCriterionTypeDefence.Undefined,
-            
+
                 Criteria = ParseNationalAwardCriteria(defenceProcedureDefinitonContract?.Descendants("CRITERIA_DEFINITION"))
             };
         }
 
-        private static ContractAwardDefence[] ParseContractAwardsDefence(IEnumerable<XElement> awardOfContractDefence,XElement defenceContractInformation, XNamespace _nutsSchema )
+        private static ContractAwardDefence[] ParseContractAwardsDefence(IEnumerable<XElement> awardOfContractDefence, XElement defenceContractInformation, XNamespace _nutsSchema)
         {
             if (awardOfContractDefence == null)
             {
@@ -691,8 +699,9 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
         private static bool ParseLikelyToBeSubcontracted(XElement award)
         {
-            if (award?.Element("MORE_INFORMATION_TO_SUB_CONTRACTED") != null) {
-                return award?.Element("MORE_INFORMATION_TO_SUB_CONTRACTED")?.Element("CONTRACT_LIKELY_SUB_CONTRACTED_WITH_DEFENCE") !=null;
+            if (award?.Element("MORE_INFORMATION_TO_SUB_CONTRACTED") != null)
+            {
+                return award?.Element("MORE_INFORMATION_TO_SUB_CONTRACTED")?.Element("CONTRACT_LIKELY_SUB_CONTRACTED_WITH_DEFENCE") != null;
             }
 
             return false;
@@ -702,13 +711,15 @@ namespace Hilma.Domain.Integrations.HilmaMigration
         {
             XNamespace nutsSchema = "http://publications.europa.eu/resource/schema/ted/2016/nuts";
             var element = economicOperatorNameAddress;
-            if (economicOperatorNameAddress?.Element("CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME") != null) {
+            if (economicOperatorNameAddress?.Element("CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME") != null)
+            {
                 element = economicOperatorNameAddress?.Element("CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME");
             }
 
-            return new ContractorContactInformation() {
+            return new ContractorContactInformation()
+            {
 
-                Email= element?.Element("E_MAILS")?.Element("E_MAIL")?.Value,
+                Email = element?.Element("E_MAILS")?.Element("E_MAIL")?.Value,
                 MainUrl = element?.Element("URL")?.Value,
                 NationalRegistrationNumber = element?.Element("ORGANISATION")?.Element("NATIONALID")?.Value ?? element?.Element("NATIONALID")?.Value,
                 OfficialName = element?.Element("ORGANISATION")?.Element("OFFICIALNAME")?.Value ?? element?.Element("OFFICIALNAME")?.Value,
@@ -732,7 +743,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 SuccessfulTenderer = subcontracting.Element("SUBCONTRACT_SHARE")?.Attribute("VALUE")?.Value == "YES",
                 SuccessfulTendererMax = ParseDecimal(subcontracting.Element("MAX_PERCENTAGE")?.Value),
                 SuccessfulTendererMin = ParseDecimal(subcontracting.Element("MIN_PERCENTAGE")?.Value),
-                SuccessfulTendererToSpecify= subcontracting.Element("IDENTIFY_SUBCONTRACT")?.Attribute("VALUE")?.Value == "YES",
+                SuccessfulTendererToSpecify = subcontracting.Element("IDENTIFY_SUBCONTRACT")?.Attribute("VALUE")?.Value == "YES",
                 TendererHasToIndicateChange = subcontracting.Element("INDICATE_ANY_CHANGE")?.Attribute("VALUE")?.Value == "YES",
                 TendererHasToIndicateShare = subcontracting.Element("INDICATE_ANY_SHARE")?.Attribute("VALUE")?.Value == "YES"
 
@@ -747,7 +758,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             return new ConditionsInformationDefence()
             {
                 DepositsRequired = ParsePElements(contractRelatingConditions?.Element("DEPOSITS_GUARANTEES_REQUIRED")),
-                EconomicCriteriaOfEconomicOperators = ParsePElements(f17ConditionsForParticipation?.Element("F17_ECONOMIC_FINANCIAL_CAPACITY")?.Element("EAF_CAPACITY_INFORMATION")) ,
+                EconomicCriteriaOfEconomicOperators = ParsePElements(f17ConditionsForParticipation?.Element("F17_ECONOMIC_FINANCIAL_CAPACITY")?.Element("EAF_CAPACITY_INFORMATION")),
                 EconomicCriteriaOfEconomicOperatorsMinimum = ParsePElements(f17ConditionsForParticipation?.Element("F17_ECONOMIC_FINANCIAL_CAPACITY")?.Element("EAF_CAPACITY_MIN_LEVEL")),
                 EconomicCriteriaOfSubcontractors = ParsePElements(f17ConditionsForParticipation?.Element("F17_ECONOMIC_FINANCIAL_CAPACITY_SUBCONTRACTORS")?.Element("EAF_CAPACITY_INFORMATION")),
                 EconomicCriteriaOfSubcontractorsMinimum = ParsePElements(f17ConditionsForParticipation?.Element("F17_ECONOMIC_FINANCIAL_CAPACITY_SUBCONTRACTORS")?.Element("EAF_CAPACITY_MIN_LEVEL")),
@@ -756,7 +767,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 OtherParticularConditions = ParsePElements(contractRelatingConditions?.Element("EXISTENCE_OTHER_PARTICULAR_CONDITIONS")),
                 PersonalSituationOfEconomicOperators = ParsePElements(f17ConditionsForParticipation?.Element("ECONOMIC_OPERATORS_PERSONAL_SITUATION")),
                 PersonalSituationOfSubcontractors = ParsePElements(f17ConditionsForParticipation?.Element("ECONOMIC_OPERATORS_PERSONAL_SITUATION_SUBCONTRACTORS")),
-                RestrictedToParticularProfession = defenceLeftiContract?.Element("SERVICES_CONTRACTS_SPECIFIC_CONDITIONS")?.Element("EXECUTION_SERVICE_RESERVED_PARTICULAR_PROFESSION") !=null,
+                RestrictedToParticularProfession = defenceLeftiContract?.Element("SERVICES_CONTRACTS_SPECIFIC_CONDITIONS")?.Element("EXECUTION_SERVICE_RESERVED_PARTICULAR_PROFESSION") != null,
                 RestrictedToParticularProfessionLaw = ParsePElements(defenceLeftiContract?.Element("SERVICES_CONTRACTS_SPECIFIC_CONDITIONS")?.Element("EXECUTION_SERVICE_RESERVED_PARTICULAR_PROFESSION")),
                 StaffResponsibleForExecution = defenceLeftiContract?.Element("SERVICES_CONTRACTS_SPECIFIC_CONDITIONS")?.Element("REQUESTS_NAMES_PROFESSIONAL_QUALIFICATIONS")?.Attribute("VALUE")?.Value == "YES",
                 TechnicalCriteriaOfEconomicOperators = ParsePElements(f17ConditionsForParticipation?.Element("TECHNICAL_CAPACITY_LEFTI")?.Element("T_CAPACITY_INFORMATION")),
@@ -782,26 +793,27 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 FrameworkAgreementType = f17Framework.Element("SEVERAL_OPERATORS") != null ? FrameworkAgreementType.FrameworkSeveral :
                                          f17Framework.Element("SINGLE_OPERATOR") != null ? FrameworkAgreementType.FrameworkSingle :
                                          FrameworkAgreementType.Undefined,
-                Duration = new TimeFrame() {
-                    Type = f17Framework.Element("DURATION_FRAMEWORK_YEAR") != null ? TimeFrameType.Years:
-                            f17Framework.Element("DURATION_FRAMEWORK_MONTH") != null ? TimeFrameType.Months:
+                Duration = new TimeFrame()
+                {
+                    Type = f17Framework.Element("DURATION_FRAMEWORK_YEAR") != null ? TimeFrameType.Years :
+                            f17Framework.Element("DURATION_FRAMEWORK_MONTH") != null ? TimeFrameType.Months :
                             TimeFrameType.Undefined,
                     Years = ParseInt(f17Framework.Element("DURATION_FRAMEWORK_YEAR")?.Value),
                     Months = ParseInt(f17Framework.Element("DURATION_FRAMEWORK_MONTH")?.Value),
-                    CanBeRenewed = f17Framework?.Element("RECURRENT_CONTRACT")!=null,
+                    CanBeRenewed = f17Framework?.Element("RECURRENT_CONTRACT") != null,
                     BeginDate = ParseDate(f17Framework.Element("DATE_START")?.Value),
                     EndDate = ParseDate(f17Framework.Element("DATE_END")?.Value),
-                    
+
 
                 },
-                EnvisagedNumberOfParticipants =  f17Framework.Element("NUMBER_PARTICIPANTS") !=null ? ParseInt( f17Framework.Element("NUMBER_PARTICIPANTS")?.Value) :
+                EnvisagedNumberOfParticipants = f17Framework.Element("NUMBER_PARTICIPANTS") != null ? ParseInt(f17Framework.Element("NUMBER_PARTICIPANTS")?.Value) :
                                                  f17Framework.Element("MAX_NUMBER_PARTICIPANTS") != null ? ParseInt(f17Framework.Element("MAX_NUMBER_PARTICIPANTS")?.Value) : (int?)null,
                 EstimatedTotalValue = ParseValueRangeContract(f17Framework.Element("TOTAL_ESTIMATED")),
                 FrameworkEnvisagedType = f17Framework.Element("NUMBER_PARTICIPANTS") != null ? FrameworkEnvisagedType.FrameworkEnvisagedExact :
                                          f17Framework.Element("MAX_NUMBER_PARTICIPANTS") != null ? FrameworkEnvisagedType.FrameworkEnvisagedMax :
                                          FrameworkEnvisagedType.Undefined,
                 FrequencyAndValue = ParsePElements(f17Framework?.Element("TOTAL_ESTIMATED")?.Element("FREQUENCY_AWARDED_CONTRACTS")),
-                JustificationForDurationOverSevenYears = ParsePElements( f17Framework?.Element("JUSTIFICATION")),
+                JustificationForDurationOverSevenYears = ParsePElements(f17Framework?.Element("JUSTIFICATION")),
             };
 
 
@@ -822,7 +834,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 {
                     ptAwardWithoutCallElement = ptAwardWithoutCall;
                 }
-                if(ptNegotiatedWithoutpublicataion != null)
+                if (ptNegotiatedWithoutpublicataion != null)
                 {
                     ptAwardWithoutCallElement = ptNegotiatedWithoutpublicataion;
                 }
@@ -843,7 +855,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                         ProcedureType = ptAwardWithoutCallElement.Element("D_PROC_OPEN") != null ? AnnexProcedureType.DProcOpen :
                                         ptAwardWithoutCallElement.Element("D_PROC_RESTRICTED") != null ? AnnexProcedureType.DProcRestricted :
                                         AnnexProcedureType.Undefined,
-                        RepetitionExisting = ptAwardWithoutCallElement.Element("D_REPETITION_EXISTING") !=null || ptAwardWithoutCallElement?.Element("D_ACCORDANCE_ARTICLE")?.Element("D_REPETITION_EXISTING") != null
+                        RepetitionExisting = ptAwardWithoutCallElement.Element("D_REPETITION_EXISTING") != null || ptAwardWithoutCallElement?.Element("D_ACCORDANCE_ARTICLE")?.Element("D_REPETITION_EXISTING") != null
                     };
 
                     if (annex.D1.ProcedureType != AnnexProcedureType.Undefined)
@@ -877,7 +889,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 var justificationChoiceElement = annexD?.Element("JUSTIFICATION_CHOICE_NEGOCIATED_PROCEDURE");
                 var justificationOther = annexD?.Element("OTHER_JUSTIFICATION");
 
-                
+
                 var procedureType = annexD?.Descendants()?.First()?.Name?.LocalName;
                 switch (procedureType)
                 {
@@ -915,7 +927,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
                 annex.D3.CrisisUrgency = justificationChoiceElement?.Element("PERIOD_FOR_PROCEDURE_INCOMPATIBLE_WITH_CRISIS") != null;
 
-                annex.D3.OtherServices = justificationChoiceElement?.Element("CONTRACT_RESEARCH_DIRECTIVE") !=null;
+                annex.D3.OtherServices = justificationChoiceElement?.Element("CONTRACT_RESEARCH_DIRECTIVE") != null;
 
                 annex.D3.ProductsManufacturedForResearch = justificationChoiceElement?.Element("MANUFACTURED_BY_DIRECTIVE") != null;
 
@@ -960,7 +972,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 {
                     Section = change?.Element("WHERE")?.Element("SECTION")?.Value,
                     Label = change?.Element("WHERE")?.Element("LABEL")?.Value,
-                    LotNumber = ParseInt(change?.Element("WHERE")?.Element("LOT_NO")?.Value)
+                    LotNumber = change?.Element("WHERE")?.Element("LOT_NO")?.Value
 
                 };
 
@@ -1071,7 +1083,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
         private static TenderSendOptions ParseNationalSendTendersOption(XElement domesticTendersOption)
         {
             string localName = domesticTendersOption?.Elements()?.First()?.Name?.LocalName;
-            if(localName == null)
+            if (localName == null)
             {
                 return TenderSendOptions.Undefined;
             }
@@ -1118,7 +1130,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
         private static DateTime? ParseDateTimeFromElements(XElement timeElement)
         {
 
-            if (timeElement == null )
+            if (timeElement == null)
             {
                 return null;
             }
@@ -1146,7 +1158,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             {
                 childElement = objectContract?.Descendants("DOMESTIC_OBJECT_INFORMATION");
             }
-            if(childElement == null)
+            if (childElement == null)
             {
 
                 return Enumerable.Empty<ObjectDescription>();
@@ -1156,7 +1168,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             {
                 var objectDescriptionModel = new ObjectDescription()
                 {
-                    LotNumber = index + 1,
+                    LotNumber = (index + 1).ToString(),
                     AwardCriteria = new AwardCriteria()
                     {
                         QualityCriteria = ParseNationalAwardCriteria(domesticContractRC?.Element("AWARD_CRITERIA")?.Element("DOMESTIC_AC_PRICE_QUALITY")?.Element("DOMESTIC_CRITERIA_STATED_BELOW")?.Elements("AC_DEFINITION")),
@@ -1185,8 +1197,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                         VocCodes = domesticObjectContract?.Element("CPV")?.Element("CPV_MAIN").Elements("CPV_SUPPLEMENTARY_CODE").Select(s => new VocCode { Code = s.Attribute("CODE")?.Value }).ToArray()
                     },
                     AdditionalCpvCodes = ParseAdditionalCpvCodes(domesticObjectContract?.Element("CPV")),
-                    EuFunds = new EuFunds(){},
-                    
+                    EuFunds = new EuFunds() { },
+
                 };
                 return objectDescriptionModel;
             });
@@ -1195,9 +1207,11 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
         private static Award ParseNationalAward(XElement domesticObjectContract)
         {
-            return new Award() {
+            return new Award()
+            {
 
-                AwardedContract =new ContractAward() {
+                AwardedContract = new ContractAward()
+                {
                     Contractors = new List<ContractorContactInformation>() {
                         new ContractorContactInformation(){
                             OfficialName = domesticObjectContract?.Element("DOMESTIC_CONTRACTOR")?.Element("OFFICIALNAME")?.Value,
@@ -1209,13 +1223,13 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
 
                 },
-                
-                
+
+
 
             };
         }
 
-        private static IEnumerable<ObjectDescription> ParseDefenceObjectDescriptions(XNamespace nutsSchema,  XElement defenceObjectContract)
+        private static IEnumerable<ObjectDescription> ParseDefenceObjectDescriptions(XNamespace nutsSchema, XElement defenceObjectContract)
         {
             var defenceContract = defenceObjectContract?.Element("F17_DIVISION_INTO_LOTS");
             var defenceAward = defenceObjectContract?.Element("F18_DIVISION_INTO_LOTS");
@@ -1229,8 +1243,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             {
                 var objectDescriptionModel = new ObjectDescription()
                 {
-                    
-                    LotNumber = index + 1,
+
+                    LotNumber = (index + 1).ToString(),
                     Title = objectDescription?.Element("LOT_TITLE")?.Value,
                     DescrProcurement = ParsePElements(objectDescription.Element("LOT_DESCRIPTION")),
                     MainCpvCode = new CpvCode
@@ -1245,13 +1259,13 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     {
                         CriterionTypes = ParseNationalCostAndQualityCriteria(objectDescription?.Element("AWARD_CRITERIA")),
                         QualityCriteria = new List<AwardCriterionDefinition>().ToArray(),
-                        CostCriteria = new AwardCriterionDefinition[]{ }
+                        CostCriteria = new AwardCriterionDefinition[] { }
                     },
                     OptionsAndVariants = new OptionsAndVariants()
                     {
                         VariantsWillBeAccepted = defenceObjectContract?.Element("ACCEPTED_VARIANTS")?.Attribute("VALUE").Value == "YES"
                     },
-                    EuFunds = new EuFunds(){}
+                    EuFunds = new EuFunds() { }
 
                 };
                 return objectDescriptionModel;
@@ -1331,13 +1345,13 @@ namespace Hilma.Domain.Integrations.HilmaMigration
         {
             if (reviewBodyAddress == null)
             {
-                return new ProceduresForReviewInformation(){};
+                return new ProceduresForReviewInformation() { };
             }
             return new ProceduresForReviewInformation()
             {
                 ReviewBody = new ContractBodyContactInformation()
                 {
-                    OfficialName = reviewBodyAddress?.Element("OFFICIALNAME")?.Value !=null? reviewBodyAddress?.Element("OFFICIALNAME")?.Value :
+                    OfficialName = reviewBodyAddress?.Element("OFFICIALNAME")?.Value != null ? reviewBodyAddress?.Element("OFFICIALNAME")?.Value :
                     reviewBodyAddress?.Element("ORGANISATION")?.Element("OFFICIALNAME")?.Value,
                     PostalAddress = ParsePostalAddress(reviewBodyAddress),
                     Email = reviewBodyAddress.Element("E_MAIL")?.Value != null ?
@@ -1397,13 +1411,13 @@ namespace Hilma.Domain.Integrations.HilmaMigration
         {
             return new CommunicationInformation()
             {
-                AdditionalInformation = contractingBody?.Element("ADDRESS_FURTHER_INFO_IDEM") != null ? AdditionalInformationAvailability.AddressToAbove : contractingBody?.Element("ADDRESS_FURTHER_INFO") != null ? AdditionalInformationAvailability.AddressAnother: AdditionalInformationAvailability.Undefined,
+                AdditionalInformation = contractingBody?.Element("ADDRESS_FURTHER_INFO_IDEM") != null ? AdditionalInformationAvailability.AddressToAbove : contractingBody?.Element("ADDRESS_FURTHER_INFO") != null ? AdditionalInformationAvailability.AddressAnother : AdditionalInformationAvailability.Undefined,
                 AdditionalInformationAddress = contractingBody?.Element("ADDRESS_FURTHER_INFO") != null ? ParseContractingBodyInformation(nutsSchema, contractingBody?.Element("ADDRESS_FURTHER_INFO")) : null,
                 ProcurementDocumentsAvailable = contractingBody?.Element("DOCUMENT_FULL") != null ? ProcurementDocumentAvailability.AddressObtainDocs : contractingBody?.Element("DOCUMENT_RESTRICTED") != null ? ProcurementDocumentAvailability.DocsRestricted : ProcurementDocumentAvailability.Undefined,
                 ProcurementDocumentsUrl = contractingBody?.Element("URL_DOCUMENT")?.Value,
                 ElectronicAddressToSendTenders = contractingBody?.Element("URL_PARTICIPATION")?.Value,
                 AddressToSendTenders = contractingBody?.Element("ADDRESS_PARTICIPATION") != null ? ParseContractingBodyInformation(nutsSchema, contractingBody?.Element("ADDRESS_PARTICIPATION")) : null,
-               
+
                 ElectronicCommunicationInfoUrl = contractingBody.Element("URL_TOOL")?.Value,
                 ValidationState = ValidationState.Valid,
                 SendTendersOption = contractingBody?.Element("URL_PARTICIPATION") != null ? TenderSendOptions.AddressSendTenders :
@@ -1429,11 +1443,11 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                                         AdditionalInformationAvailability.AddressAnother : AdditionalInformationAvailability.Undefined,
                 ElectronicAccess = internetAddresses?.Element("URL_INFORMATION")?.Value,
 
-                SendTendersOption = internetAddresses?.Element("URL_PARTICIPATE") != null &&  addressToSendTenders == null ? 
-                                    TenderSendOptions.AddressSendTenders : 
-                                    addressToSendTenders == null ? 
+                SendTendersOption = internetAddresses?.Element("URL_PARTICIPATE") != null && addressToSendTenders == null ?
+                                    TenderSendOptions.AddressSendTenders :
+                                    addressToSendTenders == null ?
                                     TenderSendOptions.Undefined :
-                                    addressToSendTenders?.Element("IDEM") != null ? 
+                                    addressToSendTenders?.Element("IDEM") != null ?
                                     TenderSendOptions.AddressOrganisation :
                                     TenderSendOptions.AddressFollowing,
                 ElectronicAddressToSendTenders = internetAddresses?.Element("URL_PARTICIPATE")?.Value,
@@ -1445,12 +1459,12 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             if (specAndAdditionalDocs?.Element("IDEM") != null)
             {
                 communicationInformation.SpecsAndAdditionalDocuments = SpecificationsAndAdditionalDocuments.AddressToAbove;
-                
+
             }
-            else if(specAndAdditionalDocs?.Element("CONTACT_DATA")!=null)
+            else if (specAndAdditionalDocs?.Element("CONTACT_DATA") != null)
             {
                 communicationInformation.SpecsAndAdditionalDocuments = SpecificationsAndAdditionalDocuments.AddressAnother;
-                communicationInformation.SpecsAndAdditionalDocumentsAddress = ParseContractingBodyInformation(nutsSchema,specAndAdditionalDocs.Element("CONTACT_DATA"));
+                communicationInformation.SpecsAndAdditionalDocumentsAddress = ParseContractingBodyInformation(nutsSchema, specAndAdditionalDocs.Element("CONTACT_DATA"));
             }
 
             return communicationInformation;
@@ -1476,7 +1490,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 ReferenceToRelevantLawRegulationOrProvision = ParsePElements(lefti?.Element("REFERENCE_TO_LAW"), 0),
                 ExecutionOfServiceIsReservedForProfession = lefti?.Element("PARTICULAR_PROFESSION") != null,
                 ObligationToIndicateNamesAndProfessionalQualifications = lefti?.Element("PERFORMANCE_STAFF_QUALIFICATION") != null,
-                
+
                 CiriteriaForTheSelectionOfParticipants = ParsePElements(lefti.Element("CRITERIA_SELECTION")),
                 EconomicCriteriaToParticipate = lefti?.Element("ECONOMIC_CRITERIA_DOC") != null ? true : false,
                 ParticipationIsReservedForProfession = lefti?.Element("PARTICULAR_PROFESSION") != null ? true : false,
@@ -1486,10 +1500,10 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 LegalFormTaken = ParsePElements(lefti?.Element("LEGAL_FORM")),
 
                 ContractPerformanceConditions = ParsePElements(lefti?.Element("PERFORMANCE_CONDITIONS")),
-                RestrictedToShelteredProgram = lefti?.Element("RESTRICTED_SHELTERED_PROGRAM") !=null,
+                RestrictedToShelteredProgram = lefti?.Element("RESTRICTED_SHELTERED_PROGRAM") != null,
                 RulesForParticipation = ParsePElements(lefti?.Element("RULES_CRITERIA")),
                 RestrictedToShelteredWorkshop = lefti?.Element("RESTRICTED_SHELTERED_WORKSHOP") != null,
-                ReservedOrganisationServiceMission = lefti?.Element("RESERVED_ORGANISATIONS_SERVICE_MISSION") !=null
+                ReservedOrganisationServiceMission = lefti?.Element("RESERVED_ORGANISATIONS_SERVICE_MISSION") != null
             };
 
             return conditionsInformation;
@@ -1546,9 +1560,9 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     languages.Add(item.Attribute("VALUE")?.Value);
                 }
             }
-            if(procedure?.Element("LANGUAGE") != null)
+            if (procedure?.Element("LANGUAGE") != null)
             {
-                foreach(var lang in procedure.Element("LANGUAGE")?.Elements("LANGUAGE_EC"))
+                foreach (var lang in procedure.Element("LANGUAGE")?.Elements("LANGUAGE_EC"))
                 {
                     languages.Add(lang.Attribute("VALUE")?.Value);
                 }
@@ -1614,7 +1628,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             if (procedure?.Element("PT_ACCELERATED_RESTRICTED_CHOICE") != null) return ProcedureType.ProctypeRestricted;
             if (procedure?.Element("PT_ACCELERATED_RESTRICTED") != null) return ProcedureType.ProctypeRestricted;
             if (procedure?.Element("F18_PT_NEGOTIATED_WITHOUT_PUBLICATION_CONTRACT_NOTICE")?.Element("ANNEX_D")?.Element("JUSTIFICATION_CHOICE_NEGOCIATED_PROCEDURE") != null) return ProcedureType.AwardWoPriorPubD1;
-            if (procedure?.Element("F18_PT_NEGOTIATED_WITHOUT_PUBLICATION_CONTRACT_NOTICE")?.Element("ANNEX_D")?.Element("OTHER_JUSTIFICATION")!=null) return ProcedureType.AwardWoPriorPubD1Other;
+            if (procedure?.Element("F18_PT_NEGOTIATED_WITHOUT_PUBLICATION_CONTRACT_NOTICE")?.Element("ANNEX_D")?.Element("OTHER_JUSTIFICATION") != null) return ProcedureType.AwardWoPriorPubD1Other;
 
             return ProcedureType.Undefined;
         }
@@ -1631,8 +1645,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                                                 ParseInt(procedure?.Element("FRAMEWORK")?.Element("NB_PARTICIPANTS")?.Value) : new int?(),
 
                 DynamicPurchasingSystemWasTerminated = procedure?.Element("TERMINATION_DPS") != null,
-                IncludesDynamicPurchasingSystem = procedure?.Element("DPS") !=null
-                
+                IncludesDynamicPurchasingSystem = procedure?.Element("DPS") != null
+
             };
         }
 
@@ -1647,7 +1661,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 },
                 ShortDescription = ParsePElements(objectContract.Element("SHORT_DESCR"), 4000),
                 ValidationState = ValidationState.Valid,
-                EstimatedValue = ParseValueRangeContract(objectContract.Element("VAL_ESTIMATED_TOTAL"), null ),
+                EstimatedValue = ParseValueRangeContract(objectContract.Element("VAL_ESTIMATED_TOTAL"), null),
                 TotalValue = ParseValueRangeContract(objectContract.Element("VAL_TOTAL"), objectContract.Element("VAL_RANGE_TOTAL"))
             };
         }
@@ -1678,7 +1692,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 Email = addressContractinBody.Element("E_MAIL")?.Value != null ?
                         addressContractinBody.Element("E_MAIL")?.Value :
                         addressContractinBody?.Element("E_MAILS")?.Element("E_MAIL")?.Value,
-                Name =  addressContractinBody.Element("CONTACT_POINT")?.Value,
+                Name = addressContractinBody.Element("CONTACT_POINT")?.Value,
                 Phone = addressContractinBody.Element("PHONE")?.Value
             };
         }
@@ -1697,7 +1711,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 {
                     AdditionalCpvCodes = ParseAdditionalCpvCodes(objectDescription),
                     Title = objectDescription.Element("TITLE")?.Element("P")?.Value,
-                    LotNumber = ParseInt(objectDescription.Element("LOT_NO")?.Value.Replace(".", "") ?? "1"),
+                    LotNumber = objectDescription.Element("LOT_NO")?.Value.Replace(".", "") ?? "1",
                     MainsiteplaceWorksDelivery = ParsePElements(objectDescription.Element("MAIN_SITE"), 0),
                     NutsCodes = ParseNutsCodes(nutsSchema, objectDescription),
                     DescrProcurement = ParsePElements(objectDescription?.Element("SHORT_DESCR"), 4000),
@@ -1710,7 +1724,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     ValidationState = ValidationState.Valid,
                     EstimatedValue = ParseValueRangeContract(objectDescription.Element("VAL_OBJECT"), null),
                     AwardContract = new Award(),
-                    
+
                     CandidateNumberRestrictions = new CandidateNumberRestrictions()
                     {
                         Selected = objectDescription.Element("NB_ENVISAGED_CANDIDATE") != null ?
@@ -1723,7 +1737,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                         EnvisagedNumber = ParseInt(objectDescription.Element("NB_ENVISAGED_CANDIDATE")?.Value),
                         ObjectiveCriteriaForChoosing = ParsePElements(objectDescription.Element("CRITERIA_CANDIDATE"), 0)
                     },
-                    
+
                 };
 
                 if (awardContract != null)
@@ -1745,7 +1759,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 AwardedContract = ParseAwardedContract(awardedContract),
                 ContractAwarded = ParseContractAwardedType(awardContract),
                 NoAwardedContract = ParseNoAwardedContract(noAwardedContract),
-                
+
             };
 
 
@@ -1756,7 +1770,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     var addressContractor = item.Element("ADDRESS_CONTRACTOR");
                     award.AwardedContract.Contractors.Add(new ContractorContactInformation()
                     {
-                        
+
                         OfficialName = addressContractor.Element("OFFICIALNAME")?.Value,
                         NationalRegistrationNumber = addressContractor.Element("NATIONALID")?.Value,
                         PostalAddress = ParsePostalAddress(addressContractor),
@@ -1789,7 +1803,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             var contractAward = new ContractAward()
             {
                 ContractTitle = awardedContract?.Parent?.Element("TITLE")?.Value,
-                ContractNumber = awardedContract?.Element("CONTRACT_NO")?.Value?? awardedContract?.Parent?.Element("CONTRACT_NO")?.Value,
+                ContractNumber = awardedContract?.Element("CONTRACT_NO")?.Value ?? awardedContract?.Parent?.Element("CONTRACT_NO")?.Value,
                 LikelyToBeSubcontracted = awardedContract?.Element("LIKELY_SUBCONTRACTED") != null ? true : false,
                 ConclusionDate = ParseDate(awardedContract?.Element("DATE_CONCLUSION_CONTRACT")?.Value),
 
@@ -1818,7 +1832,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     NonCommunityOrigin = awardedContract?.Element("COUNTRY_ORIGIN")?.Element("NON_COMMUNITY_ORIGIN") != null,
                     AbnormallyLowTendersExcluded = awardedContract?.Element("TENDERS_EXCLUDED") != null ? true : false,
                     AwardedToTendererWithVariant = awardedContract?.Element("AWARDED_TENDERER_VARIANT") != null ? true : false,
-                    
+
                 },
 
                 NumberOfTenders = ParseNumberOfTenders(awardedContract?.Element("TENDERS")),
@@ -1874,8 +1888,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 Sme = ParseInt(tenders?.Element("NB_TENDERS_RECEIVED_SME")?.Value),
                 OtherEu = ParseInt(tenders?.Element("NB_TENDERS_RECEIVED_SME")?.Value),
                 NonEu = ParseInt(tenders?.Element("NB_TENDERS_RECEIVED_NON_EU")?.Value),
-                Electronic = ParseInt(tenders?.Element("NB_TENDERS_RECEIVED_EMEANS")?.Value != null?  tenders?.Element("NB_TENDERS_RECEIVED_EMEANS")?.Value: tenders?.Element("OFFERS_RECEIVED_NUMBER_MEANING")?.Value),
-                Total = ParseInt(tenders?.Element("NB_TENDERS_RECEIVED")?.Value !=null ? tenders?.Element("NB_TENDERS_RECEIVED")?.Value : tenders?.Element("OFFERS_RECEIVED_NUMBER")?.Value)
+                Electronic = ParseInt(tenders?.Element("NB_TENDERS_RECEIVED_EMEANS")?.Value != null ? tenders?.Element("NB_TENDERS_RECEIVED_EMEANS")?.Value : tenders?.Element("OFFERS_RECEIVED_NUMBER_MEANING")?.Value),
+                Total = ParseInt(tenders?.Element("NB_TENDERS_RECEIVED")?.Value != null ? tenders?.Element("NB_TENDERS_RECEIVED")?.Value : tenders?.Element("OFFERS_RECEIVED_NUMBER")?.Value)
             };
         }
 
@@ -1898,7 +1912,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             if (objectDescription == null)
             {
                 return null;
-            } 
+            }
 
             var timeFrame = new TimeFrame()
             {
@@ -1911,15 +1925,15 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 Type = objectDescription.Element("DURATION")?.Attribute("TYPE")?.Value == "MONTH" ? TimeFrameType.Months :
                        objectDescription.Element("DURATION")?.Attribute("TYPE")?.Value == "DAY" ? TimeFrameType.Days :
                        objectDescription.Element("DATE_START") != null ? TimeFrameType.BeginAndEndDate :
-                       objectDescription.Element("MONTHS") !=null ? TimeFrameType.Months :
+                       objectDescription.Element("MONTHS") != null ? TimeFrameType.Months :
                        objectDescription.Element("DAYS") != null ? TimeFrameType.Days :
                        TimeFrameType.Undefined,
-                
+
             };
 
             if (timeFrame.Type == TimeFrameType.Months)
             {
-                timeFrame.Months = ParseInt(objectDescription.Element("DURATION")?.Value !=null? objectDescription.Element("DURATION")?.Value : objectDescription.Element("MONTHS")?.Value);
+                timeFrame.Months = ParseInt(objectDescription.Element("DURATION")?.Value != null ? objectDescription.Element("DURATION")?.Value : objectDescription.Element("MONTHS")?.Value);
             }
             if (timeFrame.Type == TimeFrameType.Days)
             {
@@ -1961,12 +1975,12 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
         private static ValueContract ParseValueContract(XElement valueElement)
         {
-            
+
             if (valueElement != null)
             {
                 return new ValueContract()
                 {
-                    Currency = valueElement.Attribute("CURRENCY")?.Value !=null ? valueElement.Attribute("CURRENCY")?.Value : string.Empty,
+                    Currency = valueElement.Attribute("CURRENCY")?.Value != null ? valueElement.Attribute("CURRENCY")?.Value : string.Empty,
                     Value = ParseDecimal(valueElement.Value != null ? valueElement.Value : valueElement?.Element("VALUE_COST")?.Value)
                 };
             }
@@ -1979,24 +1993,25 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             {
                 return new ValueRangeContract()
                 {
-                    Currency = valueElement.Attribute("CURRENCY")?.Value !=null? valueElement.Attribute("CURRENCY")?.Value :
+                    Currency = valueElement.Attribute("CURRENCY")?.Value != null ? valueElement.Attribute("CURRENCY")?.Value :
                                valueElement?.Element("COSTS_RANGE_AND_CURRENCY")?.Attribute("CURRENCY")?.Value,
                     MinValue = ParseDecimal(valueElement?.Element("COSTS_RANGE_AND_CURRENCY")?.Element("RANGE_VALUE_COST")?.Element("LOW_VALUE")?.Value),
                     MaxValue = ParseDecimal(valueElement?.Element("COSTS_RANGE_AND_CURRENCY")?.Element("RANGE_VALUE_COST")?.Element("HIGH_VALUE")?.Value),
                     Value = ParseDecimal(valueElement.Value != null ? valueElement.Value : valueElement?.Element("VALUE_COST")?.Value),
-                    Type = valueElement.Name.LocalName == "VAL_TOTAL" || valueElement?.Element("VALUE_COST")!=null ? ContractValueType.Exact : valueElement?.Element("COSTS_RANGE_AND_CURRENCY")?.Element("RANGE_VALUE_COST")?.Name.LocalName == "RANGE_VALUE_COST"? ContractValueType.Range: ContractValueType.Undefined,
+                    Type = valueElement.Name.LocalName == "VAL_TOTAL" || valueElement?.Element("VALUE_COST") != null ? ContractValueType.Exact : valueElement?.Element("COSTS_RANGE_AND_CURRENCY")?.Element("RANGE_VALUE_COST")?.Name.LocalName == "RANGE_VALUE_COST" ? ContractValueType.Range : ContractValueType.Undefined,
                     DisagreeToBePublished = valueElement?.Attribute("PUBLICATION")?.Value == "NO" ? true : false,
                 };
-            }else if (rangeElement != null)
+            }
+            else if (rangeElement != null)
             {
-              return new ValueRangeContract()
-              {
-                Currency = rangeElement?.Attribute("CURRENCY")?.Value,
-                MaxValue = ParseDecimal(rangeElement?.Element("HIGH")?.Value !=null ? rangeElement?.Element("HIGH")?.Value : rangeElement?.Element("RANGE_VALUE_COST")?.Element("HIGH_VALUE")?.Value),
-                MinValue = ParseDecimal(rangeElement?.Element("LOW")?.Value != null ? rangeElement?.Element("LOW")?.Value : rangeElement?.Element("RANGE_VALUE_COST")?.Element("LOW_VALUE")?.Value),
-                Type = ContractValueType.Range,
-                DisagreeToBePublished = rangeElement?.Attribute("PUBLICATION")?.Value == "NO" ? true : false,
-              };
+                return new ValueRangeContract()
+                {
+                    Currency = rangeElement?.Attribute("CURRENCY")?.Value,
+                    MaxValue = ParseDecimal(rangeElement?.Element("HIGH")?.Value != null ? rangeElement?.Element("HIGH")?.Value : rangeElement?.Element("RANGE_VALUE_COST")?.Element("HIGH_VALUE")?.Value),
+                    MinValue = ParseDecimal(rangeElement?.Element("LOW")?.Value != null ? rangeElement?.Element("LOW")?.Value : rangeElement?.Element("RANGE_VALUE_COST")?.Element("LOW_VALUE")?.Value),
+                    Type = ContractValueType.Range,
+                    DisagreeToBePublished = rangeElement?.Attribute("PUBLICATION")?.Value == "NO" ? true : false,
+                };
             }
 
             return new ValueRangeContract();
@@ -2097,9 +2112,9 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 Information = ParseContractingBodyInformation(nutsSchema, addressContractinBody),
 
             };
-            
+
             ParseCeActivity(contractingBody, organisationContract);
-        
+
             ParseCaTypeAndActivity(contractingBody, organisationContract);
 
             return organisationContract;
@@ -2267,7 +2282,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             }
         }
 
-        public static Supplies ParseSuppliesTEDFormat(string supplies )
+        public static Supplies ParseSuppliesTEDFormat(string supplies)
         {
             switch (supplies)
             {
@@ -2297,7 +2312,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
         private static ContractBodyContactInformation ParseContractingBodyInformation(XNamespace nutsSchema, XElement addressContractinBody)
         {
-            if (addressContractinBody == null) {
+            if (addressContractinBody == null)
+            {
                 return null;
             }
             return new ContractBodyContactInformation()
@@ -2316,7 +2332,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 NutsCodes = new[] {
                     addressContractinBody.Element(nutsSchema + "NUTS")?.Attribute("CODE")?.Value
                 },
-                MainUrl = addressContractinBody.Element("URL_GENERAL")?.Value != null ? addressContractinBody.Element("URL_GENERAL")?.Value : addressContractinBody?.Parent.Element("INTERNET_ADDRESSES_CONTRACT")?.Element("URL_GENERAL")?.Value !=null ? addressContractinBody?.Parent.Element("INTERNET_ADDRESSES_CONTRACT")?.Element("URL_GENERAL")?.Value:
+                MainUrl = addressContractinBody.Element("URL_GENERAL")?.Value != null ? addressContractinBody.Element("URL_GENERAL")?.Value : addressContractinBody?.Parent.Element("INTERNET_ADDRESSES_CONTRACT")?.Element("URL_GENERAL")?.Value != null ? addressContractinBody?.Parent.Element("INTERNET_ADDRESSES_CONTRACT")?.Element("URL_GENERAL")?.Value :
                 addressContractinBody?.Parent.Element("INTERNET_ADDRESSES_CONTRACT_AWARD")?.Element("URL_GENERAL")?.Value,
                 ValidationState = ValidationState.Valid
             };

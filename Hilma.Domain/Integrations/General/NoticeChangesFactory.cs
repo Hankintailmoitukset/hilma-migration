@@ -245,7 +245,7 @@ namespace Hilma.Domain.Integrations.General
             // Existing lots (changes and additions)
             for (var i = 0; i < notice.ObjectDescriptions.Length; i++)
             {
-                var lotNumber = i + 1;
+                var lotNumber = (i + 1).ToString();
                 var parentLot = new ObjectDescription();
                 if (parent.ObjectDescriptions.Length > i)
                 {
@@ -261,17 +261,17 @@ namespace Hilma.Domain.Integrations.General
             // Lot removals
             for (var i = notice.ObjectDescriptions.Length; i < parent.ObjectDescriptions.Length; i++)
             {
-                var lotNumber = i + 1;
+                var lotNumber = (i + 1).ToString();
 
                 changes.Add(lotNumber, null, typeof(ObjectDescription), nameof(ObjectDescription.LotNumber), lotNumber);
             }
         }
 
-        private static void HandleLotChanges(List<Change> changes, int lotNumber, ObjectDescription lot, ObjectDescription parentLot)
+        private static void HandleLotChanges(List<Change> changes, string lotNumber, ObjectDescription lot, ObjectDescription parentLot)
         {
             // II.2.1
             changes.Add(parentLot.Title, lot.Title, typeof(ObjectDescription), nameof(ObjectDescription.Title), lotNumber);
-            changes.Add(parentLot.LotNumber == 0 ? null : parentLot?.LotNumber, lot?.LotNumber, typeof(ObjectDescription), nameof(ObjectDescription.LotNumber), lotNumber);
+            changes.Add(parentLot.LotNumber == null ? null : parentLot?.LotNumber, lot?.LotNumber, typeof(ObjectDescription), nameof(ObjectDescription.LotNumber), lotNumber);
 
             // II.2.2
             // Add & change

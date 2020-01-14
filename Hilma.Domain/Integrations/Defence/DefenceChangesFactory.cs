@@ -232,7 +232,8 @@ namespace Hilma.Domain.Integrations.Defence
 
             // CPV
             var cpvSection = "";
-            switch (notice.Type) {
+            switch (notice.Type)
+            {
                 case NoticeType.DefencePriorInformation: cpvSection = "II.5"; break;
                 case NoticeType.DefenceContract: cpvSection = "II.1.6"; break;
                 case NoticeType.DefenceContractAward: cpvSection = "II.1.5"; break;
@@ -299,7 +300,7 @@ namespace Hilma.Domain.Integrations.Defence
             // Changes in lots
             for (var i = 0; i < notice.ObjectDescriptions.Length; i++)
             {
-                var lotNumber = i + 1;
+                var lotNumber = (i + 1).ToString();
                 var parentLot = new ObjectDescription();
                 if (parent.ObjectDescriptions.Length > i)
                 {
@@ -312,10 +313,10 @@ namespace Hilma.Domain.Integrations.Defence
 
         // Annex B
         // Information about lots
-        private static void HandleLotChanges(List<Change> changes, int lotNumber, ObjectDescription lot, ObjectDescription parentLot)
+        private static void HandleLotChanges(List<Change> changes, string lotNumber, ObjectDescription lot, ObjectDescription parentLot)
         {
             // Title attributed to the contract by the contracting authority/entity:
-            changes.Add(parentLot.LotNumber == 0 ? null : parentLot?.LotNumber, lot?.LotNumber, typeof(ObjectDescription), nameof(ObjectDescription.LotNumber), lotNumber, "Annex B");
+            changes.Add(parentLot.LotNumber == null ? null : parentLot?.LotNumber, lot?.LotNumber, typeof(ObjectDescription), nameof(ObjectDescription.LotNumber), lotNumber, "Annex B");
             changes.Add(parentLot.Title, lot.Title, typeof(ObjectDescription), nameof(ObjectDescription.Title), lotNumber, "Annex B");
 
             // 1) Short description:
