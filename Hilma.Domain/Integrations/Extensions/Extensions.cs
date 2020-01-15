@@ -100,7 +100,7 @@ namespace Hilma.Domain.Integrations.Extensions
             {
                 Section = where["SECTION"]?.ToString(),
                 Label = where.Value<string>("LABEL"),
-                LotNumber = where.Value<int?>("LOT_NO"),
+                LotNumber = where.Value<string>("LOT_NO"),
                 NewText = newParagraphs != null ? GetParagraphs(newParagraphs) : null,
                 OldText = oldParagraphs != null ? GetParagraphs(oldParagraphs) : null,
                 NewDate = newDate != null ? GetDate(newDate, newTime) : null,

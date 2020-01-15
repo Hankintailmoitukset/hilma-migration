@@ -11,5 +11,11 @@ namespace Hilma.Domain.Configuration {
         ///     Which extensions are forbidden
         /// </summary>
         public string ForbiddenExtensions { get; set; }
+
+        /// <summary>
+        ///     Disable malware scan for uploaded files.
+        ///     This is usually wanted in local development.
+        /// </summary>
+        public bool DisableFileScan { get; set; }
     }
 }

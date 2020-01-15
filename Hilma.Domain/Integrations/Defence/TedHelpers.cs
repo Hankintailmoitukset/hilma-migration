@@ -229,7 +229,7 @@ namespace Hilma.Domain.Integrations.Defence
         /// <param name="codes"></param>
         /// <returns></returns>
         public static List<XElement> CpvCodeElement(string elementName, CpvCode[] codes){
-            if( !codes.Any())
+            if( codes == null || !codes.Any())
                 return null;
 
             var elements = new List<XElement>();
@@ -368,7 +368,7 @@ namespace Hilma.Domain.Integrations.Defence
 
         public static XElement DateElement(string name, DateTime? value)
         {
-            return value != null ? Element(name.ToUpper(),
+            return value != null && value != default(DateTime) ? Element(name.ToUpper(),
                     Element("DAY", value?.Day),
                     Element("MONTH", value?.Month),
                     Element("YEAR", value?.Year))
@@ -377,7 +377,7 @@ namespace Hilma.Domain.Integrations.Defence
 
         public static XElement DateTimeElement(string name, DateTime? value)
         {
-            return value != null ? new XElement(name.ToUpper(),
+            return value != null && value != default(DateTime) ? new XElement(name.ToUpper(),
                     new XElement("DAY", value?.Day),
                     new XElement("MONTH", value?.Month),
                     new XElement("YEAR", value?.Year),

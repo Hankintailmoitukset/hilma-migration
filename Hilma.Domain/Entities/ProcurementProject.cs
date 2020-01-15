@@ -102,7 +102,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// If NoticeType == NationalAgricultureContract and ContractType == Works
         /// </summary>
-        [CorrigendumLabel("agriculture_works", "")]
+        [CorrigendumLabel("agriculture_works", "I.4")]
         public AgricultureWorks AgricultureWorks { get; set; }
 
         /// <summary>
@@ -146,12 +146,12 @@ namespace Hilma.Domain.Entities
             EtsCreator = creator;
         }
 
-        public ProcurementProject Update(ProcurementProjectContract dto)
+        public ProcurementProject Update(ProcurementProjectContract dto, bool ignoreErrors = false )
         {
             if (State == PublishState.Published)
             {
-                if (ProcurementCategory != dto.ProcurementCategory ||
-                    ContractType != dto.ContractType)
+                if (!ignoreErrors && ( ProcurementCategory != dto.ProcurementCategory ||
+                    ContractType != dto.ContractType))
                 {
                     throw new HilmaException("Updating procurement category, contract type is not allowed for published projects");
                 }

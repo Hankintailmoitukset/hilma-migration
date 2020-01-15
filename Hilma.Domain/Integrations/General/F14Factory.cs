@@ -251,7 +251,7 @@ namespace Hilma.Domain.Integrations.General
                 TedHelpers.ElementWithAttribute("ESENDER_LOGIN", "PUBLICATION", "NO", _eSenderLogin),
                 TedHelpers.ElementWithAttribute("CUSTOMER_LOGIN", "PUBLICATION", "NO", _eSenderLogin),
                 TedHelpers.ElementWithAttribute("NO_DOC_EXT", "PUBLICATION", "NO", _parent?.NoticeNumber),
-                TedHelpers.ElementWithAttribute("DATE_DISPATCH_ORIGINAL", "PUBLICATION", "NO", TedNoticeFactory.PublishToTed || _parent.TedPublishRequestSentDate != DateTime.MinValue ? _parent.TedPublishRequestSentDate.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"))
+                _parent?.TedPublishRequestSentDate.HasValue ?? false ? TedHelpers.ElementWithAttribute("DATE_DISPATCH_ORIGINAL", "PUBLICATION", "NO", _parent.TedPublishRequestSentDate.Value.ToString("yyyy-MM-dd")) : null 
                );
         }
         #endregion

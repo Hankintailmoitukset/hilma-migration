@@ -38,7 +38,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// Lot number, if applicable.
         /// </summary>
-        public int? LotNumber { get; set; }
+        public string LotNumber { get; set; }
 
         /// <summary>
         /// Text changes - old

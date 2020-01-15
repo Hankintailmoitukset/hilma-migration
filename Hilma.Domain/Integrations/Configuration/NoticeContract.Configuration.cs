@@ -47,7 +47,7 @@ namespace Hilma.Domain.Integrations.Configuration
         public ResultsOfContestConfiguration ResultsOfContest {get; set;} = new ResultsOfContestConfiguration();
         public bool TedNoDocExt {get; set;} = false;
         public bool Links {get; set;} = false;
-        public bool Attachments {get; set;} = false;
+        public AttachmentViewModelConfiguration Attachments {get; set;} = new AttachmentViewModelConfiguration();
         public ChangeConfiguration Changes {get; set;} = new ChangeConfiguration();
         public bool IsCorrigendum {get; set;} = false;
         public bool IsMigrated {get; set;} = false;

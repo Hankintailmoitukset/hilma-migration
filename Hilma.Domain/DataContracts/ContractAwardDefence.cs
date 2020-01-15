@@ -14,7 +14,7 @@ namespace Hilma.Domain.DataContracts
         /// <summary>
         /// Lot no (not required, if lotinfo.divisionlots = false)
         /// </summary>
-        public int LotNumber { get; set; }
+        public string LotNumber { get; set; }
 
         /// <summary>
         /// Lot title (not required, if lotinfo.divisionlots = false)

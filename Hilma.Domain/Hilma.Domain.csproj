@@ -290,6 +290,9 @@
     <Compile Update="Integrations\Configuration\AttachmentInformation.Configuration.cs">
       <CustomToolNamespace>Entities\AttachmentInformation.cs</CustomToolNamespace>
     </Compile>
+    <Compile Update="Integrations\Configuration\AttachmentViewModel.Configuration.cs">
+      <CustomToolNamespace>DataContracts\AttachmentViewModel.cs</CustomToolNamespace>
+    </Compile>
     <Compile Update="Integrations\Configuration\AuthenticationConfigContract.Configuration.cs">
       <CustomToolNamespace>Configuration\AuthenticationConfigContract.cs</CustomToolNamespace>
     </Compile>
@@ -508,6 +511,9 @@
     </Compile>
     <Compile Update="Integrations\Configuration\RewardsAndJury.Configuration.cs">
       <CustomToolNamespace>Entities\RewardsAndJury.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\SearchFilter.Configuration.cs">
+      <CustomToolNamespace>DataContracts\SearchFilter.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Integrations\Configuration\SerilogConfigurationContract.Configuration.cs">
       <CustomToolNamespace>Configuration\SerilogConfigurationContract.cs</CustomToolNamespace>

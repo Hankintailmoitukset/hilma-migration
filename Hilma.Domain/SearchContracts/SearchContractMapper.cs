@@ -47,13 +47,15 @@ namespace Hilma.Domain.SearchContracts
                                 .ForMember(d => d.IsNationalProcurement, d => d.MapFrom( (n,s) => n.Type.IsNational() ))
                                 .ForMember(d => d.ObjectDescriptions,
                                            d => d.MapFrom((x,s) => string.Join(" ", x.ObjectDescriptions?.Select(l => $"{l.Title ?? ""} {string.Join(' ', l.DescrProcurement??new[] { "" })}")??new string[0])))
+                                .ForMember(d => d.EstimatedValue, d => d.MapFrom(x => GetEstimatedValue(x)))
+                                .ForMember(d => d.Currency, d => d.MapFrom(x => x.ProcurementObject.EstimatedValue.Currency))
                                 );
             return config.CreateMapper();
         }
 
         private static string GetMainNoticeType(NoticeType type)
         {
-            if(type.IsPriorInformation()) {
+            if(type.IsPriorInformation() || type == NoticeType.ExAnte) {
                 return nameof(NoticeTypes.PriorInformationNotices);
             }
             if (type.IsContract()) {
@@ -71,6 +73,14 @@ namespace Hilma.Domain.SearchContracts
                 return nameof(NoticeTypes.NationalNotices);
             }
             return null;
+        }
+
+        private static double GetEstimatedValue(NoticeContract notice)
+        {
+            var estimatedValue = notice.ProcurementObject?.EstimatedValue;
+            if (estimatedValue?.Value == null || estimatedValue.DisagreeToBePublished == true) return 0;
+
+            return (double)estimatedValue.Value;
         }
     }
 }

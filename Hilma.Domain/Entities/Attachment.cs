@@ -1,4 +1,5 @@
 using System;
+using Hilma.Domain.Enums;
 
 namespace Hilma.Domain.Entities {
     /// <summary>

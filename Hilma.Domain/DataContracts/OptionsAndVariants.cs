@@ -18,7 +18,7 @@ namespace Hilma.Domain.DataContracts
         /// <summary>
         /// Partial offers for national agriculture notice contracts
         /// </summary>
-        [CorrigendumLabel("partial_offers_accepted", "")]
+        [CorrigendumLabel("partial_offers_accepted", "II.2.10")]
         public bool PartialOffersWillBeAccepted { get; set; }
 
         /// <summary>

@@ -66,7 +66,7 @@ namespace Hilma.Domain.Integrations.General
                 ((type == NoticeType.ExAnte || type == NoticeType.DpsAward || type == NoticeType.DesignContest || type == NoticeType.DesignContestResults) &&
                     project.ProcurementCategory == ProcurementCategory.Utility);
 
-            if(type == NoticeType.Concession || type == NoticeType.ConcessionAward)
+            if(type == NoticeType.Concession || type == NoticeType.ConcessionAward || type == NoticeType.ExAnte)
             {
                 isUtilitiesNotice = organisation.ContractingType == ContractingType.ContractingEntity;
             }
@@ -862,24 +862,29 @@ namespace Hilma.Domain.Integrations.General
             {
                 if (procedureInformation.ContestParticipants.Type == ContractValueType.Range)
                 {
-                    procedure.Add(Element("NB_MIN_PARTICIPANTS", procedureInformation.ContestParticipants.MinValue.ToString("F0")));
-                    procedure.Add(Element("NB_MAX_PARTICIPANTS", procedureInformation.ContestParticipants.MaxValue.ToString("F0")));
+                    procedure.Add(Element("NB_MIN_PARTICIPANTS", procedureInformation.ContestParticipants.MinValue?.ToString("F0")));
+                    procedure.Add(Element("NB_MAX_PARTICIPANTS", procedureInformation.ContestParticipants.MaxValue?.ToString("F0")));
                 }
                 else
                 {
-                    procedure.Add(Element("NB_PARTICIPANTS", procedureInformation.ContestParticipants.Value.ToString("F0")));
+                    procedure.Add(Element("NB_PARTICIPANTS", procedureInformation.ContestParticipants.Value?.ToString("F0")));
                 }
             }
 
             if (configuration.FrameworkAgreement.IncludesFrameworkAgreement && _notice.ProcedureInformation.FrameworkAgreement.IncludesFrameworkAgreement)
             {
                 var participants = _notice.ProcedureInformation.FrameworkAgreement.EnvisagedNumberOfParticipants;
-                procedure.Add(Element("FRAMEWORK",
+
+                var framework = Element("FRAMEWORK") ;
+                framework.Add(
                     configuration.FrameworkAgreement.EnvisagedNumberOfParticipants ? (participants != null && participants > 1
                         ? Element("SEVERAL_OPERATORS")
                         : Element("SINGLE_OPERATOR")) : null,
                     configuration.FrameworkAgreement.EnvisagedNumberOfParticipants ? Element("NB_PARTICIPANTS", participants) : null,
-                    configuration.FrameworkAgreement.JustificationForDurationOverFourYears ? PElement("JUSTIFICATION", _notice.ProcedureInformation.FrameworkAgreement.JustificationForDurationOverFourYears) : null));
+                    configuration.FrameworkAgreement.JustificationForDurationOverFourYears ? PElement("JUSTIFICATION", _notice.ProcedureInformation.FrameworkAgreement.JustificationForDurationOverFourYears) : null
+                    );
+
+                procedure.Add(framework);
             }
             else if (configuration.FrameworkAgreement.IncludesDynamicPurchasingSystem && _notice.ProcedureInformation.FrameworkAgreement.IncludesDynamicPurchasingSystem)
             {
@@ -1173,7 +1178,7 @@ namespace Hilma.Domain.Integrations.General
                 var isExante = _notice.Type == NoticeType.ExAnte;
                 return Element("AWARD_CONTRACT", new XAttribute("ITEM",i + 1),
                     _notice.Type != NoticeType.ConcessionAward ? Element("CONTRACT_NO", awardedContract?.ContractNumber) : null,
-                    _notice.LotsInfo.DivisionLots ? Element("LOT_NO", lot.LotNumber.ToString()) : null,
+                    _notice.LotsInfo.DivisionLots ? Element("LOT_NO", lot.LotNumber) : null,
                     awardedContractConfig.ContractTitle ? PElement("TITLE", awardedContract?.ContractTitle) : null,
                     // PElement("TITLE", lot.Title),
                     awardContract.ContractAwarded == ContractAwarded.AwardedContract ?
@@ -1220,7 +1225,7 @@ namespace Hilma.Domain.Integrations.General
                         awardedContract.LikelyToBeSubcontracted && awardedContractConfig.LikelyToBeSubcontracted ?
                         new List<XElement> {
                             Element("LIKELY_SUBCONTRACTED"),
-                            ElementWithAttribute("VAL_SUBCONTRACTING", "CURRENCY", awardedContract.ValueOfSubcontract.Currency, awardedContract.ValueOfSubcontract.Value),
+                            awardedContract.ValueOfSubcontract?.Value != null ? ElementWithAttribute("VAL_SUBCONTRACTING", "CURRENCY", awardedContract.ValueOfSubcontract.Currency, awardedContract.ValueOfSubcontract.Value) : null,
                             Element("PCT_SUBCONTRACTING", (int?)awardedContract?.ProportionOfValue),
                             PElement("INFO_ADD_SUBCONTRACTING", awardedContract?.SubcontractingDescription),
                             awardedContract.ExAnteSubcontracting != null && awardedContractConfig.ExAnteSubcontracting != null

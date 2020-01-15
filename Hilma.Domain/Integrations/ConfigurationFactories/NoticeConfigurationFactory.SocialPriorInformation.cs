@@ -74,6 +74,7 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 EstimatedValue = new ValueRangeContractConfiguration { Currency = true, Value = true },
                 MainCpvCode = new CpvCodeConfiguration { Code = true, VocCodes = new VocCodeConfiguration { Code = true } }
             },
+            ProcedureInformation = null,
             TenderingInformation = new TenderingInformationConfiguration {
                 TendersMustBeValidForMonths = false,
                 TendersMustBeValidUntil = false,

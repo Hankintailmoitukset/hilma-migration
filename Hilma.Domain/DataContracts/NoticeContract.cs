@@ -140,7 +140,7 @@ namespace Hilma.Domain.DataContracts
         /// <summary>
         ///     Timestamp for initiation of ted publication process
         /// </summary>
-        public DateTime TedPublishRequestSentDate { get; set; }
+        public DateTime? TedPublishRequestSentDate { get; set; }
         /// <summary>
         ///     Information regarding TED publication process
         /// </summary>
@@ -198,7 +198,7 @@ namespace Hilma.Domain.DataContracts
         ///     Attachments for this notice, as SAS-links.
         /// </summary>
         [IgnoreMap]
-        public string[] Attachments { get; set; }
+        public AttachmentViewModel[] Attachments { get; set; }
 
         /// <summary>
         ///     Notice changes for corrigendum notice
