@@ -41,11 +41,12 @@ namespace Hilma.Domain.Entities {
         ///     Displayed file name. Actual file name in the blob storage is based on
         ///     the database assigned Id. Optional.
         /// </param>
-        public File(string container, string filename = null)
+        /// <param name="status">FileStatus. Default is Staged</param>
+        public File(string container, string filename = null, FileStatus status = FileStatus.Staged)
         {
             Container = container;
             Filename = filename;
-            Status = FileStatus.Staged;
+            Status = status;
         }
     }
 }

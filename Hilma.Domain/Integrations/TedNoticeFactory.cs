@@ -112,13 +112,13 @@ namespace Hilma.Domain.Integrations
                     var f15factory = new F15Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f15factory.CreateForm();
                 case NoticeType.DefencePriorInformation:
-                    var f16Factory = new F16Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
+                    var f16Factory = new F16Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f16Factory.CreateForm();
                 case NoticeType.DefenceContract:
-                    var f17Factory = new F17Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail);
+                    var f17Factory = new F17Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f17Factory.CreateForm();
                 case NoticeType.DefenceContractAward:
-                    return new F18Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail).CreateForm();
+                    return new F18Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider).CreateForm();
                 case NoticeType.DefenceContractSub:
                     break;
                 case NoticeType.Modification:

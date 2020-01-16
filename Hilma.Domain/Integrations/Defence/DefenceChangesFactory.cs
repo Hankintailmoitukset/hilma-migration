@@ -1,3 +1,4 @@
+using System;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
@@ -297,17 +298,22 @@ namespace Hilma.Domain.Integrations.Defence
             changes.AddDate(parent.ProcurementObject.Defence.TimeFrame.BeginDate, notice.ProcurementObject.Defence.TimeFrame.BeginDate, typeof(TimeFrame), nameof(TimeFrame.BeginDate), section: "II.3");
             changes.AddDate(parent.ProcurementObject.Defence.TimeFrame.EndDate, notice.ProcurementObject.Defence.TimeFrame.EndDate, typeof(TimeFrame), nameof(TimeFrame.EndDate), section: "II.3");
 
-            // Changes in lots
-            for (var i = 0; i < notice.ObjectDescriptions.Length; i++)
+            // II.2
+            // Existing lots (changes and additions)
+            foreach (var objectDescription in notice.ObjectDescriptions)
             {
-                var lotNumber = (i + 1).ToString();
-                var parentLot = new ObjectDescription();
-                if (parent.ObjectDescriptions.Length > i)
-                {
-                    parentLot = parent.ObjectDescriptions[i];
-                }
+                var parentLot = parent.ObjectDescriptions?.FirstOrDefault(x => x.LotNumber == objectDescription.LotNumber) ?? new ObjectDescription();
 
-                HandleLotChanges(changes, lotNumber, notice.ObjectDescriptions[i], parentLot);
+                HandleLotChanges(changes, objectDescription.LotNumber, objectDescription, parentLot);
+            }
+
+            // Lot removals
+            foreach (var parentObjectDescr in parent.ObjectDescriptions)
+            {
+                if (notice.ObjectDescriptions.FirstOrDefault(x => x.LotNumber == parentObjectDescr.LotNumber) == null)
+                {
+                    changes.Add(parentObjectDescr.LotNumber, null, typeof(ObjectDescription), nameof(ObjectDescription.LotNumber), parentObjectDescr.LotNumber);
+                }
             }
         }
 
@@ -316,7 +322,7 @@ namespace Hilma.Domain.Integrations.Defence
         private static void HandleLotChanges(List<Change> changes, string lotNumber, ObjectDescription lot, ObjectDescription parentLot)
         {
             // Title attributed to the contract by the contracting authority/entity:
-            changes.Add(parentLot.LotNumber == null ? null : parentLot?.LotNumber, lot?.LotNumber, typeof(ObjectDescription), nameof(ObjectDescription.LotNumber), lotNumber, "Annex B");
+            changes.Add(parentLot?.LotNumber, lot?.LotNumber, typeof(ObjectDescription), nameof(ObjectDescription.LotNumber), lotNumber, "Annex B");
             changes.Add(parentLot.Title, lot.Title, typeof(ObjectDescription), nameof(ObjectDescription.Title), lotNumber, "Annex B");
 
             // 1) Short description:

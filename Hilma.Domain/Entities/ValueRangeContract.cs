@@ -38,7 +38,7 @@ namespace Hilma.Domain.Entities
         /// </summary>
         //[Required]
         [CorrigendumLabel("currency", "II.2.1")]
-        public string Currency { get; set; } = "EUR";
+        public string Currency { get; set; }
 
         /// <summary>
         /// Whether the value can be published or not

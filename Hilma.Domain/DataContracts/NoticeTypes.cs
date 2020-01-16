@@ -108,7 +108,8 @@ namespace Hilma.Domain.DataContracts
             NoticeType.SocialUtilities,
             NoticeType.NationalContract,
             NoticeType.NationalAgricultureContract,
-            NoticeType.SocialUtilitiesQualificationSystem
+            NoticeType.SocialUtilitiesQualificationSystem,
+            NoticeType.Concession
         };
 
         /// <summary>

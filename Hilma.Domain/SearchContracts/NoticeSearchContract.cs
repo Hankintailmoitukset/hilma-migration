@@ -38,37 +38,37 @@ namespace Hilma.Domain.SearchContracts
 
         public string ProjectTitle { get; set; }
 
-        [IsSortable, IsSearchable, Analyzer(AnalyzerName.AsString.StandardLucene)]
+        [IsSortable, IsSearchable, Analyzer(AnalyzerName.AsString.FiLucene)]
         public string ProjectTitleNormalized { get; set; }
 
-        [IsFilterable, IsSearchable, Analyzer(AnalyzerName.AsString.StandardLucene)]
+        [IsFilterable, IsSearchable, Analyzer(AnalyzerName.AsString.FiLucene)]
         [JsonProperty("cpvCodes")]
         public string CpvCodes { get; set; }
 
-        [IsSortable, IsSearchable, Analyzer(AnalyzerName.AsString.StandardLucene)]
+        [IsSortable, IsSearchable, Analyzer(AnalyzerName.AsString.FiLucene)]
         [JsonProperty("organisationName")]
         public string ProjectOrganisationOrganisationInformationOfficialName { get; set; }
 
-        [IsSearchable, Analyzer(AnalyzerName.AsString.StandardLucene)]
+        [IsSearchable, Analyzer(AnalyzerName.AsString.FiLucene)]
         [JsonProperty("organisationNationalRegistrationNumber")]
         public string ProjectOrganisationOrganisationInformationNationalRegistrationNumber { get; set; }
 
-        [IsSearchable, Analyzer(AnalyzerName.AsString.StandardLucene)]
+        [IsSearchable, Analyzer(AnalyzerName.AsString.FiLucene)]
         [JsonProperty("organisationAddress")]
         public string OrganisationAddress { get; set; }
 
-        [IsSearchable, Analyzer(AnalyzerName.AsString.StandardLucene)]
+        [IsSearchable, Analyzer(AnalyzerName.AsString.FiLucene)]
         [JsonProperty("nutsCodes")]
         public string NutsCodes { get; set; }
 
-        [IsSearchable, Analyzer(AnalyzerName.AsString.StandardLucene)]
+        [IsSearchable, Analyzer(AnalyzerName.AsString.FiLucene)]
         [JsonProperty("organisationDepartment")]
         public string ProjectOrganisationOrganisationInformationDepartment { get; set; }
 
-        [IsSearchable, Analyzer(AnalyzerName.AsString.StandardLucene)]
+        [IsSearchable, Analyzer(AnalyzerName.AsString.FiLucene)]
         public string ProjectShortDescription { get; set; }
         
-        [IsSearchable, Analyzer(AnalyzerName.AsString.StandardLucene)]
+        [IsSearchable, Analyzer(AnalyzerName.AsString.FiLucene)]
         public string ObjectDescriptions { get; set; }
 
         [IsSortable, IsFilterable]
@@ -97,6 +97,12 @@ namespace Hilma.Domain.SearchContracts
         
         [IsFilterable, IsSearchable, Analyzer(AnalyzerName.AsString.Keyword)]
         public string NoticeNumber { get; internal set; }
+
+        [IsFilterable]
+        public double EstimatedValue { get; set; }
+
+        [IsFilterable]
+        public string Currency { get; set; }
     }
 }
 #endif

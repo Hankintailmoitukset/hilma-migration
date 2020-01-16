@@ -390,7 +390,7 @@ namespace Hilma.Domain.Integrations.General
         public static XElement TimeElement(string name, DateTime? value)
         {
             var timeElement = value.HasValue
-                ? new XElement(Xmlns + name.ToUpper(), value?.ToString("hh':'mm"))
+                ? new XElement(Xmlns + name.ToUpper(), value?.ToString("HH':'mm"))
                 : null;
             return timeElement;
         }

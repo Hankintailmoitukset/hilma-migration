@@ -57,6 +57,7 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
             },
             ConditionsInformationDefence = new ConditionsInformationDefenceConfiguration {
                 DepositsRequired = true,
+                LegalFormTaken = true,
                 PersonalSituationOfEconomicOperators = true,
                 RestrictedToParticularProfession = true,
             },

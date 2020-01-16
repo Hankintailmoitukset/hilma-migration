@@ -71,7 +71,15 @@ namespace Hilma.Domain.Entities
         /// </summary>
         public bool IsCorrigendum { get; set; }
 
+        /// <summary>
+        /// Indicates that the notice has been migrated from the previous Hilma system
+        /// </summary>
         public bool IsMigrated { get; set; }
+
+        /// <summary>
+        /// Identifies the original tendering system for migrated notices
+        /// </summary>
+        public string MigratedEtsSystem { get; set; }
 
         /// <summary>
         /// Changes related to corrigendum notice
@@ -142,7 +150,7 @@ namespace Hilma.Domain.Entities
         ///     If notice is fixed, set its child FK.
         /// </summary>
         public int? CorrigendumId { get; set; }
-        
+
         /// <summary>
         /// VII.2 Other additional information for why the corrigendum was made.
         /// </summary>
@@ -255,7 +263,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         ///    Section VI: Miscellaneous information about the notice.
         /// </summary>
-        public ComplementaryInformation ComplementaryInformation { get; set;} = new ComplementaryInformation();
+        public ComplementaryInformation ComplementaryInformation { get; set; } = new ComplementaryInformation();
 
         /// <summary>
         ///     VI.4) Procedures for review
@@ -277,10 +285,10 @@ namespace Hilma.Domain.Entities
 
         public AttachmentInformation AttachmentInformation { get; set; } = new AttachmentInformation();
 
-	    /// <summary>
+        /// <summary>
         ///     Language for notice to be published in to TED.
         /// </summary>
-	    public string Language { get; set; } = "FI";
+        public string Language { get; set; } = "FI";
 
         /// <summary>
         /// Directive 2009/81/EC (Defence notices)
@@ -307,9 +315,9 @@ namespace Hilma.Domain.Entities
         ///     If this notice could be published.
         /// </summary>
         //[NotMapped]
-        public bool CanEdit => !(State == PublishState.Published || State == PublishState.NotPublic);
+        public bool CanEdit => !(State == PublishState.Published || State == PublishState.WaitingToBePublished || State == PublishState.NotPublic);
 
-        
+
         /// <summary>
         ///     Attempt to set state to published.
         /// </summary>

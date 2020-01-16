@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using Hilma.Domain.Configuration;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Integrations.Configuration;
 using Hilma.Domain.Integrations.ConfigurationFactories;
@@ -25,15 +26,16 @@ namespace Hilma.Domain.Integrations.Defence
         /// <param name="eSenderLogin">The TED esender login</param>
         /// <param name="tedESenderOrganisation">Organisation that sends notices to eSender api</param>
         /// <param name="tedContactEmail">Contact email for technical</param>
+        /// <param name="translationProvider"></param>
         public F17Factory(NoticeContract notice, string eSenderLogin, string tedESenderOrganisation,
-            string tedContactEmail)
+            string tedContactEmail, ITranslationProvider translationProvider)
         {
             _notice = notice;
             _eSenderLogin = eSenderLogin;
             _tedContactEmail = tedContactEmail;
             _tedESenderOrganisation = tedESenderOrganisation;
             _configuration = NoticeConfigurationFactory.CreateConfiguration(notice);
-            _helper = new SectionHelper(_notice, _configuration);
+            _helper = new SectionHelper(_notice, _configuration, translationProvider);
         }
 
         /// <summary>

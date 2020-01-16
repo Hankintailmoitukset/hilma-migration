@@ -67,7 +67,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// Estimated execution timeframe for national agriculture contract notices
         /// </summary>
-        [CorrigendumLabel("estimated_execution_timeframe", "")]
+        [CorrigendumLabel("estimated_execution_timeframe", "II.3")]
         public TimeFrame EstimatedExecutionTimeFrame { get; set; } = new TimeFrame() { Type = TimeFrameType.BeginAndEndDate };
 
         /// <summary>

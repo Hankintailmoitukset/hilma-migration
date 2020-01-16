@@ -25,5 +25,10 @@ namespace Hilma.Domain.DataContracts
         /// Migration api subscription name
         /// </summary>
         public string SubscriptionName { get; set; }
+
+        /// <summary>
+        /// Original sender system for the notice
+        /// </summary>
+        public string SourceSystem { get; set; }
     }
 }

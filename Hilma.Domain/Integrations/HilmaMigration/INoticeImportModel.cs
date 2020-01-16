@@ -15,5 +15,10 @@ namespace Hilma.Domain.Integrations.HilmaMigration
         bool IsPublishedInTed { get; set; }
         DateTime? TedPublishedDate { get; set; }
         string PreviousNoticeNumber { get; set; }
+
+        /// <summary>
+        /// Original source system
+        /// </summary>
+        string EtsIdentifier { get; set; }
     }
 }

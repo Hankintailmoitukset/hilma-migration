@@ -19,5 +19,7 @@ namespace Hilma.Tests
         public bool IsPublishedInTed { get; set; }
         public DateTime? TedPublishedDate { get; set; }
         public string PreviousNoticeNumber { get; set; }
+
+        public String EtsIdentifier { get; set; }
     }
 }

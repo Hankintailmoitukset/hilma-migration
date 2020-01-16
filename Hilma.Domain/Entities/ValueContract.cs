@@ -10,6 +10,6 @@ namespace Hilma.Domain.Entities
 
         //[Required]
         [CorrigendumLabel("currency", "II.1.5")]
-        public string Currency { get; set; } = "EUR";
+        public string Currency { get; set; }
     }
 }

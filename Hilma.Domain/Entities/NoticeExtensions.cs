@@ -42,6 +42,8 @@ namespace Hilma.Domain.Entities
                 LotsInfo = dto.LotsInfo,
                 ObjectDescriptions = dto.ObjectDescriptions ?? new ObjectDescription[0],
                 IsCorrigendum = dto.IsCorrigendum,
+                IsCancelled = dto.IsCancelled,
+                CancelledReason =  dto.CancelledReason,
                 Annexes = dto.Annexes,
                 CorrigendumAdditionalInformation = dto.CorrigendumAdditionalInformation,
                 Language = dto.Language,
@@ -141,6 +143,8 @@ namespace Hilma.Domain.Entities
         {
             noticeEntity.Language = dto.Language;
             noticeEntity.IsCorrigendum = dto.IsCorrigendum;
+            noticeEntity.IsCancelled = dto.IsCancelled;
+            noticeEntity.CancelledReason = dto.CancelledReason;
             noticeEntity.ReducedTimeLimitsForReceiptOfTenders = dto.ReducedTimeLimitsForReceiptOfTenders;
             noticeEntity.CorrigendumAdditionalInformation = dto.CorrigendumAdditionalInformation;
             noticeEntity.IsLatest = dto.IsLatest;

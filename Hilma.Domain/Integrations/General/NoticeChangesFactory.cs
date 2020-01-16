@@ -70,7 +70,8 @@ namespace Hilma.Domain.Integrations.General
             ComplementaryInfo(_notice, _parent, changes);
 
             // Section VII: Modifications to the contract/concession
-            Modification(_notice, _parent, changes);
+            // TED: S7-01-02: Corrections in the original notice: correction on section VII is not allowed
+            //Modification(_notice, _parent, changes);
 
             // Sections AD1-AD4:
             AnnexChanges(_notice, _parent, changes);
@@ -243,35 +244,31 @@ namespace Hilma.Domain.Integrations.General
 
             // II.2
             // Existing lots (changes and additions)
-            for (var i = 0; i < notice.ObjectDescriptions.Length; i++)
+            foreach(var objectDescription in notice.ObjectDescriptions)
             {
-                var lotNumber = (i + 1).ToString();
-                var parentLot = new ObjectDescription();
-                if (parent.ObjectDescriptions.Length > i)
-                {
-                    parentLot = parent.ObjectDescriptions[i];
-                }
+                var parentLot = parent.ObjectDescriptions?.FirstOrDefault(x => x.LotNumber == objectDescription.LotNumber) ?? new ObjectDescription();
 
-                HandleLotChanges(changes, lotNumber, notice.ObjectDescriptions[i], parentLot);
+                HandleLotChanges(changes, objectDescription.LotNumber, objectDescription, parentLot);
+            }
+
+            // Lot removals
+            foreach (var parentObjectDescr in parent.ObjectDescriptions)
+            {
+                if(notice.ObjectDescriptions.FirstOrDefault(x => x.LotNumber == parentObjectDescr.LotNumber) == null)
+                {
+                    changes.Add(parentObjectDescr.LotNumber, null, typeof(ObjectDescription), nameof(ObjectDescription.LotNumber), parentObjectDescr.LotNumber);
+                }
             }
 
             // II.3
             changes.AddDate(parent.TenderingInformation.EstimatedDateOfContractNoticePublication, notice.TenderingInformation.EstimatedDateOfContractNoticePublication, typeof(TenderingInformation), nameof(TenderingInformation.EstimatedDateOfContractNoticePublication));
-
-            // Lot removals
-            for (var i = notice.ObjectDescriptions.Length; i < parent.ObjectDescriptions.Length; i++)
-            {
-                var lotNumber = (i + 1).ToString();
-
-                changes.Add(lotNumber, null, typeof(ObjectDescription), nameof(ObjectDescription.LotNumber), lotNumber);
-            }
         }
 
         private static void HandleLotChanges(List<Change> changes, string lotNumber, ObjectDescription lot, ObjectDescription parentLot)
         {
             // II.2.1
             changes.Add(parentLot.Title, lot.Title, typeof(ObjectDescription), nameof(ObjectDescription.Title), lotNumber);
-            changes.Add(parentLot.LotNumber == null ? null : parentLot?.LotNumber, lot?.LotNumber, typeof(ObjectDescription), nameof(ObjectDescription.LotNumber), lotNumber);
+            changes.Add(string.IsNullOrEmpty(parentLot.LotNumber ) ? null : parentLot?.LotNumber, lot?.LotNumber, typeof(ObjectDescription), nameof(ObjectDescription.LotNumber), lotNumber);
 
             // II.2.2
             // Add & change
@@ -419,7 +416,7 @@ namespace Hilma.Domain.Integrations.General
             changes.Add(parentConditions?.RulesForParticipation, conditions?.RulesForParticipation, typeof(ConditionsInformation), nameof(ConditionsInformation.RulesForParticipation));
             // III.1.5
             changes.Add(parentConditions?.RestrictedToShelteredWorkshop, conditions?.RestrictedToShelteredWorkshop, typeof(ConditionsInformation), nameof(ConditionsInformation.RestrictedToShelteredWorkshop));
-            changes.Add(parentConditions?.RestrictedToShelteredProgram, conditions?.RestrictedToShelteredProgram, typeof(ConditionsInformation), nameof(ConditionsInformation.TechnicalRequiredStandards));
+            changes.Add(parentConditions?.RestrictedToShelteredProgram, conditions?.RestrictedToShelteredProgram, typeof(ConditionsInformation), nameof(ConditionsInformation.RestrictedToShelteredProgram));
             changes.Add(parentConditions?.ReservedOrganisationServiceMission, conditions?.ReservedOrganisationServiceMission, typeof(ConditionsInformation), nameof(ConditionsInformation.ReservedOrganisationServiceMission));
             // III.1.6
             changes.Add(parentConditions?.DepositsRequired, conditions?.DepositsRequired, typeof(ConditionsInformation), nameof(ConditionsInformation.DepositsRequired));

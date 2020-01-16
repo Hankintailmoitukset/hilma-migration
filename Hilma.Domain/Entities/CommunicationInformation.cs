@@ -43,7 +43,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// Documents available from an other address
         /// </summary>
-        [CorrigendumLabel("address_another", "")]
+        [CorrigendumLabel("address_another", "I.3")]
         public ContractBodyContactInformation OtherAddressForProcurementDocuments { get; set; } = new ContractBodyContactInformation();
 
         /// <summary>

@@ -13,19 +13,19 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// Participation and contractor selection criteria description
         /// </summary>
-        [CorrigendumLabel("suitability_requirements", "")]
+        [CorrigendumLabel("suitability_requirements", "III.1")]
         public string[] ParticipantSuitabilityCriteria { get; set; }
         /// <summary>
         /// Certifications and other reports, on which suitability is assessed
         /// Todistukset ja selvitykset, joiden perusteella soveltuvuuden täyttyminen arvioidaan  
         /// </summary>
-        [CorrigendumLabel("required_certifications", "")]
+        [CorrigendumLabel("required_certifications", "III.1")]
         public string[] RequiredCertifications { get; set; }
 
         /// <summary>
         /// Additional information
         /// </summary>
-        [CorrigendumLabel("info_additional", "")]
+        [CorrigendumLabel("info_additional", "III.1")]
         public string[] AdditionalInformation { get; set; }
 
         #region VueJS
@@ -38,7 +38,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// Procurement is reserved for sheltered workshop or program
         /// </summary>
-        [CorrigendumLabel("restricted_sheltered_program", "")]
+        [CorrigendumLabel("restricted_sheltered_program", "III.1")]
         public bool ReservedForShelteredWorkshopOrProgram { get; set; }
     }
 }
