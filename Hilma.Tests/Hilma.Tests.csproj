@@ -14,6 +14,7 @@
     <None Remove="Notices\Form4.xml" />
     <None Remove="Notices\Form5.xml" />
     <None Remove="Notices\Form6.xml" />
+    <None Remove="Notices\Form99.xml" />
     <None Remove="Notices\TestSchema9902_3.json" />
   </ItemGroup>
 
@@ -25,6 +26,7 @@
     <EmbeddedResource Include="Notices\Form4.xml" />
     <EmbeddedResource Include="Notices\Form5.xml" />
     <EmbeddedResource Include="Notices\Form6.xml" />
+    <EmbeddedResource Include="Notices\Form99.xml" />
     <EmbeddedResource Include="Notices\TestSchema9902_3.json" />
   </ItemGroup>
 
@@ -37,6 +39,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,91 @@
+﻿<?xml version="1.0"?>
+<HILMA_NOTICE VERSION="R3.5">
+  <HILMA_SENDER>
+    <HILMA_LOGIN CLASS="mercell">mercelltest</HILMA_LOGIN>
+    <HILMA_USER>
+      <OFFICIALNAME>MSS Public Sector Buyer-FI</OFFICIALNAME>
+      <CONTACT_POINT>Buyer2 (non-Customer admin) Contact</CONTACT_POINT>
+      <ADDRESS>Paciuksenkatu 25</ADDRESS>
+      <POSTAL_CODE>00270</POSTAL_CODE>
+      <TOWN>Helsinki</TOWN>
+      <COUNTRY VALUE="FI" />
+      <E_MAIL>thha@mercell.com</E_MAIL>
+      <URL>http://www.mercell.com/</URL>
+    </HILMA_USER>
+    <HILMA_NO_DOC_EXT>105862098</HILMA_NO_DOC_EXT>
+  </HILMA_SENDER>
+  <FORM_SECTION>
+    <DOMESTIC_CONTRACT LG="FI" CATEGORY="ORIGINAL" FORM="99" VERSION="R3.5">
+      <FD_DOMESTIC_CONTRACT DOMESTIC_CTYPE="SERVICES">
+        <DOMESTIC_NOTICE_TYPE>
+          <DOMESTIC_CONTRACT />
+        </DOMESTIC_NOTICE_TYPE>
+        <DOMESTIC_AUTHORITY_INFORMATION>
+          <DOMESTIC_NAME_ADDRESSES>
+            <ORGANISATION>
+              <OFFICIALNAME>MSS Public Sector Buyer-FI</OFFICIALNAME>
+              <NATIONALID>2740592-1</NATIONALID>
+            </ORGANISATION>
+            <ATTENTION>Buyer2 (non-Customer admin) Contact</ATTENTION>
+            <ADDRESS>Paciuksenkatu 25</ADDRESS>
+            <TOWN>Helsinki</TOWN>
+            <POSTAL_CODE>00270</POSTAL_CODE>
+            <COUNTRY VALUE="FI" />
+            <E_MAILS>
+              <E_MAIL>thha@mercell.com</E_MAIL>
+            </E_MAILS>
+            <URL_GENERAL>http://www.mercell.com/</URL_GENERAL>
+          </DOMESTIC_NAME_ADDRESSES>
+          <DOMESTIC_TENDERS_REQUESTS_APPLICATIONS_MUST_BE_SENT_TO>
+            <CONTACT_POINT>Mercell Suomi Oy</CONTACT_POINT>
+            <ADDRESS>Mikonkatu 7</ADDRESS>
+            <TOWN>Helsinki</TOWN>
+            <POSTAL_CODE>00100</POSTAL_CODE>
+            <COUNTRY VALUE="FI" />
+            <E_MAILS>
+              <E_MAIL>suomi@mercell.com</E_MAIL>
+            </E_MAILS>
+            <URL_DOCUMENT>https://permalink-patch.mercell.com/105862098.aspx</URL_DOCUMENT>
+          </DOMESTIC_TENDERS_REQUESTS_APPLICATIONS_MUST_BE_SENT_TO>
+          <DOMESTIC_TYPE_OF_CONTRACTING />
+        </DOMESTIC_AUTHORITY_INFORMATION>
+        <DOMESTIC_OBJECT_INFORMATION>
+          <TITLE_CONTRACT>dfdf</TITLE_CONTRACT>
+          <DOMESTIC_COSTS_RANGE_AND_CURRENCY CURRENCY="EUR" IS_PUBLIC="YES" EXCEEDS_THRESHOLD="NO">
+            <RANGE_VALUE_COST>
+              <LOW_VALUE>0</LOW_VALUE>
+              <HIGH_VALUE>0</HIGH_VALUE>
+            </RANGE_VALUE_COST>
+          </DOMESTIC_COSTS_RANGE_AND_CURRENCY>
+          <CPV />
+        </DOMESTIC_OBJECT_INFORMATION>
+        <DOMESTIC_PROCEDURE_DEFINITION>
+          <DOMESTIC_TYPE_OF_PROCEDURE>
+            <OPEN />
+          </DOMESTIC_TYPE_OF_PROCEDURE>
+          <ACCEPTED_VARIANTS VALUE="NO" />
+        </DOMESTIC_PROCEDURE_DEFINITION>
+        <DOMESTIC_CONTRACT_RELATING_CONDITIONS>
+          <AWARD_CRITERIA />
+          <RECEIPT_LIMIT_DATE>
+            <DAY>1</DAY>
+            <MONTH>1</MONTH>
+            <YEAR>1</YEAR>
+            <TIME>2:00</TIME>
+          </RECEIPT_LIMIT_DATE>
+        </DOMESTIC_CONTRACT_RELATING_CONDITIONS>
+        <DOMESTIC_ADDRESS_REVIEW_BODY>
+          <OFFICIALNAME>Marknadsdomstolen</OFFICIALNAME>
+          <ADDRESS>Radanrakentajantie 5</ADDRESS>
+          <TOWN>Helsingfors</TOWN>
+          <POSTAL_CODE>00520</POSTAL_CODE>
+          <COUNTRY VALUE="FI" />
+          <PHONE>+358 295643300</PHONE>
+          <E_MAIL>markkinaoikeus@oikeus.fi</E_MAIL>
+          <FAX>+358 295643314</FAX>
+          <URL>http://www.oikeus.fi/markkinaoikeus</URL>
+        </DOMESTIC_ADDRESS_REVIEW_BODY>
+      </FD_DOMESTIC_CONTRACT>
+    </DOMESTIC_CONTRACT>
+  </FORM_SECTION>
+</HILMA_NOTICE>

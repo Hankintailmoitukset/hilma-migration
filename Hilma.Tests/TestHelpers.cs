@@ -16,6 +16,7 @@ using Hilma.Domain.Integrations.HilmaMigration;
 using Hilma.Domain.Validators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Newtonsoft.Json;
 
 namespace Hilma.Tests
 {
@@ -40,7 +41,7 @@ namespace Hilma.Tests
             return result;
         }
 
-        public  static string ValidateFormReturnTedXml(string formNumber, string noticeType, string formOriginalXml)
+        public static string ValidateFormReturnTedXml(string formNumber, string noticeType, string formOriginalXml, bool publishToTED = true)
         {
             var parser = new NoticeXMLParser();
 
@@ -58,11 +59,13 @@ namespace Hilma.Tests
             var noticeContract = parser.ParseNotice(importModel);
             var etsNotice = new EtsNoticeContract(noticeContract);
 
+            var jsonstring = JsonConvert.SerializeObject(etsNotice);
+
             var noticeDto = etsNotice.CreateNotice("123");
             noticeDto.CreatorId = Guid.NewGuid();
             noticeDto.Project.Id = 1;
             noticeDto.Project.Organisation.Id = Guid.NewGuid();
-            noticeDto.Project.Publish = PublishType.ToTed;
+            noticeDto.Project.Publish = publishToTED ? PublishType.ToTed : PublishType.ToHilma;
             noticeDto.NoticeNumber = "2019-123456";
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Notice, NoticeContract>());
