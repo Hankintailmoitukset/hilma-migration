@@ -14,5 +14,16 @@ namespace Hilma.Tests
             var formOriginalXml = TestHelpers.GetEmbeddedResourceAsString($"Form99.xml");
             var tedXml = TestHelpers.ValidateFormReturnTedXml("99", null, formOriginalXml, false);
         }
+
+        [TestMethod]
+        public void TestForm99Cancellation()
+        {
+            var formOriginalXml = TestHelpers.GetEmbeddedResourceAsString($"Form99_cancellation.xml");
+            var hilmaDto = TestHelpers.ConvertContract("99", "procurement_discontinued", formOriginalXml);
+
+            Assert.IsTrue(hilmaDto.IsCancelled, "HilmaDto is not set to IsCancelled");
+            Assert.AreEqual("112014", hilmaDto.PreviousNoticeOjsNumber, "Hilma dto dosn't have ojs number");
+            Assert.AreEqual("dfdfdf", hilmaDto.CancelledReason?[0]);
+        }
     }
 }

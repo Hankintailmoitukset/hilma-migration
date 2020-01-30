@@ -149,6 +149,8 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             Links = dto.AttachmentInformation.Links;
             Defence = dto.ProcurementObject.Defence;
             IsCorrigendum = dto.IsCorrigendum;
+            IsCancelled = dto.IsCancelled;
+            CancelledReason = dto.CancelledReason;
             Changes = dto.Changes;
             CorrigendumAdditionalInformation = dto.CorrigendumAdditionalInformation;
             ContractAwardsDefence = dto.ContractAwardsDefence;

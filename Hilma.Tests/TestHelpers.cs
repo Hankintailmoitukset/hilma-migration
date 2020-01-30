@@ -41,10 +41,9 @@ namespace Hilma.Tests
             return result;
         }
 
-        public static string ValidateFormReturnTedXml(string formNumber, string noticeType, string formOriginalXml, bool publishToTED = true)
+        public static EtsNoticeContract ConvertContract(string formNumber, string noticeType, string formOriginalXml)
         {
             var parser = new NoticeXMLParser();
-
 
             var importModel = new NoticeImportContract()
             {
@@ -58,6 +57,12 @@ namespace Hilma.Tests
 
             var noticeContract = parser.ParseNotice(importModel);
             var etsNotice = new EtsNoticeContract(noticeContract);
+            return etsNotice;
+        }
+
+        public static string ValidateFormReturnTedXml(string formNumber, string noticeType, string formOriginalXml, bool publishToTED = true)
+        {
+            var etsNotice = ConvertContract(formNumber, noticeType, formOriginalXml);
 
             var jsonstring = JsonConvert.SerializeObject(etsNotice);
 

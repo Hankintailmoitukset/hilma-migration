@@ -1,0 +1,87 @@
+﻿<?xml version="1.0"?>
+<HILMA_NOTICE xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" VERSION="R3.5" xsi:schemaLocation="http://formex.publications.europa.eu/ted/schema/reception/R2.0.9.S02 TED_ESENDERS.xsd">
+  <HILMA_SENDER>
+    <HILMA_LOGIN CLASS="mercell">mercelltest</HILMA_LOGIN>
+    <HILMA_USER>
+      <OFFICIALNAME>MSS Public Sector Buyer-FI</OFFICIALNAME>
+      <CONTACT_POINT>Buyer2 (non-Customer admin) Contact</CONTACT_POINT>
+      <ADDRESS>Paciuksenkatu 25</ADDRESS>
+      <POSTAL_CODE>00270</POSTAL_CODE>
+      <TOWN>Helsinki</TOWN>
+      <COUNTRY VALUE="FI" />
+      <E_MAIL>thha@mercell.com</E_MAIL>
+      <URL>http://www.mercell.com/</URL>
+    </HILMA_USER>
+    <HILMA_NO_DOC_EXT>105867676</HILMA_NO_DOC_EXT>
+  </HILMA_SENDER>
+  <FORM_SECTION>
+    <DOMESTIC_CONTRACT xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" LG="FI" CATEGORY="ORIGINAL" FORM="99" VERSION="R3.5">
+      <FD_DOMESTIC_CONTRACT DOMESTIC_CTYPE="SUPPLIES">
+        <DOMESTIC_NOTICE_TYPE>
+          <PROCUREMENT_DISCONTINUED>
+            <DOMESTIC_DISCONTINUED_NOTICE NO_DOC_EXT="112014" FORM_NUMBER="99">
+              <TITLE_CONTRACT>fgfg</TITLE_CONTRACT>
+            </DOMESTIC_DISCONTINUED_NOTICE>
+          </PROCUREMENT_DISCONTINUED>
+        </DOMESTIC_NOTICE_TYPE>
+        <DOMESTIC_AUTHORITY_INFORMATION>
+          <DOMESTIC_NAME_ADDRESSES>
+            <ORGANISATION>
+              <OFFICIALNAME>MSS Public Sector Buyer-FI</OFFICIALNAME>
+              <NATIONALID>2740592-1</NATIONALID>
+            </ORGANISATION>
+            <ATTENTION>Buyer2 (non-Customer admin) Contact</ATTENTION>
+            <ADDRESS>Paciuksenkatu 25</ADDRESS>
+            <TOWN>Helsinki</TOWN>
+            <POSTAL_CODE>00270</POSTAL_CODE>
+            <COUNTRY VALUE="FI" />
+            <E_MAILS>
+              <E_MAIL>thha@mercell.com</E_MAIL>
+            </E_MAILS>
+            <URL_GENERAL>http://www.mercell.com/</URL_GENERAL>
+          </DOMESTIC_NAME_ADDRESSES>
+          <DOMESTIC_TENDERS_REQUESTS_APPLICATIONS_MUST_BE_SENT_TO>
+            <URL_DOCUMENT>https://permalink-patch.mercell.com/105867676.aspx</URL_DOCUMENT>
+          </DOMESTIC_TENDERS_REQUESTS_APPLICATIONS_MUST_BE_SENT_TO>
+          <DOMESTIC_TYPE_OF_CONTRACTING>
+            <MUNICIPALITY />
+          </DOMESTIC_TYPE_OF_CONTRACTING>
+          <PURCHASING_ON_BEHALF VALUE="NO" />
+        </DOMESTIC_AUTHORITY_INFORMATION>
+        <DOMESTIC_OBJECT_INFORMATION>
+          <TITLE_CONTRACT>fgfg</TITLE_CONTRACT>
+          <FILE_REFERENCE_NUMBER />
+          <SHORT_CONTRACT_DESCRIPTION>
+            <P>dfdf</P>
+          </SHORT_CONTRACT_DESCRIPTION>
+          <DOMESTIC_COSTS_RANGE_AND_CURRENCY CURRENCY="EUR" IS_PUBLIC="YES" EXCEEDS_THRESHOLD="YES">
+            <VALUE_COST>33</VALUE_COST>
+          </DOMESTIC_COSTS_RANGE_AND_CURRENCY>
+          <CPV>
+            <CPV_MAIN>
+              <CPV_CODE CODE="03000000" />
+            </CPV_MAIN>
+            <CPV_ADDITIONAL>
+              <CPV_CODE CODE="90000000" />
+            </CPV_ADDITIONAL>
+          </CPV>
+          <NUTS CODE="FI1D2" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+        </DOMESTIC_OBJECT_INFORMATION>
+        <DOMESTIC_DISCONTINUED_JUSTIFICATION>
+          <ADDITIONAL_INFORMATION>dfdfdf</ADDITIONAL_INFORMATION>
+        </DOMESTIC_DISCONTINUED_JUSTIFICATION>
+        <DOMESTIC_ADDRESS_REVIEW_BODY>
+          <OFFICIALNAME>Marknadsdomstolen</OFFICIALNAME>
+          <ADDRESS>Radanrakentajantie 5</ADDRESS>
+          <TOWN>Helsingfors</TOWN>
+          <POSTAL_CODE>00520</POSTAL_CODE>
+          <COUNTRY VALUE="FI" />
+          <PHONE>+358 295643300</PHONE>
+          <E_MAIL>markkinaoikeus@oikeus.fi</E_MAIL>
+          <FAX>+358 295643314</FAX>
+          <URL>http://www.oikeus.fi/markkinaoikeus</URL>
+        </DOMESTIC_ADDRESS_REVIEW_BODY>
+      </FD_DOMESTIC_CONTRACT>
+    </DOMESTIC_CONTRACT>
+  </FORM_SECTION>
+</HILMA_NOTICE>

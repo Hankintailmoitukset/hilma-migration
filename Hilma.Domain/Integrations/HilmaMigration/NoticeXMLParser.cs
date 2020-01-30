@@ -2581,6 +2581,11 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 return paragraphArray.TakeWhile(p => (totalLength += p.Length) < lengthLimit).ToArray();
             }
 
+            if (paragraphArray.Length == 0)
+            {
+                return new[] { pElements.Value };
+            }
+
             return paragraphArray;
         }
 
