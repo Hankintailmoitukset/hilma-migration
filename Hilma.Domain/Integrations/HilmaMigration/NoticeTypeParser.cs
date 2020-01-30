@@ -64,6 +64,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                         case "request_for_information":
                             noticeType = NoticeType.NationalPriorInformation;
                             break;
+                        case "domestic_discontinued_notice":
                         case "procurement_discontinued":
                             noticeType = NoticeType.NationalContract;
                             isCancelled = true;
