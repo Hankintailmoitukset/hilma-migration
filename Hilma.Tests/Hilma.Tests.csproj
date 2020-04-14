@@ -11,6 +11,7 @@
     <None Remove="Notices\Form2.xml" />
     <None Remove="Notices\Form21.xml" />
     <None Remove="Notices\Form3.xml" />
+    <None Remove="Notices\Form3JointProcurement.xml" />
     <None Remove="Notices\Form4.xml" />
     <None Remove="Notices\Form5.xml" />
     <None Remove="Notices\Form6.xml" />
@@ -23,6 +24,7 @@
     <EmbeddedResource Include="Notices\Form1.xml" />
     <EmbeddedResource Include="Notices\Form2.xml" />
     <EmbeddedResource Include="Notices\Form21.xml" />
+    <EmbeddedResource Include="Notices\Form3JointProcurement.xml" />
     <EmbeddedResource Include="Notices\Form3.xml" />
     <EmbeddedResource Include="Notices\Form4.xml" />
     <EmbeddedResource Include="Notices\Form5.xml" />

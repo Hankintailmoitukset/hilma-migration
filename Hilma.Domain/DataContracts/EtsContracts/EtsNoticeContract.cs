@@ -123,7 +123,9 @@ namespace Hilma.Domain.DataContracts.EtsContracts
                 JointProcurement = dto.Project.JointProcurement,
                 ProcurementCategory = dto.Project.ProcurementCategory,
                 ProcurementLaw = dto.Project.ProcurementLaw,
-                AgricultureWorks = dto.Project.AgricultureWorks
+                AgricultureWorks = dto.Project.AgricultureWorks,
+                CoPurchasers = dto.Project.CoPurchasers
+                
             };
             Organisation = new EtsOrganisationContract
             {

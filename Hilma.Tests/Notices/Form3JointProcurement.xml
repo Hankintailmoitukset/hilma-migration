@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TED_ESENDERS VERSION="R2.0.9.S03">
+  <SENDER>
+    <IDENTIFICATION>
+      <ESENDER_LOGIN>TED45</ESENDER_LOGIN>
+      <NO_DOC_EXT>2019-008377</NO_DOC_EXT>
+    </IDENTIFICATION>
+    <CONTACT>
+      <ORGANISATION>Mercell Danmark A/S</ORGANISATION>
+      <COUNTRY VALUE="DK" />
+      <PHONE>+45 63133700</PHONE>
+      <E_MAIL>internal.support@mercell.com</E_MAIL>
+    </CONTACT>
+  </SENDER>
+  <FORM_SECTION>
+    <F03_2014 LG="FI" CATEGORY="ORIGINAL" FORM="F03" >
+      <LEGAL_BASIS VALUE="32014L0024" />
+      <CONTRACTING_BODY>
+        <ADDRESS_CONTRACTING_BODY>
+          <OFFICIALNAME>Päijät-Hämeen Jätehuolto Oy</OFFICIALNAME>
+          <NATIONALID>0937458-6</NATIONALID>
+          <ADDRESS>Sapelikatu 7</ADDRESS>
+          <TOWN>Lahti</TOWN>
+          <POSTAL_CODE>15160</POSTAL_CODE>
+          <COUNTRY VALUE="FI" />
+          <CONTACT_POINT>Leena Seppälä</CONTACT_POINT>
+          <PHONE>+358 503247428</PHONE>
+          <E_MAIL>leena.seppala@phj.fi</E_MAIL>
+          <NUTS CODE="FI"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <URL_GENERAL>https://permalink.mercell.com/127486761.aspx</URL_GENERAL>
+          <URL_BUYER>http://www.phj.fi/</URL_BUYER>
+        </ADDRESS_CONTRACTING_BODY>
+        <ADDRESS_CONTRACTING_BODY_ADDITIONAL>
+          <OFFICIALNAME>Lahden kaupunki</OFFICIALNAME>
+          <NATIONALID>0149669-</NATIONALID>
+          <TOWN>Lahti</TOWN>
+          <COUNTRY VALUE="FI" />
+          <E_MAIL>mika.lastikka@lahti.fi</E_MAIL>
+          <NUTS CODE="FI1C3"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <URL_GENERAL>www.lahti.fi</URL_GENERAL>
+        </ADDRESS_CONTRACTING_BODY_ADDITIONAL>
+        <ADDRESS_CONTRACTING_BODY_ADDITIONAL>
+          <OFFICIALNAME>LABIO Oy</OFFICIALNAME>
+          <NATIONALID>1860042-6</NATIONALID>
+          <TOWN>Lahti</TOWN>
+          <COUNTRY VALUE="FI" />
+          <E_MAIL>ari.savolainen@labio.fi</E_MAIL>
+          <NUTS CODE="FI1C3"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <URL_GENERAL>www.labio.fi</URL_GENERAL>
+        </ADDRESS_CONTRACTING_BODY_ADDITIONAL>
+        <ADDRESS_CONTRACTING_BODY_ADDITIONAL>
+          <OFFICIALNAME>Lahti Energia Oy</OFFICIALNAME>
+          <NATIONALID>0804847-1</NATIONALID>
+          <TOWN>Lahti</TOWN>
+          <COUNTRY VALUE="FI" />
+          <E_MAIL>eeva.lillman@lahtienergia.fi</E_MAIL>
+          <NUTS CODE="FI1C3"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <URL_GENERAL>www.lahtienergia.fi</URL_GENERAL>
+        </ADDRESS_CONTRACTING_BODY_ADDITIONAL>
+        <ADDRESS_CONTRACTING_BODY_ADDITIONAL>
+          <OFFICIALNAME>RAKENNUSBETONI- JA ELEMENTTI OY</OFFICIALNAME>
+          <NATIONALID>0146190-9</NATIONALID>
+          <TOWN>Hollola</TOWN>
+          <COUNTRY VALUE="FI" />
+          <E_MAIL>Sami.Hallikainen@rakennusbetoni.fi</E_MAIL>
+          <NUTS CODE="FI1C3"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <URL_GENERAL>www.rakennusbetoni.fi</URL_GENERAL>
+        </ADDRESS_CONTRACTING_BODY_ADDITIONAL>
+        <ADDRESS_CONTRACTING_BODY_ADDITIONAL>
+          <OFFICIALNAME>Mikrobetoni Oy</OFFICIALNAME>
+          <NATIONALID>0935343-5</NATIONALID>
+          <TOWN>Lahti</TOWN>
+          <COUNTRY VALUE="FI" />
+          <E_MAIL>Sami.Hallikainen@rakennusbetoni.fi</E_MAIL>
+          <NUTS CODE="FI1C3"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <URL_GENERAL>https://www.rakennusbetoni.fi</URL_GENERAL>
+        </ADDRESS_CONTRACTING_BODY_ADDITIONAL>
+        <ADDRESS_CONTRACTING_BODY_ADDITIONAL>
+          <OFFICIALNAME>Päijät-Hämeen Jätehuolto Oy</OFFICIALNAME>
+          <NATIONALID>0937458-6</NATIONALID>
+          <ADDRESS>Sapelikatu 7</ADDRESS>
+          <TOWN>Lahti</TOWN>
+          <POSTAL_CODE>15160</POSTAL_CODE>
+          <COUNTRY VALUE="FI" />
+          <E_MAIL>leena.seppala@phj.fi</E_MAIL>
+          <NUTS CODE="FI1C3"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <URL_GENERAL>www.phj.fi</URL_GENERAL>
+        </ADDRESS_CONTRACTING_BODY_ADDITIONAL>
+        <JOINT_PROCUREMENT_INVOLVED />
+        <PROCUREMENT_LAW>
+          <P>Laki julkisista hankinnoista ja käyttöoikeussopimuksista 1397/2016</P>
+        </PROCUREMENT_LAW>
+        <CA_TYPE VALUE="BODY_PUBLIC" />
+        <CA_ACTIVITY VALUE="ENVIRONMENT" />
+      </CONTRACTING_BODY>
+      <OBJECT_CONTRACT>
+        <TITLE>
+          <P>Jälki-ilmoitus: Vesientarkkailun yhteishankinta 2020- 2022</P>
+        </TITLE>
+        <REFERENCE_NUMBER>Vesientarkkailun yhteishankinta 2020- 2022</REFERENCE_NUMBER>
+        <CPV_MAIN>
+          <CPV_CODE CODE="71313000" />
+        </CPV_MAIN>
+        <TYPE_CONTRACT CTYPE="SERVICES" />
+        <SHORT_DESCR>
+          <P>Tarjousta pyydettiin liitteenä olleiden tarkkailuohjelmien mukaisesta vesien tarkkailutyöstä mukaan lukien näytteenottoon ja</P>
+          <P>laboratorioanalyysien suorittamisen sekä vuosiraporttien laadinnan vuosiksi 2020-2022. Osapuolten yhteisellä päätöksellä</P>
+          <P>sopimusta voidaan jatkaa kaksi kertaa yhdellä vuodella.</P>
+        </SHORT_DESCR>
+        <VAL_TOTAL CURRENCY="EUR">167636.76</VAL_TOTAL>
+        <NO_LOT_DIVISION />
+        <OBJECT_DESCR ITEM="1">
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="71900000" />
+          </CPV_ADDITIONAL>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="90711300" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1C3"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Tarjousta pyydettiin liitteenä olleiden tarkkailuohjelmien mukaisesta vesien tarkkailutyöstä mukaan lukien näytteenottoon ja</P>
+            <P>laboratorioanalyysien suorittamisen sekä vuosiraporttien laadinnan vuosiksi 2020-2022. Osapuolten yhteisellä päätöksellä</P>
+            <P>sopimusta voidaan jatkaa kaksi kertaa yhdellä vuodella.</P>
+          </SHORT_DESCR>
+          <AC>
+            <AC_PRICE />
+          </AC>
+          <OPTIONS />
+          <OPTIONS_DESCR>
+            <P>Sopimuksen kesto on kolme (3) vuotta: 1.1.2020 - 31.12.2022. Optiona 1+1 vuotta. Osapuolten</P>
+            <P>yhteisellä päätöksellä sopimusta voidaan jatkaa kaksi kertaa yhdellä vuodella. Optioiden</P>
+            <P>käytöstä ilmoitetaan palveluntarjoajalle viimeistään kolme kuukautta ennen sopimuskauden</P>
+            <P>päättymistä.</P>
+          </OPTIONS_DESCR>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+      </OBJECT_CONTRACT>
+      <PROCEDURE>
+        <PT_OPEN />
+        <NO_CONTRACT_COVERED_GPA />
+        <NOTICE_NUMBER_OJ>2019/S 217-532954</NOTICE_NUMBER_OJ>
+      </PROCEDURE>
+      <AWARD_CONTRACT ITEM="1">
+        <TITLE>
+          <P>Sopimus vesientarkkailusta 2020-2022</P>
+        </TITLE>
+        <AWARDED_CONTRACT>
+          <DATE_CONCLUSION_CONTRACT>2020-02-18</DATE_CONCLUSION_CONTRACT>
+          <TENDERS>
+            <NB_TENDERS_RECEIVED>5</NB_TENDERS_RECEIVED>
+            <NB_TENDERS_RECEIVED_SME>3</NB_TENDERS_RECEIVED_SME>
+            <NB_TENDERS_RECEIVED_OTHER_EU>0</NB_TENDERS_RECEIVED_OTHER_EU>
+            <NB_TENDERS_RECEIVED_NON_EU>0</NB_TENDERS_RECEIVED_NON_EU>
+            <NB_TENDERS_RECEIVED_EMEANS>5</NB_TENDERS_RECEIVED_EMEANS>
+          </TENDERS>
+          <CONTRACTORS>
+            <AWARDED_TO_GROUP />
+            <CONTRACTOR>
+              <ADDRESS_CONTRACTOR>
+                <OFFICIALNAME>Eurofins Environment Testing Finland Oy</OFFICIALNAME>
+                <NATIONALID>2752292-5</NATIONALID>
+                <TOWN>Lahti</TOWN>
+                <COUNTRY VALUE="FI" />
+                <NUTS CODE="FI1C3"
+                    xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              </ADDRESS_CONTRACTOR>
+              <SME />
+            </CONTRACTOR>
+            <CONTRACTOR>
+              <ADDRESS_CONTRACTOR>
+                <OFFICIALNAME>Eurofins Ahma Oy</OFFICIALNAME>
+                <NATIONALID>0227583‐3</NATIONALID>
+                <TOWN>Rovaniemi</TOWN>
+                <COUNTRY VALUE="FI" />
+                <NUTS CODE="FI"
+                    xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              </ADDRESS_CONTRACTOR>
+              <SME />
+            </CONTRACTOR>
+            <CONTRACTOR>
+              <ADDRESS_CONTRACTOR>
+                <OFFICIALNAME>Eurofins Nab Labs Oy</OFFICIALNAME>
+                <NATIONALID>0283126-2</NATIONALID>
+                <TOWN>JYVÄSKYLÄ</TOWN>
+                <COUNTRY VALUE="FI" />
+                <NUTS CODE="FI"
+                    xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              </ADDRESS_CONTRACTOR>
+              <SME />
+            </CONTRACTOR>
+            <CONTRACTOR>
+              <ADDRESS_CONTRACTOR>
+                <OFFICIALNAME>Eurofins Labtium Oy</OFFICIALNAME>
+                <NATIONALID>2128301-1</NATIONALID>
+                <TOWN>ESPOO</TOWN>
+                <COUNTRY VALUE="FI" />
+                <NUTS CODE="FI"
+                    xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              </ADDRESS_CONTRACTOR>
+              <SME />
+            </CONTRACTOR>
+          </CONTRACTORS>
+          <VALUES>
+            <VAL_ESTIMATED_TOTAL CURRENCY="EUR">190000.00</VAL_ESTIMATED_TOTAL>
+            <VAL_TOTAL CURRENCY="EUR">167636.76</VAL_TOTAL>
+          </VALUES>
+        </AWARDED_CONTRACT>
+      </AWARD_CONTRACT>
+      <COMPLEMENTARY_INFO>
+        <ADDRESS_REVIEW_BODY>
+          <OFFICIALNAME>Markkinaoikeus</OFFICIALNAME>
+          <ADDRESS>Radanrakentajantie 5</ADDRESS>
+          <TOWN>Helsinki</TOWN>
+          <POSTAL_CODE>00520</POSTAL_CODE>
+          <COUNTRY VALUE="FI" />
+          <PHONE>+358 295643314</PHONE>
+          <E_MAIL>markkinaoikeus@oikeus.fi</E_MAIL>
+          <URL>http://www.oikeus.fi/markkinaoikeus</URL>
+        </ADDRESS_REVIEW_BODY>
+        <ADDRESS_REVIEW_INFO>
+          <OFFICIALNAME>Päijät-Hämeen Jätehuolto Oy</OFFICIALNAME>
+          <TOWN>Lahti</TOWN>
+          <POSTAL_CODE>15160</POSTAL_CODE>
+          <COUNTRY VALUE="FI" />
+          <E_MAIL>leena.seppala@phj.fi</E_MAIL>
+          <URL>www.phj.fi</URL>
+        </ADDRESS_REVIEW_INFO>
+        <DATE_DISPATCH_NOTICE>2020-04-14</DATE_DISPATCH_NOTICE>
+      </COMPLEMENTARY_INFO>
+    </F03_2014>
+  </FORM_SECTION>
+</TED_ESENDERS>
