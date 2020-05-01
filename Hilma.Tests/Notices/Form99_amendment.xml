@@ -1,0 +1,123 @@
+﻿<?xml version="1.0"?>
+<HILMA_NOTICE xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" VERSION="R3.5">
+  <HILMA_SENDER>
+    <HILMA_LOGIN CLASS="mercell" />
+    <HILMA_USER>
+      <OFFICIALNAME>Pyhäjärvi-instituuttisäätiö</OFFICIALNAME>
+      <CONTACT_POINT>Elina Lindström</CONTACT_POINT>
+      <ADDRESS>Sepäntie 7</ADDRESS>
+      <POSTAL_CODE>27500</POSTAL_CODE>
+      <TOWN>Kauttua</TOWN>
+      <COUNTRY VALUE="FI" />
+      <PHONE>+358 406453322</PHONE>
+      <E_MAIL>elina.lindstrom@juhaconsulting.fi</E_MAIL>
+      <URL>http://www.pyhajarvi-instituutti.fi/</URL>
+    </HILMA_USER>
+    <HILMA_NO_DOC_EXT>126772060</HILMA_NO_DOC_EXT>
+  </HILMA_SENDER>
+  <FORM_SECTION>
+    <DOMESTIC_CONTRACT xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" LG="FI" CATEGORY="ORIGINAL" FORM="99" VERSION="R3.5">
+      <FD_DOMESTIC_CONTRACT DOMESTIC_CTYPE="SUPPLIES">
+        <DOMESTIC_NOTICE_TYPE>
+          <CORRIGENDUM_NOTICE>
+            <DOMESTIC_ORIGINAL_NOTICE NO_DOC_EXT="43182" FORM_NUMBER="99">
+              <TITLE_CONTRACT>Rakennekalkki levitettynä</TITLE_CONTRACT>
+            </DOMESTIC_ORIGINAL_NOTICE>
+          </CORRIGENDUM_NOTICE>
+        </DOMESTIC_NOTICE_TYPE>
+        <DOMESTIC_AUTHORITY_INFORMATION>
+          <DOMESTIC_NAME_ADDRESSES>
+            <ORGANISATION>
+              <OFFICIALNAME>Pyhäjärvi-instituuttisäätiö</OFFICIALNAME>
+              <NATIONALID>0773351-4</NATIONALID>
+            </ORGANISATION>
+            <ATTENTION>Elina Lindström</ATTENTION>
+            <ADDRESS>Sepäntie 7</ADDRESS>
+            <TOWN>Kauttua</TOWN>
+            <POSTAL_CODE>27500</POSTAL_CODE>
+            <COUNTRY VALUE="FI" />
+            <PHONE>+358 406453322</PHONE>
+            <E_MAILS>
+              <E_MAIL>elina.lindstrom@juhaconsulting.fi</E_MAIL>
+            </E_MAILS>
+            <URL_GENERAL>http://www.pyhajarvi-instituutti.fi/</URL_GENERAL>
+          </DOMESTIC_NAME_ADDRESSES>
+          <DOMESTIC_TENDERS_REQUESTS_APPLICATIONS_MUST_BE_SENT_TO>
+            <URL_DOCUMENT>https://permalink.mercell.com/126772060.aspx</URL_DOCUMENT>
+          </DOMESTIC_TENDERS_REQUESTS_APPLICATIONS_MUST_BE_SENT_TO>
+          <DOMESTIC_TYPE_OF_CONTRACTING>
+            <OTHER>Säätiö</OTHER>
+          </DOMESTIC_TYPE_OF_CONTRACTING>
+          <PURCHASING_ON_BEHALF VALUE="NO" />
+        </DOMESTIC_AUTHORITY_INFORMATION>
+        <DOMESTIC_OBJECT_INFORMATION>
+          <TITLE_CONTRACT>Rakennekalkki levitettynä</TITLE_CONTRACT>
+          <FILE_REFERENCE_NUMBER />
+          <SHORT_CONTRACT_DESCRIPTION>
+            <P>Pyhäjärvi-instituutti pyytää tarjousta rakennekalkista, joka levitetään kahdelle Eurajoen vesistöalueella sijaitsevalle kohdealueelle syksyllä 2020.</P>
+            <P>Ympäristöministeriön rahoittamassa tutkimushankkeessa tutkitaan rakennekalkin vaikutusta peltojen eroosioon ja fosforikuormitukseen. Tutkimusryhmään kuuluun Pyhäjärvi-instituutin lisäksi Turun ammattikorkeakoulu (Turun AMK), Luonnonvarakeskus (LUKE), Suomen ympäristökeskus (SYKE), ProAgria Länsi-Suomi (ProAgria), Sokerijuurikkaan tutkimuskeskus (SjT) sekä Turun kaupunki (Turku).</P>
+            <P>Hankkeessa toteutetaan valuma-aluetason rakennekalkitus-pilotti Eurajoen vesistöalueeseen kuuluvan Vähäjoen valuma-alueella, jossa maatalousmaan osuus valuma-alueesta on 39 % ja jossa pelloista valtaosa on savimaita.</P>
+            <P>Peltojen kalkitukset toteutetaan kahdella Vähäjokeen laskevan ojan valuma-alueella (kuva 1). Molempien valuma-alueiden kaikki pellot pyritään käsittelemään rakennekalkilla. Rakennekalkin annostelu (tonnia/ha) perustuu tuotteen reaktiivisen kalkin pitoisuuteen sekä lohko kohtaiseen kalkitustarpeeseen.</P>
+          </SHORT_CONTRACT_DESCRIPTION>
+          <DOMESTIC_COSTS_RANGE_AND_CURRENCY CURRENCY="EUR" IS_PUBLIC="NO" EXCEEDS_THRESHOLD="YES">
+            <RANGE_VALUE_COST>
+              <LOW_VALUE>0</LOW_VALUE>
+              <HIGH_VALUE>0</HIGH_VALUE>
+            </RANGE_VALUE_COST>
+          </DOMESTIC_COSTS_RANGE_AND_CURRENCY>
+          <CPV>
+            <CPV_MAIN>
+              <CPV_CODE CODE="14300000" />
+            </CPV_MAIN>
+            <CPV_ADDITIONAL>
+              <CPV_CODE CODE="44920000" />
+            </CPV_ADDITIONAL>
+            <CPV_ADDITIONAL>
+              <CPV_CODE CODE="77100000" />
+            </CPV_ADDITIONAL>
+          </CPV>
+          <NUTS CODE="FI1C1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+        </DOMESTIC_OBJECT_INFORMATION>
+        <DOMESTIC_PROCEDURE_DEFINITION>
+          <DOMESTIC_TYPE_OF_PROCEDURE>
+            <OPEN />
+          </DOMESTIC_TYPE_OF_PROCEDURE>
+          <FRAMEWORK_AGREEMENT_IS_ESTABLISH VALUE="NO" />
+          <IS_ELECTRONIC_AUCTION_USABLE VALUE="NO" />
+          <DIVISION_INTO_LOTS VALUE="NO" />
+          <ACCEPTED_VARIANTS VALUE="NO" />
+          <RESERVED_CONTRACTS VALUE="NO" />
+        </DOMESTIC_PROCEDURE_DEFINITION>
+        <DOMESTIC_CONTRACT_RELATING_CONDITIONS>
+          <SELECTION_CRITERIA />
+          <SELECTION_CRITERIA_CERTIFICATIONS />
+          <SELECTION_CRITERIA_INFORMATION />
+          <AWARD_CRITERIA>
+            <LOWEST_PRICE />
+          </AWARD_CRITERIA>
+          <RECEIPT_LIMIT_DATE>
+            <DAY>7</DAY>
+            <MONTH>5</MONTH>
+            <YEAR>2020</YEAR>
+            <TIME>12:00</TIME>
+          </RECEIPT_LIMIT_DATE>
+          <ADDITIONAL_INFORMATION>Hankinnan kohteen vähimmäisvaatimukset, vaatimuksessa 3 korjattu raekoko.&lt;br /&gt;Tarjousten jättöaikaa pidennetty.&lt;br /&gt;Liitteenä päivitetty tarjouspyyntö.</ADDITIONAL_INFORMATION>
+        </DOMESTIC_CONTRACT_RELATING_CONDITIONS>
+        <DOMESTIC_ADDRESS_REVIEW_BODY>
+          <OFFICIALNAME>Markkinaoikeus</OFFICIALNAME>
+          <ADDRESS>Radanrakentajantie 5</ADDRESS>
+          <TOWN>Helsinki</TOWN>
+          <POSTAL_CODE>00520</POSTAL_CODE>
+          <COUNTRY VALUE="FI" />
+          <PHONE>+358 295643300</PHONE>
+          <E_MAIL>markkinaoikeus@oikeus.fi</E_MAIL>
+          <FAX>+358 295643314</FAX>
+          <URL>http://www.oikeus.fi/markkinaoikeus</URL>
+        </DOMESTIC_ADDRESS_REVIEW_BODY>
+      </FD_DOMESTIC_CONTRACT>
+    </DOMESTIC_CONTRACT>
+  </FORM_SECTION>
+</HILMA_NOTICE>

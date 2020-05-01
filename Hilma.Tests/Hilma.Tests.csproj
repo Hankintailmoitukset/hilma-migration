@@ -16,6 +16,7 @@
     <None Remove="Notices\Form5.xml" />
     <None Remove="Notices\Form6.xml" />
     <None Remove="Notices\Form99.xml" />
+    <None Remove="Notices\Form99_amendment.xml" />
     <None Remove="Notices\Form99_cancellation.xml" />
     <None Remove="Notices\TestSchema9902_3.json" />
   </ItemGroup>
@@ -29,6 +30,7 @@
     <EmbeddedResource Include="Notices\Form4.xml" />
     <EmbeddedResource Include="Notices\Form5.xml" />
     <EmbeddedResource Include="Notices\Form6.xml" />
+    <EmbeddedResource Include="Notices\Form99_amendment.xml" />
     <EmbeddedResource Include="Notices\Form99_cancellation.xml" />
     <EmbeddedResource Include="Notices\Form99.xml" />
     <EmbeddedResource Include="Notices\TestSchema9902_3.json" />

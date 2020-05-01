@@ -72,7 +72,7 @@ namespace Hilma.Tests
             noticeDto.Project.Organisation.Id = Guid.NewGuid();
             noticeDto.Project.Publish = publishToTED ? PublishType.ToTed : PublishType.ToHilma;
             noticeDto.NoticeNumber = "2019-123456";
-
+            
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Notice, NoticeContract>());
             var translate = new Mock<ITranslationProvider>();
 

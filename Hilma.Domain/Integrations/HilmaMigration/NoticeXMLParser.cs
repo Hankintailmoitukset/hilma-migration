@@ -1274,8 +1274,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             {
                 case "REQUEST_FOR_INFORMATION":
                     return NoticeType.NationalPriorInformation;
+                case "CORRIGENDUM_NOTICE":
                 case "DOMESTIC_CONTRACT":
-                    return NoticeType.NationalContract;
                 case "PROCUREMENT_DISCONTINUED":
                     return NoticeType.NationalContract;
                 default:
