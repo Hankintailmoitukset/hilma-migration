@@ -2002,7 +2002,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     MaxValue = ParseDecimal(awardedContract?.Element("VALUES")?.Element("VAL_RANGE_TOTAL")?.Element("HIGH")?.Value),
                     MinValue = ParseDecimal(awardedContract?.Element("VALUES")?.Element("VAL_RANGE_TOTAL")?.Element("LOW")?.Value),
                     Type = ParseContractValueType(awardedContract),
-                    DisagreeToBePublished = awardedContract?.Element("VALUES")?.Attribute("PUBLICATION")?.Value == "YES" ? false : true,
+                    DisagreeToBePublished = awardedContract?.Element("VALUES")?.Attribute("PUBLICATION")?.Value == null || awardedContract?.Element("VALUES")?.Attribute("PUBLICATION")?.Value == "YES" ? false : true,
 
                 },
                 InitialEstimatedValueOfContract = new ValueContract
