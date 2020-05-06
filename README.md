@@ -1,5 +1,7 @@
 # Hilma Migration example
 
+**This example is meant for reference purposes and it is not actively maintained currently**
+
 ## Prerequisites
 
   * Install .NET Core 2.2 SDK or newer https://dotnet.microsoft.com/download/dotnet-core/2.2
@@ -20,3 +22,5 @@ Instructions: give 4 arguments:
 To run the code:
   * navigate to `./Hilma.MigrationExample`
   * execute `dotnet run notice.xml 2 0 '2019/S 1234567'`
+  
+  
