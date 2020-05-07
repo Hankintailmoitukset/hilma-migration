@@ -64,6 +64,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
                 ContractingAuthorityType = dbo.Project.Organisation.ContractingAuthorityType,
                 ContractingType = dbo.Project.Organisation.ContractingType,
                 MainActivity = dbo.Project.Organisation.MainActivity,
+                MainActivityUtilities = dbo.Project.Organisation.MainActivityUtilities,
                 OtherContractingAuthorityType = dbo.Project.Organisation.OtherContractingAuthorityType,
                 OtherMainActivity = dbo.Project.Organisation.OtherMainActivity
             };
@@ -83,8 +84,9 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             Changes = dbo.Changes;
             CorrigendumAdditionalInformation = dbo.CorrigendumAdditionalInformation;
             ContractAwardsDefence = dbo.ContractAwardsDefence;
+            IsPrivateSmallValueProcurement = dbo.IsPrivateSmallValueProcurement;
         }
-      
+
         /// <summary>
         /// Total value of the procurement
         /// </summary>
@@ -151,11 +153,12 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             Changes = dto.Changes;
             CorrigendumAdditionalInformation = dto.CorrigendumAdditionalInformation;
             ContractAwardsDefence = dto.ContractAwardsDefence;
+            IsPrivateSmallValueProcurement = dto.IsPrivateSmallValueProcurement;
         }
 
 
         /// <summary>
-        /// The regulation number that is used as a legal basis for the notice
+        /// The regulation number that is used as a legal basis for the notice, for national notices this is optional
         /// </summary>
         public string LegalBasis { get; set; }
 
@@ -358,5 +361,10 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         ///     AD1-AD4) Contains annex sections AD1-AD4.
         /// </summary>
         public Annex Annexes { get; set; }
+
+        /// <summary>
+        ///     Should notice not be published to search index. Only for national small value procurements
+        /// </summary>
+        public bool IsPrivateSmallValueProcurement { get; set; }
     }
 }

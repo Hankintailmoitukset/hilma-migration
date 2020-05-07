@@ -26,5 +26,14 @@ namespace Hilma.Domain.DataContracts
         /// If months or days
         /// </summary>
         public TimeFrame SubsequentContract { get; set;}
+
+        public void Trim()
+        {
+            if (!CanBeRenewed)
+            {
+                Amount = new ValueRangeContract();
+                SubsequentContract = new TimeFrame();
+            }
+        }
     }
 }

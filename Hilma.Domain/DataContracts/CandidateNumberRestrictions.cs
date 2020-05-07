@@ -39,5 +39,19 @@ namespace Hilma.Domain.DataContracts
         ///     Type of restriction for this tender.
         /// </summary>
         public EnvisagedParticipantsOptions Selected { get; set; }
+
+        public void Trim()
+        {
+            if (Selected != EnvisagedParticipantsOptions.Range)
+            {
+                EnvisagedMinimumNumber = default;
+                EnvisagedMaximumNumber = default;
+            }
+
+            if (Selected != EnvisagedParticipantsOptions.EnvisagedNumber)
+            {
+                EnvisagedNumber = default;
+            }
+        }
     }
 }

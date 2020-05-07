@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
@@ -7,8 +8,10 @@ using Hilma.Domain.Configuration;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
+using Hilma.Domain.Exceptions;
 using Hilma.Domain.Integrations.Configuration;
 using Hilma.Domain.Integrations.Extensions;
+using Newtonsoft.Json.Linq;
 
 namespace Hilma.Domain.Integrations.General
 {
@@ -62,13 +65,16 @@ namespace Hilma.Domain.Integrations.General
 
             // F15 ex-ante and dps award for utility procurements behaves as an utility notice here
             // project.ProcurementCategory == ProcurementCategory.Utility might be enough alone
-            var isUtilitiesNotice = type.IsUtilities() ||
-                ((type == NoticeType.ExAnte || type == NoticeType.DpsAward || type == NoticeType.DesignContest || type == NoticeType.DesignContestResults) &&
-                    project.ProcurementCategory == ProcurementCategory.Utility);
-
-            if(type == NoticeType.Concession || type == NoticeType.ConcessionAward || type == NoticeType.ExAnte)
+            bool isUtilitiesNotice;
+            if (type == NoticeType.Concession || type == NoticeType.ConcessionAward || type == NoticeType.ExAnte )
             {
-                isUtilitiesNotice = organisation.ContractingType == ContractingType.ContractingEntity;
+                isUtilitiesNotice = organisation.ContractingType == ContractingType.ContractingEntity || project.ProcurementCategory == ProcurementCategory.Utility;
+            }
+            else
+            {
+                isUtilitiesNotice = type.IsUtilities() ||
+                    (( type == NoticeType.DpsAward || type == NoticeType.DesignContest || type == NoticeType.DesignContestResults) &&
+                        project.ProcurementCategory == ProcurementCategory.Utility);
             }
 
             return Element("CONTRACTING_BODY",
@@ -199,14 +205,24 @@ namespace Hilma.Domain.Integrations.General
             var elements = new List<XElement>();
             if (project.JointProcurement)
             {
-                foreach (var coPurchaser in project.CoPurchasers )
+                if (project.CoPurchasers == null)
+                {
+                    throw new HilmaMalformedRequestException(
+                        "project.CoPurchasers array must be provided when project.JointProcurement is set to true");
+                }
+
+                foreach (var coPurchaser in project.CoPurchasers)
                 {
                     yield return ADDRS1("ADDRESS_CONTRACTING_BODY_ADDITIONAL",
                         new OrganisationContract
                         {
                             Information = coPurchaser
                         },
-                        new ContactPerson {Email = coPurchaser.Email, Phone = coPurchaser.TelephoneNumber, Name = coPurchaser.ContactPerson}
+                        new ContactPerson
+                        {
+                            Email = coPurchaser.Email, Phone = coPurchaser.TelephoneNumber,
+                            Name = coPurchaser.ContactPerson
+                        }
                     );
                 }
 
@@ -248,20 +264,20 @@ namespace Hilma.Domain.Integrations.General
             }
 
             return new XElement(Xmlns + "LOT_DIVISION",
-                configuration.LotsSubmittedFor ? LotTendersMayBeSubmittedFor(lotsInfo.LotsSubmittedFor, lotsInfo.LotsMaxAwardedQuantity) : null,
-                configuration.LotsMaxAwarded && lotsInfo.LotsMaxAwarded ? Element("LOT_MAX_ONE_TENDERER", lotsInfo.LotsSubmittedForQuantity, 1) : null,
+                configuration.LotsSubmittedFor ? LotTendersMayBeSubmittedFor(lotsInfo.LotsSubmittedFor, lotsInfo.LotsSubmittedForQuantity) : null,
+                configuration.LotsMaxAwarded && lotsInfo.LotsMaxAwarded ? Element("LOT_MAX_ONE_TENDERER", lotsInfo.LotsMaxAwardedQuantity, 1) : null,
                 configuration.LotCombinationPossible && lotsInfo.LotCombinationPossible ? PElement("LOT_COMBINING_CONTRACT_RIGHT", lotsInfo.LotCombinationPossibleDescription) : null);
 
         }
 
-        private XElement LotTendersMayBeSubmittedFor(LotsSubmittedFor lotsInfoLotsSubmittedFor, int lotsInfoLotsMaxAwardedQuantity)
+        private XElement LotTendersMayBeSubmittedFor(LotsSubmittedFor lotsInfoLotsSubmittedFor, int lotsSubmittedForQuantity)
         {
             switch (lotsInfoLotsSubmittedFor)
             {
                 case LotsSubmittedFor.LotsAll:
                     return Element("LOT_ALL");
                 case LotsSubmittedFor.LotsMax:
-                    return Element("LOT_MAX_NUMBER", lotsInfoLotsMaxAwardedQuantity);
+                    return Element("LOT_MAX_NUMBER", lotsSubmittedForQuantity);
                 case LotsSubmittedFor.LotOneOnly:
                     return Element("LOT_ONE_ONLY");
                 default:
@@ -285,7 +301,11 @@ namespace Hilma.Domain.Integrations.General
 
             var showObjectNumber = (_notice.Type.IsPriorInformation() ||
                 _notice.Type.IsUtilities() ||
-                _notice.Type.IsSocial()) && _notice.Type != NoticeType.ContractUtilities &&_notice.Type != NoticeType.ContractAwardUtilities;
+                _notice.Type.IsSocial()) &&
+                _notice.Type != NoticeType.ContractUtilities &&
+                _notice.Type != NoticeType.ContractAwardUtilities &&
+                _notice.Type != NoticeType.SocialConcessionPriorInformation &&
+                _notice.Type != NoticeType.SocialConcessionAward;
 
             var contract = Element("OBJECT_CONTRACT", showObjectNumber ? new XAttribute("ITEM", 1) : null,
                     projectConfig.Title ? PElement("TITLE", _notice.Project?.Title) : null,
@@ -293,11 +313,11 @@ namespace Hilma.Domain.Integrations.General
                     configuration.MainCpvCode.Code ? CpvCodeElement("CPV_MAIN", new [] { procurementObject.MainCpvCode }) : null,
                     projectConfig.ContractType ? ElementWithAttribute("TYPE_CONTRACT", "CTYPE", _notice.Project?.ContractType.ToTEDFormat()) : null,
                     configuration.ShortDescription ? PElement("SHORT_DESCR", procurementObject.ShortDescription) : null,
-                    _notice.Type != NoticeType.ConcessionAward && configuration.TotalValue.Type && _notice.ObjectDescriptions.Any(x => x.AwardContract?.ContractAwarded == ContractAwarded.AwardedContract)
+                    _notice.Type != NoticeType.ConcessionAward && _notice.Type != NoticeType.SocialConcessionAward && configuration.TotalValue.Type && _notice.ObjectDescriptions.Any(x => x.AwardContract?.ContractAwarded == ContractAwarded.AwardedContract)
                         ? ValueTotal(procurementObject.TotalValue, true) : null,
                     configuration.EstimatedValue.Value && procurementObject.EstimatedValue.Value > 0 ?  Element("VAL_ESTIMATED_TOTAL", attribute: new XAttribute("CURRENCY", _notice.ProcurementObject.EstimatedValue.Currency), value: _notice.ProcurementObject.EstimatedValue.Value) : null,
                     configuration.EstimatedValueCalculationMethod ? PElement("CALCULATION_METHOD", procurementObject.EstimatedValueCalculationMethod) : null,
-                    _notice.Type == NoticeType.ConcessionAward && configuration.TotalValue.Type && _notice.ObjectDescriptions.Any(x => x.AwardContract?.ContractAwarded == ContractAwarded.AwardedContract)
+                    (_notice.Type == NoticeType.ConcessionAward || _notice.Type == NoticeType.SocialConcessionAward) && configuration.TotalValue.Type && _notice.ObjectDescriptions.Any(x => x.AwardContract?.ContractAwarded == ContractAwarded.AwardedContract)
                         ? ValueTotal(procurementObject.TotalValue, true) : null,
                     LotDivision(_notice.LotsInfo),
                     ObjectDescriptions(_notice.ObjectDescriptions),
@@ -309,8 +329,10 @@ namespace Hilma.Domain.Integrations.General
 
         private XElement ValueTotal(ValueRangeContract totalValue, bool addPublicationAttribute)
         {
-            if (totalValue == null)
+            if (totalValue == null || (totalValue.Type == ContractValueType.Undefined && totalValue.Value == null))
+            {
                 return null;
+            }
 
             var publicationAttribute = _configuration.ProcurementObject.TotalValue.DisagreeToBePublished && addPublicationAttribute && totalValue.DisagreeToBePublished != null
                 ? new XAttribute("PUBLICATION", (bool) totalValue.DisagreeToBePublished ? "NO" : "YES")
@@ -350,7 +372,7 @@ namespace Hilma.Domain.Integrations.General
             var hideItemNumber = _notice.Type == NoticeType.DesignContest || _notice.Type == NoticeType.DesignContestResults;
 
             return Element("OBJECT_DESCR", !hideItemNumber ? new XAttribute("ITEM", index + 1) : null,
-                config.Title ? PElement("TITLE", objectDescription.Title) : null,
+                config.Title && _notice.LotsInfo.DivisionLots ? PElement("TITLE", objectDescription.Title) : null,
                 config.LotNumber && _notice.LotsInfo.DivisionLots ? Element("LOT_NO", objectDescription.LotNumber ) : null,
                 config.AdditionalCpvCodes.Code ? CpvCodeElement("CPV_ADDITIONAL", objectDescription.AdditionalCpvCodes) : null,
                 config.NutsCodes ? NutsCodes(objectDescription.NutsCodes) : null,
@@ -862,12 +884,12 @@ namespace Hilma.Domain.Integrations.General
             {
                 if (procedureInformation.ContestParticipants.Type == ContractValueType.Range)
                 {
-                    procedure.Add(Element("NB_MIN_PARTICIPANTS", procedureInformation.ContestParticipants.MinValue?.ToString("F0")));
-                    procedure.Add(Element("NB_MAX_PARTICIPANTS", procedureInformation.ContestParticipants.MaxValue?.ToString("F0")));
+                    procedure.Add(Element("NB_MIN_PARTICIPANTS", procedureInformation.ContestParticipants.MinValue?.ToString("F0", CultureInfo.InvariantCulture)));
+                    procedure.Add(Element("NB_MAX_PARTICIPANTS", procedureInformation.ContestParticipants.MaxValue?.ToString("F0", CultureInfo.InvariantCulture)));
                 }
                 else
                 {
-                    procedure.Add(Element("NB_PARTICIPANTS", procedureInformation.ContestParticipants.Value?.ToString("F0")));
+                    procedure.Add(Element("NB_PARTICIPANTS", procedureInformation.ContestParticipants.Value?.ToString("F0", CultureInfo.InvariantCulture)));
                 }
             }
 
@@ -1177,7 +1199,9 @@ namespace Hilma.Domain.Integrations.General
 
                 var isExante = _notice.Type == NoticeType.ExAnte;
                 return Element("AWARD_CONTRACT", new XAttribute("ITEM",i + 1),
-                    _notice.Type != NoticeType.ConcessionAward ? Element("CONTRACT_NO", awardedContract?.ContractNumber) : null,
+                    _notice.Type != NoticeType.ConcessionAward &&
+                    _notice.Type != NoticeType.SocialConcessionAward ?
+                        Element("CONTRACT_NO", awardedContract?.ContractNumber) : null,
                     _notice.LotsInfo.DivisionLots ? Element("LOT_NO", lot.LotNumber) : null,
                     awardedContractConfig.ContractTitle ? PElement("TITLE", awardedContract?.ContractTitle) : null,
                     // PElement("TITLE", lot.Title),
@@ -1202,11 +1226,17 @@ namespace Hilma.Domain.Integrations.General
                                 : awardedContractConfig.DisagreeContractorInformationToBePublished
                                     ? new XAttribute("PUBLICATION", awardedContract?.DisagreeContractorInformationToBePublished ?? false ? "NO" : "YES")
                                     : null,
-                            awardedContract.Contractors.Count > 1 ? Element("AWARDED_TO_GROUP") : _notice.Type != NoticeType.SocialContractAward && _notice.Type != NoticeType.SocialUtilitiesContractAward ? Element("NO_AWARDED_TO_GROUP") : null,
+                            awardedContract.Contractors.Count > 1 ?
+                                Element("AWARDED_TO_GROUP") :
+                                _notice.Type != NoticeType.SocialContractAward &&
+                                _notice.Type != NoticeType.SocialUtilitiesContractAward &&
+                                _notice.Type != NoticeType.SocialConcessionAward ?
+                                    Element("NO_AWARDED_TO_GROUP") :
+                                    null,
                             awardedContract.Contractors.Select((contractor, a) =>
                                 Element("CONTRACTOR",
                                     ADDRS5(contractor),
-                                    contractor.IsSmallMediumEnterprise ? Element("SME") : _notice.Type != NoticeType.SocialContractAward && _notice.Type != NoticeType.SocialUtilitiesContractAward ? Element("NO_SME") : null
+                                    contractor.IsSmallMediumEnterprise ? Element("SME") : _notice.Type != NoticeType.SocialContractAward && _notice.Type != NoticeType.SocialUtilitiesContractAward && _notice.Type != NoticeType.SocialConcessionAward ? Element("NO_SME") : null
                                 )
                             )
                         ),
@@ -1326,7 +1356,19 @@ namespace Hilma.Domain.Integrations.General
             }
             if (configuration.AdditionalInformation)
             {
-                complementaryInfo.Add(PElement("INFO_ADD", complementaryInformation.AdditionalInformation));
+                string[] additionalInformation = complementaryInformation.AdditionalInformation;
+                if(_notice.HasAttachments) {
+                    var translations = _translationProvider.GetDynamicObject(CancellationToken.None).Result;
+                    string attachmentInfoText = translations != null ? translations[_notice.Language.ToLongLang()]["TED_noticeHasAttachments"] :
+                        "This notice has links and/or attachments listed in hankintailmoitukset.fi";
+
+                    attachmentInfoText = attachmentInfoText.Replace("{procurementProjectId}", _notice.ProcurementProjectId.ToString());
+                    attachmentInfoText = attachmentInfoText.Replace("{noticeId}", _notice.Id.ToString());
+
+                    Array.Resize(ref additionalInformation, additionalInformation.Length + 1);
+                    additionalInformation[additionalInformation.Length - 1] = attachmentInfoText;
+                }
+                complementaryInfo.Add(PElement("INFO_ADD", additionalInformation));
             }
 
             var proceduresForReview = _notice.ProceduresForReview;

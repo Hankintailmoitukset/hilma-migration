@@ -15,6 +15,8 @@ namespace Hilma.Domain.Entities
         public List<Watcher> SavedWatchers { get; set; }
         public int WatcherCount { get; set; }
 
+        public bool IsAdmin { get; set; }
+
         public IList<ProjectCollaborators> CollaboratingProjects { get; set; }
 
         #region Navigation

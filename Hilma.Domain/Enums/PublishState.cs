@@ -21,8 +21,12 @@ namespace Hilma.Domain.Enums
         /// </summary>
         WaitingToBePublished = 1 << 2,
         /// <summary>
-        /// Notice is to be published to TED and Hilma, but not available to the public.
+        /// Notice sent to ted and either the publication has been cancelled or the notice is set not to be available to the public.
         /// </summary>
-        NotPublic = 1 << 3
+        NotPublic = 1 << 3,
+        /// <summary>
+        /// Notice had been published by the 48h rule in Finland, but was rejected by TED
+        /// </summary>
+        PublishedThenRejected = 1 <<4
     }
 }

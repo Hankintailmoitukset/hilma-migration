@@ -34,6 +34,7 @@ namespace Hilma.Domain.Exceptions
 
     public class HilmaNotFoundException : HilmaException
     {
-
+        public HilmaNotFoundException() { }
+        public HilmaNotFoundException(string msg) : base(msg) { }
     }
 }

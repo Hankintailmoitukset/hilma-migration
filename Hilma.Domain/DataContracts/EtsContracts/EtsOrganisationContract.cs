@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
@@ -12,6 +11,11 @@ namespace Hilma.Domain.DataContracts.EtsContracts
     public class EtsOrganisationContract
     {
         /// <summary>
+        /// Surrogate key for the department
+        /// </summary>
+        public string DepartmentIdentifier { get; set; }
+
+        /// <summary>
         ///     Main form type information of the organisation.
         /// </summary>
         public ContractBodyContactInformation Information { get; set; }
@@ -20,11 +24,12 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         ///     Eu classification for the organisations legal basis.
         /// </summary>
         public ContractingAuthorityType ContractingAuthorityType { get; set; }
+
         /// <summary>
-        /// Used in F24 and F25 to determine type of main activity:
-        ///  (in the case of a notice published by a contracting authority)
+        /// Used in F15, F24 and F25 to determine type of main activity:
+        ///  (in the case of a notice published by a contracting authority -> MainActivity)
         ///  or
-        ///  (in the case of a notice published by a contracting entity)
+        ///  (in the case of a notice published by a contracting entity -> MainActivityUtilities)
         /// </summary>
         public ContractingType ContractingType { get; set; }
         /// <summary>

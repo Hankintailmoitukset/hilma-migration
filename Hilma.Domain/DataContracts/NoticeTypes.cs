@@ -24,8 +24,8 @@ namespace Hilma.Domain.DataContracts
             NoticeType.ContractUtilities,
             NoticeType.ContractAwardUtilities,
 
-            NoticeType.DesignContest,
-            NoticeType.DesignContestResults,
+            //NoticeType.DesignContest,
+            //NoticeType.DesignContestResults,
 
             NoticeType.ExAnte,
 
@@ -40,16 +40,21 @@ namespace Hilma.Domain.DataContracts
             NoticeType.SocialContractAward,
 
             NoticeType.SocialUtilitiesPriorInformation,
+            NoticeType.SocialUtilitiesQualificationSystem,
             NoticeType.SocialUtilities,
             NoticeType.SocialUtilitiesContractAward,
-            NoticeType.SocialUtilitiesQualificationSystem,
+
+            NoticeType.SocialConcessionPriorInformation,
+            NoticeType.SocialConcessionAward,
 
             NoticeType.Concession,
             NoticeType.ConcessionAward,
 
             // Nationals below
             NoticeType.NationalPriorInformation,
-            NoticeType.NationalContract,
+            NoticeType.NationalContract, 
+            NoticeType.NationalSmallValueProcurement,
+            NoticeType.NationalSmallValueProcurementSocial,
 
             NoticeType.NationalDirectAward,
             NoticeType.NationalDesignContest,
@@ -75,6 +80,8 @@ namespace Hilma.Domain.DataContracts
         public NoticeType[] NationalNotices { get; } = new[] {
             NoticeType.NationalPriorInformation,
             NoticeType.NationalContract,
+            NoticeType.NationalSmallValueProcurement,
+            NoticeType.NationalSmallValueProcurementSocial,
             NoticeType.NationalDesignContest,
             NoticeType.NationalDirectAward,
             NoticeType.NationalDefencePriorInformation,
@@ -107,6 +114,8 @@ namespace Hilma.Domain.DataContracts
             NoticeType.SocialContract,
             NoticeType.SocialUtilities,
             NoticeType.NationalContract,
+            NoticeType.NationalSmallValueProcurement,
+            NoticeType.NationalSmallValueProcurementSocial,
             NoticeType.NationalAgricultureContract,
             NoticeType.SocialUtilitiesQualificationSystem,
             NoticeType.Concession
@@ -122,7 +131,9 @@ namespace Hilma.Domain.DataContracts
             NoticeType.DefenceContractAward,
             NoticeType.ConcessionAward,
             NoticeType.SocialUtilitiesContractAward,
-            NoticeType.DpsAward
+            NoticeType.DpsAward,
+            NoticeType.SocialConcessionAward,
+            NoticeType.NationalDirectAward
         };
 
         /// <summary>
@@ -148,10 +159,12 @@ namespace Hilma.Domain.DataContracts
             NoticeType.SocialUtilities,
             NoticeType.SocialPriorInformation,
             NoticeType.SocialContractAward,
-            NoticeType.SocialConcessions,
+            NoticeType.SocialConcessionPriorInformation,
+            NoticeType.SocialConcessionAward,
             NoticeType.SocialUtilitiesPriorInformation,
             NoticeType.SocialUtilitiesContractAward,
-            NoticeType.SocialUtilitiesQualificationSystem
+            NoticeType.SocialUtilitiesQualificationSystem,
+            NoticeType.NationalSmallValueProcurementSocial
         };
 
         /// <summary>
@@ -189,6 +202,7 @@ namespace Hilma.Domain.DataContracts
         public NoticeType[] NationalPublicCategories { get; } = new[] {
             NoticeType.NationalPriorInformation,
             NoticeType.NationalContract,
+            NoticeType.NationalSmallValueProcurement,
             NoticeType.NationalDesignContest
         };
 
@@ -232,7 +246,8 @@ namespace Hilma.Domain.DataContracts
         public NoticeType[] EuLisenceCategories { get; } = new[] {
             NoticeType.Concession,
             NoticeType.ConcessionAward,
-            NoticeType.SocialConcessions,
+            NoticeType.SocialConcessionPriorInformation,
+            NoticeType.SocialConcessionAward,
             NoticeType.Modification,
             NoticeType.ExAnte
         };

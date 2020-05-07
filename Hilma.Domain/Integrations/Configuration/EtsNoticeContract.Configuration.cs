@@ -44,5 +44,6 @@ namespace Hilma.Domain.Integrations.Configuration
         public bool CorrigendumAdditionalInformation {get; set;} = false;
         public ContractAwardDefenceConfiguration ContractAwardsDefence {get; set;} = new ContractAwardDefenceConfiguration();
         public AnnexConfiguration Annexes {get; set;} = new AnnexConfiguration();
+        public bool IsPrivateSmallValueProcurement {get; set;} = false;
     }
 }

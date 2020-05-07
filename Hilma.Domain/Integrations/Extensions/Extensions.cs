@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Xml;
 
@@ -42,7 +43,7 @@ namespace Hilma.Domain.Integrations.Extensions
 
         public static string ToString(this decimal? data, string format, string nullResult = "")
         {
-            return data.HasValue ? data.Value.ToString(format) : nullResult;
+             return data.HasValue ? data.Value.ToString(format, CultureInfo.InvariantCulture) : nullResult;
         }
 
         /// <summary>

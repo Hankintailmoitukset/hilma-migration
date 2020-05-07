@@ -8,7 +8,7 @@ namespace Hilma.Domain.Integrations.Configuration
     {
         
         
-        public bool ForbiddenExtensions {get; set;} = false;
+        public bool AllowedExtensions {get; set;} = false;
         public bool DisableFileScan {get; set;} = false;
     }
 }

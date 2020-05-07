@@ -20,7 +20,7 @@ namespace Hilma.Domain.Entities
         public string Code { get; set; }
 
         /// <summary>
-        ///     Clear text explanation for the code.
+        ///     Clear text explanation for the code. Supplied in the notice language. 
         /// </summary>
         public string Name { get; set; }
 

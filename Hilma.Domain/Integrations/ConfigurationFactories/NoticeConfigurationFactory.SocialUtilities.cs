@@ -4,7 +4,7 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
 {
     public partial class NoticeConfigurationFactory
     {
-        private static NoticeContractConfiguration socialUtilities = new NoticeContractConfiguration {
+        private static NoticeContractConfiguration SocialUtilities => new NoticeContractConfiguration {
             Language = true,
             PreviousNoticeOjsNumber = true,
             Project = new ProcurementProjectContractConfiguration()
@@ -81,7 +81,11 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                 {
                     ProcurementRelatedToEuProgram = true,
                     ProjectIdentification = true
-                }
+                },
+                TimeFrame = new TimeFrameConfiguration() {
+                   Type = true,
+                   
+                },
             },
             CommunicationInformation = new CommunicationInformationConfiguration()
             {

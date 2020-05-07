@@ -31,7 +31,7 @@ namespace Hilma.Domain.Entities
         /// Information about a framework agreement or a dynamic purchasing systemInformation about 
         /// </summary>
         [CorrigendumLabel("framework_info", "II.3")]
-        public FrameworkAgreementInformation FrameworkAgreement { get; set; }
+        public FrameworkAgreementInformation FrameworkAgreement { get; set; } = new FrameworkAgreementInformation();
 
         /// <summary>
         /// II.5 for prior

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Hilma.Domain.Attributes;
+using Hilma.Domain.DataContracts;
 using Hilma.Domain.Enums;
 using Hilma.Domain.Validators;
 

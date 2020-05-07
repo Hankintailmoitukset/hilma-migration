@@ -4,7 +4,7 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
 {
     public partial class NoticeConfigurationFactory
     {
-        private static NoticeContractConfiguration designContestResults = new NoticeContractConfiguration {
+        private static NoticeContractConfiguration DesignContestResults => new NoticeContractConfiguration {
             Project = new ProcurementProjectContractConfiguration()
             {
                 Title = true,

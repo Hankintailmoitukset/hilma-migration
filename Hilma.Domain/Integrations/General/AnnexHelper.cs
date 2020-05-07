@@ -19,6 +19,7 @@ namespace Hilma.Domain.Integrations.General
         /// Public constructor that sets the notice and configuration.
         /// </summary>
         /// <param name="notice"></param>
+        /// <param name="configuration"></param>
         public AnnexHelper(NoticeContract notice, AnnexConfiguration configuration)
         {
             _notice = notice;
@@ -67,7 +68,7 @@ namespace Hilma.Domain.Integrations.General
                 return WrapAnnex(AnnexD2(), ProcedureType.AwardWoPriorPubD1, "PT_AWARD_CONTRACT_WITHOUT_CALL", ProcedureType.AwardWoPriorPubD1Other, "PT_AWARD_CONTRACT_WITHOUT_CALL");
             }
 
-            if (_notice.Type == NoticeType.ConcessionAward &&
+            if ((_notice.Type == NoticeType.ConcessionAward || _notice.Type == NoticeType.SocialConcessionAward) &&
                 (_notice.ProcedureInformation.ProcedureType == ProcedureType.AwardWoPriorPubD4 ||
                 _notice.ProcedureInformation.ProcedureType == ProcedureType.AwardWoPriorPubD4Other))
             {

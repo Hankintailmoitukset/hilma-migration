@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using Microsoft.Azure.Search.Models;
-using Newtonsoft.Json;
 
-namespace Hilma.Domain.Entities {
+namespace Hilma.Domain.Entities
+{
     /// <summary>
     ///     Search parameters for azure search
     /// </summary>
@@ -77,13 +76,13 @@ namespace Hilma.Domain.Entities {
         /// </summary>
         public QueryType QueryType { get; set; }
 
-        /// <summary>
-        /// Gets or sets the list of parameter values to be used in scoring
-        /// functions (for example, referencePointParameter) using the format
-        /// name-values. For example, if the scoring profile defines a function
-        /// with a parameter called 'mylocation' the parameter string would be
-        /// "mylocation--122.2,44.8" (without the quotes).
-        /// </summary>
+        // <summary>
+        // Gets or sets the list of parameter values to be used in scoring
+        // functions (for example, referencePointParameter) using the format
+        // name-values. For example, if the scoring profile defines a function
+        // with a parameter called 'mylocation' the parameter string would be
+        // "mylocation--122.2,44.8" (without the quotes).
+        // </summary>
         //public ScoringParameter[] ScoringParameters { get; set; }
     
         /// <summary>

@@ -14,5 +14,6 @@ namespace Hilma.Domain.Integrations.Configuration
         public bool ContactEmail {get; set;} = false;
         public bool FavouritedNotices {get; set;} = false;
         public WatcherConfiguration SavedWatchers {get; set;} = new WatcherConfiguration();
+        public bool IsAdmin {get; set;} = false;
     }
 }

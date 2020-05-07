@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -16,7 +17,7 @@ namespace Hilma.Domain.SearchContracts
         /// Create mapper for NoticeContract and NoticeSearchContract
         /// </summary>
         /// <returns>IMapper</returns>
-        public static IMapper Create()
+        public static IMapper Create(int defaultNoticeActiveTimeInMonths)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<NoticeContract, NoticeSearchContract>()
                                 .ForMember(d => d.DatePublished, opt => opt.MapFrom(x => x.DatePublished))
@@ -42,6 +43,7 @@ namespace Hilma.Domain.SearchContracts
                                     x.Project?.Organisation?.Information?.NutsCodes.Aggregate("", (current, next) => current + " " + next),
                                     string.Join(" ", x.ObjectDescriptions?.Select(l => $"{l.NutsCodes.Aggregate("", (current, next) => current + " " + next)}")??new string[0]))))
                                 .ForMember(d => d.TendersOrRequestsToParticipateDueDateTime, d => d.MapFrom((x,s) => x.TenderingInformation?.TendersOrRequestsToParticipateDueDateTime))
+                                .ForMember(d => d.ExpirationDate, d => d.MapFrom((x, s) => GetExpirationDate(x, defaultNoticeActiveTimeInMonths)))
                                 .ForMember(d => d.IncludesDynamicPurcharingSystem, d => d.MapFrom((n, s) => n.ProcedureInformation?.FrameworkAgreement?.IncludesDynamicPurchasingSystem ?? false))
                                 .ForMember(d => d.IncludesFrameworkAgreement, d => d.MapFrom((n, s) => n.ProcedureInformation?.FrameworkAgreement?.IncludesFrameworkAgreement ?? false))
                                 .ForMember(d => d.IsNationalProcurement, d => d.MapFrom( (n,s) => n.Type.IsNational() ))
@@ -49,6 +51,9 @@ namespace Hilma.Domain.SearchContracts
                                            d => d.MapFrom((x,s) => string.Join(" ", x.ObjectDescriptions?.Select(l => $"{l.Title ?? ""} {string.Join(' ', l.DescrProcurement??new[] { "" })}")??new string[0])))
                                 .ForMember(d => d.EstimatedValue, d => d.MapFrom(x => GetEstimatedValue(x)))
                                 .ForMember(d => d.Currency, d => d.MapFrom(x => x.ProcurementObject.EstimatedValue.Currency))
+                                .ForMember(d => d.EnergyEfficiencyConsidered, d => d.MapFrom(x => x.HilmaStatistics.EnergyEfficiencyConsidered))
+                                .ForMember(d => d.InnovationConsidered, d => d.MapFrom(x => x.HilmaStatistics.InnovationConsidered))
+                                .ForMember(d => d.SMEParticipationConsidered, d => d.MapFrom(x => x.HilmaStatistics.SMEParticipationConsidered))
                                 );
             return config.CreateMapper();
         }
@@ -81,6 +86,15 @@ namespace Hilma.Domain.SearchContracts
             if (estimatedValue?.Value == null || estimatedValue.DisagreeToBePublished == true) return 0;
 
             return (double)estimatedValue.Value;
+        }
+
+        private static DateTime? GetExpirationDate(NoticeContract notice, int defaultActiveTimeInMonths)
+        {
+            if (notice.TenderingInformation?.TendersOrRequestsToParticipateDueDateTime == null)
+            {
+                return notice.DatePublished?.AddMonths(defaultActiveTimeInMonths);
+            }
+            return notice.TenderingInformation.TendersOrRequestsToParticipateDueDateTime;
         }
     }
 }

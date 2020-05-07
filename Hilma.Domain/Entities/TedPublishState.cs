@@ -33,6 +33,10 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// Occupied with a reason code.
         /// </summary>
-        NotPublished = 7
+        NotPublished = 7,
+        /// <summary>
+        /// TED has approved notice to be published. Publication will occur in the future.
+        /// </summary>
+        ApprovedForPublish = 8
     }
 }

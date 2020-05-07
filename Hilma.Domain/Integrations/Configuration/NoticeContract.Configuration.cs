@@ -18,6 +18,7 @@ namespace Hilma.Domain.Integrations.Configuration
         public bool ReducedTimeLimitsForReceiptOfTenders {get; set;} = false;
         public bool CorrigendumAdditionalInformation {get; set;} = false;
         public bool CorrigendumPreviousNoticeNumber {get; set;} = false;
+        public bool CreatorSystem {get; set;} = false;
         public bool CreatorId {get; set;} = false;
         public bool Type {get; set;} = false;
         public bool LegalBasis {get; set;} = false;
@@ -48,6 +49,7 @@ namespace Hilma.Domain.Integrations.Configuration
         public bool TedNoDocExt {get; set;} = false;
         public bool Links {get; set;} = false;
         public AttachmentViewModelConfiguration Attachments {get; set;} = new AttachmentViewModelConfiguration();
+        public bool HasAttachments {get; set;} = false;
         public ChangeConfiguration Changes {get; set;} = new ChangeConfiguration();
         public bool IsCorrigendum {get; set;} = false;
         public bool IsMigrated {get; set;} = false;
@@ -62,5 +64,7 @@ namespace Hilma.Domain.Integrations.Configuration
         public HilmaStatisticsConfiguration HilmaStatistics {get; set;} = new HilmaStatisticsConfiguration();
         public AnnexConfiguration Annexes {get; set;} = new AnnexConfiguration();
         public ModifierConfiguration Modifiers {get; set;} = new ModifierConfiguration();
+        public bool DepartmentId {get; set;} = false;
+        public bool IsPrivateSmallValueProcurement {get; set;} = false;
     }
 }

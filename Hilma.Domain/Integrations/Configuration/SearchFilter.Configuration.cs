@@ -9,6 +9,7 @@ namespace Hilma.Domain.Integrations.Configuration
         
         
         public bool SearchTerms {get; set;} = false;
+        public bool SearchOptions {get; set;} = false;
         public bool NutsSearchTerms {get; set;} = false;
         public bool CpvSearchTerms {get; set;} = false;
         public bool NoticeTypes {get; set;} = false;

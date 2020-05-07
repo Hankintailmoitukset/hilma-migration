@@ -109,11 +109,6 @@ namespace Hilma.Domain.Enums
         /// </summary>
         DesignContestResults = 1300,
 
-        ///
-        /// F14_2014
-        /// Corrigendum notices are sent and saved with the original notice type and <example>notice.IsCorrigendum</example> flag is set true on corrigendum notice.
-        ///
-
         /// <summary>
         /// F15_2014
         /// Voluntary ex ante transparency notice
@@ -194,9 +189,15 @@ namespace Hilma.Domain.Enums
 
         /// <summary>
         /// F23_2014
-        /// Social and other specific services - concessions  
+        /// Social and other specific services - concession prior information
         /// </summary>
-        SocialConcessions = 2300,
+        SocialConcessionPriorInformation = 2300,
+
+        /// <summary>
+        /// F23_2014
+        /// Social and other specific services - concession award
+        /// </summary>
+        SocialConcessionAward = 2301,
 
         /// <summary>
         /// F24_2014
@@ -250,7 +251,15 @@ namespace Hilma.Domain.Enums
         /// </summary>
         NationalDefenceContract = 9911,
 
-        
+        /// <summary>
+        /// National small value procurement (pienhankinta)
+        /// </summary>
+        NationalSmallValueProcurement = 9912,
+
+        /// <summary>
+        /// National small value procurement social and utilities (pienhankinta sosiaali- ja erityispalvelut)
+        /// </summary>
+        NationalSmallValueProcurementSocial = 9913
     }
 
 }

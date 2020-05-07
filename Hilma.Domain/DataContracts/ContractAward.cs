@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
+using Hilma.Domain.Extensions;
 using Hilma.Domain.Validators;
 
 namespace Hilma.Domain.DataContracts {
@@ -121,5 +122,13 @@ namespace Hilma.Domain.DataContracts {
         /// </summary>
         [CorrigendumLabel("concess_other_details", "V.2.4")]
         public string[] ConcessionValueAdditionalInformation { get; set; }
+
+        public void Trim()
+        {
+            foreach (var contractor in Contractors)
+            {
+                contractor.MainUrl = contractor.MainUrl.CleanUrl();
+            }
+        }
     }
 }

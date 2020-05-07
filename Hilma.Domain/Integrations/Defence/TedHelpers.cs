@@ -13,10 +13,9 @@ namespace Hilma.Domain.Integrations.Defence
     /// </summary>
     public class TedHelpers
     {
-        public static readonly XNamespace Xmlns = "http://publications.europa.eu/resource/schema/ted/R2.0.8/reception";
+        public static readonly XNamespace Reception = "http://publications.europa.eu/resource/schema/ted/R2.0.8/reception";
         public static readonly XNamespace n2016 = "http://publications.europa.eu/resource/schema/ted/2016/nuts";
         public static readonly XNamespace xs = "http://www.w3.org/2001/XMLSchema-instance";
-        public static readonly string Directive = "32009L0081";
         
         internal static XDocument CreateTedDocument(params XElement[] xElements)
         {
@@ -41,7 +40,7 @@ namespace Hilma.Domain.Integrations.Defence
                     Element("ESENDER_LOGIN", eSenderLogin)),
                 Element("USER",
                     Element("USER_E_MAILS",
-                    ElementWithAttribute("USER_E_MAIL", "TYPE", "FUNCTIONAL", tedContactEmail))),
+                    ElementWithAttribute("USER_E_MAIL", "TYPE", "FUNCTIONAL", notice.ContactPerson?.Email ?? tedContactEmail))),
                 Element("NO_DOC_EXT", notice.NoticeNumber));
         }
               
@@ -57,17 +56,17 @@ namespace Hilma.Domain.Integrations.Defence
         {
             return Element(elementName,
                     Element("ORGANISATION",
-                        Element("OFFICIALNAME", organisation.Information.OfficialName),
-                        Element("NATIONALID", organisation.Information.NationalRegistrationNumber)
+                        Element("OFFICIALNAME", organisation?.Information?.OfficialName),
+                        Element("NATIONALID", organisation?.Information?.NationalRegistrationNumber)
                     ),
-                    Element("ADDRESS", organisation.Information.PostalAddress.StreetAddress),
-                    Element("TOWN", organisation.Information.PostalAddress.Town),
-                    Element("POSTAL_CODE", organisation.Information.PostalAddress.PostalCode),
-                    ElementWithAttribute("COUNTRY", "VALUE", organisation.Information.PostalAddress.Country),
-                    !string.IsNullOrEmpty(contactPerson.Name) ? Element("CONTACT_POINT", contactPerson.Name) : null,
-                    Element("PHONE", contactPerson.Phone),
+                    Element("ADDRESS", organisation?.Information?.PostalAddress?.StreetAddress),
+                    Element("TOWN", organisation?.Information?.PostalAddress?.Town),
+                    Element("POSTAL_CODE", organisation?.Information?.PostalAddress?.PostalCode),
+                    ElementWithAttribute("COUNTRY", "VALUE", organisation?.Information?.PostalAddress?.Country),
+                    !string.IsNullOrEmpty(contactPerson.Name) ? Element("CONTACT_POINT", contactPerson?.Name) : null,
+                    Element("PHONE", contactPerson?.Phone),
                     Element("E_MAILS",
-                        Element("E_MAIL", contactPerson.Email)
+                        Element("E_MAIL", contactPerson?.Email)
                     )
                 );
         }
@@ -80,15 +79,16 @@ namespace Hilma.Domain.Integrations.Defence
         /// <returns>Xelement</returns>
         public static XElement INC_01(string elementName, OrganisationContract organisation)
         {
+            var information = organisation?.Information;
             return Element(elementName,
                     Element("ORGANISATION",
-                        Element("OFFICIALNAME", organisation.Information.OfficialName),
-                        Element("NATIONALID", organisation.Information.NationalRegistrationNumber)
+                        Element("OFFICIALNAME", information?.OfficialName),
+                        Element("NATIONALID", information?.NationalRegistrationNumber)
                     ),
-                    Element("ADDRESS", organisation.Information.PostalAddress.StreetAddress),
-                    Element("TOWN", organisation.Information.PostalAddress.Town),
-                    Element("POSTAL_CODE", organisation.Information.PostalAddress.PostalCode),
-                    ElementWithAttribute("COUNTRY", "VALUE", organisation.Information.PostalAddress.Country)
+                    Element("ADDRESS", information?.PostalAddress?.StreetAddress),
+                    Element("TOWN", information?.PostalAddress?.Town),
+                    Element("POSTAL_CODE", information?.PostalAddress?.PostalCode),
+                    ElementWithAttribute("COUNTRY", "VALUE", information?.PostalAddress?.Country)
                 );
         }
 
@@ -99,15 +99,18 @@ namespace Hilma.Domain.Integrations.Defence
         /// <returns>Xelement</returns>
         public static XElement INC_04(ContractBodyContactInformation information)
         {
+            if (information == null)
+                return null;
+
             return Element("CONTACT_DATA",
                         Element("ORGANISATION",
                             Element("OFFICIALNAME", information.OfficialName),
                             Element("NATIONALID", information.NationalRegistrationNumber)
                         ),
-                        Element("ADDRESS", information.PostalAddress.StreetAddress),
-                        Element("TOWN", information.PostalAddress.Town),
-                        Element("POSTAL_CODE", information.PostalAddress.PostalCode),
-                        ElementWithAttribute("COUNTRY", "VALUE", information.PostalAddress.Country),
+                        Element("ADDRESS", information.PostalAddress?.StreetAddress),
+                        Element("TOWN", information.PostalAddress?.Town),
+                        Element("POSTAL_CODE", information.PostalAddress?.PostalCode),
+                        ElementWithAttribute("COUNTRY", "VALUE", information.PostalAddress?.Country),
                         Element("CONTACT_POINT", information.ContactPerson),
                         Element("PHONE", information.TelephoneNumber),
                         Element("E_MAILS",
@@ -129,10 +132,10 @@ namespace Hilma.Domain.Integrations.Defence
                         Element("OFFICIALNAME", contractor.OfficialName),
                         Element("NATIONALID", contractor.NationalRegistrationNumber)
                     ),
-                    Element("ADDRESS", contractor.PostalAddress.StreetAddress),
-                    Element("TOWN", contractor.PostalAddress.Town),
-                    Element("POSTAL_CODE", contractor.PostalAddress.PostalCode),
-                    ElementWithAttribute("COUNTRY", "VALUE", contractor.PostalAddress.Country),
+                    Element("ADDRESS", contractor.PostalAddress?.StreetAddress),
+                    Element("TOWN", contractor.PostalAddress?.Town),
+                    Element("POSTAL_CODE", contractor.PostalAddress?.PostalCode),
+                    ElementWithAttribute("COUNTRY", "VALUE", contractor.PostalAddress?.Country),
                     Element("E_MAILS",
                          Element("E_MAIL", contractor.Email)
                     ),
@@ -152,10 +155,10 @@ namespace Hilma.Domain.Integrations.Defence
                         Element("OFFICIALNAME", organisation.OfficialName),
                         Element("NATIONALID", organisation.NationalRegistrationNumber)
                     ),
-                    Element("ADDRESS", organisation.PostalAddress.StreetAddress),
-                    Element("TOWN", organisation.PostalAddress.Town),
-                    Element("POSTAL_CODE", organisation.PostalAddress.PostalCode),
-                    ElementWithAttribute("COUNTRY", "VALUE", organisation.PostalAddress.Country),
+                    Element("ADDRESS", organisation.PostalAddress?.StreetAddress),
+                    Element("TOWN", organisation.PostalAddress?.Town),
+                    Element("POSTAL_CODE", organisation.PostalAddress?.PostalCode),
+                    ElementWithAttribute("COUNTRY", "VALUE", organisation.PostalAddress?.Country),
                     Element("E_MAILS",
                          Element("E_MAIL", organisation.Email)
                     ),
@@ -233,7 +236,7 @@ namespace Hilma.Domain.Integrations.Defence
                 return null;
 
             var elements = new List<XElement>();
-            foreach(var code in codes.Where( c=> !string.IsNullOrEmpty(c.Code)))
+            foreach(var code in codes.Where( c=> !string.IsNullOrWhiteSpace(c.Code)))
             {
                 elements.Add(Element(elementName, ElementWithAttribute("CPV_CODE", "CODE", code.Code),
                     code.VocCodes?.Select(v => ElementWithAttribute("CPV_SUPPLEMENTARY_CODE", "CODE", v.Code))));
@@ -355,17 +358,6 @@ namespace Hilma.Domain.Integrations.Defence
             return new XElement(name.ToUpper());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static XElement Element(XName name, params object[] value)
-        {
-            return value != null && value.Any(a => a != null) ? new XElement(name, value.Where(a => a != null)) : null;
-        }
-
         public static XElement DateElement(string name, DateTime? value)
         {
             return value != null && value != default(DateTime) ? Element(name.ToUpper(),
@@ -384,5 +376,20 @@ namespace Hilma.Domain.Integrations.Defence
                     new XElement("TIME", value?.Hour.ToString("00.##") + ":" + value?.Minute.ToString("00.##")))
                     : null;
         }
+
+        public static XDocument SetRootNamespace(XDocument document)
+        {
+            SetDefaultXmlNamespace( document.Root, Reception);
+            return document;
+        }
+
+        private static void SetDefaultXmlNamespace(XElement xelem, XNamespace xmlns)
+        {
+            if (xelem.Name.NamespaceName == string.Empty)
+                xelem.Name = xmlns + xelem.Name.LocalName;
+            foreach (var e in xelem.Elements())
+                SetDefaultXmlNamespace(e,xmlns);
+        }
+
     }
 }

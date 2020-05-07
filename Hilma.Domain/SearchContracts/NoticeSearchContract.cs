@@ -75,6 +75,9 @@ namespace Hilma.Domain.SearchContracts
         public DateTime? TendersOrRequestsToParticipateDueDateTime { get; set; }
 
         [IsSortable, IsFilterable]
+        public DateTime? ExpirationDate { get; set; }
+
+        [IsSortable, IsFilterable]
         public int? ParentId { get; set; }
 
         [IsFilterable]
@@ -103,5 +106,23 @@ namespace Hilma.Domain.SearchContracts
 
         [IsFilterable]
         public string Currency { get; set; }
+
+        /// <summary>
+        /// Tässä hankintamenettelyssä otetaan huomioon energiatehokkuusnäkökohtia
+        /// </summary>
+        [IsFilterable]
+        public bool EnergyEfficiencyConsidered { get; set; }
+
+        /// <summary>
+        /// Tässä hankintamenettelyssä otetaan huomioon innovaationäkökohtia
+        /// </summary>
+        [IsFilterable]
+        public bool InnovationConsidered { get; set; }
+
+        /// <summary>
+        /// Tässä hankintamenettelyssä otetaan huomioon pienten ja keskisuurten yritysten osallisumismahdollisuudet
+        /// </summary>
+        [IsFilterable]
+        public bool SMEParticipationConsidered { get; set; }
     }
 }

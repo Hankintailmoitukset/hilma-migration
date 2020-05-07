@@ -15,6 +15,8 @@ namespace Hilma.Domain.Enums
         MaintypeEu = 1 << 5,
         OtherType = 1 << 6,
         MaintypeChurch = 1 << 7,
-        MaintypeFarmer = 1 << 8
+        MaintypeFarmer = 1 << 8,
+        MaintypeUtility = 1 << 9,
+        MaintypeSocialUtility = 1 << 10
     }
 }

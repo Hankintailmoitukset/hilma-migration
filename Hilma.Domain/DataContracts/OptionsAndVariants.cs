@@ -55,5 +55,27 @@ namespace Hilma.Domain.DataContracts
         /// </summary>
         [CorrigendumLabel("duration_months", "II.2.2")]
         public int? OptionsMonths { get; set; }
+
+        /// <summary>
+        /// Trims the component optional fields based on selections.
+        /// </summary>
+        public void Trim()
+        {
+            if (!Options)
+            {
+                OptionType = default;
+                OptionsDescription = new string[0];
+            }
+
+            if (OptionType != TimeFrameType.Days)
+            {
+                OptionsDays = default;
+            }
+
+            if (OptionType != TimeFrameType.Months)
+            {
+                OptionsMonths = default;
+            }
+        }
     }
 }

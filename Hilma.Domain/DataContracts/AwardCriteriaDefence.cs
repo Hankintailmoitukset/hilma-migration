@@ -25,5 +25,18 @@ namespace Hilma.Domain.DataContracts
         ///     Award criteria 
         /// </summary>
         public AwardCriterionDefinition[] Criteria { get; set; } = new AwardCriterionDefinition[0];
+
+        public void Trim()
+        {
+            if ((CriterionTypes & AwardCriterionTypeDefence.EconomicallyAdvantageous) == 0)
+            {
+                EconomicCriteriaTypes = AwardCriterionTypeDefence.Undefined;
+            }
+
+            if ((EconomicCriteriaTypes & AwardCriterionTypeDefence.CriteriaBelow) == 0)
+            {
+                Criteria = new AwardCriterionDefinition[0];
+            }
+        }
     }
 }

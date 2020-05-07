@@ -54,6 +54,11 @@ namespace Hilma.Domain.DataContracts
         public string CorrigendumPreviousNoticeNumber { get; set; }
 
         /// <summary>
+        /// Creatign system name, either Hilma or Sending ets system.
+        /// </summary>
+        public string CreatorSystem { get; set; }
+
+        /// <summary>
         ///     Creator Id for user-created (as opposed to Ets API created) notices.
         /// </summary>
         public Guid? CreatorId { get; set; }
@@ -199,7 +204,10 @@ namespace Hilma.Domain.DataContracts
         /// </summary>
         [IgnoreMap]
         public AttachmentViewModel[] Attachments { get; set; }
-
+        /// <summary>
+        ///     Notice has Attachments or Links.
+        /// </summary>
+        public bool HasAttachments { get; set; }
         /// <summary>
         ///     Notice changes for corrigendum notice
         /// </summary>
@@ -271,5 +279,16 @@ namespace Hilma.Domain.DataContracts
         /// Modification information. For Hilma use only
         /// </summary>
         public Modifier[] Modifiers { get; set; }
+
+        /// <summary>
+        /// Department for this notice. For Hilma use only, at least for now. For UI, serves as a hint on which
+        /// departments data should be auto-filled to organisation fields.
+        /// </summary>
+        public Guid? DepartmentId { get; set; }
+
+        /// <summary>
+        /// Should notice not be published to search index. Only for national small value procurements
+        /// </summary>
+        public bool IsPrivateSmallValueProcurement { get; set; }
     }
 }

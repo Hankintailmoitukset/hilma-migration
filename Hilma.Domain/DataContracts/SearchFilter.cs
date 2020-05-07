@@ -10,6 +10,7 @@ namespace Hilma.Domain.DataContracts
     public class SearchFilter
     {
         public string[] SearchTerms { get; set; }
+        public string[] SearchOptions { get; set; }
         public string[] NutsSearchTerms { get; set; }
         public string[] CpvSearchTerms { get; set; }
         public string[] NoticeTypes { get; set; }

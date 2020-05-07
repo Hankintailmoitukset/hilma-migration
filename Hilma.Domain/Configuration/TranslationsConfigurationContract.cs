@@ -7,5 +7,7 @@ namespace Hilma.Domain.Configuration
     {
         public string TranslationsEndpoint { get; set; }
         public int TranslationsCacheLifetimeMinutes { get; set; }
+        public string OrganisationUrl { get; set; }
+        public string NoReplyEmailAddress { get; set; }
     }
 }

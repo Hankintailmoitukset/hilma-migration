@@ -22,13 +22,6 @@ namespace Hilma.Domain.Entities
         public string OfficialName { get; set; }
 
         /// <summary>
-        /// Hilma specific additional specifier for Official Name, to distinguish multiple
-        /// departments of same organisation from each other.
-        /// </summary>
-        [MaxLength(300)]
-        public string Department { get; set; }
-
-        /// <summary>
         /// National registration number of the contracting body
         /// </summary>
         /// <example>1732626-9</example>
@@ -37,12 +30,19 @@ namespace Hilma.Domain.Entities
         public string NationalRegistrationNumber { get; set; }
 
         /// <summary>
+        /// Hilma specific additional specifier for Official Name, to distinguish multiple
+        /// departments of same organisation from each other.
+        /// </summary>
+        [MaxLength(300)]
+        public string Department { get; set; }
+
+        /// <summary>
         /// Location code for the organisation
         /// </summary>
         [Required]
         [MinLength(1), MaxLength(20)]
         [CorrigendumLabel("nutscode", "I.3")]
-        public string[] NutsCodes { get; set; }
+        public string[] NutsCodes { get; set; } = new string[0];
 
         /// <summary>
         ///     Postal address for the contact.

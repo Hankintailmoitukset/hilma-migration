@@ -6,6 +6,7 @@ using Hilma.Domain.Configuration;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
+using Hilma.Domain.Exceptions;
 using Hilma.Domain.Extensions;
 using Hilma.Domain.Integrations.Extensions;
 
@@ -150,7 +151,7 @@ namespace Hilma.Domain.Integrations.General
                     yield return TedHelpers.DateElement("DATE_END", timeFrame.EndDate);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(timeFrame.Type), "Undefined is not allowed value");
+                    throw new HilmaMalformedRequestException("Undefined is not allowed value for time frame type");
             }
 
             if (justificationIsOverFourYears != null && justificationIsOverFourYears.HasAnyContent() && timeFrame.IsOverFourYears)
@@ -228,34 +229,50 @@ namespace Hilma.Domain.Integrations.General
                 return null;
             }
 
-            return TedHelpers.Element("MODIFICATIONS_CONTRACT",
-                TedHelpers.Element("DESCRIPTION_PROCUREMENT",
-                    TedHelpers.CpvCodeElement("CPV_MAIN", new CpvCode[] { modifications.MainCpvCode }),
-                    TedHelpers.CpvCodeElement("CPV_ADDITIONAL", modifications.AdditionalCpvCodes),
-                    modifications.NutsCodes.Select(n => new XElement(TedHelpers.n2016 + "NUTS", new XAttribute("CODE", n))),
-                    TedHelpers.PElement("MAIN_SITE", modifications.MainsiteplaceWorksDelivery),
-                    TedHelpers.PElement("SHORT_DESCR", modifications.DescrProcurement),
-                    Duration(modifications.TimeFrame,modifications.JustificationForDurationOverFourYears, modifications.JustificationForDurationOverEightYears),
-                    TedHelpers.Element("VALUES", TedHelpers.ElementWithAttribute("VAL_TOTAL", "CURRENCY",
-                                        modifications.TotalValue?.Currency, modifications.TotalValue?.Value)),
-                    TedHelpers.Element("CONTRACTORS",
-                        modifications.AwardedToGroupOfEconomicOperators && modifications.Contractors?.Count > 1 ? TedHelpers.Element("AWARDED_TO_GROUP") : TedHelpers.Element("NO_AWARDED_TO_GROUP"),
-                        modifications.Contractors?.Select((contractor, a) =>
-                        TedHelpers.Element("CONTRACTOR",
-                            TedHelpers.ADDRS5(contractor),
-                            contractor.IsSmallMediumEnterprise ? TedHelpers.Element("SME") : TedHelpers.Element("NO_SME"))))
+            try
+            {
+                return TedHelpers.Element("MODIFICATIONS_CONTRACT",
+                    TedHelpers.Element("DESCRIPTION_PROCUREMENT",
+                        TedHelpers.CpvCodeElement("CPV_MAIN", new CpvCode[] {modifications.MainCpvCode}),
+                        TedHelpers.CpvCodeElement("CPV_ADDITIONAL", modifications.AdditionalCpvCodes),
+                        modifications.NutsCodes.Select(n =>
+                            new XElement(TedHelpers.n2016 + "NUTS", new XAttribute("CODE", n))),
+                        TedHelpers.PElement("MAIN_SITE", modifications.MainsiteplaceWorksDelivery),
+                        TedHelpers.PElement("SHORT_DESCR", modifications.DescrProcurement),
+                        Duration(modifications.TimeFrame, modifications.JustificationForDurationOverFourYears,
+                            modifications.JustificationForDurationOverEightYears),
+                        TedHelpers.Element("VALUES", TedHelpers.ElementWithAttribute("VAL_TOTAL", "CURRENCY",
+                            modifications.TotalValue?.Currency, modifications.TotalValue?.Value)),
+                        TedHelpers.Element("CONTRACTORS",
+                            modifications.Contractors?.Count > 1
+                                ? TedHelpers.Element("AWARDED_TO_GROUP")
+                                : TedHelpers.Element("NO_AWARDED_TO_GROUP"),
+                            modifications.Contractors?.Select((contractor, a) =>
+                                TedHelpers.Element("CONTRACTOR",
+                                    TedHelpers.ADDRS5(contractor),
+                                    contractor.IsSmallMediumEnterprise
+                                        ? TedHelpers.Element("SME")
+                                        : TedHelpers.Element("NO_SME"))))
                     ),
-                TedHelpers.Element("INFO_MODIFICATIONS",
-                TedHelpers.PElement("SHORT_DESCR", modifications.Description),
-                modifications.Reason == ModificationReason.ModNeedForAdditional ?
-                    TedHelpers.PElement("ADDITIONAL_NEED", modifications.ReasonDescriptionEconomic) :
-                    TedHelpers.PElement("UNFORESEEN_CIRCUMSTANCE", modifications.ReasonDescriptionCircumstances),
-                TedHelpers.Element("VALUES",
-                    TedHelpers.ElementWithAttribute("VAL_TOTAL_BEFORE", "CURRENCY", modifications.IncreaseBeforeModifications?.Currency,
-                                                    modifications.IncreaseBeforeModifications?.Value),
-                    TedHelpers.ElementWithAttribute("VAL_TOTAL_AFTER", "CURRENCY", modifications.IncreaseAfterModifications?.Currency,
-                                                    modifications.IncreaseAfterModifications?.Value)))
-                ); 
+                    TedHelpers.Element("INFO_MODIFICATIONS",
+                        TedHelpers.PElement("SHORT_DESCR", modifications.Description),
+                        modifications.Reason == ModificationReason.ModNeedForAdditional
+                            ? TedHelpers.PElement("ADDITIONAL_NEED", modifications.ReasonDescriptionEconomic)
+                            : TedHelpers.PElement("UNFORESEEN_CIRCUMSTANCE",
+                                modifications.ReasonDescriptionCircumstances),
+                        TedHelpers.Element("VALUES",
+                            TedHelpers.ElementWithAttribute("VAL_TOTAL_BEFORE", "CURRENCY",
+                                modifications.IncreaseBeforeModifications?.Currency,
+                                modifications.IncreaseBeforeModifications?.Value),
+                            TedHelpers.ElementWithAttribute("VAL_TOTAL_AFTER", "CURRENCY",
+                                modifications.IncreaseAfterModifications?.Currency,
+                                modifications.IncreaseAfterModifications?.Value)))
+                );
+            }
+            catch(HilmaMalformedRequestException e)
+            {
+                throw new HilmaMalformedRequestException( $"Invalid content in notice.Modifications: {e.Message}");
+            }
         }
         #endregion
     }

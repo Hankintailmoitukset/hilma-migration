@@ -19,6 +19,7 @@ namespace Hilma.Domain.Integrations.Defence
         /// Public constructor that sets the notice and configuration.
         /// </summary>
         /// <param name="notice"></param>
+        /// <param name="configuration"></param>
         public AnnexHelper(NoticeContract notice, AnnexConfiguration configuration)
         {
             _notice = notice;

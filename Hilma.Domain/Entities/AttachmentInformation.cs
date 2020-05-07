@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using AutoMapper;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Enums;
+using Hilma.Domain.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace Hilma.Domain.Entities
 {
     [Contract]
-    public class AttachmentInformation  
+    public class AttachmentInformation
     {
         /// <summary>
         /// Description for attachments and links
@@ -25,5 +26,12 @@ namespace Hilma.Domain.Entities
         /// </summary>
         public ValidationState ValidationState { get; set; }
 
+        public void Trim()
+        {
+            foreach (var link in Links)
+            {
+                link.Url = link.Url.CleanUrl();
+            }
+        }
     }
 }

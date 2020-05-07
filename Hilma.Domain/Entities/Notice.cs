@@ -24,6 +24,11 @@ namespace Hilma.Domain.Entities
         public int Id { get; set; }
 
         /// <summary>
+        /// Is the notice deleted?
+        /// </summary>
+        public bool Deleted { get; set; }
+
+        /// <summary>
         /// Hilma notice number, formatting [year]-[id].
         /// Assigned by Hilma. Used as TED No Doc Ext.
         /// </summary>
@@ -70,6 +75,11 @@ namespace Hilma.Domain.Entities
         ///     Time when the request to publish in TED was sent.
         /// </summary>
         public DateTime? TedPublishRequestSentDate { get; set; }
+
+        /// <summary>
+        /// TED data wrapper for notice, contains submission history
+        /// </summary>
+        public List<TedData> TedSendHistory { get; set; }
         /// <summary>
         /// If notice is a corrigendum
         /// </summary>
@@ -195,14 +205,12 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// Update notice number. Notice id must have been set before
         /// </summary>
-        public void UpdateNoticeNumber()
+        public void UpdateNoticeNumber() 
         {
-            if (!string.IsNullOrEmpty(NoticeNumber))
+            if (string.IsNullOrEmpty(NoticeNumber))
             {
-                throw new HilmaException("Notice number cannot be updated when it is set");
+                NoticeNumber = $"{DateModified?.Year}-{(Id % 1000000):D6}";
             }
-
-            NoticeNumber = $"{DateCreated?.Year}-{(Id % 1000000):D6}";
         }
 
         /// <summary>
@@ -290,6 +298,11 @@ namespace Hilma.Domain.Entities
         public AttachmentInformation AttachmentInformation { get; set; } = new AttachmentInformation();
 
         /// <summary>
+        ///     Notice has Attachments or Links.
+        /// </summary>
+        public bool HasAttachments { get; set; }
+
+        /// <summary>
         ///     Language for notice to be published in to TED.
         /// </summary>
         public string Language { get; set; } = "FI";
@@ -314,6 +327,25 @@ namespace Hilma.Domain.Entities
         /// Modification information. For Hilma use only
         /// </summary>
         public Modifier[] Modifiers { get; set; }
+        /// <summary>
+        /// Department FK. Currently does very little, pretty much just stores which department was selected for the notice for now.
+        /// Already useful for statistics, can later be to implement more granular authorization
+        /// </summary>
+        public Guid? DepartmentId { get; set; }
+        /// <summary>
+        /// Department navigation property
+        /// </summary>
+        public Department Department { get; set; }
+
+        /// <summary>
+        /// Should notice not be published to search index. Only for national small value procurements
+        /// </summary>
+        public bool IsPrivateSmallValueProcurement { get; set; }
+
+        /// <summary>
+        ///  List of references to ESPD requests stored in the espd service
+        /// </summary>
+        public List<EspdRequestReference> EspdRequestReferences { get; set; }
 
         /// <summary>
         ///     If this notice could be published.

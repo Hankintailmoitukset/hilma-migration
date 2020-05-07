@@ -8,6 +8,7 @@ namespace Hilma.Domain.Integrations.Configuration
     {
         
         
+        public bool DepartmentIdentifier {get; set;} = false;
         public ContractBodyContactInformationConfiguration Information {get; set;} = new ContractBodyContactInformationConfiguration();
         public bool ContractingAuthorityType {get; set;} = false;
         public bool ContractingType {get; set;} = false;

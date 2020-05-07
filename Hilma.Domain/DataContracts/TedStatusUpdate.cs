@@ -49,5 +49,10 @@ namespace Hilma.Domain.DataContracts
         ///     enforced useless surrogate key in addition to SubmissionId.
         /// </summary>
         public string NoDocExt { get; set; }
+
+        /// <summary>
+        /// UTC Timestamp when TED publish request has been sent successfully to TED
+        /// </summary>
+        public DateTime? TedPublishRequestSentDate { get; set; }
     }
 }

@@ -115,53 +115,57 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
             switch ( notice.Type)
             {
                 case Enums.NoticeType.PriorInformation:
-                    return priorNotice;
+                    return PriorNotice;
                 case Enums.NoticeType.PriorInformationReduceTimeLimits:
-                    return priorNoticeReducedTime;
+                    return PriorNoticeReducedTime;
                 case Enums.NoticeType.PeriodicIndicativeUtilities:
-                    return priorNoticeUtilities;
+                    return PriorNoticeUtilities;
                 case Enums.NoticeType.PeriodicIndicativeUtilitiesReduceTimeLimits:
-                    return priorNoticeReducedTimeUtilities;
+                    return PriorNoticeReducedTimeUtilities;
                 case Enums.NoticeType.SocialUtilitiesPriorInformation:
-                    return priorNoticeSocialUtilities;
+                    return PriorNoticeSocialUtilities;
                 case Enums.NoticeType.Contract:
-                    return contractNotice;
+                    return ContractNotice;
                 case Enums.NoticeType.ContractAward:
-                    return contractAward;
+                    return ContractAward;
                 case Enums.NoticeType.SocialContract:
-                    return socialContract;
+                    return SocialContract;
                 case Enums.NoticeType.SocialContractAward:
-                    return socialContractAward;
+                    return SocialContractAward;
                 case Enums.NoticeType.DefenceContract:
-                    return defenceContractNotice;
+                    return DefenceContractNotice;
                 case Enums.NoticeType.ContractUtilities:
-                    return contractNoticeUtilities;
+                    return ContractNoticeUtilities;
                 case Enums.NoticeType.SocialUtilities:
-                    return socialUtilities;
+                    return SocialUtilities;
                 case Enums.NoticeType.DefencePriorInformation:
-                    return defencePriorInformation;
+                    return DefencePriorInformation;
                 case Enums.NoticeType.SocialPriorInformation:
-                    return socialPriorInformation;
+                    return SocialPriorInformation;
                 case Enums.NoticeType.ContractAwardUtilities:
-                    return contractAwardUtilities;
+                    return ContractAwardUtilities;
                 case Enums.NoticeType.DefenceContractAward:
-                    return defenceContractAward;
+                    return DefenceContractAward;
                 case Enums.NoticeType.ExAnte:
                     return ExAnte(notice);
                 case Enums.NoticeType.DesignContest:
-                    return designContest;
+                    return DesignContest;
                 case Enums.NoticeType.DesignContestResults:
-                    return designContestResults;
+                    return DesignContestResults;
                 case Enums.NoticeType.Concession:
-                    return concession;
+                    return Concession;
                 case Enums.NoticeType.ConcessionAward:
-                    return concessionAward;
+                    return ConcessionAward;
                 case Enums.NoticeType.SocialUtilitiesContractAward:
-                    return socialUtilitiesContractAward;
+                    return SocialUtilitiesContractAward;
                 case Enums.NoticeType.DpsAward:
-                    return notice.Project.ProcurementCategory == Enums.ProcurementCategory.Public ? contractAward : contractAwardUtilities;
+                    return notice.Project.ProcurementCategory == Enums.ProcurementCategory.Public ? ContractAward : ContractAwardUtilities;
                 case Enums.NoticeType.SocialUtilitiesQualificationSystem:
-                    return socialUtilitiesQualificationSystem;
+                    return SocialUtilitiesQualificationSystem;
+                case Enums.NoticeType.SocialConcessionPriorInformation:
+                    return SocialConcessionPriorInformation;
+                case Enums.NoticeType.SocialConcessionAward:
+                    return SocialConcessionAward;
                 default:
                     break;
             }

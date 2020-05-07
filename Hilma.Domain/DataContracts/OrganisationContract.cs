@@ -4,6 +4,7 @@ using AutoMapper.Attributes;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
+using Hilma.Domain.Extensions;
 
 namespace Hilma.Domain.DataContracts
 {
@@ -39,10 +40,10 @@ namespace Hilma.Domain.DataContracts
         public string OtherContractingAuthorityType { get; set; }
 
         /// <summary>
-        /// Used in F24 and F25 to determine type of main activity:
-        ///  (in the case of a notice published by a contracting authority)
+        /// Used in F15, F24 and F25 to determine type of main activity:
+        ///  (in the case of a notice published by a contracting authority -> MainActivity)
         ///  or
-        ///  (in the case of a notice published by a contracting entity)
+        ///  (in the case of a notice published by a contracting entity -> MainActivityUtilities )
         /// </summary>
         public ContractingType ContractingType { get; set; }
 
@@ -68,5 +69,28 @@ namespace Hilma.Domain.DataContracts
         ///     Vuejs application validation state for organisation section.
         /// </summary>
         public ValidationState ValidationState { get; set; }
+
+        /// <summary>
+        ///     Currently selected department for this organisation.
+        /// </summary>
+        public Guid? DepartmentId { get; set; }
+        
+        public void Trim()
+        {
+            if (ContractingAuthorityType != ContractingAuthorityType.OtherType)
+            {
+                OtherContractingAuthorityType = string.Empty;
+            }
+
+            if (MainActivity != MainActivity.OtherActivity && MainActivityUtilities != MainActivityUtilities.OtherActivity)
+            {
+                OtherMainActivity = string.Empty;
+            }
+
+            if (Information != null)
+            {
+                Information.MainUrl = Information.MainUrl.CleanUrl();
+            }
+        }
     }
 }

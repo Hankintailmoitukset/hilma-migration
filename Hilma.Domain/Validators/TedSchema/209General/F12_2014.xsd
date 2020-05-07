@@ -3,8 +3,8 @@
 ####################################################################################
 #  XSD name : F12_2014
 #  RELEASE : "R2.0.9.S03"                                                      
-#  Intermediate release number 007-20181030                               
-#  Last update : 30/10/2018
+#  Intermediate release number 009-20190628                               
+#  Last update : 07/06/2019
 #  Form : Design contest notice
 ####################################################################################
  -->
@@ -44,7 +44,7 @@
 						</xs:sequence>
 						<xs:element name="NB_MAX_PARTICIPANTS" type="nb"/>
 					</xs:choice>
-					<xs:element name="PARTICIPANT_NAME" type="string_300" minOccurs="0" maxOccurs="100"/>
+					<xs:element name="PARTICIPANT_NAME" type="string_400" minOccurs="0" maxOccurs="100"/>
 				</xs:sequence>
 			</xs:choice>
 			<xs:element ref="CRITERIA_EVALUATION"/>
@@ -67,7 +67,7 @@
 				<xs:element name="DECISION_BINDING_CONTRACTING" type="empty"/>
 				<xs:element name="NO_DECISION_BINDING_CONTRACTING" type="empty"/>
 			</xs:choice>
-			<xs:element name="MEMBER_NAME" type="string_300" minOccurs="0" maxOccurs="50"/>
+			<xs:element name="MEMBER_NAME" type="string_500" minOccurs="0" maxOccurs="50"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="lefti_f12">

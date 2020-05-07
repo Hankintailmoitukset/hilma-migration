@@ -1,13 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup>
     <DocumentationFile>Hilma.Domain.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
+  
 
   <ItemGroup>
     <None Remove="Validators\TedSchema\208Defence\common.xsd" />
@@ -256,7 +257,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Hilma.Domain.xml">
+    <None Include="Hilma.Domain.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -286,6 +287,12 @@
     </Compile>
     <Compile Update="Integrations\Configuration\ApplicationHandlingContract.Configuration.cs">
       <CustomToolNamespace>DataContracts\ApplicationHandlingContract.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\ApplicationStatus.Configuration.cs">
+      <CustomToolNamespace>DataContracts\ApplicationStatus.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\AttachmentInfo.Configuration.cs">
+      <CustomToolNamespace>DataContracts\AttachmentInfo.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Integrations\Configuration\AttachmentInformation.Configuration.cs">
       <CustomToolNamespace>Entities\AttachmentInformation.cs</CustomToolNamespace>
@@ -326,9 +333,6 @@
     <Compile Update="Integrations\Configuration\ComplementaryInformationDefence.Configuration.cs">
       <CustomToolNamespace>Entities\ComplementaryInformationDefence.cs</CustomToolNamespace>
     </Compile>
-    <Compile Update="Integrations\Configuration\ConditionsInformation - Copy.Configuration.cs">
-      <CustomToolNamespace>Entities\ConditionsInformation - Copy.cs</CustomToolNamespace>
-    </Compile>
     <Compile Update="Integrations\Configuration\ConditionsInformation.Configuration.cs">
       <CustomToolNamespace>Entities\ConditionsInformation.cs</CustomToolNamespace>
     </Compile>
@@ -359,6 +363,12 @@
     <Compile Update="Integrations\Configuration\CpvCode.Configuration.cs">
       <CustomToolNamespace>Entities\CpvCode.cs</CustomToolNamespace>
     </Compile>
+    <Compile Update="Integrations\Configuration\CpvCodeMetadata.Configuration.cs">
+      <CustomToolNamespace>DataContracts\CpvCodeMetadata.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\CpvCodeTreeNode.Configuration.cs">
+      <CustomToolNamespace>DataContracts\CpvCodeTreeNode.cs</CustomToolNamespace>
+    </Compile>
     <Compile Update="Integrations\Configuration\DefenceAdministrativeInformation.Configuration.cs">
       <CustomToolNamespace>DataContracts\DefenceAdministrativeInformation.cs</CustomToolNamespace>
     </Compile>
@@ -374,8 +384,14 @@
     <Compile Update="Integrations\Configuration\DefenceRenewals.Configuration.cs">
       <CustomToolNamespace>DataContracts\DefenceRenewals.cs</CustomToolNamespace>
     </Compile>
+    <Compile Update="Integrations\Configuration\DepartmentContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\DepartmentContract.cs</CustomToolNamespace>
+    </Compile>
     <Compile Update="Integrations\Configuration\Esender.Configuration.cs">
       <CustomToolNamespace>DataContracts\Esender.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\EtsDepartmentContract.Configuration.cs">
+      <CustomToolNamespace>DataContracts\EtsContracts\EtsDepartmentContract.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Integrations\Configuration\EtsNoticeContract.Configuration.cs">
       <CustomToolNamespace>DataContracts\EtsContracts\EtsNoticeContract.cs</CustomToolNamespace>
@@ -443,9 +459,6 @@
     <Compile Update="Integrations\Configuration\NumberOfTenders.Configuration.cs">
       <CustomToolNamespace>DataContracts\NumberOfTenders.cs</CustomToolNamespace>
     </Compile>
-    <Compile Update="Integrations\Configuration\NutsCode - Copy.Configuration.cs">
-      <CustomToolNamespace>Entities\NutsCode - Copy.cs</CustomToolNamespace>
-    </Compile>
     <Compile Update="Integrations\Configuration\NutsCode.Configuration.cs">
       <CustomToolNamespace>Entities\NutsCode.cs</CustomToolNamespace>
     </Compile>
@@ -506,6 +519,9 @@
     <Compile Update="Integrations\Configuration\ResultsOfContest.Configuration.cs">
       <CustomToolNamespace>Entities\ResultsOfContest.cs</CustomToolNamespace>
     </Compile>
+    <Compile Update="Integrations\Configuration\ReviewBodyAxConfigurationContract.Configuration.cs">
+      <CustomToolNamespace>Configuration\ReviewBodyAxConfigurationContract.cs</CustomToolNamespace>
+    </Compile>
     <Compile Update="Integrations\Configuration\ReviewBodyConfigurationContract.Configuration.cs">
       <CustomToolNamespace>Configuration\ReviewBodyConfigurationContract.cs</CustomToolNamespace>
     </Compile>
@@ -518,8 +534,14 @@
     <Compile Update="Integrations\Configuration\SerilogConfigurationContract.Configuration.cs">
       <CustomToolNamespace>Configuration\SerilogConfigurationContract.cs</CustomToolNamespace>
     </Compile>
+    <Compile Update="Integrations\Configuration\StopPublicationInfo.Configuration.cs">
+      <CustomToolNamespace>DataContracts\StopPublicationInfo.cs</CustomToolNamespace>
+    </Compile>
     <Compile Update="Integrations\Configuration\SubcontractingInformation.Configuration.cs">
       <CustomToolNamespace>Entities\SubcontractingInformation.cs</CustomToolNamespace>
+    </Compile>
+    <Compile Update="Integrations\Configuration\TedConfigurationContract.Configuration.cs">
+      <CustomToolNamespace>Configuration\TedConfigurationContract.cs</CustomToolNamespace>
     </Compile>
     <Compile Update="Integrations\Configuration\TedLinks.Configuration.cs">
       <CustomToolNamespace>DataContracts\TedLinks.cs</CustomToolNamespace>

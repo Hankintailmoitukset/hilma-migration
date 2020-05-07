@@ -17,5 +17,6 @@ namespace Hilma.Domain.Integrations.Configuration
         public bool OtherMainActivity {get; set;} = false;
         public bool MainActivityUtilities {get; set;} = false;
         public bool ValidationState {get; set;} = false;
+        public bool DepartmentId {get; set;} = false;
     }
 }

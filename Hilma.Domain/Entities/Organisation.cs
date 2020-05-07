@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Enums;
 using Hilma.Domain.Exceptions;
-using Hilma.Domain.Extensions;
 
 namespace Hilma.Domain.Entities
 {
@@ -65,6 +64,8 @@ namespace Hilma.Domain.Entities
         ///     Navigational property for users belonging to organisation.
         /// </summary>
         public List<OrganisationUser> OrganisationUsers { get; set; }
+
+        public List<Department> Departments { get; set; }
 
         /// <summary>
         ///     Applications to the organisation.
