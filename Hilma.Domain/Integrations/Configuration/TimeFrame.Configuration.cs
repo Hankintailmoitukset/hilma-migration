@@ -17,5 +17,7 @@ namespace Hilma.Domain.Integrations.Configuration
         public bool CanBeRenewed {get; set;} = false;
         public bool RenewalDescription {get; set;} = false;
         public bool ScheduledStartDateOfAwardProcedures {get; set;} = false;
+        public bool IsOverFourYears {get; set;} = false;
+        public bool IsOverEightYears {get; set;} = false;
     }
 }

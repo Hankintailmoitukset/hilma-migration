@@ -257,7 +257,7 @@ namespace Hilma.Domain.Integrations.Defence
         /// <returns>The PROCEDURES_ICAR XElement</returns>
         private XElement ProcedureInformation()
         {
-            var previousOjs = _notice.TenderingInformation.Defence.PreviousPriorInformationNoticeOjsNumber;
+            var previousOjs = _notice.TenderingInformation.Defence?.PreviousPriorInformationNoticeOjsNumber ?? new OjsNumber();
             if(_notice.Type == NoticeType.DefenceContractAward)
             {
                 previousOjs = _notice.TenderingInformation.Defence.PreviousContractNoticeOjsNumber;
@@ -270,17 +270,17 @@ namespace Hilma.Domain.Integrations.Defence
                 TedHelpers.Element("TYPE_OF_PROCEDURE_CORRIGENDUM",
                     TedHelpers.ElementWithAttribute("TYPE_OF_PROCEDURE_DETAIL_FOR_ICAR", "VALUE", ProcedureType())),
                 TedHelpers.Element("ADMINISTRATIVE_INFORMATION",
-                    TedHelpers.PElement("FILE_REFERENCE_NUMBER", _notice.Project.ReferenceNumber),
+                    TedHelpers.PElement("FILE_REFERENCE_NUMBER", _notice.Project?.ReferenceNumber),
                     TedHelpers.Element("SIMAP_ESENDER_NOTICE_REFERENCE",
                         TedHelpers.ElementWithAttribute("SIMAP_ESENDER", "VALUE", "OJS_ESENDER"),
                         TedHelpers.ElementWithAttribute("LOGIN", "CLASS", "B",
-                            TedHelpers.Element("ESENDER_LOGIN", _eSenderLogin),
-                            TedHelpers.Element("CUSTOMER_LOGIN", _eSenderLogin)),
+                            TedHelpers.Element("ESENDER_LOGIN", _eSenderLogin)),
                         TedHelpers.Element("NO_DOC_EXT", _notice.NoticeNumber)),
                     TedHelpers.Element("NOTICE_PUBLICATION",
                         TedHelpers.Element("NOTICE_NUMBER_OJ", previousOjs.Number),
                         TedHelpers.DateElement("DATE_OJ", previousOjs.Date)),
-                    TedHelpers.DateElement("ORIGINAL_DISPATCH_DATE", TedNoticeFactory.PublishToTed || _parent.TedPublishRequestSentDate != DateTime.MinValue ? _parent.TedPublishRequestSentDate : DateTime.Now))
+                    TedHelpers.DateElement("ORIGINAL_DISPATCH_DATE",  _parent.TedPublishRequestSentDate != DateTime.MinValue ? _parent.TedPublishRequestSentDate :  null))
+                //TODO (TuomasT): Allow setting original date manually
                );
         }
 

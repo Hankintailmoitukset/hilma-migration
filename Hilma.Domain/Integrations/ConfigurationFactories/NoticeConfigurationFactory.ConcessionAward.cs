@@ -4,7 +4,7 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
 {
     public partial class NoticeConfigurationFactory
     {
-        private static NoticeContractConfiguration concessionAward = new NoticeContractConfiguration
+        private static NoticeContractConfiguration ConcessionAward => new NoticeContractConfiguration
         {
             PreviousNoticeOjsNumber = true,
             Language = true,

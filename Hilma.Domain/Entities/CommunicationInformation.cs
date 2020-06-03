@@ -116,5 +116,73 @@ namespace Hilma.Domain.Entities
         ///     Vuejs application validation state for corresponding form section.
         /// </summary>
         public ValidationState ValidationState { get; set; }
+
+        public void Trim()
+        {
+            if ((SpecsAndAdditionalDocuments & SpecificationsAndAdditionalDocuments.AddressAnother) == 0)
+            {
+                SpecsAndAdditionalDocumentsAddress = new ContractBodyContactInformation
+                {
+                    PostalAddress = new PostalAddress()
+                };
+            }
+
+            if ((SendTendersOption & TenderSendOptions.AddressFollowing) == 0)
+            {
+                if ((SendTendersOption & TenderSendOptions.EmailSendTenders) == 0)
+                {
+                    AddressToSendTenders = new ContractBodyContactInformation
+                    {
+                        PostalAddress = new PostalAddress()
+                    };
+                }
+                else
+                {
+                    AddressToSendTenders = new ContractBodyContactInformation
+                    {
+                        Email = AddressToSendTenders?.Email,
+                        PostalAddress = new PostalAddress()
+                    };
+                }
+            }
+
+            if ((SendTendersOption & TenderSendOptions.AddressSendTenders) == 0)
+            {
+                ElectronicAddressToSendTenders = default;
+            }
+
+            if ((AdditionalInformation & AdditionalInformationAvailability.AddressAnother) == 0)
+            {
+                AdditionalInformationAddress = new ContractBodyContactInformation
+                {
+                    PostalAddress = new PostalAddress()
+                };
+            }
+
+            ProcurementDocumentsUrl = ProcurementDocumentsUrl.CleanUrl();
+            ElectronicCommunicationInfoUrl = ElectronicCommunicationInfoUrl.CleanUrl();
+            ElectronicAccess = ElectronicAccess.CleanUrl();
+            ElectronicAddressToSendTenders = ElectronicAddressToSendTenders.CleanUrl();
+
+            if (AddressToSendTenders != null)
+            {
+                AddressToSendTenders.MainUrl = AddressToSendTenders.MainUrl.CleanUrl();
+            }
+
+            if (AdditionalInformationAddress != null)
+            {
+                AdditionalInformationAddress.MainUrl = AdditionalInformationAddress.MainUrl.CleanUrl();
+            }
+
+            if (OtherAddressForProcurementDocuments != null)
+            {
+                OtherAddressForProcurementDocuments.MainUrl = OtherAddressForProcurementDocuments.MainUrl.CleanUrl();
+            }
+
+            if (SpecsAndAdditionalDocumentsAddress != null)
+            {
+                SpecsAndAdditionalDocumentsAddress.MainUrl = SpecsAndAdditionalDocumentsAddress.MainUrl.CleanUrl();
+            }
+        }
     }
 }

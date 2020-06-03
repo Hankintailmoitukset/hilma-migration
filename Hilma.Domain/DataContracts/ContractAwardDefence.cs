@@ -2,6 +2,7 @@ using System;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
+using Hilma.Domain.Extensions;
 
 namespace Hilma.Domain.DataContracts
 {
@@ -141,5 +142,13 @@ namespace Hilma.Domain.DataContracts
         ///     Validation state for Vuejs application.
         /// </summary>
         public ValidationState ValidationState { get; set; }
+
+        public void Trim()
+        {
+            if(Contractor != null)
+            {
+                Contractor.MainUrl = Contractor.MainUrl.CleanUrl();
+            }
+        }
     }
 }

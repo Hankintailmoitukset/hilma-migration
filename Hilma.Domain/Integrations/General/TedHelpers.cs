@@ -4,7 +4,6 @@ using System.Linq;
 using System.Xml.Linq;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Entities;
-using Hilma.Domain.Enums;
 
 namespace Hilma.Domain.Integrations.General
 {
@@ -34,7 +33,7 @@ namespace Hilma.Domain.Integrations.General
                       Element("NO_DOC_EXT", notice.NoticeNumber)),
                 Element("CONTACT", Element("ORGANISATION", tedSenderOrganisation),
                     Element("COUNTRY", new XAttribute("VALUE", "FI")),
-                    Element("E_MAIL", tedContactEmail)));
+                    Element("E_MAIL", notice.ContactPerson?.Email ?? tedContactEmail)));
         }
 
         /// <summary>
@@ -49,27 +48,10 @@ namespace Hilma.Domain.Integrations.General
             string directive = string.IsNullOrEmpty( notice.LegalBasis ) ? DirectiveMapper.GetDirective(notice, parent) : notice.LegalBasis;
             return new List<XElement>
             {
-                ElementWithAttribute("LEGAL_BASIS", "VALUE", directive),
-                directive == "32018R1046" ?
-                PElement("LEGAL_BASIS_OTHER", GetOtherContractingAuthorityType(notice)): null
+                ElementWithAttribute("LEGAL_BASIS", "VALUE", directive)
             };
         }
-
-        private static string GetOtherContractingAuthorityType(NoticeContract notice)
-        {
-            switch (notice.Type)
-            {
-                case NoticeType.PriorInformation:
-                case NoticeType.Contract:
-                case NoticeType.ContractAward:
-                    return notice.Project.Organisation.OtherContractingAuthorityType;
-            }
-
-            return string.Empty;
-        }
-
         
-
         internal static XDocument CreateTedDocument(params XElement[] xElements)
         {
             return new XDocument(
@@ -230,11 +212,11 @@ namespace Hilma.Domain.Integrations.General
         /// <param name="codes"></param>
         /// <returns></returns>
         public static List<XElement> CpvCodeElement(string elementName, CpvCode[] codes){
-            if( !codes.Any())
+            if( codes == null || !codes.Any())
                 return null;
 
             var elements = new List<XElement>();
-            foreach(var code in codes.Where( c=> !string.IsNullOrEmpty(c.Code)))
+            foreach(var code in codes.Where( c=> !string.IsNullOrWhiteSpace(c?.Code)))
             {
                 elements.Add(Element(elementName, ElementWithAttribute("CPV_CODE", "CODE", code.Code),
                     code.VocCodes?.Select(v => ElementWithAttribute("CPV_SUPPLEMENTARY_CODE", "CODE", v.Code))));

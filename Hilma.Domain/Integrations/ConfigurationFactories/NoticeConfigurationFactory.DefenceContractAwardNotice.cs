@@ -4,7 +4,7 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
 {
     public partial class NoticeConfigurationFactory
     {
-        private static NoticeContractConfiguration defenceContractAward = new NoticeContractConfiguration {
+        private static NoticeContractConfiguration DefenceContractAward => new NoticeContractConfiguration {
             Project = BasicProjectConfiguration,
             LotsInfo = LotsInfoConfigurationDefault,
             ObjectDescriptions = new ObjectDescriptionConfiguration {
@@ -57,7 +57,7 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
             },
             ConditionsInformationDefence = null,
             CommunicationInformation = new CommunicationInformationConfiguration {
-                ProcurementDocumentsAvailable = true,
+                ProcurementDocumentsAvailable = false,
                 ProcurementDocumentsUrl = true,
                 AdditionalInformation = false,
                 AdditionalInformationAddress = new ContractBodyContactInformationConfiguration {

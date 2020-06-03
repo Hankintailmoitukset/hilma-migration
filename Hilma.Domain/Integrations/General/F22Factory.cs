@@ -26,6 +26,7 @@ namespace Hilma.Domain.Integrations.General
         /// <param name="notice">The notice</param>
         /// <param name="eSenderLogin">The TED esender login</param>
         /// <param name="tedContactEmail"></param>
+        /// <param name="translationProvider"></param>
         /// <param name="tedSenderOrganisation"></param>
         public F22Factory(NoticeContract notice, string eSenderLogin, string tedSenderOrganisation, string tedContactEmail, ITranslationProvider translationProvider)
         {

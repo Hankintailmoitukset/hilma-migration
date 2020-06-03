@@ -10,5 +10,6 @@ namespace Hilma.Domain.Integrations.Configuration
         
         public bool TranslationsEndpoint {get; set;} = false;
         public bool TranslationsCacheLifetimeMinutes {get; set;} = false;
+        public bool OrganisationUrl {get; set;} = false;
     }
 }

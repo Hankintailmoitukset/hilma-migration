@@ -4,7 +4,7 @@ using Hilma.Domain.Enums;
 namespace Hilma.Domain.Entities
 {
     [Contract]
-    public class AttachmentInformation  
+    public class AttachmentInformation
     {
         /// <summary>
         /// Description for attachments and links
@@ -21,5 +21,12 @@ namespace Hilma.Domain.Entities
         /// </summary>
         public ValidationState ValidationState { get; set; }
 
+        public void Trim()
+        {
+            foreach (var link in Links)
+            {
+                link.Url = link.Url.CleanUrl();
+            }
+        }
     }
 }

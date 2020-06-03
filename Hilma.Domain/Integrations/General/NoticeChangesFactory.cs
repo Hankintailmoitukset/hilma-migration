@@ -4,10 +4,12 @@ using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
 using Hilma.Domain.Integrations.Extensions;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Hilma.Domain.Entities.Annexes;
 using Hilma.Domain.Configuration;
 using System.Threading;
+using Newtonsoft.Json.Linq;
 
 namespace Hilma.Domain.Integrations.General
 {
@@ -16,8 +18,8 @@ namespace Hilma.Domain.Integrations.General
     /// </summary>
     public class NoticeChangesFactory
     {
-        private static NoticeContract _notice;
-        private static NoticeContract _parent;
+        private NoticeContract _notice;
+        private NoticeContract _parent;
         private readonly ITranslationProvider _translationProvider;
 
         /// <summary>
@@ -106,9 +108,9 @@ namespace Hilma.Domain.Integrations.General
             var parentOrg = parent.Project.Organisation;
 
             // I.1 Name and addresses
-            changes.Add(parentOrg.Information?.OfficialName, org.Information.OfficialName, typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.OfficialName));
-            changes.Add(parentOrg.Information?.NationalRegistrationNumber, org.Information.NationalRegistrationNumber, typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.NationalRegistrationNumber));
-            changes.Add(parentOrg.Information?.NutsCodes?[0], org.Information.NutsCodes?[0], typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.NutsCodes));
+            changes.Add(parentOrg.Information?.OfficialName, org.Information?.OfficialName, typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.OfficialName));
+            changes.Add(parentOrg.Information?.NationalRegistrationNumber, org.Information?.NationalRegistrationNumber, typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.NationalRegistrationNumber));
+            changes.Add(parentOrg.Information?.NutsCodes?.FirstOrDefault(), org.Information?.NutsCodes?.FirstOrDefault(), typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.NutsCodes));
 
             // Default Ted section is I.1 for PostalAddress. Use overload if used elsewhere
             changes.Add(parentOrg.Information?.PostalAddress?.StreetAddress, org.Information?.PostalAddress?.StreetAddress, typeof(PostalAddress), nameof(PostalAddress.StreetAddress));
@@ -123,8 +125,44 @@ namespace Hilma.Domain.Integrations.General
 
             // I.2 Joint procurement
             changes.Add(parent.Project.JointProcurement, notice.Project.JointProcurement, typeof(ProcurementProjectContract), nameof(ProcurementProjectContract.JointProcurement));
+            changes.Add(parent.Project.ProcurementLaw, notice.Project.ProcurementLaw, typeof(ProcurementProjectContract), nameof(ProcurementProjectContract.ProcurementLaw));
             changes.Add(parent.Project.CentralPurchasing, notice.Project.CentralPurchasing, typeof(ProcurementProjectContract), nameof(ProcurementProjectContract.CentralPurchasing));
 
+            // Co-purchasers
+            if (notice.Project.CoPurchasers != null)
+            {
+                foreach (var coPurchaser in notice.Project.CoPurchasers)
+                {
+                    if(coPurchaser == null)
+                    {
+                        continue;
+                    }
+
+                    //TODO(TuomasT): There has been issues when there are more than one with same business identifier. If issues persist some uid should be introduces to match list
+                    var parentCoPurchaser = parent.Project?.CoPurchasers?.FirstOrDefault(x => x.OfficialName == coPurchaser.OfficialName);
+
+                    if (parentCoPurchaser == null)
+                    {
+                        parentCoPurchaser = parent.Project?.CoPurchasers?.FirstOrDefault(x => x.NationalRegistrationNumber == coPurchaser.NationalRegistrationNumber);
+                    }
+                    if (parentCoPurchaser == null)
+                    {
+                        // If parentCoPurchaser is still not found, it was removed or added. Use corrigendumAdditionalInfo -field in this case.
+                        continue;
+                    }
+
+                    changes.Add(parentCoPurchaser.OfficialName, coPurchaser.OfficialName, typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.OfficialName), section: "I.2");
+                    changes.Add(parentCoPurchaser.NationalRegistrationNumber, coPurchaser.NationalRegistrationNumber, typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.NationalRegistrationNumber), section: "I.2");
+                    changes.Add(parentCoPurchaser.PostalAddress?.StreetAddress, coPurchaser.PostalAddress?.StreetAddress, typeof(PostalAddress), nameof(PostalAddress.StreetAddress), section: "I.2");
+                    changes.Add(parentCoPurchaser.PostalAddress?.PostalCode, coPurchaser.PostalAddress?.PostalCode, typeof(PostalAddress), nameof(PostalAddress.PostalCode), section: "I.2");
+                    changes.Add(parentCoPurchaser.PostalAddress?.Country, coPurchaser.PostalAddress?.Country, typeof(PostalAddress), nameof(PostalAddress.Country), section: "I.2");
+                    changes.Add(parentCoPurchaser.NutsCodes?.FirstOrDefault(), coPurchaser.NutsCodes?.FirstOrDefault(), typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.NutsCodes), section: "I.2");
+                    changes.Add(parentCoPurchaser.MainUrl, coPurchaser.MainUrl, typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.MainUrl), section: "I.2");
+                    changes.Add(parentCoPurchaser.ContactPerson, coPurchaser.ContactPerson, typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.ContactPerson), section: "I.2");
+                    changes.Add(parentCoPurchaser.Email, coPurchaser.Email, typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.Email), section: "I.2");
+                    changes.Add(parentCoPurchaser.TelephoneNumber, coPurchaser.TelephoneNumber, typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.TelephoneNumber), section: "I.2");
+                }
+            }
             // I.3 Communication
             var parentCommunicationInfo = parent.CommunicationInformation;
             var communicationInformation = notice.CommunicationInformation;
@@ -146,7 +184,7 @@ namespace Hilma.Domain.Integrations.General
 
             if (parentAdditionalAddress != null && parentAdditionalAddress.NutsCodes != null && parentAdditionalAddress.NutsCodes.Any())
             {
-                changes.Add(parentAdditionalAddress?.NutsCodes[0], additionalAddress?.NutsCodes[0], typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.NutsCodes));
+                changes.Add(parentAdditionalAddress?.NutsCodes?.FirstOrDefault(), additionalAddress?.NutsCodes?.FirstOrDefault(), typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.NutsCodes));
             }
             changes.Add(parentAdditionalAddress?.OfficialName, additionalAddress?.OfficialName, typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.OfficialName));
             changes.Add(parentAdditionalAddress?.PostalAddress?.StreetAddress, additionalAddress?.PostalAddress?.StreetAddress, typeof(PostalAddress), nameof(PostalAddress.StreetAddress), null, "I.3");
@@ -166,7 +204,7 @@ namespace Hilma.Domain.Integrations.General
             changes.Add(parentAddressToSendTenders?.NationalRegistrationNumber, addressToSendTenders?.NationalRegistrationNumber, typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.NationalRegistrationNumber));
             if (parentAddressToSendTenders != null && parentAddressToSendTenders.NutsCodes != null && parentAddressToSendTenders.NutsCodes.Any())
             {
-                changes.Add(parentAddressToSendTenders?.NutsCodes[0], addressToSendTenders?.NutsCodes[0], typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.NutsCodes));
+                changes.Add(parentAddressToSendTenders?.NutsCodes?.FirstOrDefault(), addressToSendTenders?.NutsCodes?.FirstOrDefault(), typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.NutsCodes));
             }
             changes.Add(parentAddressToSendTenders?.OfficialName, addressToSendTenders?.OfficialName, typeof(ContractBodyContactInformation), nameof(ContractBodyContactInformation.OfficialName));
             changes.Add(parentAddressToSendTenders?.PostalAddress.StreetAddress, addressToSendTenders?.PostalAddress.StreetAddress, typeof(PostalAddress), nameof(PostalAddress.StreetAddress), null, "I.3");
@@ -183,17 +221,20 @@ namespace Hilma.Domain.Integrations.General
             changes.Add(parentOrg.OtherContractingAuthorityType, org.OtherContractingAuthorityType, typeof(OrganisationContract), nameof(OrganisationContract.OtherContractingAuthorityType));
 
             // I.5 Main activity
-            if (org.MainActivity != MainActivity.Undefined)
+            if (!notice.Type.IsNational())
             {
-                changes.AddEnum(parentOrg.MainActivity, org.MainActivity, typeof(OrganisationContract), nameof(OrganisationContract.MainActivity));
-            }
+                if (org.MainActivity != MainActivity.Undefined)
+                {
+                    changes.AddEnum(parentOrg.MainActivity, org.MainActivity, typeof(OrganisationContract), nameof(OrganisationContract.MainActivity));
+                }
 
-            if(org.MainActivityUtilities != MainActivityUtilities.Undefined)
-            {
-                changes.AddEnum(parentOrg.MainActivityUtilities, org.MainActivityUtilities, typeof(OrganisationContract), nameof(OrganisationContract.MainActivityUtilities));
-            }
+                if (org.MainActivityUtilities != MainActivityUtilities.Undefined)
+                {
+                    changes.AddEnum(parentOrg.MainActivityUtilities, org.MainActivityUtilities, typeof(OrganisationContract), nameof(OrganisationContract.MainActivityUtilities));
+                }
 
-            changes.Add(parentOrg.OtherMainActivity, org.OtherMainActivity, typeof(OrganisationContract), nameof(OrganisationContract.OtherMainActivity));
+                changes.Add(parentOrg.OtherMainActivity, org.OtherMainActivity, typeof(OrganisationContract), nameof(OrganisationContract.OtherMainActivity));
+            }
         }
         #endregion
 
@@ -220,9 +261,7 @@ namespace Hilma.Domain.Integrations.General
             changes.Add(parent.ProcurementObject.ShortDescription, notice.ProcurementObject.ShortDescription, typeof(ProcurementObject), nameof(ProcurementObject.ShortDescription));
 
             // II.1.5
-            changes.Add(parent.ProcurementObject.EstimatedValue.Value, notice.ProcurementObject.EstimatedValue.Value, typeof(ProcurementObject), nameof(ProcurementObject.EstimatedValue));
-            changes.Add(parent.ProcurementObject.EstimatedValue.Currency, notice.ProcurementObject.EstimatedValue.Currency, typeof(ProcurementObject), nameof(ProcurementObject.EstimatedValue));
-            changes.Add(parent.ProcurementObject.EstimatedValue.DoesNotExceedNationalThreshold, notice.ProcurementObject.EstimatedValue.DoesNotExceedNationalThreshold, typeof(ValueRangeContract), nameof(ValueRangeContract.DoesNotExceedNationalThreshold));
+            changes.Add(parent.ProcurementObject.EstimatedValue, notice.ProcurementObject.EstimatedValue, typeof(ProcurementObject), nameof(ProcurementObject.EstimatedValue));
             changes.Add(parent.ProcurementObject.EstimatedValueCalculationMethod, notice.ProcurementObject.EstimatedValueCalculationMethod, typeof(ProcurementObject), nameof(ProcurementObject.EstimatedValueCalculationMethod));
 
             // II.1.6
@@ -237,9 +276,7 @@ namespace Hilma.Domain.Integrations.General
             // II.1.7
             if(notice.ProcurementObject.TotalValue?.DisagreeToBePublished != true)
             {
-                changes.Add(parent.ProcurementObject.TotalValue?.Value, notice.ProcurementObject.TotalValue?.Value, typeof(ProcurementObject), nameof(ProcurementObject.TotalValue), null, "II.1.7");
-                changes.Add(parent.ProcurementObject.TotalValue?.MinValue, notice.ProcurementObject.TotalValue?.MinValue, typeof(ProcurementObject), nameof(ProcurementObject.TotalValue), null, "II.1.7", "lowest_offer");
-                changes.Add(parent.ProcurementObject.TotalValue?.MaxValue, notice.ProcurementObject.TotalValue?.MaxValue, typeof(ProcurementObject), nameof(ProcurementObject.TotalValue), null, "II.1.7", "highest_offer");
+                changes.Add(parent.ProcurementObject.TotalValue, notice.ProcurementObject.TotalValue, typeof(ProcurementObject), nameof(ProcurementObject.TotalValue), null, "II.1.7", null,"lowest_offer", "highest_offer");
             }
 
             // II.2
@@ -339,13 +376,18 @@ namespace Hilma.Domain.Integrations.General
             }
 
             // II.2.6
-            changes.Add(parentLot.EstimatedValue.Value, lot.EstimatedValue.Value, typeof(ValueContract), nameof(ValueContract.Value), lotNumber, "II.2.6");
-            changes.Add(parentLot.EstimatedValue.Currency, lot.EstimatedValue.Currency, typeof(ValueContract), nameof(ValueContract.Currency), lotNumber, "II.2.6");
-
+            changes.Add(parentLot.EstimatedValue, lot.EstimatedValue, typeof(ValueContract), nameof(ValueContract.Value), lotNumber, "II.2.6");
+          
             // II.2.7
-            changes.Add(parentLot.TimeFrame.Months, lot.TimeFrame.Months, typeof(TimeFrame), nameof(TimeFrame.Months), lotNumber);
-            changes.Add(parentLot.TimeFrame.Days, lot.TimeFrame.Days, typeof(TimeFrame), nameof(TimeFrame.Days), lotNumber);
-            changes.AddDate(parentLot.TimeFrame.BeginDate, lot.TimeFrame.BeginDate, typeof(TimeFrame), nameof(TimeFrame.BeginDate), lotNumber);
+            if(parentLot.TimeFrame.Type == TimeFrameType.Months || lot.TimeFrame.Type == TimeFrameType.Months) {
+                changes.Add(parentLot.TimeFrame.Months, lot.TimeFrame.Months, typeof(TimeFrame), nameof(TimeFrame.Months), lotNumber);
+            }
+            if(parentLot.TimeFrame.Type == TimeFrameType.Days || lot.TimeFrame.Type == TimeFrameType.Days) {
+                changes.Add(parentLot.TimeFrame.Days, lot.TimeFrame.Days, typeof(TimeFrame), nameof(TimeFrame.Days), lotNumber);
+            }
+            if(parentLot.TimeFrame.Type == TimeFrameType.BeginAndEndDate || lot.TimeFrame.Type == TimeFrameType.BeginAndEndDate) {
+                changes.AddDate(parentLot.TimeFrame.BeginDate, lot.TimeFrame.BeginDate, typeof(TimeFrame), nameof(TimeFrame.BeginDate), lotNumber);
+            }
             changes.AddDate(parentLot.TimeFrame.EndDate, lot.TimeFrame.EndDate, typeof(TimeFrame), nameof(TimeFrame.EndDate), lotNumber);
             changes.Add(parentLot.TimeFrame.CanBeRenewed, lot.TimeFrame.CanBeRenewed, typeof(TimeFrame), nameof(TimeFrame.CanBeRenewed), lotNumber);
             changes.Add(parentLot.TimeFrame.RenewalDescription, lot.TimeFrame.RenewalDescription, typeof(TimeFrame), nameof(TimeFrame.RenewalDescription), lotNumber);
@@ -503,21 +545,30 @@ namespace Hilma.Domain.Integrations.General
                 // Contest type cannot be changed
                 //changes.AddEnum(parentProcedureInformation.ContestType, procedureInformation.ContestType, typeof(ProcedureInformation), nameof(ProcedureInformation.ContestType));
                 changes.AddEnum(parentProcedureInformation.ContestParticipants.Type, procedureInformation.ContestParticipants.Type, typeof(ProcedureInformation), nameof(ProcedureInformation.ContestParticipants));
-                changes.Add(parentProcedureInformation.ContestParticipants.Value?.ToString("F0"), procedureInformation.ContestParticipants.Value?.ToString("F0"), typeof(ProcedureInformation), nameof(ProcedureInformation.ContestParticipants), null, null, "number_participants");
-                changes.Add(parentProcedureInformation.ContestParticipants.MinValue?.ToString("F0"), procedureInformation.ContestParticipants.MinValue?.ToString("F0"), typeof(ProcedureInformation), nameof(ProcedureInformation.ContestParticipants), null, null, "min_number");
-                changes.Add(parentProcedureInformation.ContestParticipants.MaxValue?.ToString("F0"), procedureInformation.ContestParticipants.MaxValue?.ToString("F0"), typeof(ProcedureInformation), nameof(ProcedureInformation.ContestParticipants), null, null, "max_number");
+                changes.Add(parentProcedureInformation.ContestParticipants.Value?.ToString("F0", CultureInfo.InvariantCulture), procedureInformation.ContestParticipants.Value?.ToString("F0", CultureInfo.InvariantCulture), typeof(ProcedureInformation), nameof(ProcedureInformation.ContestParticipants), null, null, "number_participants");
+                changes.Add(parentProcedureInformation.ContestParticipants.MinValue?.ToString("F0", CultureInfo.InvariantCulture), procedureInformation.ContestParticipants.MinValue?.ToString("F0", CultureInfo.InvariantCulture), typeof(ProcedureInformation), nameof(ProcedureInformation.ContestParticipants), null, null, "min_number");
+                changes.Add(parentProcedureInformation.ContestParticipants.MaxValue?.ToString("F0", CultureInfo.InvariantCulture), procedureInformation.ContestParticipants.MaxValue?.ToString("F0", CultureInfo.InvariantCulture), typeof(ProcedureInformation), nameof(ProcedureInformation.ContestParticipants), null, null, "max_number");
             }
+
+            // TODO: Framwork agreement values shouldn't be allowed to be changed.
             // IV 1.3
             var framework = procedureInformation.FrameworkAgreement;
             var parentFramework = parentProcedureInformation.FrameworkAgreement;
             if(framework != null && parentFramework != null)
             {
-                changes.AddEnum(framework.FrameworkAgreementType, parentFramework.FrameworkAgreementType, typeof(FrameworkAgreementInformation), nameof(FrameworkAgreementInformation.FrameworkAgreementType));
-                changes.Add(framework.IncludesFrameworkAgreement, parentFramework.IncludesFrameworkAgreement, typeof(FrameworkAgreementInformation), nameof(FrameworkAgreementInformation.IncludesFrameworkAgreement));
-                changes.Add(framework.EnvisagedNumberOfParticipants, parentFramework.EnvisagedNumberOfParticipants, typeof(FrameworkAgreementInformation), nameof(FrameworkAgreementInformation.EnvisagedNumberOfParticipants));
-                changes.Add(framework.IncludesDynamicPurchasingSystem, parentFramework.IncludesDynamicPurchasingSystem, typeof(FrameworkAgreementInformation), nameof(FrameworkAgreementInformation.IncludesDynamicPurchasingSystem));
-                changes.Add(framework.DynamicPurchasingSystemInvolvesAdditionalPurchasers, parentFramework.DynamicPurchasingSystemInvolvesAdditionalPurchasers, typeof(FrameworkAgreementInformation), nameof(FrameworkAgreementInformation.DynamicPurchasingSystemInvolvesAdditionalPurchasers));
-                changes.Add(framework.JustificationForDurationOverFourYears, parentFramework.JustificationForDurationOverFourYears, typeof(FrameworkAgreementInformation), nameof(FrameworkAgreementInformation.JustificationForDurationOverFourYears));
+                if(framework.IncludesFrameworkAgreement || parentFramework.IncludesFrameworkAgreement)
+                {
+                    changes.Add(parentFramework.IncludesFrameworkAgreement, framework.IncludesFrameworkAgreement, typeof(FrameworkAgreementInformation), nameof(FrameworkAgreementInformation.IncludesFrameworkAgreement));
+                    changes.AddEnum(parentFramework.FrameworkAgreementType, framework.FrameworkAgreementType, typeof(FrameworkAgreementInformation), nameof(FrameworkAgreementInformation.FrameworkAgreementType));
+                    changes.Add(parentFramework.EnvisagedNumberOfParticipants, framework.EnvisagedNumberOfParticipants, typeof(FrameworkAgreementInformation), nameof(FrameworkAgreementInformation.EnvisagedNumberOfParticipants));
+                    changes.Add(parentFramework.JustificationForDurationOverFourYears, framework.JustificationForDurationOverFourYears, typeof(FrameworkAgreementInformation), nameof(FrameworkAgreementInformation.JustificationForDurationOverFourYears));
+                }
+
+                if(parentFramework.IncludesDynamicPurchasingSystem || framework.IncludesDynamicPurchasingSystem)
+                {
+                    changes.Add(parentFramework.IncludesDynamicPurchasingSystem, framework.IncludesDynamicPurchasingSystem, typeof(FrameworkAgreementInformation), nameof(FrameworkAgreementInformation.IncludesDynamicPurchasingSystem));
+                    changes.Add(parentFramework.DynamicPurchasingSystemInvolvesAdditionalPurchasers, framework.DynamicPurchasingSystemInvolvesAdditionalPurchasers, typeof(FrameworkAgreementInformation), nameof(FrameworkAgreementInformation.DynamicPurchasingSystemInvolvesAdditionalPurchasers));
+                }
             }
 
             // IV 1.4
@@ -661,7 +712,7 @@ namespace Hilma.Domain.Integrations.General
                     changes.Add(parentContractor?.PostalAddress.Town, currentConrtactor?.PostalAddress.Town, typeof(PostalAddress), nameof(PostalAddress.Town), lot.LotNumber, "V.2.3");
                     changes.Add(parentContractor?.PostalAddress.PostalCode, currentConrtactor?.PostalAddress.PostalCode, typeof(PostalAddress), nameof(PostalAddress.PostalCode), lot.LotNumber, "V.2.3");
                     changes.Add(parentContractor?.PostalAddress.Country, currentConrtactor?.PostalAddress.Country, typeof(PostalAddress), nameof(PostalAddress.Country), lot.LotNumber, "V.2.3");
-                    changes.Add(parentContractor?.NutsCodes.Any() == true ? parentContractor?.NutsCodes[0] : string.Empty, currentConrtactor?.NutsCodes.Any() == true ? currentConrtactor?.NutsCodes[0] : string.Empty, typeof(ContractorContactInformation), nameof(ContractorContactInformation.NutsCodes), lot.LotNumber);
+                    changes.Add(parentContractor?.NutsCodes.FirstOrDefault(), currentConrtactor?.NutsCodes.FirstOrDefault(), typeof(ContractorContactInformation), nameof(ContractorContactInformation.NutsCodes), lot.LotNumber);
                     changes.Add(parentContractor?.Email, currentConrtactor?.Email, typeof(ContractorContactInformation), nameof(ContractorContactInformation.Email), lot.LotNumber);
                     changes.Add(parentContractor?.TelephoneNumber, currentConrtactor?.TelephoneNumber, typeof(ContractorContactInformation), nameof(ContractorContactInformation.TelephoneNumber), lot.LotNumber);
                     changes.Add(parentContractor?.MainUrl, currentConrtactor?.MainUrl, typeof(ContractorContactInformation), nameof(ContractorContactInformation.MainUrl), lot.LotNumber);
@@ -678,7 +729,7 @@ namespace Hilma.Domain.Integrations.General
                     changes.Add(parentContractor?.PostalAddress.Town, string.Empty, typeof(PostalAddress), nameof(PostalAddress.Town), lot.LotNumber, "V.2.3");
                     changes.Add(parentContractor?.PostalAddress.PostalCode, string.Empty, typeof(PostalAddress), nameof(PostalAddress.PostalCode), lot.LotNumber, "V.2.3");
                     changes.Add(parentContractor?.PostalAddress.Country, string.Empty, typeof(PostalAddress), nameof(PostalAddress.Country), lot.LotNumber, "V.2.3");
-                    changes.Add(parentContractor?.NutsCodes[0], string.Empty, typeof(ContractorContactInformation), nameof(ContractorContactInformation.NutsCodes), lot.LotNumber);
+                    changes.Add(parentContractor?.NutsCodes.FirstOrDefault(), string.Empty, typeof(ContractorContactInformation), nameof(ContractorContactInformation.NutsCodes), lot.LotNumber);
                     changes.Add(parentContractor?.Email, string.Empty, typeof(ContractorContactInformation), nameof(ContractorContactInformation.Email), lot.LotNumber);
                     changes.Add(parentContractor?.TelephoneNumber, string.Empty, typeof(ContractorContactInformation), nameof(ContractorContactInformation.TelephoneNumber), lot.LotNumber);
                     changes.Add(parentContractor?.MainUrl, string.Empty, typeof(ContractorContactInformation), nameof(ContractorContactInformation.MainUrl), lot.LotNumber);
@@ -687,28 +738,20 @@ namespace Hilma.Domain.Integrations.General
             }
 
             // V.2.4
-            changes.Add(parentLot.EstimatedValue.Value, lot.EstimatedValue.Value, typeof(ValueContract), nameof(ValueContract.Value), lot.LotNumber, "V.2.4");
-            changes.Add(parentLot.AwardContract.AwardedContract.InitialEstimatedValueOfContract.Value, lot.AwardContract.AwardedContract.InitialEstimatedValueOfContract.Value, typeof(ValueContract), nameof(ValueContract.Value), lot.LotNumber, "V.2.4");
+            changes.Add(parentLot.EstimatedValue, lot.EstimatedValue, typeof(ValueContract), nameof(ValueContract.Value), lot.LotNumber, "V.2.4");
+            changes.Add(parentLot.AwardContract.AwardedContract.InitialEstimatedValueOfContract, lot.AwardContract.AwardedContract.InitialEstimatedValueOfContract, typeof(ValueContract), nameof(ValueContract.Value), lot.LotNumber, "V.2.4");
             if (lot.AwardContract.AwardedContract.FinalTotalValue.DisagreeToBePublished != true)
             {
-                changes.Add(parentLot.AwardContract.AwardedContract.FinalTotalValue.Value, lot.AwardContract.AwardedContract.FinalTotalValue.Value, typeof(ValueRangeContract), nameof(ValueRangeContract.Value), lot.LotNumber, "V.2.4");
-                changes.Add(parentLot.AwardContract.AwardedContract.FinalTotalValue.Currency, lot.AwardContract.AwardedContract.FinalTotalValue.Currency, typeof(ValueRangeContract), nameof(ValueContract.Currency), lot.LotNumber, "V.2.4");
-                changes.Add(parentLot.AwardContract.AwardedContract.FinalTotalValue.MinValue, lot.AwardContract.AwardedContract.FinalTotalValue.MinValue, typeof(ValueRangeContract), nameof(ContractAward.FinalTotalValue.MinValue), lot.LotNumber, "V.2.4", "lowest_offer"); ;
-                changes.Add(parentLot.AwardContract.AwardedContract.FinalTotalValue.Currency, lot.AwardContract.AwardedContract.FinalTotalValue.Currency, typeof(ValueContract), nameof(ValueContract.Currency), lot.LotNumber, "V.2.4");
-                changes.Add(parentLot.AwardContract.AwardedContract.FinalTotalValue.MaxValue, lot.AwardContract.AwardedContract.FinalTotalValue.MaxValue, typeof(ValueRangeContract), nameof(ContractAward.FinalTotalValue.MaxValue), lot.LotNumber, "V.2.4", "highest_offer");
-                changes.Add(parentLot.AwardContract.AwardedContract.FinalTotalValue.Currency, lot.AwardContract.AwardedContract.FinalTotalValue.Currency, typeof(ValueRangeContract), nameof(ValueContract.Currency), lot.LotNumber, "V.2.4");
+                changes.Add(parentLot.AwardContract.AwardedContract.FinalTotalValue, lot.AwardContract.AwardedContract.FinalTotalValue, typeof(ValueRangeContract), nameof(ValueRangeContract.Value), lot.LotNumber, "V.2.4", null, "lowest_offer", "highest_offer");
             }
 
-            changes.Add(parentLot.AwardContract.AwardedContract.ConcessionRevenue?.Value, lot.AwardContract.AwardedContract.ConcessionRevenue?.Value, typeof(ContractAward), nameof(ContractAward.ConcessionRevenue), lot.LotNumber, "V.2.4");
-            changes.Add(parentLot.AwardContract.AwardedContract.ConcessionRevenue?.Currency, lot.AwardContract.AwardedContract.ConcessionRevenue?.Currency, typeof(ContractAward), nameof(ContractAward.ConcessionRevenue), lot.LotNumber, "V.2.4");
-            changes.Add(parentLot.AwardContract.AwardedContract.PricesAndPayments?.Value, lot.AwardContract.AwardedContract.PricesAndPayments?.Value, typeof(ContractAward), nameof(ContractAward.PricesAndPayments), lot.LotNumber, "V.2.4");
-            changes.Add(parentLot.AwardContract.AwardedContract.PricesAndPayments?.Currency, lot.AwardContract.AwardedContract.PricesAndPayments?.Currency, typeof(ContractAward), nameof(ContractAward.PricesAndPayments), lot.LotNumber, "V.2.4");
+            changes.Add(parentLot.AwardContract.AwardedContract.ConcessionRevenue, lot.AwardContract.AwardedContract.ConcessionRevenue, typeof(ContractAward), nameof(ContractAward.ConcessionRevenue), lot.LotNumber, "V.2.4");
+            changes.Add(parentLot.AwardContract.AwardedContract.PricesAndPayments, lot.AwardContract.AwardedContract.PricesAndPayments, typeof(ContractAward), nameof(ContractAward.PricesAndPayments), lot.LotNumber, "V.2.4");
             changes.Add(parentLot.AwardContract.AwardedContract.ConcessionValueAdditionalInformation, lot.AwardContract.AwardedContract.ConcessionValueAdditionalInformation, typeof(ContractAward), nameof(ContractAward.ConcessionValueAdditionalInformation), lot.LotNumber, "V.2.4");
 
             // V.2.5
             changes.Add(parentLot.AwardContract.AwardedContract.LikelyToBeSubcontracted, lot.AwardContract.AwardedContract.LikelyToBeSubcontracted, typeof(ContractAward), nameof(ContractAward.LikelyToBeSubcontracted), lot.LotNumber, "V.2.5");
-            changes.Add(parentLot.AwardContract.AwardedContract.ValueOfSubcontract.Value, lot.AwardContract.AwardedContract.ValueOfSubcontract.Value, typeof(ValueContract), nameof(ValueContract.Value), lot.LotNumber, "V.2.5");
-            changes.Add(parentLot.AwardContract.AwardedContract.ValueOfSubcontract.Currency, lot.AwardContract.AwardedContract.ValueOfSubcontract.Currency, typeof(ValueContract), nameof(ValueContract.Currency), lot.LotNumber, "V.2.5");
+            changes.Add(parentLot.AwardContract.AwardedContract.ValueOfSubcontract, lot.AwardContract.AwardedContract.ValueOfSubcontract, typeof(ValueContract), nameof(ValueContract.Value), lot.LotNumber, "V.2.5");
             changes.Add(parentLot.AwardContract.AwardedContract.ProportionOfValue, lot.AwardContract.AwardedContract.ProportionOfValue, typeof(ContractAward), nameof(ContractAward.ProportionOfValue), lot.LotNumber, "V.2.5");
             changes.Add(parentLot.AwardContract.AwardedContract.SubcontractingDescription, lot.AwardContract.AwardedContract.SubcontractingDescription, typeof(ContractAward), nameof(ContractAward.SubcontractingDescription), lot.LotNumber, "V.2.5");
 
@@ -731,9 +774,8 @@ namespace Hilma.Domain.Integrations.General
                 typeof(ExAnteSubcontracting), nameof(ExAnteSubcontracting.ShareOfContractWillBeSubcontractedMaxPercentage), lot.LotNumber, "V.2.5");
 
             // V.2.6
-            changes.Add(parentLot.AwardContract.AwardedContract.PricePaidForBargainPurchases?.Value, lot.AwardContract.AwardedContract.PricePaidForBargainPurchases?.Value, typeof(ValueContract), nameof(ValueContract.Value), lot.LotNumber, "V.2.6");
-            changes.Add(parentLot.AwardContract.AwardedContract.PricePaidForBargainPurchases?.Currency, lot.AwardContract.AwardedContract.PricePaidForBargainPurchases?.Currency, typeof(ValueContract), nameof(ValueContract.Currency), lot.LotNumber, "V.2.6");
-
+            changes.Add(parentLot.AwardContract.AwardedContract.PricePaidForBargainPurchases, lot.AwardContract.AwardedContract.PricePaidForBargainPurchases, typeof(ValueContract), nameof(ValueContract.Value), lot.LotNumber, "V.2.6");
+          
             // V.2.8
             changes.Add(parentLot.AwardContract.AwardedContract.NotPublicFields.CommunityOrigin, lot.AwardContract.AwardedContract.NotPublicFields.CommunityOrigin, typeof(ContractAwardNotPublicFields), nameof(ContractAwardNotPublicFields.CommunityOrigin), lot.LotNumber, "V.2.8");
             changes.Add(parentLot.AwardContract.AwardedContract.NotPublicFields.NonCommunityOrigin, lot.AwardContract.AwardedContract.NotPublicFields.NonCommunityOrigin, typeof(ContractAwardNotPublicFields), nameof(ContractAwardNotPublicFields.NonCommunityOrigin), lot.LotNumber, "V.2.8");
@@ -771,8 +813,7 @@ namespace Hilma.Domain.Integrations.General
 
             if (!notice.ResultsOfContest.DisagreeValuePublish)
             {
-                changes.Add(parent.ResultsOfContest.ValueOfPrize.Value, notice.ResultsOfContest.ValueOfPrize.Value, typeof(ResultsOfContest), nameof(ResultsOfContest.ValueOfPrize));
-                changes.Add(parent.ResultsOfContest.ValueOfPrize.Currency, notice.ResultsOfContest.ValueOfPrize.Currency, typeof(ResultsOfContest), nameof(ResultsOfContest.ValueOfPrize), null, "V.3.4");
+                changes.Add(parent.ResultsOfContest.ValueOfPrize, notice.ResultsOfContest.ValueOfPrize, typeof(ResultsOfContest), nameof(ResultsOfContest.ValueOfPrize));
             }
         }
         #endregion
@@ -784,7 +825,7 @@ namespace Hilma.Domain.Integrations.General
         /// <param name="notice">The notice</param>/param>
         /// <param name="parent">The parent notice</param>
         /// <param name="changes">List of changes to append to</param>
-        private static void ComplementaryInfo(NoticeContract notice, NoticeContract parent, List<Change> changes)
+        private void ComplementaryInfo(NoticeContract notice, NoticeContract parent, List<Change> changes)
         {
             var comp = notice.ComplementaryInformation;
             var parentComp = parent.ComplementaryInformation;
@@ -813,14 +854,12 @@ namespace Hilma.Domain.Integrations.General
             {
                 return;
             }
-
+           
             changes.Add(parent.Modifications?.Description, notice.Modifications?.Description, typeof(Modifications), nameof(Modifications.Description));
 
-            changes.Add(parent.Modifications?.IncreaseAfterModifications.Currency, notice.Modifications?.IncreaseAfterModifications.Currency, typeof(Modifications), nameof(Modifications.IncreaseAfterModifications));
-            changes.Add(parent.Modifications?.IncreaseAfterModifications.Value, notice.Modifications?.IncreaseAfterModifications.Value, typeof(Modifications), nameof(Modifications.IncreaseAfterModifications));
+            changes.Add(parent.Modifications?.IncreaseAfterModifications, notice.Modifications?.IncreaseAfterModifications, typeof(Modifications), nameof(Modifications.IncreaseAfterModifications));
+            changes.Add(parent.Modifications?.IncreaseBeforeModifications, notice.Modifications?.IncreaseBeforeModifications, typeof(Modifications), nameof(Modifications.IncreaseBeforeModifications));
 
-            changes.Add(parent.Modifications?.IncreaseBeforeModifications.Currency, notice.Modifications?.IncreaseBeforeModifications.Currency, typeof(Modifications), nameof(Modifications.IncreaseBeforeModifications));
-            changes.Add(parent.Modifications?.IncreaseBeforeModifications.Value, notice.Modifications?.IncreaseBeforeModifications.Value, typeof(Modifications), nameof(Modifications.IncreaseBeforeModifications));
 
             if(parent.Modifications != null && notice.Modifications != null)
             {
@@ -829,6 +868,9 @@ namespace Hilma.Domain.Integrations.General
                 changes.Add(parent.Modifications.ReasonDescriptionEconomic, notice.Modifications.ReasonDescriptionEconomic, typeof(Modifications), nameof(Modifications.ReasonDescriptionEconomic));
             }
         }
+
+        
+
         #endregion
 
         #region Section AD1-AD4

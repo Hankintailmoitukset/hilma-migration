@@ -3,8 +3,8 @@
 ####################################################################################
 #  XSD name : common_2014
 #  RELEASE : "R2.0.9.S03"                                                      
-#  Intermediate release number 007-20181030                               
-#  Last update: 15/01/2018 
+#  Intermediate release number 009-20190628                               
+#  Last update: 07/06/2019 
 ####################################################################################
  -->
 <xs:schema xmlns:cur="http://publications.europa.eu/resource/authority/currency" xmlns:lb="http://publications.europa.eu/resource/authority/legal-basis" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:n2016="http://publications.europa.eu/resource/schema/ted/2016/nuts" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.9.S03">
@@ -142,6 +142,11 @@ CONTENT
 			<xs:maxLength value="20"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="string_30">
+		<xs:restriction base="string_not_empty">
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="string_50">
 		<xs:restriction base="string_not_empty">
 			<xs:maxLength value="50"/>
@@ -162,6 +167,11 @@ CONTENT
 			<xs:maxLength value="200"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="string_250">
+		<xs:restriction base="string_not_empty">
+			<xs:maxLength value="250"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="string_300">
 		<xs:restriction base="string_not_empty">
 			<xs:maxLength value="300"/>
@@ -170,6 +180,16 @@ CONTENT
 	<xs:simpleType name="string_400">
 		<xs:restriction base="string_not_empty">
 			<xs:maxLength value="400"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string_500">
+		<xs:restriction base="string_not_empty">
+			<xs:maxLength value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string_1000">
+		<xs:restriction base="string_not_empty">
+			<xs:maxLength value="1000"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="ft">
@@ -232,7 +252,7 @@ CONTENT
 			<xs:totalDigits value="4"/>
 		</xs:restriction>
 	</xs:simpleType>
-		<xs:simpleType name="_5car">
+	<xs:simpleType name="_5car">
 		<xs:annotation>
 			<xs:documentation>Pattern for 5 chars (integer)</xs:documentation>
 		</xs:annotation>
@@ -532,15 +552,11 @@ ADDRESSES
 	<xs:element name="PHONE" type="phone"/>
 	<xs:element name="FAX" type="phone"/>
 	<xs:simpleType name="email">
-		<xs:restriction base="string_200">
-			<xs:pattern value="[^@]+@[^\.]+\..+"/>
-		</xs:restriction>
+		<xs:restriction base="string_250"/>
 	</xs:simpleType>
 	<xs:element name="E_MAIL" type="email"/>
 	<xs:simpleType name="url">
-		<xs:restriction base="string_200">
-			<xs:pattern value="(((http|HTTP|https|HTTPS|ftp|FTP|ftps|FTPS|sftp|SFTP)://)|((w|W){3}(\d)?\.))[\w\?!\./:;,\-_=#+*%@&quot;\(\)&amp;]+"/>
-		</xs:restriction>
+		<xs:restriction base="string_250"/>
 	</xs:simpleType>
 	<xs:element name="URL" type="url"/>
 	<xs:element name="URL_BUYER" type="url"/>
@@ -867,11 +883,10 @@ SECTION I
 	<xs:element name="JOINT_PROCUREMENT_INVOLVED" type="empty"/>
 	<xs:element name="PROCUREMENT_LAW" type="text_ft_multi_lines"/>
 	<xs:element name="CENTRAL_PURCHASING" type="empty"/>
-	<xs:element name="NO_CENTRAL_PURSACHING" type="empty"/>
 	<xs:group name="procurement_address">
 		<xs:sequence>
 			<xs:sequence minOccurs="0">
-				<xs:element ref="ADDRESS_CONTRACTING_BODY_ADDITIONAL" maxOccurs="500"/>
+				<xs:element ref="ADDRESS_CONTRACTING_BODY_ADDITIONAL" maxOccurs="unbounded"/>
 				<xs:element ref="JOINT_PROCUREMENT_INVOLVED"/>
 				<xs:element ref="PROCUREMENT_LAW" minOccurs="0"/>
 			</xs:sequence>
@@ -959,7 +974,7 @@ SECTION I
 		</xs:attribute>
 	</xs:complexType>
 	<xs:element name="CA_TYPE" type="ca_type"/>
-	<xs:element name="CA_TYPE_OTHER" type="string_200"/>
+	<xs:element name="CA_TYPE_OTHER" type="string_400"/>
 	<xs:element name="CA_ACTIVITY" type="ca_activity"/>
 	<xs:element name="CA_ACTIVITY_OTHER" type="string_200"/>
 	<xs:group name="authority">
@@ -1022,8 +1037,8 @@ SECTION II
 	<xs:element name="TYPE_CONTRACT" type="type_contract"/>
 	<xs:element name="SHORT_DESCR" type="text_ft_multi_lines"/>
 	<xs:element name="MAIN_SITE" type="text_ft_multi_lines"/>
-	<xs:element name="AC_CRITERION" type="string_200"/>
-	<xs:element name="AC_WEIGHTING" type="string_20"/>
+	<xs:element name="AC_CRITERION" type="string_1000"/>
+	<xs:element name="AC_WEIGHTING" type="string_30"/>
 	<xs:complexType name="ac_definition">
 		<xs:sequence>
 			<xs:element ref="AC_CRITERION" minOccurs="1"/>

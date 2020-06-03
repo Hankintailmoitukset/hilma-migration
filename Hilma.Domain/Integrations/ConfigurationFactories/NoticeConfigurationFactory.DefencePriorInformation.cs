@@ -4,7 +4,7 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
 {
     public partial class NoticeConfigurationFactory
     {
-        private static NoticeContractConfiguration defencePriorInformation = new NoticeContractConfiguration {
+        private static NoticeContractConfiguration DefencePriorInformation => new NoticeContractConfiguration {
             PreviousNoticeOjsNumber = true,
             Project = BasicProjectConfiguration,
             ObjectDescriptions = new ObjectDescriptionConfiguration {
@@ -113,6 +113,7 @@ namespace Hilma.Domain.Integrations.ConfigurationFactories
                         ProjectIdentification = true,
                         ProcurementRelatedToEuProgram = true
                     },
+                    TaxLegislationUrl = true
                 },
                 AdditionalInformation = true,
                 IsRecurringProcurement = false

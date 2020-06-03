@@ -3,8 +3,8 @@
 ####################################################################################
 #  XSD name : MOVE
 #  RELEASE : "R2.0.9.S03"                                                      
-#  Intermediate release number 007-20181030                               
-#  Last update : 30/10/2018
+#  Intermediate release number 009-20190628                               
+#  Last update : 05/03/2019
 #  Form : MOVE 
 ####################################################################################
  -->
@@ -258,7 +258,7 @@
 		<xs:sequence>
 			<xs:element name="ADDRESS_CONTRACTING_BODY" type="contact_contracting_body_move"/>
 			<xs:sequence minOccurs="0">
-				<xs:element name="ADDRESS_CONTRACTING_BODY_ADDITIONAL" type="contact_add_contracting_body_move" maxOccurs="500"/>
+				<xs:element name="ADDRESS_CONTRACTING_BODY_ADDITIONAL" type="contact_add_contracting_body_move" maxOccurs="unbounded"/>
 				<xs:element ref="CENTRAL_PURCHASING"/>
 			</xs:sequence>
 			<xs:choice>

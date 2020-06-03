@@ -73,7 +73,7 @@ namespace Hilma.Domain.DataContracts
 
                 switch( Type ) {
                     case TimeFrameType.BeginAndEndDate:
-                        years = (EndDate - BeginDate ).Value.TotalDays / 365d;
+                        years = (EndDate - BeginDate ).GetValueOrDefault().TotalDays / 365d;
                         break;
                     case TimeFrameType.Months:
                         years = Months.GetValueOrDefault() / 12d;
@@ -103,6 +103,35 @@ namespace Hilma.Domain.DataContracts
                         break;
                 }
                 return years > 8d;
+            }
+        }
+
+        public void Trim()
+        {
+            if (Type != TimeFrameType.BeginAndEndDate)
+            {
+                BeginDate = default;
+                EndDate = default;
+            }
+
+            if (Type != TimeFrameType.Days)
+            {
+                Days = default;
+            }
+
+            if (Type != TimeFrameType.Months)
+            {
+                Months = default;
+            }
+
+            if (Type != TimeFrameType.Years)
+            {
+                Years = default;
+            }
+
+            if (!CanBeRenewed)
+            {
+                RenewalDescription = new string[0];
             }
         }
     }

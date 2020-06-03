@@ -54,5 +54,17 @@ namespace Hilma.Domain.Entities
         /// </summary>
         [CorrigendumLabel("successfulTendererToSpecify", "II.1.7")]
         public bool SuccessfulTendererToSpecify { get; set; }
+
+        /// <summary>
+        /// Trims conditionally visible fields, if condition not present.
+        /// </summary>
+        public void Trim()
+        {
+            if (!SuccessfulTenderer)
+            {
+                SuccessfulTendererMin = default;
+                SuccessfulTendererMax = default;
+            }
+        }
     }
 }

@@ -62,7 +62,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         /// In case of defence procurement (Directive 2009/81/EC)
         /// </summary>
-        public DefenceAdministrativeInformation Defence { get; set; }
+        public DefenceAdministrativeInformation Defence { get; set; } = new DefenceAdministrativeInformation();
 
         /// <summary>
         /// Estimated execution timeframe for national agriculture contract notices

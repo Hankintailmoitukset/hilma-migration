@@ -2,7 +2,9 @@ using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
+using Hilma.Domain.Enums;
 using Hilma.Domain.Extensions;
 using Newtonsoft.Json.Linq;
 
@@ -122,6 +124,62 @@ namespace Hilma.Domain.Integrations.Extensions
         }
 
         /// <summary>
+        /// Adds changes for Value contracts, ignores currency if value is not set
+        /// </summary>
+        /// <param name="changes"></param>
+        /// <param name="originalValue"></param>
+        /// <param name="newValue"></param>
+        /// <param name="type"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="lotNumber">Override for lot number</param>
+        /// <param name="section">Override for section number</param>
+        /// <param name="translationKey">Override for translation key</param>
+        public static void Add(this List<Change> changes, ValueContract originalValue, ValueContract newValue, Type type,
+            string propertyName, string lotNumber = null, string section = null , string translationKey = null)
+        {
+            var originalCurrency = originalValue?.Value != null ? originalValue?.Currency : null;
+            var newCurrency = newValue?.Value != null ? newValue?.Currency : null;
+            changes.Add(originalValue?.Value, newValue?.Value, type, propertyName, lotNumber, section, translationKey);
+            changes.Add(originalCurrency, newCurrency, type, propertyName,lotNumber, section, translationKey);
+        }
+
+        /// <summary>
+        /// Adds changes for Value range contracts, ignores currency if value is not set
+        /// </summary>
+        /// <param name="changes"></param>
+        /// <param name="originalValue"></param>
+        /// <param name="newValue"></param>
+        /// <param name="type"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="lotNumber">Override for lot number</param>
+        /// <param name="section">Override for section number</param>
+        /// <param name="translationKey">Override for translation key</param>
+        /// <param name="alternativeMinTranslationKey">Alternative key for min value translation</param>
+        /// <param name="alternativeMaxTranslationKey">Alternative key for max value translation</param>
+
+        public static void Add(this List<Change> changes, ValueRangeContract originalValue, ValueRangeContract newValue, Type type,
+            string propertyName, string lotNumber = null, string section = null, string translationKey = null, string alternativeMinTranslationKey = null, string alternativeMaxTranslationKey = null )
+        {
+           
+            var originalIsRange = originalValue?.Type == ContractValueType.Range;
+            var newIsRange = newValue?.Type == ContractValueType.Range;
+
+            changes.Add(originalValue?.Value, newValue?.Value, type, propertyName, lotNumber, section, translationKey) ;
+            changes.Add(originalValue?.MinValue, newValue?.MinValue, type, propertyName, lotNumber, section, alternativeMinTranslationKey);
+            changes.Add(originalValue?.MaxValue, newValue?.MaxValue, type, propertyName, lotNumber, section, alternativeMaxTranslationKey);
+
+            var originalHasValue = originalIsRange ? originalValue?.MinValue != null || originalValue?.MaxValue != null : originalValue?.Value != null;
+            var newHasValue = newIsRange ? newValue?.MinValue != null || newValue?.MaxValue != null : newValue?.Value != null;
+
+            var originalCurrency = originalHasValue ? originalValue?.Currency : null;
+            var newCurrency = newHasValue ? newValue?.Currency : null;
+
+            changes.Add(originalCurrency, newCurrency, type, propertyName, lotNumber, section, translationKey);
+            changes.Add(originalValue?.DoesNotExceedNationalThreshold, newValue?.DoesNotExceedNationalThreshold, type, nameof(ValueRangeContract.DoesNotExceedNationalThreshold), lotNumber, section, translationKey);
+
+        }
+
+        /// <summary>
         /// Adds an XElement to the list, if there is a change.
         /// </summary>
         /// <param name="list">The list</param>
@@ -147,12 +205,28 @@ namespace Hilma.Domain.Integrations.Extensions
             string oldValueString = originalValue?.ToParagraphedString();
             string newValueString = newValue?.ToParagraphedString();
 
-            if (oldValueString == newValueString || ( originalValue == null && newValue == null ) || !originalValue.HasAnyContent() && !newValue.HasAnyContent())
+            
+            if (EqualsExcludingWhitespace(oldValueString, newValueString))
             {
                 return;
             }
 
             list.Add(ChangeText(originalValue, newValue, type, property, lotNum, section, translationKey));
+        }
+
+        static bool EqualsExcludingWhitespace(String a, String b)
+        {
+            if (string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b))
+                return true;
+
+            if (string.IsNullOrEmpty(a))
+                return false;
+
+            if (string.IsNullOrEmpty(b))
+                return false;
+
+            return a.Where(c => !char.IsWhiteSpace(c))
+                .SequenceEqual(b.Where(c => !char.IsWhiteSpace(c)));
         }
 
         public static void AddNuts(this List<Change> list, string[] originalValue, string[] newValue, Type type, string property, string lotNum = null, string section = null, string translationKey = null)
@@ -239,9 +313,12 @@ namespace Hilma.Domain.Integrations.Extensions
         /// <param name="section">Section overload</param>
         public static void AddCpv(this List<Change> list, CpvCode originalValue, CpvCode newValue, Type type, string property,string lotNum = null, string section = null)
         {
-            var originalVocs = originalValue.VocCodes?.Select(x => x.Code) ?? new string[0];
-            var newVocs = newValue.VocCodes?.Select(x => x.Code) ?? new string[0];
-            if (originalValue.Code == newValue.Code && !(originalVocs.Except(newVocs).Any() || newVocs.Except(originalVocs).Any()))
+            var originalVocs = originalValue.VocCodes?.Select(x => x.Code).ToList() ?? new List<string>();
+            var newVocs = newValue.VocCodes?.Select(x => x.Code).ToList() ?? new List<string>();
+
+            if (((originalValue.Code == newValue.Code)
+                || (string.IsNullOrEmpty(originalValue.Code) && string.IsNullOrEmpty(newValue.Code)))
+                && !(originalVocs.Except(newVocs).Any() || newVocs.Except(originalVocs).Any()))
             {
                 return;
             }
@@ -261,7 +338,11 @@ namespace Hilma.Domain.Integrations.Extensions
         /// <param name="section">Section overload</param>
         public static void AddAdditionalCpv(this List<Change> list, List<CpvCode> originalValue, List<CpvCode> newValue, Type type, string property,string lotNum = null, string section = null)
         {
-            if (originalValue.All(origCpv => newValue.Any(newCpv => newCpv.Code.Equals(origCpv.Code)
+            originalValue = originalValue ?? new List<CpvCode>();
+            newValue = newValue ?? new List<CpvCode>();
+
+            if (originalValue.Count == newValue.Count &&
+                originalValue.All(origCpv => newValue.Any(newCpv => newCpv.Code.Equals(origCpv.Code)
             &&
             (origCpv.VocCodes != null && newCpv.VocCodes != null &&
             !(origCpv.VocCodes.Select(origVoc => origVoc.Code).Except(newCpv.VocCodes.Select(newVoc => newVoc.Code)).Any() ||

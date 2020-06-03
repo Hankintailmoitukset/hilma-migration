@@ -6,6 +6,7 @@ using Hilma.Domain.Configuration;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
+using Hilma.Domain.Exceptions;
 using Hilma.Domain.Integrations.Defence;
 using Hilma.Domain.Integrations.Extensions;
 
@@ -72,7 +73,7 @@ namespace Hilma.Domain.Integrations.General
             return TedHelpers.Element("FORM_SECTION",
                 TedHelpers.Element("F14_2014", new XAttribute("LG", _notice.Language), new XAttribute("CATEGORY", "ORIGINAL"), new XAttribute("FORM", "F14"),
                     TedHelpers.LegalBasis(_notice, _parent),
-                    ContractingBody(_notice.Project.Organisation, _notice.ContactPerson, _notice.CommunicationInformation),
+                    ContractingBody(_notice.Project, _notice.ContactPerson, _notice.CommunicationInformation),
                     ObjectContract(),
                     ComplementaryInformation(),
                     TedHelpers.Element("CHANGES",
@@ -124,7 +125,9 @@ namespace Hilma.Domain.Integrations.General
                                 TedHelpers.ElementWithAttribute("CPV_CODE", "CODE", change.OldMainCpvCode.Code),
                                 change.OldMainCpvCode.VocCodes?.Select(x => TedHelpers.ElementWithAttribute("CPV_SUPPLEMENTARY_CODE", "CODE", x.Code))) };
             }
-            else if (change.OldAdditionalCpvCodes != null && change.OldAdditionalCpvCodes.Count > 0)
+            else if (change.OldAdditionalCpvCodes != null &&
+                change.OldAdditionalCpvCodes.Count > 0 &&
+                change.OldAdditionalCpvCodes.Any(x => !string.IsNullOrEmpty(x.Code)))
             {
                 oldValue = change.OldAdditionalCpvCodes.Select(x =>
                              TedHelpers.Element("CPV_ADDITIONAL",
@@ -157,7 +160,9 @@ namespace Hilma.Domain.Integrations.General
                                 TedHelpers.ElementWithAttribute("CPV_CODE", "CODE", change.NewMainCpvCode.Code),
                                 change.NewMainCpvCode.VocCodes?.Select(x => TedHelpers.ElementWithAttribute("CPV_SUPPLEMENTARY_CODE", "CODE", x.Code))) };
             }
-            else if (change.NewAdditionalCpvCodes != null && change.NewAdditionalCpvCodes.Count > 0)
+            else if (change.NewAdditionalCpvCodes != null &&
+                change.NewAdditionalCpvCodes.Count > 0 &&
+                change.NewAdditionalCpvCodes.Any(x => !string.IsNullOrEmpty(x.Code)))
             {
                 newValue = change.NewAdditionalCpvCodes.Select(x =>
                              TedHelpers.Element("CPV_ADDITIONAL",
@@ -174,19 +179,61 @@ namespace Hilma.Domain.Integrations.General
         }
 
         #region Section I: Contracting authority
+
         /// <summary>
         /// Section I: Contracting authority
         /// </summary>
-        /// <param name="organisation">The organisation</param>
+        /// <param name="project"></param>
         /// <param name="contactPerson">The contact person</param>
         /// <param name="communicationInformation">I.3 Communication</param>
         /// <returns>CONTRACTING_BODY XElement</returns>
-        private XElement ContractingBody(OrganisationContract organisation, ContactPerson contactPerson, CommunicationInformation communicationInformation)
+        private XElement ContractingBody(
+            ProcurementProjectContract project,
+            ContactPerson contactPerson,
+            CommunicationInformation communicationInformation
+        )
         {
+            var organisation = project?.Organisation;
+            if (organisation == null)
+                return null;
+
             return TedHelpers.Element("CONTRACTING_BODY",
-                    CAFields("ADDRESS_CONTRACTING_BODY", organisation, contactPerson),
-                    CAFields("ADDRESS_CONTRACTING_BODY_ADDITIONAL", organisation, contactPerson)
-                );
+                TedHelpers.ADDRS1("ADDRESS_CONTRACTING_BODY", organisation, contactPerson),
+                JointProcurement(project)
+            );
+        }
+      
+
+        private IEnumerable<XElement> JointProcurement(ProcurementProjectContract project)
+        {
+            if (project == null)
+                yield break;
+
+            var elements = new List<XElement>();
+            if (project.JointProcurement)
+            {
+                if (project.CoPurchasers == null)
+                {
+                    throw new HilmaMalformedRequestException(
+                        "project.CoPurchasers array must be provided when project.JointProcurement is set to true");
+                }
+
+                foreach (var coPurchaser in project.CoPurchasers)
+                {
+                    yield return TedHelpers.ADDRS1("ADDRESS_CONTRACTING_BODY_ADDITIONAL",
+                        new OrganisationContract
+                        {
+                            Information = coPurchaser
+                        },
+                        new ContactPerson
+                        {
+                            Email = coPurchaser.Email,
+                            Phone = coPurchaser.TelephoneNumber,
+                            Name = coPurchaser.ContactPerson
+                        }
+                    );
+                }
+            }
         }
 
         private XElement CAFields(string elementName, OrganisationContract organisation, ContactPerson contactPerson)
@@ -251,7 +298,9 @@ namespace Hilma.Domain.Integrations.General
                 TedHelpers.ElementWithAttribute("ESENDER_LOGIN", "PUBLICATION", "NO", _eSenderLogin),
                 TedHelpers.ElementWithAttribute("CUSTOMER_LOGIN", "PUBLICATION", "NO", _eSenderLogin),
                 TedHelpers.ElementWithAttribute("NO_DOC_EXT", "PUBLICATION", "NO", _parent?.NoticeNumber),
-                _parent?.TedPublishRequestSentDate.HasValue ?? false ? TedHelpers.ElementWithAttribute("DATE_DISPATCH_ORIGINAL", "PUBLICATION", "NO", _parent.TedPublishRequestSentDate.Value.ToString("yyyy-MM-dd")) : null 
+                _parent?.TedPublishState == TedPublishState.PublishedInTed ? TedHelpers.Element("NOTICE_NUMBER_OJ", _notice?.PreviousNoticeOjsNumber) : null,
+                _parent?.TedPublishRequestSentDate.HasValue ?? false ? TedHelpers.ElementWithAttribute("DATE_DISPATCH_ORIGINAL", "PUBLICATION", "NO", _parent.TedPublishRequestSentDate.Value.ToString("yyyy-MM-dd")) : null
+                //TODO (TuomasT): Allow setting original date manually
                );
         }
         #endregion

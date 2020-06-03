@@ -9,8 +9,8 @@ namespace Hilma.Domain.Integrations.Configuration
         
         
         public bool OfficialName {get; set;} = false;
-        public bool Department {get; set;} = false;
         public bool NationalRegistrationNumber {get; set;} = false;
+        public bool Department {get; set;} = false;
         public bool NutsCodes {get; set;} = false;
         public PostalAddressConfiguration PostalAddress {get; set;} = new PostalAddressConfiguration();
         public bool TelephoneNumber {get; set;} = false;

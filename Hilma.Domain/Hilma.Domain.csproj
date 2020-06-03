@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -8,6 +8,7 @@
     <Authors>Mercell</Authors>
     <PackageId>Mercell.Hilma.Domain</PackageId>
   </PropertyGroup>
+  
 
   <ItemGroup>
     <None Remove="Validators\TedSchema\208Defence\common.xsd" />

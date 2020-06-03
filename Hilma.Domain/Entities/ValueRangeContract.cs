@@ -50,5 +50,19 @@ namespace Hilma.Domain.Entities
         /// </summary>
         [CorrigendumLabel("doesNotExceedNationalThreshold", "II.2.1")]
         public bool? DoesNotExceedNationalThreshold { get; set; }
+
+        public void Trim()
+        {
+            if (Type != ContractValueType.Exact && Type != ContractValueType.Undefined)
+            {
+                Value = default;
+            }
+
+            if (Type != ContractValueType.Range)
+            {
+                MinValue = default;
+                MaxValue = default;
+            }
+        }
     }
 }

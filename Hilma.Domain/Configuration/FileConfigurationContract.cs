@@ -8,14 +8,19 @@ namespace Hilma.Domain.Configuration {
     public class FileConfigurationContract
     {
         /// <summary>
-        ///     Which extensions are forbidden
+        ///     Which extensions are allowed
         /// </summary>
-        public string ForbiddenExtensions { get; set; }
+        public string AllowedExtensions { get; set; }
 
         /// <summary>
         ///     Disable malware scan for uploaded files.
         ///     This is usually wanted in local development.
         /// </summary>
         public bool DisableFileScan { get; set; }
+
+        /// <summary>
+        ///     CDN Endpoint
+        /// </summary>
+        public string CdnEndpoint { get; set; }
     }
 }

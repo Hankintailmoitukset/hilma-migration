@@ -13,6 +13,8 @@ using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
 using Hilma.Domain.Extensions;
 using Hilma.Domain.Integrations;
+using Hilma.Domain.Integrations.Defence;
+using System.Runtime.InteropServices;
 
 namespace Hilma.Domain.Validators
 {
@@ -40,18 +42,47 @@ namespace Hilma.Domain.Validators
             _translationProvider = translationProvider;
         }
 
-        public bool Validate(bool publishToTed, out string tedXml)
+        public bool Validate(out string tedXml)
         {
-            if (_notice.Project.Publish != PublishType.ToTed)
+            if( _notice.IsCorrigendum) {
+
+                if( _notice.Parent == null ) {
+                    
+                    _validationErrors.Add( "Corrigendum notice should have parent set. Parent is null.");
+                    tedXml = string.Empty;
+                    return false;
+                } 
+
+                // Validate that the notice is not expired
+                bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+                var localFinnishTimezone = isWindows ? TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time") : TimeZoneInfo.FindSystemTimeZoneById("Europe/Helsinki");
+                var timeInLocalTimezone = TimeZoneInfo.ConvertTime(DateTime.UtcNow, localFinnishTimezone);
+                var expirationTime = _notice.Parent.TenderingInformation?.TendersOrRequestsToParticipateDueDateTime; 
+
+                if( expirationTime.HasValue && expirationTime.Value <= timeInLocalTimezone ) {
+                    
+                    _validationErrors.Add($"Corrigendum notice cannot be made to notice that has expired TendersOrRequestsToParticipateDueDateTime: ExpirationTime: {expirationTime}, Current local time: {timeInLocalTimezone}");
+                    
+                    tedXml = string.Empty;
+                    return false; 
+                }
+
+            } 
+            
+            if (_notice.Type.IsNational())
             {
+                // Do not validate national notices
                 tedXml = null;
                 return true;
             }
 
+            
             var path = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory);
             var schema = new XmlSchemaSet { XmlResolver = new XmlUrlResolver() };
             var nameSpace = XmlnsGeneral;
-            if (_notice.Type.IsDefence())
+            var isDefence = _notice.Type.IsDefence();
+
+            if (isDefence)
             {
                 schema.Add(XmlnsDefence.ToString(), Path.Combine(path, "Validators", "TedSchema", "208Defence", "TED_ESENDERS.xsd"));
                 nameSpace = XmlnsDefence;
@@ -62,15 +93,36 @@ namespace Hilma.Domain.Validators
             }
             schema.Compile();
 
-            var xDoc = new TedNoticeFactory(_mapper.Map<NoticeContract>(_notice), _notice.Parent != null ? _mapper.Map<NoticeContract>(_notice.Parent) : new NoticeContract(), "Validator", "validator@validator.com", "TEDEXXXX", _translationProvider, publishToTed).CreateDocument();
-            xDoc.Validate(schema, (sender, e) => { _validationErrors.Add(e.Message + "\n"); });
+            var noticeContract = _mapper.Map<NoticeContract>(_notice);
+            var parent = _notice.Parent != null ? _mapper.Map<NoticeContract>(_notice.Parent) : new NoticeContract();
+            var xDoc = new TedNoticeFactory(noticeContract, parent, "Validator", "validator@validator.com", "TEDEXXXX", _translationProvider).CreateDocument();
+            var copy = new XDocument(xDoc);
+
+            if (isDefence)
+            {
+                // Add namespace attribute to fix the validation
+                copy = TedHelpers.SetRootNamespace(copy);
+            }
+                 
+            copy.Validate(schema, (sender, e) => { _validationErrors.Add(e.Message + "\n"); });
+
+           
 
             // We don't want to send the login part in the response.
-            var descendants = xDoc.Descendants(nameSpace + "FORM_SECTION");
-            tedXml = string.Join("\n", descendants);
+            if (isDefence)
+            {
+                // defense version does not use root namespace in ted xml
+                var descendants = xDoc.Descendants("FORM_SECTION");
+                tedXml = string.Join("\n", descendants);
+            } else
+            {                
+                var descendants = xDoc.Descendants(nameSpace + "FORM_SECTION");
+                tedXml = string.Join("\n", descendants);
+            }
+            
             var teSchemaValid = Valid(!_validationErrors.Any(), "TED message formed:\n" + tedXml);
 
-            return ValidateAll(teSchemaValid);
+            return ValidateAll(teSchemaValid, ValidateValueFields(noticeContract));
         }
 
         public bool ValidateAll(params bool[] validationResults)
@@ -78,27 +130,59 @@ namespace Hilma.Domain.Validators
             return validationResults.All(r => r);
         }
 
+        public bool ValidateAll(IEnumerable<bool> validationResults)
+        { 
+            return validationResults.All(r => r);
+        }
         #region Partial validators
 
-
-        public bool Validate(ConditionsInformation info)
+        public bool ValidateValueFields(NoticeContract notice)
         {
-            if (!Valid(info != null, "ConditionsInformation"))
+            bool VerifyDisagreeToPublish(ValueRangeContract value, string path)
             {
+                if ((value?.DisagreeToBePublished ?? false) == false)
+                {
+                    return true;
+                }
+
+                _validationErrors.Add($"Value disagreeToBePublished == true for {path} is not valid for notice type {notice.Type}");
+
                 return false;
             }
 
-            if (_notice.Type != NoticeType.Contract)
+            bool VerifyProcurementEstimatedValue(ValueRangeContract estimatedValue, string path)
             {
-                return true;
+                // Only national notices can hide procurement estimated value value
+                if (notice.Type.IsNational())
+                {
+                    return true;
+                }
+
+                return VerifyDisagreeToPublish(estimatedValue, path);
             }
 
-            return ValidateAll(Valid(!info.ExecutionOfServiceIsReservedForProfession ||
-                                     (info.ReferenceToRelevantLawRegulationOrProvision).HasAnyContent(),
-                                     "ConditionsInformation.ReferenceToRelevantLawRegulationOrProvision")
-                              );
-
-
+            bool VerifyTotalValue(ValueRangeContract totalValue, string path)
+            {
+                // Only ContractAwardUtilities can hide total value
+                if (notice.Type == NoticeType.ContractAwardUtilities)
+                {
+                    return true;
+                }
+                
+                return VerifyDisagreeToPublish(totalValue, path);
+            }
+            
+            return ValidateAll(
+                VerifyProcurementEstimatedValue( notice.ProcurementObject?.EstimatedValue, "notice.EstimatedValue"),
+                VerifyDisagreeToPublish(notice.ProcurementObject?.Defence?.TotalQuantityOrScope, $"notice.Defence.TotalQuantityOrScope"),
+                VerifyTotalValue(notice.ProcurementObject?.TotalValue, "notice.TotalValue" ),
+                ValidateAll( notice.ObjectDescriptions.Select( (o,ix) => ValidateAll(
+                    VerifyDisagreeToPublish(o.EstimatedValue,
+                        $"notice.ObjectDescriptions[{ix}].EstimatedValue"),
+                    VerifyTotalValue(
+                        o.AwardContract?.AwardedContract?.FinalTotalValue,
+                        $"notice.ObjectDescriptions[{ix}].AwardContract.AwardedContract.FinalTotalValue"))
+                )));
         }
 
         public bool Validate(TenderingInformation info)

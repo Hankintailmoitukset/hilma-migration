@@ -3,8 +3,8 @@
 ####################################################################################
 #  XSD name : F14_2014
 #  RELEASE : "R2.0.9.S03"                                                      
-#  Intermediate release number 007-20181030                               
-#  Last update : 08/06/2018 
+#  Intermediate release number 009-20190628                               
+#  Last update : 05/03/2019 
 #  Form : Corrigendum
 ####################################################################################
  -->
@@ -184,7 +184,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="ADDRESS_CONTRACTING_BODY" type="contact_contracting_body_f14"/>
-			<xs:element name="ADDRESS_CONTRACTING_BODY_ADDITIONAL" type="contact_add_contracting_body_f14" minOccurs="0" maxOccurs="500"/>
+			<xs:element name="ADDRESS_CONTRACTING_BODY_ADDITIONAL" type="contact_add_contracting_body_f14" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="legal_basis_f14">

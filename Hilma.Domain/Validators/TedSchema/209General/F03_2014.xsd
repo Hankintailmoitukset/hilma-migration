@@ -3,8 +3,8 @@
 ####################################################################################
 #  XSD name : F03_2014
 #  RELEASE : "R2.0.9.S03"                                                      
-#  Intermediate release number 007-20181030                               
-#  Last update : 30/10/2018 
+#  Intermediate release number 009-20190628                               
+#  Last update : 05/03/2019 
 #  Form : Contract award notice
 ####################################################################################
  -->
@@ -40,7 +40,7 @@
 				<xs:element name="AWARDED_CONTRACT">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element ref="DATE_CONCLUSION_CONTRACT"/>
+							<xs:element ref="DATE_CONCLUSION_CONTRACT" minOccurs="0"/>
 							<xs:element name="TENDERS">
 								<xs:complexType>
 									<xs:group ref="nb_tenders"/>

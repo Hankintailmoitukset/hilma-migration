@@ -45,7 +45,7 @@ namespace Hilma.Domain.Entities
         /// <summary>
         ///     VII.1.5) Duration of the contract, framework agreement, dynamic purchasing system or concession
         /// </summary>
-        [CorrigendumLabel("duration_contract_framework_dps", "VI.1.5")]
+        [CorrigendumLabel("duration_contract_framework_dps", "VII.1.5")]
         public TimeFrame TimeFrame { get; set; } = new TimeFrame();
 
         /// <summary>

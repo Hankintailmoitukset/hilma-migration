@@ -39,5 +39,10 @@ namespace Hilma.Domain.DataContracts
         ///     Watchers saved by the user.
         /// </summary>
         public List<Watcher> SavedWatchers { get; set; }
+
+        /// <summary>
+        ///     Is user an admin
+        /// </summary>
+        public bool IsAdmin { get; set; }
     }
 }

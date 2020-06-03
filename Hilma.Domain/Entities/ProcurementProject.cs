@@ -17,6 +17,11 @@ namespace Hilma.Domain.Entities
         public int Id { get; set; }
 
         /// <summary>
+        /// Is the project deleted?
+        /// </summary>
+        public bool Deleted { get; set; }
+
+        /// <summary>
         /// II.1.1) Title
         /// </summary>
         //[Required]

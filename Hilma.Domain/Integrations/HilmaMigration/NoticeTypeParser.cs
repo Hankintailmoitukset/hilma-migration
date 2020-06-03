@@ -27,6 +27,9 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 case "3":
                     noticeType = NoticeType.ContractAward;
                     break;
+                case "4":
+                    noticeType = NoticeType.PeriodicIndicativeUtilities;
+                    break;
                 case "5":
                     noticeType = NoticeType.ContractUtilities;
                     break;
@@ -39,6 +42,9 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     break;
                 case "15":
                     noticeType = NoticeType.ExAnte;
+                    break;
+                case "16":
+                    noticeType = NoticeType.DefencePriorInformation;
                     break;
                 case "17":
                     noticeType = NoticeType.DefenceContract;
@@ -54,6 +60,12 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     break;
                 case "25":
                     noticeType = NoticeType.ConcessionAward;
+                    break;
+                case "50":
+                    noticeType = NoticeType.NationalAgricultureContract;
+                    break;
+                case "51":
+                    noticeType = NoticeType.NationalAgricultureContract;
                     break;
                 case "99":
                     switch (editaNotice.NoticeType)
@@ -78,6 +90,9 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                             break;
                     }
                     break;
+                case "91":
+                    noticeType = NoticeType.NationalDefenceContract;
+                    break;
                 case "92":
                     noticeType = NoticeType.NationalTransparency;
                     break;
@@ -100,6 +115,9 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                             noticeType = NoticeType.Undefined;
                             break;
                     }
+                    break;
+                case "22":
+                    noticeType = NoticeType.SocialUtilities;
                     break;
                 default:
                     noticeType = NoticeType.Undefined;

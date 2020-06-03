@@ -63,6 +63,8 @@ namespace Hilma.Domain.Entities
         /// </summary>
         public List<OrganisationUser> OrganisationUsers { get; set; }
 
+        public List<Department> Departments { get; set; }
+
         /// <summary>
         ///     Applications to the organisation.
         /// </summary>

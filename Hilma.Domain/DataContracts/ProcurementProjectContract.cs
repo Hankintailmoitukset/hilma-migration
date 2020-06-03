@@ -50,7 +50,7 @@ namespace Hilma.Domain.DataContracts
         /// <summary>
         /// I.1.2.1) The contract involves join purchase.
         /// </summary>
-        [CorrigendumLabel("joint_procurement_involved", "I.1.2")]
+        [CorrigendumLabel("joint_procurement_involved", "I.2")]
         public bool JointProcurement { get; set; }
         /// <summary>
         /// I.1.2.2) Reference to applicable law related to JointProcurement.
@@ -61,11 +61,12 @@ namespace Hilma.Domain.DataContracts
         /// <summary>
         /// I.1.2.3) Contract is awarded by a central purchasing body.
         /// </summary>
-        [CorrigendumLabel("central_purchasing", "I.1.2")]
+        [CorrigendumLabel("central_purchasing", "I.2")]
         public bool CentralPurchasing { get; set; }
         /// <summary>
         ///     List of co-purchasers in a joint purchase.
         /// </summary>
+        [CorrigendumLabel("number_of_co_purchasers", "I.1")]
         public List<ContractBodyContactInformation> CoPurchasers { get; set; } = new List<ContractBodyContactInformation>();
 
         /// <summary>
@@ -129,5 +130,38 @@ namespace Hilma.Domain.DataContracts
         /// Affects how the procurement is shown to the user
         /// </summary>
         public bool IsConcluded { get; set; }
+
+        /// <summary>
+        /// Trims conditional values.
+        /// </summary>
+        public void Trim()
+        {
+            if (!JointProcurement)
+            {
+                CoPurchasers = new List<ContractBodyContactInformation>();
+            }
+
+            if (ContractType != ContractType.Works || ProcurementCategory != ProcurementCategory.Defence)
+            {
+                DefenceWorks = default;
+            }
+
+            if (ContractType != ContractType.Supplies ||
+                ProcurementCategory != ProcurementCategory.Defence)
+            {
+                DefenceSupplies = default;
+            }
+
+            if (ContractType != ContractType.Services ||
+                ProcurementCategory != ProcurementCategory.Defence)
+            {
+                DefenceCategory = new DefenceCategory();
+            }
+
+            if (ContractType != ContractType.Works || ProcurementCategory != ProcurementCategory.Agriculture)
+            {
+                AgricultureWorks = default;
+            }
+        }
     }
 }

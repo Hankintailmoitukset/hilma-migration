@@ -24,11 +24,6 @@ namespace Hilma.Domain.Integrations
         private string _tedSenderOrganisation;
 
         /// <summary>
-        /// If publishin to ted - has some affect on how message is formed.
-        /// </summary>
-        public static bool PublishToTed;
-
-        /// <summary>
         /// Notice factory constructor.
         /// </summary>
         /// <param name="notice">The notice</param>
@@ -37,9 +32,8 @@ namespace Hilma.Domain.Integrations
         /// <param name="tedContactEmail">The TED contact email</param>
         /// <param name="eSenderLogin">eSenderLogin</param>
         /// <param name="translationProvider">Remote translations (Loco)</param>
-        /// <param name="publishToTed">If publishing to ted</param>
         public TedNoticeFactory(NoticeContract notice, NoticeContract parent, string tedSenderOrganisationName,
-            string tedContactEmail, string eSenderLogin, ITranslationProvider translationProvider = null, bool publishToTed = true)
+            string tedContactEmail, string eSenderLogin, ITranslationProvider translationProvider = null)
         {
             _notice = notice;
             _parent = parent;
@@ -47,7 +41,6 @@ namespace Hilma.Domain.Integrations
             _tedSenderOrganisation = tedSenderOrganisationName;
             _eSenderLogin = eSenderLogin;
             _translationProvider = translationProvider;
-            PublishToTed = publishToTed;
         }
 
         /// <summary>
@@ -135,8 +128,10 @@ namespace Hilma.Domain.Integrations
                 case NoticeType.SocialUtilitiesQualificationSystem:
                     var f22Factory = new F22Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f22Factory.CreateForm();
-                case NoticeType.SocialConcessions:
-                    break;
+                case NoticeType.SocialConcessionPriorInformation:
+                case NoticeType.SocialConcessionAward:
+                    var f23Factory = new F23Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
+                    return f23Factory.CreateForm();
                 case NoticeType.Concession:
                     var f24Factory = new F24Factory(_notice, _eSenderLogin, _tedSenderOrganisation, _tedContactEmail, _translationProvider);
                     return f24Factory.CreateForm();

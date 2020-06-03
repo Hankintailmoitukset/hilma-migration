@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml;
 using Hilma.Domain.DataContracts;
 using Hilma.Domain.DataContracts.EtsContracts;
 using Hilma.Domain.Enums;
+using Hilma.Domain.Integrations.General;
 
 namespace Hilma.Domain.Entities
 {
@@ -48,7 +45,7 @@ namespace Hilma.Domain.Entities
                 CorrigendumAdditionalInformation = dto.CorrigendumAdditionalInformation,
                 Language = dto.Language,
                 ProceduresForReview = dto.ProceduresForReview,
-
+                
                 // Flattened stuff
                 ProcurementObject = new ProcurementObject
                 {
@@ -85,12 +82,17 @@ namespace Hilma.Domain.Entities
                     CentralPurchasing = dto.Project?.CentralPurchasing ?? false,
                     JointProcurement = dto.Project?.JointProcurement ?? false,
                     Publish = dto.Type.IsNational() ? PublishType.ToHilma : PublishType.ToTed,
-                    AgricultureWorks = dto.Project.AgricultureWorks
+                    AgricultureWorks = dto.Project?.AgricultureWorks ?? AgricultureWorks.Undefined
                 },
                 AttachmentInformation = new AttachmentInformation()
                 {
                     Links = dto.Links ?? new Link[0]
                 },
+                HasAttachments = dto.Links?.Length > 0,
+                Modifications = dto.Modifications,
+                ContractAwardsDefence = dto.ContractAwardsDefence,
+                IsPrivateSmallValueProcurement = dto.IsPrivateSmallValueProcurement,
+
 
                 // mandatory setup
                 State = PublishState.Draft,
@@ -108,13 +110,13 @@ namespace Hilma.Domain.Entities
             
             switch (legalBasis)
             {
-                case "32009L0081":
+                case DirectiveMapper.EuDefenceProcurements2009Directive:
                     return  ProcurementCategory.Defence;
-                case "32014L0023":
+                case DirectiveMapper.EuConcessionProcurement2014Directive:
                     return ProcurementCategory.Lisence;
-                case "32014L0025":
+                case DirectiveMapper.EuUtilitiesProcurements2014Directive:
                     return ProcurementCategory.Utility;
-                case "32014L0024":
+                case DirectiveMapper.EuPublicProcurements2014Directive:
                     return ProcurementCategory.Public;
                 default:
                     return ProcurementCategory.Public;
@@ -170,11 +172,15 @@ namespace Hilma.Domain.Entities
             noticeEntity.TenderingInformation = dto.TenderingInformation;
             noticeEntity.RewardsAndJury = dto.RewardsAndJury;
             noticeEntity.AttachmentInformation = dto.AttachmentInformation;
+            noticeEntity.HasAttachments = noticeEntity.Attachments?.Count > 0 || dto.AttachmentInformation?.Links?.Length > 0;
+
             noticeEntity.ContractAwardsDefence = dto.ContractAwardsDefence;
             noticeEntity.ResultsOfContest = dto.ResultsOfContest;
             noticeEntity.HilmaStatistics = dto.HilmaStatistics;
             noticeEntity.Annexes = dto.Annexes;
- 
+            
+            noticeEntity.IsPrivateSmallValueProcurement = dto.IsPrivateSmallValueProcurement;
+
             return noticeEntity;
         }
 

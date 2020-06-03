@@ -42,5 +42,23 @@ namespace Hilma.Domain.DataContracts
         /// </summary>
         public bool CriteriaStatedInProcurementDocuments { get; set; }
 
+        public void Trim()
+        {
+            if ((CriterionTypes & AwardCriterionType.QualityCriterion) == 0)
+            {
+                QualityCriteria = new AwardCriterionDefinition[0];
+            }
+
+            if ((CriterionTypes & AwardCriterionType.CostCriterion) == 0)
+            {
+                CostCriteria = new AwardCriterionDefinition[0];
+            }
+
+            if ((CriterionTypes & AwardCriterionType.PriceCriterion) == 0)
+            {
+                PriceCriterion = new AwardCriterionDefinition();
+            }
+        }
+
     }
 }
