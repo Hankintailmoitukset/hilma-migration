@@ -230,7 +230,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 IsCorrigendum = isCorrigendum,
                 IsCancelled = isCancelled,
                 TedPublishState = importedNotice.IsPublishedInTed ? TedPublishState.PublishedInTed : TedPublishState.Undefined,
-                CancelledReason = ParsePElements(domesticContract?.Element("DOMESTIC_DISCONTINUED_JUSTIFICATION")?.Element("ADDITIONAL_INFORMATION")),
+                CancelledReason = new[] { domesticContract?.Element("DOMESTIC_DISCONTINUED_JUSTIFICATION")?.Element("ADDITIONAL_INFORMATION")?.Value },
                 CreatorId = null,
                 NoticeNumber = noticeNumber,
                 Language = formElement.Attribute("LG")?.Value ?? "FI",
@@ -1434,8 +1434,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     NutsCodes = ParseNationalNuts(domesticObjectContract, nutsSchema),
                     MainCpvCode = new CpvCode
                     {
-                        Code = domesticObjectContract?.Element("CPV")?.Element("CPV_MAIN").Element("CPV_CODE")?.Attribute("CODE")?.Value,
-                        VocCodes = domesticObjectContract?.Element("CPV")?.Element("CPV_MAIN").Elements("CPV_SUPPLEMENTARY_CODE").Select(s => new VocCode { Code = s.Attribute("CODE")?.Value }).ToArray()
+                        Code = domesticObjectContract?.Element("CPV")?.Element("CPV_MAIN")?.Element("CPV_CODE")?.Attribute("CODE")?.Value,
+                        VocCodes = domesticObjectContract?.Element("CPV")?.Element("CPV_MAIN")?.Elements("CPV_SUPPLEMENTARY_CODE").Select(s => new VocCode { Code = s.Attribute("CODE")?.Value }).ToArray()
                     },
                     AdditionalCpvCodes = ParseAdditionalCpvCodes(domesticObjectContract?.Element("CPV")),
                     EuFunds = new EuFunds() { },
