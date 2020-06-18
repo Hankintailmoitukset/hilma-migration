@@ -73,19 +73,21 @@ namespace Hilma.Tests
             noticeDto.Project.Publish = publishToTED ? PublishType.ToTed : PublishType.ToHilma;
             noticeDto.NoticeNumber = "2019-123456";
             
+            var noticeJson = JsonConvert.SerializeObject(noticeDto);
+
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Notice, NoticeContract>());
             var translate = new Mock<ITranslationProvider>();
 
             var noticeValidator = new NoticeValidator(noticeDto, config.CreateMapper(), translate.Object);
 
-            var isValid = noticeValidator.Validate(true, out string tedXml);
+            var isValid = noticeValidator.Validate(out string tedXml);
 
             foreach (string error in noticeValidator.ValidationErrors)
             {
                 Trace.WriteLine(error);
             }
 
-            Assert.IsTrue(isValid);
+            Assert.IsTrue(isValid,"Notice is not valid, please se output!");
 
             return tedXml;
         }

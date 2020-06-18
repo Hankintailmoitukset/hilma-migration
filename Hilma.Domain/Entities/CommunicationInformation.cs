@@ -1,5 +1,6 @@
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Enums;
+using Hilma.Domain.Extensions;
 
 namespace Hilma.Domain.Entities
 {

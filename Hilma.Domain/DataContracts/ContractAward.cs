@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Entities;
+using Hilma.Domain.Extensions;
 
 namespace Hilma.Domain.DataContracts {
     /// <summary>

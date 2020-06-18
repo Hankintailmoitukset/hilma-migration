@@ -54,7 +54,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 return ParseEuNotice(importedNotice, noticeType, formElement, noticeNumber, isCorrigendum);
 
             }
-            catch (Exception e)
+            catch
             {
                 throw;
             }
@@ -2008,23 +2008,25 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 var lotNumber = awardElement.Element("LOT_NO")?.Value;
                 var title = awardElement.Element("TITLE")?.Value;
                 var itemId = award.item;
-                var objectDescription = ResolveObjectDescriptionForAward(objectDescriptionList, lotNumber, title);
-                if (objectDescription == null || objectDescription.AwardCriteria != null)
+                var objectDescription = ResolveObjectDescriptionForAward(objectDescriptionList, title, lotNumber);
+                if (objectDescription == null)
                 {
-                    var dummyLotNumber = objectDescription?.LotNumber ?? (!string.IsNullOrEmpty(lotNumber) ? lotNumber : itemId.ToString());
-                    var dummyobjectDescription = new ObjectDescription()
-                    {
-                        LotNumber = dummyLotNumber,
-                        Title = objectDescription?.Title ?? title,
-                        AdditionalCpvCodes = new CpvCode[0],
-                        NutsCodes = new string[0],
-                        AwardCriteria = new AwardCriteria()
-                        {
-                            CriterionTypes = AwardCriterionType.Undefined
-                        }
-                    };
-                    dummyobjectDescription.AwardContract = awardContract;
-                    dummyobjectDescriptionList.Add(dummyobjectDescription);
+                    throw new Exception("No ObjectDescription was found matching the award");
+
+                    //var dummyLotNumber = objectDescription?.LotNumber ?? (!string.IsNullOrEmpty(lotNumber) ? lotNumber : itemId.ToString());
+                    //var dummyobjectDescription = new ObjectDescription()
+                    //{
+                    //    LotNumber = dummyLotNumber,
+                    //    Title = objectDescription?.Title ?? title,m
+                    //    AdditionalCpvCodes = new CpvCode[0],
+                    //    NutsCodes = new string[0],
+                    //    AwardCriteria = new AwardCriteria()
+                    //    {
+                    //        CriterionTypes = AwardCriterionType.Undefined
+                    //    }
+                    //};
+                    //dummyobjectDescription.AwardContract = awardContract;
+                    //dummyobjectDescriptionList.Add(dummyobjectDescription);
                 }
                 else
                 {
@@ -2032,13 +2034,18 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     objectDescription.AwardContract = awardContract;
                 }
             }
-
-            return objectDescriptionList.Union(dummyobjectDescriptionList);
+            var result = objectDescriptionList.Union(dummyobjectDescriptionList);
+            return result;
 
         }
 
         private static ObjectDescription ResolveObjectDescriptionForAward(List<ObjectDescription> objectDescriptionList, string title, string lotNumber)
         {
+            if (objectDescriptionList.Count == 1)
+            {
+                return objectDescriptionList.FirstOrDefault();
+            }
+
             var objectDescription = objectDescriptionList.FirstOrDefault(o => !string.IsNullOrEmpty(lotNumber) && o.LotNumber == lotNumber) ??
                                     objectDescriptionList.FirstOrDefault(o => !string.IsNullOrEmpty(title) && o.Title == title);
 
