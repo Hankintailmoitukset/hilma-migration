@@ -38,7 +38,15 @@ namespace Hilma.Tests
             Assert.IsTrue(hilmaDto.IsCorrigendum, "HilmaDto is not set to IsCancelled");
             Assert.AreEqual("43182", hilmaDto.PreviousNoticeOjsNumber, "Hilma dto dosn't have ojs number");
             Assert.AreEqual(NoticeType.NationalContract, hilmaDto.Type);
+        }
 
+        [TestMethod]
+        public void TestForm99ComUrl()
+        {
+            var formOriginalXml = TestHelpers.GetEmbeddedResourceAsString($"Form99.xml");
+            var hilmaDto = TestHelpers.ConvertContract("99", null, formOriginalXml);
+
+            Assert.AreEqual("https://permalink-patch.mercell.com/105862098.aspx", hilmaDto.CommunicationInformation.ElectronicAddressToSendTenders);
         }
     }
 }

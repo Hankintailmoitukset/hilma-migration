@@ -9,6 +9,9 @@ namespace Hilma.Tests
     [TestClass]
     public class Form2Test
     {
+        private string formXml = "Form2.xml";
+        private string formNumber = "2";
+
         [TestMethod]
         public void TestForm2_DurationType()
         {

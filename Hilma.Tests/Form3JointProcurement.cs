@@ -8,6 +8,9 @@ namespace Hilma.Tests
     [TestClass]
     public class Form3JointProcurement
     {
+        private string formXml = "Form3JointProcurement.xml";
+        private string formNumber = "3";
+
         [TestMethod]
         public void Form3JointProcurementTest()
         {

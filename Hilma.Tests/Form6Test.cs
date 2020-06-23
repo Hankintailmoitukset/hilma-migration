@@ -8,6 +8,9 @@ namespace Hilma.Tests
     [TestClass]
     public class Form6Test
     {
+        private string formXml = "Form6.xml";
+        private string formNumber = "6";
+
         [TestMethod]
         public void TestForm6()
         {

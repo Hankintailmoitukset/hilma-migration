@@ -51,7 +51,12 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     return ParseDefenceNotices(formElement, noticeNumber, importedNotice, noticeType, isCorrigendum);
                 }
 
-                return ParseEuNotice(importedNotice, noticeType, formElement, noticeNumber, isCorrigendum);
+                var hilmaStatistics = new HilmaStatistics();
+                hilmaStatistics.EnergyEfficiencyConsidered = formSection.Attribute("TAKING_ACCOUNT_ENERGY_EFFICIENCY")?.Value == "YES";
+                hilmaStatistics.InnovationConsidered = formSection.Attribute("TAKING_ACCOUNT_INNOVATION")?.Value == "YES";
+                hilmaStatistics.SMEParticipationConsidered = formSection.Attribute("TAKING_ACCOUNT_SME_PARTICIPATION")?.Value == "YES";
+
+                return ParseEuNotice(importedNotice, noticeType, formElement, noticeNumber, isCorrigendum, hilmaStatistics);
 
             }
             catch
@@ -61,7 +66,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 
         }
 
-        private NoticeContract ParseEuNotice(INoticeImportModel importedNotice, NoticeType noticeType, XElement formElement, string noticeNumber, bool isCorrigendum)
+        private NoticeContract ParseEuNotice(INoticeImportModel importedNotice, NoticeType noticeType, XElement formElement, string noticeNumber, bool isCorrigendum, HilmaStatistics hilmaStatistics)
         {
             if (noticeType == NoticeType.Undefined && !isCorrigendum)
             {
@@ -121,7 +126,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                 IsCorrigendum = isCorrigendum,
                 Annexes = ParseAnnex(procedureInformation?.ProcedureType ?? ProcedureType.Undefined, procedure, GetProcurementCategoryByDirective(directive)),
                 Modifications = ParseEuModifications(formElement?.Element("MODIFICATIONS_CONTRACT"), _nutsSchema),
-                TedPublishRequestSentDate = ParseDate(complementaryInfo.Element("DATE_DISPATCH_NOTICE")?.Value).GetValueOrDefault()
+                TedPublishRequestSentDate = ParseDate(complementaryInfo.Element("DATE_DISPATCH_NOTICE")?.Value).GetValueOrDefault(),
+                HilmaStatistics = hilmaStatistics
             };
 
             if (importedNotice.FormNumber == "14")
@@ -1290,6 +1296,8 @@ namespace Hilma.Domain.Integrations.HilmaMigration
             {
                 SendTendersOption = ParseNationalSendTendersOption(sendToTenders),
             };
+
+            communicationInformation.ElectronicAddressToSendTenders = sendToTenders?.Element("URL_DOCUMENT")?.Value;
 
             switch (communicationInformation.SendTendersOption)
             {

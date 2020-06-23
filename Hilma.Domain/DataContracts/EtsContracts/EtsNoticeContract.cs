@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Hilma.Domain.Entities;
 using Hilma.Domain.Enums;
@@ -84,6 +85,12 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             CorrigendumAdditionalInformation = dbo.CorrigendumAdditionalInformation;
             ContractAwardsDefence = dbo.ContractAwardsDefence;
             IsPrivateSmallValueProcurement = dbo.IsPrivateSmallValueProcurement;
+            HilmaStatistics = new HilmaStatistics
+            {
+                EnergyEfficiencyConsidered = dbo.HilmaStatistics.EnergyEfficiencyConsidered,
+                InnovationConsidered = dbo.HilmaStatistics.InnovationConsidered,
+                SMEParticipationConsidered = dbo.HilmaStatistics.SMEParticipationConsidered
+            };
         }
 
         /// <summary>
@@ -127,7 +134,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
                 ProcurementLaw = dto.Project.ProcurementLaw,
                 AgricultureWorks = dto.Project.AgricultureWorks,
                 CoPurchasers = dto.Project.CoPurchasers
-                
+
             };
             Organisation = new EtsOrganisationContract
             {
@@ -159,6 +166,14 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             CorrigendumAdditionalInformation = dto.CorrigendumAdditionalInformation;
             ContractAwardsDefence = dto.ContractAwardsDefence;
             IsPrivateSmallValueProcurement = dto.IsPrivateSmallValueProcurement;
+
+            if (dto.HilmaStatistics != null)
+                HilmaStatistics = new HilmaStatistics
+                {
+                    EnergyEfficiencyConsidered = dto.HilmaStatistics.EnergyEfficiencyConsidered,
+                    InnovationConsidered = dto.HilmaStatistics.InnovationConsidered,
+                    SMEParticipationConsidered = dto.HilmaStatistics.SMEParticipationConsidered
+                };
         }
 
 
@@ -371,5 +386,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
         ///     Should notice not be published to search index. Only for national small value procurements
         /// </summary>
         public bool IsPrivateSmallValueProcurement { get; set; }
+
+        public HilmaStatistics HilmaStatistics { get; set; }
     }
 }
