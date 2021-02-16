@@ -85,6 +85,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             CorrigendumAdditionalInformation = dbo.CorrigendumAdditionalInformation;
             ContractAwardsDefence = dbo.ContractAwardsDefence;
             IsPrivateSmallValueProcurement = dbo.IsPrivateSmallValueProcurement;
+            Annexes = dbo.Annexes;
             HilmaStatistics = new HilmaStatistics
             {
                 EnergyEfficiencyConsidered = dbo.HilmaStatistics.EnergyEfficiencyConsidered,
@@ -166,6 +167,7 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             CorrigendumAdditionalInformation = dto.CorrigendumAdditionalInformation;
             ContractAwardsDefence = dto.ContractAwardsDefence;
             IsPrivateSmallValueProcurement = dto.IsPrivateSmallValueProcurement;
+            Annexes = dto.Annexes;
 
             if (dto.HilmaStatistics != null)
                 HilmaStatistics = new HilmaStatistics
