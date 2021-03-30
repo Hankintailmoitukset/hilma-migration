@@ -42,5 +42,14 @@ namespace Hilma.Tests
 
             Assert.IsNotNull(tedDoc.SelectSingleNode("//bk:ADDRESS_REVIEW_INFO", nsmgr));
         }
+
+        [TestMethod]
+        public void TestForm2_Nuts2021()
+        {
+            var formOriginalXml = TestHelpers.GetEmbeddedResourceAsString($"Form2_nuts2021.xml");
+            var notice = TestHelpers.ConvertContract("2", null, formOriginalXml);
+
+            Assert.AreEqual("DK", notice.Organisation.Information.NutsCodes[0]);
+        }
     }
 }

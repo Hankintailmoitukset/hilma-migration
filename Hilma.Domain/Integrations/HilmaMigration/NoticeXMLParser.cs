@@ -13,7 +13,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
 {
     public class NoticeXMLParser
     {
-        private static readonly XNamespace _nutsSchema = "http://publications.europa.eu/resource/schema/ted/2016/nuts";
+        private static readonly XNamespace _nutsSchema = "http://publications.europa.eu/resource/schema/ted/2021/nuts";
 
         public NoticeContract ParseNotice(INoticeImportModel importedNotice)
         {

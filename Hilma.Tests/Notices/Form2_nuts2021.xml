@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TED_ESENDERS VERSION="R2.0.9.S03">
+  <SENDER>
+    <IDENTIFICATION>
+      <ESENDER_LOGIN>TED45</ESENDER_LOGIN>
+      <NO_DOC_EXT>2019-008377</NO_DOC_EXT>
+    </IDENTIFICATION>
+    <CONTACT>
+      <ORGANISATION>Mercell Danmark A/S</ORGANISATION>
+      <COUNTRY VALUE="DK" />
+      <PHONE>+45 63133700</PHONE>
+      <E_MAIL>internal.support@mercell.com</E_MAIL>
+    </CONTACT>
+  </SENDER>
+  <FORM_SECTION>
+    <F02_2014 LG="EN" CATEGORY="ORIGINAL" FORM="F02">
+      <LEGAL_BASIS VALUE="32014L0024" />
+      <CONTRACTING_BODY>
+        <ADDRESS_CONTRACTING_BODY>
+          <OFFICIALNAME>Public Buyer (SupplySector)</OFFICIALNAME>
+          <NATIONALID>980921565</NATIONALID>
+          <ADDRESS>Nørregade 47</ADDRESS>
+          <TOWN>Odense C</TOWN>
+          <POSTAL_CODE>5000</POSTAL_CODE>
+          <COUNTRY VALUE="DK" />
+          <CONTACT_POINT>Public Buyer Contact</CONTACT_POINT>
+          <E_MAIL>than@mercell.com</E_MAIL>
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
+          <URL_GENERAL>https://permalink-26415.mercell.com/91149189.aspx</URL_GENERAL>
+          <URL_BUYER>http://www.mercell.com/</URL_BUYER>
+        </ADDRESS_CONTRACTING_BODY>
+        <DOCUMENT_FULL />
+        <URL_DOCUMENT>https://permalink-26415.mercell.com/91149189.aspx</URL_DOCUMENT>
+        <ADDRESS_FURTHER_INFO_IDEM />
+        <URL_PARTICIPATION>https://permalink-26415.mercell.com/91149189.aspx</URL_PARTICIPATION>
+        <CA_TYPE VALUE="NATIONAL_AGENCY" />
+        <CA_ACTIVITY VALUE="PUBLIC_ORDER_AND_SAFETY" />
+      </CONTRACTING_BODY>
+      <OBJECT_CONTRACT>
+        <TITLE>
+          <P>dfdf</P>
+        </TITLE>
+        <CPV_MAIN>
+          <CPV_CODE CODE="80000000" />
+        </CPV_MAIN>
+        <TYPE_CONTRACT CTYPE="SERVICES" />
+        <SHORT_DESCR>
+          <P>ghgh</P>
+        </SHORT_DESCR>
+        <NO_LOT_DIVISION />
+        <OBJECT_DESCR ITEM="1">
+          <NUTS CODE="DK03" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
+          <SHORT_DESCR>
+            <P>ghgh</P>
+          </SHORT_DESCR>
+          <AC>
+            <AC_PROCUREMENT_DOC />
+          </AC>
+          <DURATION TYPE="DAY">6666</DURATION>
+          <NO_RENEWAL />
+          <NO_ACCEPTED_VARIANTS />
+          <NO_OPTIONS />
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+      </OBJECT_CONTRACT>
+      <LEFTI>
+        <ECONOMIC_CRITERIA_DOC />
+        <TECHNICAL_CRITERIA_DOC />
+      </LEFTI>
+      <PROCEDURE>
+        <PT_OPEN />
+        <NO_CONTRACT_COVERED_GPA />
+        <DATE_RECEIPT_TENDERS>2020-09-25</DATE_RECEIPT_TENDERS>
+        <TIME_RECEIPT_TENDERS>12:00</TIME_RECEIPT_TENDERS>
+        <LANGUAGES>
+          <LANGUAGE VALUE="EN" />
+        </LANGUAGES>
+        <OPENING_CONDITION>
+          <DATE_OPENING_TENDERS>2020-09-26</DATE_OPENING_TENDERS>
+          <TIME_OPENING_TENDERS>12:00</TIME_OPENING_TENDERS>
+        </OPENING_CONDITION>
+      </PROCEDURE>
+      <COMPLEMENTARY_INFO>
+        <NO_RECURRENT_PROCUREMENT />
+        <ADDRESS_REVIEW_BODY>
+          <OFFICIALNAME>Klagenævnet for Udbud</OFFICIALNAME>
+          <ADDRESS>Nævnenes Hus, Toldboden 2</ADDRESS>
+          <TOWN>Viborg</TOWN>
+          <POSTAL_CODE>8800</POSTAL_CODE>
+          <COUNTRY VALUE="DK" />
+          <PHONE>+45 35291000</PHONE>
+          <E_MAIL>klfu@erst.dk</E_MAIL>
+          <FAX>+45 33307799</FAX>
+          <URL>http://www.klfu.dk</URL>
+        </ADDRESS_REVIEW_BODY>
+        <ADDRESS_REVIEW_INFO>
+          <OFFICIALNAME>Konkurrence- og Forbrugerstyrelsen</OFFICIALNAME>
+          <ADDRESS>Carl Jacobsens Vej 35</ADDRESS>
+          <TOWN>Valby</TOWN>
+          <POSTAL_CODE>2500</POSTAL_CODE>
+          <COUNTRY VALUE="DK" />
+          <PHONE>+45 41715000</PHONE>
+          <E_MAIL>kfst@kfst.dk</E_MAIL>
+          <FAX>+45 41715100</FAX>
+          <URL>http://www.kfst.dk</URL>
+        </ADDRESS_REVIEW_INFO>
+        <DATE_DISPATCH_NOTICE>2018-09-03</DATE_DISPATCH_NOTICE>
+      </COMPLEMENTARY_INFO>
+    </F02_2014>
+  </FORM_SECTION>
+</TED_ESENDERS>
