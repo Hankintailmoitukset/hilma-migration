@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Version>1.0.21</Version>
     <Company>Mercell</Company>
     <RepositoryUrl>https://github.com/Mercell/hilma-migration</RepositoryUrl>
@@ -35,7 +35,7 @@
     <None Remove="Validators\TedSchema\208Defence\F17_CONTRACT_DEFENCE.xsd" />
     <None Remove="Validators\TedSchema\208Defence\F18_CONTRACT_AWARD_DEFENCE.xsd" />
     <None Remove="Validators\TedSchema\208Defence\F19_CONTRACT_SUB_DEFENCE.xsd" />
-    <None Remove="Validators\TedSchema\208Defence\nuts_codes_2016.xsd" />
+    <None Remove="Validators\TedSchema\208Defence\nuts_codes_2021.xsd" />
     <None Remove="Validators\TedSchema\208Defence\T01_PRIOR_INFORMATION_MOVE.xsd" />
     <None Remove="Validators\TedSchema\208Defence\T02_CONTRACT_MOVE.xsd" />
     <None Remove="Validators\TedSchema\208Defence\TED_ESENDERS.xd" />
@@ -46,7 +46,6 @@
     <None Remove="Validators\TedSchema\209General\countries.xsd" />
     <None Remove="Validators\TedSchema\209General\cpv_codes.xsd" />
     <None Remove="Validators\TedSchema\209General\cpv_supplementary_codes.xsd" />
-    <None Remove="Validators\TedSchema\209General\DEVCO.xsd" />
     <None Remove="Validators\TedSchema\209General\F01_2014.xsd" />
     <None Remove="Validators\TedSchema\209General\F02_2014.xsd" />
     <None Remove="Validators\TedSchema\209General\F03_2014.xsd" />
@@ -67,7 +66,7 @@
     <None Remove="Validators\TedSchema\209General\F25_2014.xsd" />
     <None Remove="Validators\TedSchema\209General\languages.xsd" />
     <None Remove="Validators\TedSchema\209General\MOVE.xsd" />
-    <None Remove="Validators\TedSchema\209General\nuts_codes_2016.xsd" />
+    <None Remove="Validators\TedSchema\209General\nuts_codes_2021.xsd" />
     <None Remove="Validators\TedSchema\209General\TED_ESENDERS.xsd" />
   </ItemGroup>
 
@@ -144,7 +143,7 @@
     <EmbeddedResource Include="Validators\TedSchema\208Defence\F19_CONTRACT_SUB_DEFENCE.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Validators\TedSchema\208Defence\nuts_codes_2016.xsd">
+    <EmbeddedResource Include="Validators\TedSchema\208Defence\nuts_codes_2021.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Validators\TedSchema\208Defence\T01_PRIOR_INFORMATION_MOVE.xsd">
@@ -175,9 +174,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Validators\TedSchema\209General\cpv_supplementary_codes.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Validators\TedSchema\209General\DEVCO.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Validators\TedSchema\209General\F01_2014.xsd">
@@ -240,7 +236,7 @@
     <EmbeddedResource Include="Validators\TedSchema\209General\MOVE.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Validators\TedSchema\209General\nuts_codes_2016.xsd">
+    <EmbeddedResource Include="Validators\TedSchema\209General\nuts_codes_2021.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Validators\TedSchema\209General\TED_ESENDERS.xsd">

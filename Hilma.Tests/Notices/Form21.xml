@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TED_ESENDERS VERSION="R2.0.9.S03">
+<TED_ESENDERS VERSION="R2.0.9.S04">
   <SENDER>
     <IDENTIFICATION>
       <ESENDER_LOGIN>TED45</ESENDER_LOGIN>
@@ -26,7 +26,7 @@
           <COUNTRY VALUE="DK" />
           <CONTACT_POINT>Maria Brøchner Tødt</CONTACT_POINT>
           <E_MAIL>mart@redcross.dk</E_MAIL>
-          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <URL_GENERAL>https://permalink.mercell.com/115786701.aspx</URL_GENERAL>
         </ADDRESS_CONTRACTING_BODY>
         <DOCUMENT_FULL />
@@ -65,7 +65,7 @@
           <CPV_ADDITIONAL>
             <CPV_CODE CODE="98000000" />
           </CPV_ADDITIONAL>
-          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <MAIN_SITE>
             <P>Danmark</P>
           </MAIN_SITE>
@@ -94,7 +94,7 @@
           <CPV_ADDITIONAL>
             <CPV_CODE CODE="98000000" />
           </CPV_ADDITIONAL>
-          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <MAIN_SITE>
             <P>Danmark</P>
           </MAIN_SITE>
@@ -123,7 +123,7 @@
           <CPV_ADDITIONAL>
             <CPV_CODE CODE="98000000" />
           </CPV_ADDITIONAL>
-          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <MAIN_SITE>
             <P>Danmark</P>
           </MAIN_SITE>
@@ -151,7 +151,7 @@
           <CPV_ADDITIONAL>
             <CPV_CODE CODE="98000000" />
           </CPV_ADDITIONAL>
-          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <MAIN_SITE>
             <P>Danmark</P>
           </MAIN_SITE>

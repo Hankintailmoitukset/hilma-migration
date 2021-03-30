@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TED_ESENDERS VERSION="R2.0.9.S03">
+<TED_ESENDERS VERSION="R2.0.9.S04">
   <SENDER>
     <IDENTIFICATION>
       <ESENDER_LOGIN>TED45</ESENDER_LOGIN>
@@ -27,7 +27,7 @@
           <PHONE>+358 503247428</PHONE>
           <E_MAIL>leena.seppala@phj.fi</E_MAIL>
           <NUTS CODE="FI"
-              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <URL_GENERAL>https://permalink.mercell.com/127486761.aspx</URL_GENERAL>
           <URL_BUYER>http://www.phj.fi/</URL_BUYER>
         </ADDRESS_CONTRACTING_BODY>
@@ -38,7 +38,7 @@
           <COUNTRY VALUE="FI" />
           <E_MAIL>mika.lastikka@lahti.fi</E_MAIL>
           <NUTS CODE="FI1C3"
-              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <URL_GENERAL>www.lahti.fi</URL_GENERAL>
         </ADDRESS_CONTRACTING_BODY_ADDITIONAL>
         <ADDRESS_CONTRACTING_BODY_ADDITIONAL>
@@ -48,7 +48,7 @@
           <COUNTRY VALUE="FI" />
           <E_MAIL>ari.savolainen@labio.fi</E_MAIL>
           <NUTS CODE="FI1C3"
-              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <URL_GENERAL>www.labio.fi</URL_GENERAL>
         </ADDRESS_CONTRACTING_BODY_ADDITIONAL>
         <ADDRESS_CONTRACTING_BODY_ADDITIONAL>
@@ -58,7 +58,7 @@
           <COUNTRY VALUE="FI" />
           <E_MAIL>eeva.lillman@lahtienergia.fi</E_MAIL>
           <NUTS CODE="FI1C3"
-              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <URL_GENERAL>www.lahtienergia.fi</URL_GENERAL>
         </ADDRESS_CONTRACTING_BODY_ADDITIONAL>
         <ADDRESS_CONTRACTING_BODY_ADDITIONAL>
@@ -68,7 +68,7 @@
           <COUNTRY VALUE="FI" />
           <E_MAIL>Sami.Hallikainen@rakennusbetoni.fi</E_MAIL>
           <NUTS CODE="FI1C3"
-              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <URL_GENERAL>www.rakennusbetoni.fi</URL_GENERAL>
         </ADDRESS_CONTRACTING_BODY_ADDITIONAL>
         <ADDRESS_CONTRACTING_BODY_ADDITIONAL>
@@ -78,7 +78,7 @@
           <COUNTRY VALUE="FI" />
           <E_MAIL>Sami.Hallikainen@rakennusbetoni.fi</E_MAIL>
           <NUTS CODE="FI1C3"
-              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <URL_GENERAL>https://www.rakennusbetoni.fi</URL_GENERAL>
         </ADDRESS_CONTRACTING_BODY_ADDITIONAL>
         <ADDRESS_CONTRACTING_BODY_ADDITIONAL>
@@ -90,7 +90,7 @@
           <COUNTRY VALUE="FI" />
           <E_MAIL>leena.seppala@phj.fi</E_MAIL>
           <NUTS CODE="FI1C3"
-              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <URL_GENERAL>www.phj.fi</URL_GENERAL>
         </ADDRESS_CONTRACTING_BODY_ADDITIONAL>
         <JOINT_PROCUREMENT_INVOLVED />
@@ -124,7 +124,7 @@
             <CPV_CODE CODE="90711300" />
           </CPV_ADDITIONAL>
           <NUTS CODE="FI1C3"
-              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <SHORT_DESCR>
             <P>Tarjousta pyydettiin liitteenä olleiden tarkkailuohjelmien mukaisesta vesien tarkkailutyöstä mukaan lukien näytteenottoon ja</P>
             <P>laboratorioanalyysien suorittamisen sekä vuosiraporttien laadinnan vuosiksi 2020-2022. Osapuolten yhteisellä päätöksellä</P>
@@ -170,7 +170,7 @@
                 <TOWN>Lahti</TOWN>
                 <COUNTRY VALUE="FI" />
                 <NUTS CODE="FI1C3"
-                    xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+                    xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
               </ADDRESS_CONTRACTOR>
               <SME />
             </CONTRACTOR>
@@ -181,7 +181,7 @@
                 <TOWN>Rovaniemi</TOWN>
                 <COUNTRY VALUE="FI" />
                 <NUTS CODE="FI"
-                    xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+                    xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
               </ADDRESS_CONTRACTOR>
               <SME />
             </CONTRACTOR>
@@ -192,7 +192,7 @@
                 <TOWN>JYVÄSKYLÄ</TOWN>
                 <COUNTRY VALUE="FI" />
                 <NUTS CODE="FI"
-                    xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+                    xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
               </ADDRESS_CONTRACTOR>
               <SME />
             </CONTRACTOR>
@@ -203,7 +203,7 @@
                 <TOWN>ESPOO</TOWN>
                 <COUNTRY VALUE="FI" />
                 <NUTS CODE="FI"
-                    xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+                    xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
               </ADDRESS_CONTRACTOR>
               <SME />
             </CONTRACTOR>

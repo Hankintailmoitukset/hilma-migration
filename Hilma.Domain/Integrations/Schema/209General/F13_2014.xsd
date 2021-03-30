@@ -2,13 +2,13 @@
 <!-- 
 ####################################################################################
 #  XSD name : F13_2014
-#  RELEASE : "R2.0.9.S03"                                                      
-#  Intermediate release number 009-20190628                               
-#  Last update : 30/10/2018  
+#  RELEASE : "R2.0.9.S04"                                                      
+#  Intermediate release number 002-20201027                               
+#  Last update : 08/10/2020   
 #  Form : Results of design contest
 ####################################################################################
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.9.S03">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.9.S04">
 	<xs:include schemaLocation="common_2014.xsd"/>
 	<xs:complexType name="ci_f13">
 		<xs:annotation>
@@ -159,8 +159,13 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="LEGAL_BASIS" type="legal_basis_f13"/>
-				<xs:element ref="LEGAL_BASIS_OTHER" minOccurs="0"/>
+				<xs:choice>
+					<xs:sequence>
+						<xs:element name="LEGAL_BASIS" type="legal_basis_f13"/>
+						<xs:element ref="LEGAL_BASIS_OTHER" minOccurs="0"/>
+					</xs:sequence>
+					<xs:element ref="LEGAL_BASIS_OTHER"/>
+				</xs:choice>
 				<xs:element name="CONTRACTING_BODY" type="body_f13"/>
 				<xs:element name="OBJECT_CONTRACT" type="object_contract_f13"/>
 				<xs:element name="PROCEDURE" type="procedure_f13"/>

@@ -51,7 +51,7 @@ namespace Hilma.Domain.Integrations.Defence
 
         /// <summary>
         /// #  XSD name : F02_2014
-        /// #  RELEASE : "R2.0.9.S03"
+        /// #  RELEASE : "R2.0.9.S04"
         /// #  Intermediate release number 007-20181030
         /// #  Last update : 30/10/2018
         /// #  Form : Contract notice

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TED_ESENDERS VERSION="R2.0.9.S03">
+<TED_ESENDERS VERSION="R2.0.9.S04">
   <SENDER>
     <IDENTIFICATION>
       <ESENDER_LOGIN>TED45</ESENDER_LOGIN>
@@ -25,7 +25,7 @@
           <COUNTRY VALUE="DK" />
           <CONTACT_POINT>Lisa Blenstrup Pallisgaard på vegne af Brædstrup Totalenergianlæg A/S</CONTACT_POINT>
           <E_MAIL>lbp@planenergi.dk</E_MAIL>
-          <NUTS CODE="DK04" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="DK04" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <URL_GENERAL>https://permalink.mercell.com/110147205.aspx</URL_GENERAL>
           <URL_BUYER>http://www.planenergi.dk/</URL_BUYER>
         </ADDRESS_CONTRACTING_BODY>
@@ -46,7 +46,7 @@
         <VAL_TOTAL CURRENCY="DKK" PUBLICATION="NO">45000000.00</VAL_TOTAL>
         <NO_LOT_DIVISION />
         <OBJECT_DESCR ITEM="1">
-          <NUTS CODE="DK04" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="DK04" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <SHORT_DESCR>
             <P>Brædstrup Totalenergianlæg A/S ønsker at etablere en eldrevet varmepumpe, der kan anvende udeluft som</P>
             <P>varmekilde til produktion af fjernvarme i samdrift med værkets eksisterende produktionsenheder.</P>
@@ -94,7 +94,7 @@
                 <COUNTRY VALUE="DK" />
                 <PHONE>+45 74505550</PHONE>
                 <E_MAIL>pl@innoterm.dk</E_MAIL>
-                <NUTS CODE="DK032" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+                <NUTS CODE="DK032" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
               </ADDRESS_CONTRACTOR>
               <SME />
             </CONTRACTOR>

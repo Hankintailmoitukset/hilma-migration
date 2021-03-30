@@ -2,12 +2,12 @@
 <!-- 
 ####################################################################################
 #  XSD name : TED_ESENDERS  (.xsd) 
-#  RELEASE : "R2.0.8.S04"
-#  Intermediate release number 003-20180515
-#  Last update :14/12/2017
+#  RELEASE : "R2.0.8.S05"
+#  Intermediate release number 002-20201027
+#  Last update :08/10/2020
 ####################################################################################
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://publications.europa.eu/resource/schema/ted/R2.0.8/reception" targetNamespace="http://publications.europa.eu/resource/schema/ted/R2.0.8/reception" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://publications.europa.eu/resource/schema/ted/R2.0.8/reception" targetNamespace="http://publications.europa.eu/resource/schema/ted/R2.0.8/reception" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S05">
 	<!-- *********************************** -->
 	<!-- include schemas                    -->
 	<!-- *********************************** -->

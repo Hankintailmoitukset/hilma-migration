@@ -2,7 +2,7 @@
 <!-- 
 ####################################################################################
 #  XSD name : nuts_codes_2016 
-#  RELEASE : "R2.0.9.S03"                                                      
+#  RELEASE : "R2.0.9.S04"                                                      
 #  Intermediate release number 009-20190628                               
 #  Last update : 14/12/2017 
 #  NUTS Codes 2016 for 
@@ -13,7 +13,7 @@
 #    others: 00;
 ####################################################################################
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" targetNamespace="http://publications.europa.eu/resource/schema/ted/2016/nuts" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.9.S03">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" targetNamespace="http://publications.europa.eu/resource/schema/ted/2016/nuts" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.9.S04">
 	<xs:simpleType name="t_nuts_code_list">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="00"/>

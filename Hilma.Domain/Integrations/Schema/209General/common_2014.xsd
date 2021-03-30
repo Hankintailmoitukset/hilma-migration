@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2019 rel. 3 sp1 (x64) (http://www.altova.com) by rafes (OP Publications Office of the European Union) -->
 <!-- 
 ####################################################################################
 #  XSD name : common_2014
-#  RELEASE : "R2.0.9.S03"                                                      
-#  Intermediate release number 009-20190628                               
-#  Last update: 07/06/2019 
+#  RELEASE : "R2.0.9.S04"                                                      
+#  Intermediate release number 002-20201027                               
+#  Last update : 08/10/2020  
 ####################################################################################
  -->
-<xs:schema xmlns:cur="http://publications.europa.eu/resource/authority/currency" xmlns:lb="http://publications.europa.eu/resource/authority/legal-basis" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:n2016="http://publications.europa.eu/resource/schema/ted/2016/nuts" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.9.S03">
+<xs:schema xmlns:cur="http://publications.europa.eu/resource/authority/currency" xmlns:lb="http://publications.europa.eu/resource/authority/legal-basis" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:n2021="http://publications.europa.eu/resource/schema/ted/2021/nuts" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.9.S04">
 	<xs:include schemaLocation="languages.xsd"/>
 	<xs:include schemaLocation="countries.xsd"/>
 	<xs:include schemaLocation="cpv_codes.xsd"/>
 	<xs:include schemaLocation="cpv_supplementary_codes.xsd"/>
-	<xs:import namespace="http://publications.europa.eu/resource/schema/ted/2016/nuts" schemaLocation="nuts_codes_2016.xsd"/>
+	<xs:import namespace="http://publications.europa.eu/resource/schema/ted/2021/nuts" schemaLocation="nuts_codes_2021.xsd"/>
 	<xs:import namespace="http://publications.europa.eu/resource/authority/currency" schemaLocation="code_lists/t_currency_PublicProcurement.xsd"/>
 	<xs:import namespace="http://publications.europa.eu/resource/authority/legal-basis" schemaLocation="code_lists/t_legal-basis_PublicProcurement.xsd"/>
 	<!--####################################################################################
@@ -573,7 +574,7 @@ ADDRESSES
 			<xs:element ref="PHONE" minOccurs="0"/>
 			<xs:element ref="E_MAIL" minOccurs="0"/>
 			<xs:element ref="FAX" minOccurs="0"/>
-			<xs:element ref="n2016:NUTS" minOccurs="0"/>
+			<xs:element ref="n2021:NUTS" minOccurs="0"/>
 			<xs:element ref="URL_GENERAL" minOccurs="0"/>
 			<xs:element ref="URL_BUYER" minOccurs="0"/>
 			<xs:element ref="URL" minOccurs="0"/>
@@ -593,7 +594,7 @@ ADDRESSES
 					<xs:element ref="PHONE" minOccurs="0"/>
 					<xs:element ref="E_MAIL"/>
 					<xs:element ref="FAX" minOccurs="0"/>
-					<xs:element ref="n2016:NUTS"/>
+					<xs:element ref="n2021:NUTS"/>
 					<xs:element ref="URL_GENERAL"/>
 					<xs:element ref="URL_BUYER" minOccurs="0"/>
 				</xs:sequence>
@@ -613,7 +614,7 @@ ADDRESSES
 					<xs:element ref="PHONE" minOccurs="0"/>
 					<xs:element ref="E_MAIL" minOccurs="0"/>
 					<xs:element ref="FAX" minOccurs="0"/>
-					<xs:element ref="n2016:NUTS"/>
+					<xs:element ref="n2021:NUTS"/>
 					<xs:element ref="URL" minOccurs="0"/>
 				</xs:sequence>
 			</xs:restriction>
@@ -1338,7 +1339,7 @@ SECTION V
 	</xs:group>
 	<xs:element name="PROCUREMENT_DISCONTINUED">
 		<xs:complexType>
-			<xs:sequence>
+			<xs:sequence minOccurs="0">
 				<xs:choice>
 					<xs:sequence>
 						<xs:choice>

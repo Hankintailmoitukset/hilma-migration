@@ -48,7 +48,7 @@ namespace Hilma.Domain.Integrations.General
             return new XDocument(
                 new XDeclaration("1.0", "utf-8", null), TedHelpers.Element("TED_ESENDERS",
                     new XAttribute(XNamespace.Xmlns + nameof(TedHelpers.n2016), TedHelpers.n2016),
-                    new XAttribute("VERSION", "R2.0.9.S03"),
+                    new XAttribute("VERSION", "R2.0.9.S04"),
                     new XAttribute(XNamespace.Xmlns + nameof(TedHelpers.xs), TedHelpers.xs),
                     TedHelpers.LoginPart(_notice, _eSenderLogin, _tedESenderOrganisation, _tedContactEmail),
                     NoticeBody()));
@@ -56,7 +56,7 @@ namespace Hilma.Domain.Integrations.General
 
         /// <summary>
         /// #  XSD name : F02_2014
-        /// #  RELEASE : "R2.0.9.S03"
+        /// #  RELEASE : "R2.0.9.S04"
         /// #  Intermediate release number 007-20181030
         /// #  Last update : 30/10/2018
         /// #  Form : Contract notice

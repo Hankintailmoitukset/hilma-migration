@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0"?>
-<HILMA_NOTICE xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" VERSION="R2.0.9.S03">
+<HILMA_NOTICE xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" VERSION="R2.0.9.S04">
   <HILMA_SENDER>
     <HILMA_LOGIN CLASS="mercell">Koskimau</HILMA_LOGIN>
     <HILMA_USER>
@@ -29,7 +29,7 @@
           <CONTACT_POINT>Mauri Koski</CONTACT_POINT>
           <PHONE>+358 449764173</PHONE>
           <E_MAIL>mauri.koski@dominuslaki.fi</E_MAIL>
-          <NUTS CODE="FI1B" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="FI1B" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <URL_GENERAL>https://permalink.mercell.com/120804292.aspx</URL_GENERAL>
           <URL_BUYER>https://www.sfportservice.fi/</URL_BUYER>
         </ADDRESS_CONTRACTING_BODY>
@@ -55,7 +55,7 @@
         <VAL_ESTIMATED_TOTAL CURRENCY="EUR">3200000.00</VAL_ESTIMATED_TOTAL>
         <NO_LOT_DIVISION />
         <OBJECT_DESCR ITEM="1">
-          <NUTS CODE="FI1B" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="FI1B" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <MAIN_SITE>
             <P>Helsinki</P>
           </MAIN_SITE>

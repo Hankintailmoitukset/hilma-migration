@@ -2,13 +2,13 @@
 <!-- 
 ####################################################################################
 #  XSD name : languages
-#  RELEASE : "R2.0.9.S03"                                                      
-#  Intermediate release number 009-20190628 
-#  Last update : 14/12/2017
-#  R2.0.9.S03_001-20171213 / languages.xsd: #  Based on email [From: Andres Palm] [Sent: 25 June 2014 02:36] 
+#  RELEASE : "R2.0.9.S04"                                                      
+#  Intermediate release number 002-20201027 
+#  Last update : 08/10/2020
+#  R2.0.9.S04_001-20171213 / languages.xsd: #  Based on email [From: Andres Palm] [Sent: 25 June 2014 02:36] 
 ####################################################################################
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.9.S03">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.9.S04">
 	<xs:simpleType name="t_language_list">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="AR"/>

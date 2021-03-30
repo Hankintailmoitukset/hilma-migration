@@ -2,16 +2,17 @@
 <!-- 
 ####################################################################################
 #  XSD name : common
-#  RELEASE : "R2.0.8.S04"
-#  Intermediate release number 003-20180515
-#  Last update :10/11/2016
+#  RELEASE : "R2.0.8.S05"
+#  Intermediate release number 002-20201027
+#  Last update : 27/10/2020
 ####################################################################################
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+<xs:schema xmlns:cur="http://publications.europa.eu/resource/authority/currency" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S05">
 	<xs:include schemaLocation="countries.xsd"/>
 	<xs:include schemaLocation="cpv_codes.xsd"/>
 	<xs:include schemaLocation="cpv_supplementary_codes.xsd"/>
-	<xs:include schemaLocation="nuts_codes_2016.xsd"/>
+	<xs:include schemaLocation="nuts_codes_2021.xsd"/>
+	<xs:import namespace="http://publications.europa.eu/resource/authority/currency" schemaLocation="code_lists/t_currency_PublicProcurement.xsd"/>	
 	<xs:simpleType name="value_incomplete_reason">
 		<xs:restriction base="xs:NMTOKEN">
 			<xs:enumeration value="PROCEDURE_DISCONTINUED"/>
@@ -892,31 +893,7 @@
 	<xs:element name="EXISTENCE_AUTHORISED_PERSONS" type="btx"/>
 	<xs:element name="REASON_CONTRACT_LAWFUL" type="btx"/>
 	<xs:simpleType name="currencies">
-		<xs:restriction base="xs:NMTOKEN">
-			<xs:enumeration value="GBP"/>
-			<xs:enumeration value="ISK"/>
-			<xs:enumeration value="LTL"/>
-			<xs:enumeration value="CHF"/>
-			<xs:enumeration value="SEK"/>
-			<xs:enumeration value="JPY"/>
-			<xs:enumeration value="LVL"/>
-			<xs:enumeration value="NOK"/>
-			<xs:enumeration value="MTL"/>
-			<xs:enumeration value="EEK"/>
-			<xs:enumeration value="CYP"/>
-			<xs:enumeration value="SKK"/>
-			<xs:enumeration value="RON"/>
-			<xs:enumeration value="CZK"/>
-			<xs:enumeration value="DKK"/>
-			<xs:enumeration value="PLN"/>
-			<xs:enumeration value="BGN"/>
-			<xs:enumeration value="HUF"/>
-			<xs:enumeration value="USD"/>
-			<xs:enumeration value="EUR"/>
-			<xs:enumeration value="MKD"/>
-			<xs:enumeration value="TRY"/>
-			<xs:enumeration value="HRK"/>
-		</xs:restriction>
+		<xs:restriction base="cur:t_currency_tedschema"/>
 	</xs:simpleType>
 	<xs:simpleType name="cost">
 		<xs:restriction base="xs:decimal">
@@ -1624,7 +1601,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="LABEL" minOccurs="0"/>
-				<xs:element ref="NUTS" minOccurs="0" maxOccurs="99"/>
+				<xs:element ref="NUTS" minOccurs="0" maxOccurs="250"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -1908,7 +1885,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="LOCATION" minOccurs="0"/>
-				<xs:element ref="NUTS" minOccurs="0" maxOccurs="99"/>
+				<xs:element ref="NUTS" minOccurs="0" maxOccurs="250"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

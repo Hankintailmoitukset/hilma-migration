@@ -53,7 +53,7 @@ namespace Hilma.Domain.Integrations.General
 
         /// <summary>
         /// #  XSD name : F01_2014
-        /// #  RELEASE : "R2.0.9.S03"
+        /// #  RELEASE : "R2.0.9.S04"
         /// #  Intermediate release number 007-20181030
         /// #  Last update : 30/10/2018
         /// #  Form : Prior information notice

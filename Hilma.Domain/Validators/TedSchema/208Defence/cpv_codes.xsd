@@ -2,12 +2,12 @@
 <!-- 
 ####################################################################################
 #  XSD name : cpv_codes
-#  RELEASE : "R2.0.8.S04"
-#  Intermediate release number 003-20180515
-#  Last update :20/02/2012
+#  RELEASE : "R2.0.8.S05"
+#  Intermediate release number 002-20201027
+#  Last update :08/10/2020
 ####################################################################################
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S05">
 	<xs:simpleType name="t_cpv_code_list">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="03000000"/>

@@ -52,7 +52,7 @@ namespace Hilma.Domain.Integrations.General
 
         /// <summary>
         ///  XSD name : F13_2014
-        ///  RELEASE : "R2.0.9.S03"                                                      
+        ///  RELEASE : "R2.0.9.S04"                                                      
         ///  Intermediate release number 009-20190628                              
         ///  Last update : 30/10/2018
         ///  Form : Results of design contest

@@ -65,7 +65,7 @@
               <CPV_CODE CODE="90000000" />
             </CPV_ADDITIONAL>
           </CPV>
-          <NUTS CODE="FI1D2" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="FI1D2" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
         </DOMESTIC_OBJECT_INFORMATION>
         <DOMESTIC_DISCONTINUED_JUSTIFICATION>
           <ADDITIONAL_INFORMATION>dfdfdf</ADDITIONAL_INFORMATION>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TED_ESENDERS VERSION="R2.0.9.S03">
+<TED_ESENDERS VERSION="R2.0.9.S04">
   <SENDER>
     <IDENTIFICATION>
       <ESENDER_LOGIN>TED45</ESENDER_LOGIN>
@@ -26,7 +26,7 @@
           <COUNTRY VALUE="DK" />
           <CONTACT_POINT>Lene Ritz, Chief Risk Officer</CONTACT_POINT>
           <E_MAIL>ler@energinet.dk</E_MAIL>
-          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <URL_GENERAL>https://permalink.mercell.com/111939775.aspx</URL_GENERAL>
           <URL_BUYER>http://www.willis.dk/</URL_BUYER>
         </ADDRESS_CONTRACTING_BODY>
@@ -58,7 +58,7 @@
           <CPV_ADDITIONAL>
             <CPV_CODE CODE="66516400" />
           </CPV_ADDITIONAL>
-          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <SHORT_DESCR>
             <P>Viking Link Project - Invitation Insurance Market Roadshow 30th August 2019 London</P>
             <P>In preparation for the EU Insurance tender for the Viking Link project anticipated to attach 1st of January 2020, we are pleased to invite you to a Viking Link presentation that will be held on 30th August 2019 from 09:45 am to 13:00 pm (BST). </P>

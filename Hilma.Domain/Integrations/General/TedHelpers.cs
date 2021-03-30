@@ -14,7 +14,7 @@ namespace Hilma.Domain.Integrations.General
     public class TedHelpers
     {
         public static readonly XNamespace Xmlns = "http://publications.europa.eu/resource/schema/ted/R2.0.9/reception";
-        public static readonly XNamespace n2016 = "http://publications.europa.eu/resource/schema/ted/2016/nuts";
+        public static readonly XNamespace n2016 = "http://publications.europa.eu/resource/schema/ted/2021/nuts";
         public static readonly XNamespace xs = "http://www.w3.org/2001/XMLSchema-instance";
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Hilma.Domain.Integrations.General
             return new XDocument(
                  new XDeclaration("1.0", "utf-8", null), TedHelpers.Element("TED_ESENDERS",
                      new XAttribute(XNamespace.Xmlns + nameof(TedHelpers.n2016), TedHelpers.n2016),
-                     new XAttribute("VERSION", "R2.0.9.S03"),
+                     new XAttribute("VERSION", "R2.0.9.S04"),
                      new XAttribute(XNamespace.Xmlns + nameof(TedHelpers.xs), TedHelpers.xs),
                      xElements));
         } 

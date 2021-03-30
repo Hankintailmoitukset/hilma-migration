@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TED_ESENDERS VERSION="R2.0.9.S03">
+<TED_ESENDERS VERSION="R2.0.9.S04">
   <SENDER>
     <IDENTIFICATION>
       <ESENDER_LOGIN>TED45</ESENDER_LOGIN>
@@ -25,7 +25,7 @@
           <COUNTRY VALUE="DK" />
           <CONTACT_POINT>Public Buyer Contact</CONTACT_POINT>
           <E_MAIL>than@mercell.com</E_MAIL>
-          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <URL_GENERAL>https://permalink-26415.mercell.com/91149189.aspx</URL_GENERAL>
           <URL_BUYER>http://www.mercell.com/</URL_BUYER>
         </ADDRESS_CONTRACTING_BODY>
@@ -49,7 +49,7 @@
         </SHORT_DESCR>
         <NO_LOT_DIVISION />
         <OBJECT_DESCR ITEM="1">
-          <NUTS CODE="DK03" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="DK03" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <SHORT_DESCR>
             <P>ghgh</P>
           </SHORT_DESCR>

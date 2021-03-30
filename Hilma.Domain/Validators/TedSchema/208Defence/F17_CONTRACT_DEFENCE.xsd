@@ -2,12 +2,12 @@
 <!-- 
 ####################################################################################
 #  XSD name : F17_CONTRACT_DEFENCE
-#  RELEASE : "R2.0.8.S04"
-#  Intermediate release number 003-20180515
-#  Last update :04/07/2012
+#  RELEASE : "R2.0.8.S05"
+#  Intermediate release number 002-20201027
+#  Last update :08/10/2020
 ####################################################################################
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S04">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.8.S05">
 	<xs:include schemaLocation="common.xsd"/>
 	<!-- procedure_definition_contract_notice Declaration -->
 	<xs:complexType name="administrative_information_contract_notice_defence">
@@ -246,7 +246,7 @@
 		<xs:attribute name="LG" type="languages" use="required"/>
 		<xs:attribute name="CATEGORY" type="category" use="required"/>
 		<xs:attribute name="FORM" use="required" fixed="17"/>
-		<xs:attribute name="VERSION" use="required" fixed="R2.0.8.S04"/>
+		<xs:attribute name="VERSION" use="required" fixed="R2.0.8.S05"/>
 	</xs:complexType>
 	<!-- ROOT element -->
 	<xs:element name="CONTRACT_DEFENCE" type="contract_defence">

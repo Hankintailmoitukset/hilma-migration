@@ -51,7 +51,7 @@ namespace Hilma.Domain.Integrations.General
             new XDocument(
                 new XDeclaration("1.0", "utf-8", null), TedHelpers.Element("TED_ESENDERS",
                     new XAttribute(XNamespace.Xmlns + nameof(TedHelpers.n2016), TedHelpers.n2016),
-                    new XAttribute("VERSION", "R2.0.9.S03"),
+                    new XAttribute("VERSION", "R2.0.9.S04"),
                     new XAttribute(XNamespace.Xmlns + nameof(TedHelpers.xs), TedHelpers.xs),
                     TedHelpers.LoginPart(_notice, _eSenderLogin, _tedESenderOrganisation, _tedContactEmail),
                     NoticeBody()));

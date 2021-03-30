@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TED_ESENDERS VERSION="R2.0.9.S03">
+<TED_ESENDERS VERSION="R2.0.9.S04">
   <SENDER>
     <IDENTIFICATION>
       <ESENDER_LOGIN>TED45</ESENDER_LOGIN>
@@ -25,7 +25,7 @@
           <COUNTRY VALUE="DK" />
           <CONTACT_POINT>Símun Petur Eið</CONTACT_POINT>
           <E_MAIL>dw9a@kk.dk</E_MAIL>
-          <NUTS CODE="DK011" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="DK011" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <URL_GENERAL>https://permalink.mercell.com/108058454.aspx</URL_GENERAL>
         </ADDRESS_CONTRACTING_BODY>
         <CA_TYPE VALUE="REGIONAL_AUTHORITY" />
@@ -49,7 +49,7 @@
           <CPV_ADDITIONAL>
             <CPV_CODE CODE="98330000" />
           </CPV_ADDITIONAL>
-          <NUTS CODE="DK011" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <NUTS CODE="DK011" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
           <MAIN_SITE>
             <P>På Københavns Kommues enheder</P>
           </MAIN_SITE>
@@ -90,7 +90,7 @@
                 <COUNTRY VALUE="DK" />
                 <PHONE>+45 70200726</PHONE>
                 <E_MAIL>cityfys@cityfys.dk</E_MAIL>
-                <NUTS CODE="DK011" xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+                <NUTS CODE="DK011" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
               </ADDRESS_CONTRACTOR>
               <SME />
             </CONTRACTOR>

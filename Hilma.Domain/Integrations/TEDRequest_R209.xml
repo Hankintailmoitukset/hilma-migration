@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TED_ESENDERS xmlns:n2016="http://publications.europa.eu/resource/schema/ted/2016/nuts" xmlns="http://publications.europa.eu/resource/schema/ted/R2.0.9/reception" VERSION="R2.0.9.S03" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
+<TED_ESENDERS xmlns:n2016="http://publications.europa.eu/resource/schema/ted/2016/nuts" xmlns="http://publications.europa.eu/resource/schema/ted/R2.0.9/reception" VERSION="R2.0.9.S04" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
   <SENDER>
     <IDENTIFICATION>
       <ESENDER_LOGIN>TEDE0MUT</ESENDER_LOGIN>

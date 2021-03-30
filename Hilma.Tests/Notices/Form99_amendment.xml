@@ -79,7 +79,7 @@
             </CPV_ADDITIONAL>
           </CPV>
           <NUTS CODE="FI1C1"
-              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+              xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
         </DOMESTIC_OBJECT_INFORMATION>
         <DOMESTIC_PROCEDURE_DEFINITION>
           <DOMESTIC_TYPE_OF_PROCEDURE>

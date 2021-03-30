@@ -13,7 +13,7 @@ namespace Hilma.Domain.Integrations.Defence
     public class TedHelpers
     {
         public static readonly XNamespace Reception = "http://publications.europa.eu/resource/schema/ted/R2.0.8/reception";
-        public static readonly XNamespace n2016 = "http://publications.europa.eu/resource/schema/ted/2016/nuts";
+        public static readonly XNamespace n2016 = "http://publications.europa.eu/resource/schema/ted/2021/nuts";
         public static readonly XNamespace xs = "http://www.w3.org/2001/XMLSchema-instance";
         
         internal static XDocument CreateTedDocument(params XElement[] xElements)

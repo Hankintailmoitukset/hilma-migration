@@ -7,7 +7,7 @@ namespace Hilma.Domain.Entities
     /// <summary>
     /// Defines all possible changes according to:
     /// #  XSD name : F14_2014
-    /// #  RELEASE : "R2.0.9.S03"                                                      
+    /// #  RELEASE : "R2.0.9.S04"                                                      
     /// #  Intermediate release number 007-20181030                               
     /// #  Last update : 08/06/2018 
     /// #  Form : Corrigendum

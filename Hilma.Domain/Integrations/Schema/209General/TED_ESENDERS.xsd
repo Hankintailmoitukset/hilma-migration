@@ -2,12 +2,12 @@
 <!-- 
 ####################################################################################
 #  XSD name : TED_ESENDERS  (.xsd)                                              
-#  RELEASE : "R2.0.9.S03"                                                      
-#  Intermediate release number 009-20190628                             
-#  Last update: 14/12/2017 
+#  RELEASE : "R2.0.9.S04"                                                      
+#  Intermediate release number 002-20201027                             
+#  Last update : 08/10/2020
 ####################################################################################
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://publications.europa.eu/resource/schema/ted/R2.0.9/reception" targetNamespace="http://publications.europa.eu/resource/schema/ted/R2.0.9/reception" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.9.S03">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://publications.europa.eu/resource/schema/ted/R2.0.9/reception" targetNamespace="http://publications.europa.eu/resource/schema/ted/R2.0.9/reception" elementFormDefault="qualified" attributeFormDefault="unqualified" version="R2.0.9.S04">
 	<!-- *********************************** -->
 	<!-- include schemas                    -->
 	<!-- *********************************** -->
@@ -29,7 +29,6 @@
 	<xs:include schemaLocation="F23_2014.xsd"/>
 	<xs:include schemaLocation="F24_2014.xsd"/>
 	<xs:include schemaLocation="F25_2014.xsd"/>
-	<xs:include schemaLocation="DEVCO.xsd"/>
 	<xs:include schemaLocation="MOVE.xsd"/>
 	<xs:complexType name="sender">
 		<xs:sequence>
@@ -86,7 +85,6 @@
 				<xs:element ref="F23_2014" maxOccurs="unbounded"/>
 				<xs:element ref="F24_2014" maxOccurs="unbounded"/>
 				<xs:element ref="F25_2014" maxOccurs="unbounded"/>
-				<xs:element ref="DEVCO" maxOccurs="unbounded"/>
 				<xs:element ref="MOVE" maxOccurs="unbounded"/>
 			</xs:choice>
 		</xs:sequence>
@@ -101,7 +99,7 @@
 				</xs:unique>
 			</xs:element>
 		</xs:sequence>
-		<xs:attribute name="VERSION" use="required" fixed="R2.0.9.S03"/>
+		<xs:attribute name="VERSION" use="required" fixed="R2.0.9.S04"/>
 	</xs:complexType>
 	<xs:element name="TED_ESENDERS" type="ted_esenders">
 		<xs:annotation>
