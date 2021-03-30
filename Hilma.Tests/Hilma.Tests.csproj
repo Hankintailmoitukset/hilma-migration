@@ -26,6 +26,7 @@
     <EmbeddedResource Include="Notices\Form1.xml" />
     <EmbeddedResource Include="Notices\Form2.xml" />
     <EmbeddedResource Include="Notices\Form21.xml" />
+    <EmbeddedResource Include="Notices\Form21_2.xml" />
     <EmbeddedResource Include="Notices\Form3JointProcurement.xml" />
     <EmbeddedResource Include="Notices\Form3.xml" />
     <EmbeddedResource Include="Notices\Form4.xml" />
