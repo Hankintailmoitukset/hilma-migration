@@ -10,6 +10,7 @@
     <None Remove="Notices\Form1.xml" />
     <None Remove="Notices\Form2.xml" />
     <None Remove="Notices\Form21.xml" />
+    <None Remove="Notices\Form21_2.xml" />
     <None Remove="Notices\Form3.xml" />
     <None Remove="Notices\Form3JointProcurement.xml" />
     <None Remove="Notices\Form4.xml" />

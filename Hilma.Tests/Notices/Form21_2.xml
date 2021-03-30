@@ -1,0 +1,450 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TED_ESENDERS VERSION="R2.0.9.S03">
+  <SENDER>
+    <IDENTIFICATION>
+      <ESENDER_LOGIN>TED45</ESENDER_LOGIN>
+      <NO_DOC_EXT>2019-008317</NO_DOC_EXT>
+    </IDENTIFICATION>
+    <CONTACT>
+      <ORGANISATION>Mercell Danmark A/S</ORGANISATION>
+      <COUNTRY VALUE="DK" />
+      <PHONE>+45 63133700</PHONE>
+      <E_MAIL>internal.support@mercell.com</E_MAIL>
+    </CONTACT>
+  </SENDER>
+  <FORM_SECTION>
+    <F21_2014 LG="FI" CATEGORY="ORIGINAL" FORM="F21">
+      <LEGAL_BASIS VALUE="32014L0024" />
+      <NOTICE TYPE="CONTRACT" />
+      <CONTRACTING_BODY>
+        <ADDRESS_CONTRACTING_BODY>
+          <OFFICIALNAME>Ylioppilaiden terveydenhoitosäätiö</OFFICIALNAME>
+          <NATIONALID>0202637-8</NATIONALID>
+          <ADDRESS>Töölönkatu 37</ADDRESS>
+          <TOWN>Helsinki</TOWN>
+          <POSTAL_CODE>00260</POSTAL_CODE>
+          <COUNTRY VALUE="FI" />
+          <CONTACT_POINT>Heidi Weiste-Palvanen</CONTACT_POINT>
+          <PHONE>+358 0417307813</PHONE>
+          <E_MAIL>heidi.weiste-palvanen@yths.fi</E_MAIL>
+          <NUTS CODE="FI"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <URL_GENERAL>https://permalink.mercell.com/146963410.aspx</URL_GENERAL>
+          <URL_BUYER>http://www.yths.fi/</URL_BUYER>
+        </ADDRESS_CONTRACTING_BODY>
+        <DOCUMENT_FULL />
+        <URL_DOCUMENT>https://permalink.mercell.com/146963410.aspx</URL_DOCUMENT>
+        <ADDRESS_FURTHER_INFO_IDEM />
+        <URL_PARTICIPATION>https://permalink.mercell.com/146963410.aspx</URL_PARTICIPATION>
+        <CA_TYPE VALUE="BODY_PUBLIC" />
+        <CA_ACTIVITY VALUE="HEALTH" />
+      </CONTRACTING_BODY>
+      <OBJECT_CONTRACT ITEM="1">
+        <TITLE>
+          <P>Korjausilmoitus: Vuokrayleislääkäripalveluiden hankinta Ylioppilaiden terveydenhoitosäätiölle</P>
+        </TITLE>
+        <CPV_MAIN>
+          <CPV_CODE CODE="85000000" />
+        </CPV_MAIN>
+        <TYPE_CONTRACT CTYPE="SERVICES" />
+        <SHORT_DESCR>
+          <P>Hankinnan kohteena on yleislääkäreiden vuokraus täyttämään henkilöstövajauksia satunnaisissa ja äkillisissä työvoimatarpeissa YTHS:n palveluverkoston mukaisilla paikkakunnilla. Toiminta toteutetaan arkipäivisin (ma-pe).</P>
+          <P>Hankinta kilpailutetaan ja toteutetaan 21 osassa paikkakuntien mukaisesti. </P>
+          <P>Jokaiselle hankinnan osalle eli paikkakunnalle (pääkaupunkiseudulla tarkoitetaan Helsingin ja Espoon palvelupisteitä) pyydetään vuokralääkäripalvelulle tuntihinta (ALV 0%). Tarjouksen voi antaa yhteen tai useampaan osaan. </P>
+          <P>Tarkempi palvelukuvaus ja vaatimukset on ilmoitettu liitteillä 1 ja 2.</P>
+          <P>Tarjoukset on lähetettävä sähköisesti Mercell -järjestelmän kautta, www.mercell.fi.</P>
+          <P>LIITTEET</P>
+          <P>Liite 1 Tarjouspyyntö</P>
+          <P>Liite 2 Vaatimusluettelo vuokrayleislääkäripalvelu</P>
+          <P>Liite 3 Tarjouslomake</P>
+          <P>Liite 4 Palvelusopimus</P>
+          <P>Liite 5 JYSE 2014 Palvelut -ehdot, päivitysversio huhtikuulta 2017</P>
+          <P>Osoite, johon tarjoukset on lähetettävä: https://permalink.mercell.com/146963410.aspx</P>
+        </SHORT_DESCR>
+        <LOT_DIVISION>
+          <LOT_ALL />
+        </LOT_DIVISION>
+        <OBJECT_DESCR ITEM="146964567">
+          <TITLE>
+            <P>1. osa: vuokrayleislääkäripalvelu pääkaupunkiseudulle. YTHS:llä on pääkaupunkiseudulla kolme toimipistettä: Töölö, Malmi ja Otaniemi. </P>
+          </TITLE>
+          <LOT_NO>1</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146965526">
+          <TITLE>
+            <P>2. osa: vuokrayleislääkäripalvelu Tampereelle</P>
+          </TITLE>
+          <LOT_NO>2</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146965552">
+          <TITLE>
+            <P>3. osa: Vuokrayleislääkäripalvelu Turkuun </P>
+          </TITLE>
+          <LOT_NO>3</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146965577">
+          <TITLE>
+            <P>4. osa: vuokrayleislääkäripalvelu Jyväskylään</P>
+          </TITLE>
+          <LOT_NO>4</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146965622">
+          <TITLE>
+            <P>5. osa: vuokrayleislääkäripalvelu Ouluun</P>
+          </TITLE>
+          <LOT_NO>5</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146965641">
+          <TITLE>
+            <P>6. osa: vuokrayleislääkäripalvelu Vaasaan</P>
+          </TITLE>
+          <LOT_NO>6</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146965668">
+          <TITLE>
+            <P>7. osa: vuokrayleislääkäripalvelu Joensuuhun</P>
+          </TITLE>
+          <LOT_NO>7</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146965838">
+          <TITLE>
+            <P>8. osa: Vuokrayleislääkäripalvelu Kuopioon</P>
+          </TITLE>
+          <LOT_NO>8</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146968772">
+          <TITLE>
+            <P>9. osa: vuokrayleislääkäripalvelu Lappeenrantaan</P>
+          </TITLE>
+          <LOT_NO>9</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146968809">
+          <TITLE>
+            <P>10. osa: vuokrayleislääkäripalvelu Rovaniemelle</P>
+          </TITLE>
+          <LOT_NO>10</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146968828">
+          <TITLE>
+            <P>11. osa: vuokrayleislääkäripalvelu Lahteen</P>
+          </TITLE>
+          <LOT_NO>11</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146968941">
+          <TITLE>
+            <P>12. osa: vuokrayleislääkäripalvelu Poriin</P>
+          </TITLE>
+          <LOT_NO>12</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146968968">
+          <TITLE>
+            <P>13. osa: vuokrayleislääkäripalvelu Seinäjoelle</P>
+          </TITLE>
+          <LOT_NO>13</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146968996">
+          <TITLE>
+            <P>14. osa: vuokrayleislääkäripalvelu Hämeenlinnaan</P>
+          </TITLE>
+          <LOT_NO>14</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146969035">
+          <TITLE>
+            <P>15. osa: vuokrayleislääkäripalvelu Mikkeliin</P>
+          </TITLE>
+          <LOT_NO>15</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146969164">
+          <TITLE>
+            <P>16. osa: vuokrayleislääkäripalvelu Kotkaan</P>
+          </TITLE>
+          <LOT_NO>16</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146969246">
+          <TITLE>
+            <P>17. osa: vuokrayleislääkäripalvelu Kajaaniin </P>
+          </TITLE>
+          <LOT_NO>17</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä.  </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146969270">
+          <TITLE>
+            <P>18. osa: vuokrayleislääkäripalvelu Kemiin</P>
+          </TITLE>
+          <LOT_NO>18</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146969331">
+          <TITLE>
+            <P>19. osa: vuokrayleislääkäripalvelu Raumalle</P>
+          </TITLE>
+          <LOT_NO>19</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146969362">
+          <TITLE>
+            <P>20. osa: vuokrayleislääkäripalvelu Kouvolaan</P>
+          </TITLE>
+          <LOT_NO>20</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+        <OBJECT_DESCR ITEM="146969417">
+          <TITLE>
+            <P>21. osa: vuokrayleislääkäripalvelu Kokkolaan </P>
+          </TITLE>
+          <LOT_NO>21</LOT_NO>
+          <CPV_ADDITIONAL>
+            <CPV_CODE CODE="85100000" />
+          </CPV_ADDITIONAL>
+          <NUTS CODE="FI1"
+              xmlns="http://publications.europa.eu/resource/schema/ted/2016/nuts" />
+          <SHORT_DESCR>
+            <P>Palvelukuvaus ja vaatimukset määritelty liitteissä. </P>
+          </SHORT_DESCR>
+          <DATE_START>2021-04-01</DATE_START>
+          <DATE_END>2023-03-31</DATE_END>
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+      </OBJECT_CONTRACT>
+      <LEFTI />
+      <PROCEDURE>
+        <PT_OPEN />
+        <NOTICE_NUMBER_OJ>2021/S 025-062220</NOTICE_NUMBER_OJ>
+        <DATE_RECEIPT_TENDERS>2021-03-12</DATE_RECEIPT_TENDERS>
+        <TIME_RECEIPT_TENDERS>10:00</TIME_RECEIPT_TENDERS>
+        <LANGUAGES>
+          <LANGUAGE VALUE="FI" />
+        </LANGUAGES>
+      </PROCEDURE>
+      <COMPLEMENTARY_INFO>
+        <ADDRESS_REVIEW_BODY>
+          <OFFICIALNAME>Markkinaoikeus</OFFICIALNAME>
+          <ADDRESS>Radanrakentajantie 5</ADDRESS>
+          <TOWN>Helsinki</TOWN>
+          <POSTAL_CODE>00520</POSTAL_CODE>
+          <COUNTRY VALUE="FI" />
+          <PHONE>+358 295643314</PHONE>
+          <E_MAIL>markkinaoikeus@oikeus.fi</E_MAIL>
+          <URL>http://www.oikeus.fi/markkinaoikeus</URL>
+        </ADDRESS_REVIEW_BODY>
+        <DATE_DISPATCH_NOTICE>2021-02-17</DATE_DISPATCH_NOTICE>
+      </COMPLEMENTARY_INFO>
+    </F21_2014>
+  </FORM_SECTION>
+</TED_ESENDERS>
