@@ -18,8 +18,10 @@ jobs:
     - name: Build NuGet Package
       run: dotnet pack Hilma.Domain/Hilma.Domain.csproj --configuration Release -o NuGetPackages
     
-    - name: Setup Nuget.exe
-      uses: warrenbuckley/Setup-Nuget@v1
-    
-    - name: Deploy NuGet Package
-      run: dotnet nuget push D:\a\hilma-migration\hilma-migration\NuGetPackages\*.nupkg -k  ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json -n true
+    - name: Publish to NuGet
+      uses: brandedoutcast/publish-nuget@v2
+      with:
+        PROJECT_FILE_PATH: Hilma.Domain/Hilma.Domain.csproj
+        VERSION_REGEX: '^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$'
+        TAG_FORMAT: '*'
+        NUGET_KEY: ${{secrets.NUGET_KEY}}
