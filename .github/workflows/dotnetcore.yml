@@ -1,7 +1,9 @@
 name: .NET Core
 
-on: [push]
-
+on:
+ push:
+    branches: [ master ]
+    
 jobs:
   build:
 
@@ -22,6 +24,5 @@ jobs:
       uses: brandedoutcast/publish-nuget@v2
       with:
         PROJECT_FILE_PATH: Hilma.Domain/Hilma.Domain.csproj
-        VERSION_REGEX: '^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$'
         TAG_FORMAT: '*'
         NUGET_KEY: ${{secrets.NUGET_KEY}}
