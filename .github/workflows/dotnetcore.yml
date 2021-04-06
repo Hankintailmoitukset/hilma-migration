@@ -1,25 +1,28 @@
 name: .NET Core
 
-on: [push]
-
+on:
+ push:
+    branches: [ master ]
+    
 jobs:
   build:
 
-    runs-on: [windows-latest]
+    runs-on: [ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v1
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 2.2.108
+        dotnet-version: '3.1.x'
     - name: Build with dotnet
       run: dotnet build Hilma.Domain/Hilma.Domain.csproj --configuration Release
     - name: Build NuGet Package
       run: dotnet pack Hilma.Domain/Hilma.Domain.csproj --configuration Release -o NuGetPackages
     
-    - name: Setup Nuget.exe
-      uses: warrenbuckley/Setup-Nuget@v1
-    
-    - name: Deploy NuGet Package
-      run: dotnet nuget push D:\a\hilma-migration\hilma-migration\NuGetPackages\*.nupkg -k  ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json -n true
+    - name: Publish to NuGet
+      uses: brandedoutcast/publish-nuget@v2
+      with:
+        PROJECT_FILE_PATH: Hilma.Domain/Hilma.Domain.csproj
+        TAG_FORMAT: '*'
+        NUGET_KEY: ${{secrets.NUGET_KEY}}
