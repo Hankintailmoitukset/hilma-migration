@@ -1,5 +1,6 @@
 using Hilma.Domain.Attributes;
 using Hilma.Domain.Enums;
+using System.Collections.Generic;
 
 namespace Hilma.Domain.DataContracts {
     /// <summary>
@@ -24,5 +25,7 @@ namespace Hilma.Domain.DataContracts {
         ///     If contract has been awarded, information about the contracts made.
         /// </summary>
         public ContractAward AwardedContract { get; set; } = new ContractAward();
+
+        public List<ContractAward> AwardedContracts { get; set; } = new List<ContractAward>();
     }
 }
