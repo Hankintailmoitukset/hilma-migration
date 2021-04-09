@@ -277,7 +277,7 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                         VocCodes = domesticObjectContract?.Element("CPV")?.Element("CPV_MAIN")?.Elements("CPV_SUPPLEMENTARY_CODE")?.Select(s => new VocCode { Code = s?.Attribute("CODE")?.Value }).ToArray()
                     },
                     EstimatedValue = ParseNationalEstimatedValue(domesticObjectContract),
-                    ShortDescription = ParsePElements(domesticObjectContract?.Element("SHORT_DESCRIPTION")),
+                    ShortDescription = ParsePElements(domesticObjectContract?.Element("SHORT_DESCRIPTION")).Count() == 0 || ParsePElements(domesticObjectContract?.Element("SHORT_DESCRIPTION"))?[0] == null ? ParsePElements(domesticObjectContract?.Element("SHORT_CONTRACT_DESCRIPTION")) : ParsePElements(domesticObjectContract?.Element("SHORT_DESCRIPTION")),
                     ValidationState = ValidationState.Valid
                 },
                 ObjectDescriptions = ParseNationalObjectDescriptions(_nutsSchema, domesticContract, domesticContractRC, domesticObjectContract).ToArray(),

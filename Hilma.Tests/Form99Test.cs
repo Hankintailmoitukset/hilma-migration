@@ -48,5 +48,15 @@ namespace Hilma.Tests
 
             Assert.AreEqual("https://permalink-patch.mercell.com/105862098.aspx", hilmaDto.CommunicationInformation.ElectronicAddressToSendTenders);
         }
+
+        [TestMethod]
+        public void TestForm99_description_procurement_and_short()
+        {
+            var formOriginalXml = TestHelpers.GetEmbeddedResourceAsString($"Form99.xml");
+            Domain.DataContracts.EtsContracts.EtsNoticeContract notice = TestHelpers.ConvertContract("99", null, formOriginalXml);
+
+            Assert.AreEqual("ghgh", notice.ObjectDescriptions[0].DescrProcurement[0]);
+            Assert.AreEqual("ghgh", notice.ShortDescription[0]);
+        }
     }
 }

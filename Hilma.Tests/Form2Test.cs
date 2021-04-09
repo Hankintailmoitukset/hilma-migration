@@ -51,5 +51,15 @@ namespace Hilma.Tests
 
             Assert.AreEqual("DK", notice.Organisation.Information.NutsCodes[0]);
         }
+
+        [TestMethod]
+        public void TestForm2_description_procurement_and_short()
+        {
+            var formOriginalXml = TestHelpers.GetEmbeddedResourceAsString($"Form2_nuts2021.xml");
+            Domain.DataContracts.EtsContracts.EtsNoticeContract notice = TestHelpers.ConvertContract("2", null, formOriginalXml);
+
+            Assert.AreEqual("ghgh", notice.ObjectDescriptions[0].DescrProcurement[0]);
+            Assert.AreEqual("ghgh", notice.ShortDescription[0]);
+        }
     }
 }
