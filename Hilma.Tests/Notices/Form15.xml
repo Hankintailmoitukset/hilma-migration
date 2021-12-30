@@ -1,0 +1,106 @@
+﻿<HILMA_NOTICE VERSION="R2.0.9.S03">
+  <HILMA_SENDER>
+    <HILMA_LOGIN CLASS="mercell">mercelltest</HILMA_LOGIN>
+    <HILMA_USER>
+      <OFFICIALNAME>MSS Public Sector Buyer-FI</OFFICIALNAME>
+      <CONTACT_POINT>Test generic name</CONTACT_POINT>
+      <ADDRESS>Paciuksenkatu 25</ADDRESS>
+      <POSTAL_CODE>00270</POSTAL_CODE>
+      <TOWN>Helsinki</TOWN>
+      <COUNTRY VALUE="FI" />
+      <PHONE>+358 440000000</PHONE>
+      <E_MAIL>testemail@generic.com</E_MAIL>
+      <URL>http://www.mercell.com/</URL>
+    </HILMA_USER>
+    <HILMA_NO_DOC_EXT>131852770</HILMA_NO_DOC_EXT>
+  </HILMA_SENDER>
+  <FORM_SECTION>
+    <F15_2014 LG="FI" CATEGORY="ORIGINAL" FORM="F15">
+      <LEGAL_BASIS VALUE="32014L0024" />
+      <CONTRACTING_BODY>
+        <ADDRESS_CONTRACTING_BODY>
+          <OFFICIALNAME>MSS Public Sector Buyer-FI</OFFICIALNAME>
+          <NATIONALID>2740592-1</NATIONALID>
+          <ADDRESS>Paciuksenkatu 25</ADDRESS>
+          <TOWN>Helsinki</TOWN>
+          <POSTAL_CODE>00270</POSTAL_CODE>
+          <COUNTRY VALUE="FI" />
+          <CONTACT_POINT>Test generic name</CONTACT_POINT>
+          <PHONE>+358 440000000</PHONE>
+          <E_MAIL>testemail@generic.com</E_MAIL>
+          <NUTS CODE="FI" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
+          <URL_GENERAL>https://permalink-patch.mercell.com/131852770.aspx</URL_GENERAL>
+          <URL_BUYER>http://www.mercell.com/</URL_BUYER>
+        </ADDRESS_CONTRACTING_BODY>
+        <CA_TYPE VALUE="MINISTRY" />
+        <CA_ACTIVITY VALUE="GENERAL_PUBLIC_SERVICES" />
+      </CONTRACTING_BODY>
+      <OBJECT_CONTRACT>
+        <TITLE>
+          <P>Hilma Form 15 - #2</P>
+        </TITLE>
+        <CPV_MAIN>
+          <CPV_CODE CODE="50100000" />
+        </CPV_MAIN>
+        <TYPE_CONTRACT CTYPE="SERVICES" />
+        <SHORT_DESCR>
+          <P>Aenean faucibus orci eu placerat elementum. Mauris non suscipit nulla, id hendrerit est. Sed tincidunt molestie nisl. Cras viverra suscipit mattis. Fusce a elementum diam. Nunc ullamcorper tempor justo id porta. Praesent quis nibh pharetra, vestibulum purus non, tempus eros. Proin rutrum tellus pretium, egestas mi ut, blandit eros. Nulla commodo condimentum diam, non gravida lectus pulvinar tempus.</P>
+        </SHORT_DESCR>
+        <VAL_TOTAL CURRENCY="EUR">200000000.00</VAL_TOTAL>
+        <NO_LOT_DIVISION />
+        <OBJECT_DESCR ITEM="1">
+          <NUTS CODE="FI" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
+          <SHORT_DESCR>
+            <P>Duis eu ante risus. Cras aliquet non risus a feugiat. Ut sed ornare nisl. Vestibulum accumsan porttitor turpis, sed vulputate quam consequat non. Sed tellus nisi, egestas non mauris ut, ultrices volutpat nulla. Nunc dignissim consectetur ligula. Donec venenatis suscipit urna, a ornare tellus elementum dignissim. Interdum et malesuada fames ac ante ipsum primis in faucibus.</P>
+          </SHORT_DESCR>
+          <NO_OPTIONS />
+          <NO_EU_PROGR_RELATED />
+        </OBJECT_DESCR>
+      </OBJECT_CONTRACT>
+      <PROCEDURE>
+        <DIRECTIVE_2014_24_EU>
+          <PT_AWARD_CONTRACT_WITHOUT_CALL>
+            <D_OUTSIDE_SCOPE />
+            <D_JUSTIFICATION>
+              <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eros velit, bibendum sit amet risus et, semper egestas metus. Duis imperdiet nibh dictum laoreet placerat. Etiam posuere convallis neque, a ullamcorper ipsum mollis sit amet. Phasellus molestie placerat lobortis. Donec ultricies est at viverra malesuada. Proin tincidunt ornare felis quis aliquet. Donec hendrerit risus eu congue congue. Nulla pharetra quam vitae fermentum sollicitudin. Proin eleifend mi orci, sed dapibus metus cursus ac.</P>
+            </D_JUSTIFICATION>
+          </PT_AWARD_CONTRACT_WITHOUT_CALL>
+        </DIRECTIVE_2014_24_EU>
+        <CONTRACT_COVERED_GPA />
+      </PROCEDURE>
+      <AWARD_CONTRACT ITEM="1">
+        <TITLE>
+          <P>Award 1</P>
+        </TITLE>
+        <AWARDED_CONTRACT>
+          <DATE_CONCLUSION_CONTRACT>2021-12-30</DATE_CONCLUSION_CONTRACT>
+          <CONTRACTORS>
+            <NO_AWARDED_TO_GROUP />
+            <CONTRACTOR>
+              <ADDRESS_CONTRACTOR>
+                <OFFICIALNAME>Mercell A/S</OFFICIALNAME>
+                <NATIONALID>123456</NATIONALID>
+                <ADDRESS>Østre Stations 33</ADDRESS>
+                <TOWN>Odense</TOWN>
+                <COUNTRY VALUE="DK" />
+                <NUTS CODE="DK" xmlns="http://publications.europa.eu/resource/schema/ted/2021/nuts" />
+              </ADDRESS_CONTRACTOR>
+              <SME />
+            </CONTRACTOR>
+          </CONTRACTORS>
+          <VALUES>
+            <VAL_TOTAL CURRENCY="EUR">77777.00</VAL_TOTAL>
+          </VALUES>
+        </AWARDED_CONTRACT>
+      </AWARD_CONTRACT>
+      <COMPLEMENTARY_INFO>
+        <ADDRESS_REVIEW_BODY>
+          <OFFICIALNAME>Hilma Test #2</OFFICIALNAME>
+          <TOWN>Helsinki</TOWN>
+          <COUNTRY VALUE="FI" />
+        </ADDRESS_REVIEW_BODY>
+        <DATE_DISPATCH_NOTICE>2021-12-30</DATE_DISPATCH_NOTICE>
+      </COMPLEMENTARY_INFO>
+    </F15_2014>
+  </FORM_SECTION>
+</HILMA_NOTICE>

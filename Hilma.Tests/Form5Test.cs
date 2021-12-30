@@ -26,9 +26,21 @@ namespace Hilma.Tests
             var hilmaDto = TestHelpers.ConvertContract(formNumber, null, formOriginalXml);
 
             Assert.IsNotNull(hilmaDto.HilmaStatistics);
-            Assert.IsFalse(hilmaDto.HilmaStatistics.EnergyEfficiencyConsidered);
+            Assert.IsTrue(hilmaDto.HilmaStatistics.EnergyEfficiencyConsidered);
             Assert.IsFalse(hilmaDto.HilmaStatistics.InnovationConsidered);
             Assert.IsTrue(hilmaDto.HilmaStatistics.SMEParticipationConsidered);
+            Assert.IsFalse(hilmaDto.HilmaStatistics.LowCarbon);
+            Assert.IsTrue(hilmaDto.HilmaStatistics.CircularEconomy);
+            Assert.IsFalse(hilmaDto.HilmaStatistics.Biodiversity);
+            Assert.IsTrue(hilmaDto.HilmaStatistics.SustainableFoodProduction);
+            Assert.IsFalse(hilmaDto.HilmaStatistics.ListedGreenCriteriaUsed);
+            Assert.IsTrue(hilmaDto.HilmaStatistics.JustWorkingConditions);
+            Assert.IsFalse(hilmaDto.HilmaStatistics.EmploymentCondition);
+            Assert.AreEqual(2, hilmaDto.HilmaStatistics.HowManyOpportunitiesIsEstimated);
+            Assert.IsTrue(hilmaDto.HilmaStatistics.CodeOfConduct);
+            Assert.IsFalse(hilmaDto.HilmaStatistics.SolutionNewToBuyer);
+            Assert.IsTrue(hilmaDto.HilmaStatistics.SolutionNewToMarketOrIndustry);
+            Assert.IsFalse(hilmaDto.HilmaStatistics.EndUserInvolved);
         }
     }
 }

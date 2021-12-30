@@ -90,7 +90,19 @@ namespace Hilma.Domain.DataContracts.EtsContracts
             {
                 EnergyEfficiencyConsidered = dbo.HilmaStatistics.EnergyEfficiencyConsidered,
                 InnovationConsidered = dbo.HilmaStatistics.InnovationConsidered,
-                SMEParticipationConsidered = dbo.HilmaStatistics.SMEParticipationConsidered
+                SMEParticipationConsidered = dbo.HilmaStatistics.SMEParticipationConsidered,
+                LowCarbon = dbo.HilmaStatistics.LowCarbon,
+                CircularEconomy = dbo.HilmaStatistics.CircularEconomy,
+                Biodiversity = dbo.HilmaStatistics.Biodiversity,
+                SustainableFoodProduction = dbo.HilmaStatistics.SustainableFoodProduction,
+                ListedGreenCriteriaUsed = dbo.HilmaStatistics.ListedGreenCriteriaUsed,
+                JustWorkingConditions = dbo.HilmaStatistics.JustWorkingConditions,
+                EmploymentCondition = dbo.HilmaStatistics.EmploymentCondition,
+                HowManyOpportunitiesIsEstimated = dbo.HilmaStatistics.HowManyOpportunitiesIsEstimated,
+                CodeOfConduct = dbo.HilmaStatistics.CodeOfConduct,
+                SolutionNewToBuyer = dbo.HilmaStatistics.SolutionNewToBuyer,
+                SolutionNewToMarketOrIndustry = dbo.HilmaStatistics.SolutionNewToMarketOrIndustry,
+                EndUserInvolved = dbo.HilmaStatistics.EndUserInvolved
             };
         }
 
@@ -174,7 +186,19 @@ namespace Hilma.Domain.DataContracts.EtsContracts
                 {
                     EnergyEfficiencyConsidered = dto.HilmaStatistics.EnergyEfficiencyConsidered,
                     InnovationConsidered = dto.HilmaStatistics.InnovationConsidered,
-                    SMEParticipationConsidered = dto.HilmaStatistics.SMEParticipationConsidered
+                    SMEParticipationConsidered = dto.HilmaStatistics.SMEParticipationConsidered,
+                    LowCarbon = dto.HilmaStatistics.LowCarbon,
+                    CircularEconomy = dto.HilmaStatistics.CircularEconomy,
+                    Biodiversity = dto.HilmaStatistics.Biodiversity,
+                    SustainableFoodProduction = dto.HilmaStatistics.SustainableFoodProduction,
+                    ListedGreenCriteriaUsed = dto.HilmaStatistics.ListedGreenCriteriaUsed,
+                    JustWorkingConditions = dto.HilmaStatistics.JustWorkingConditions,
+                    EmploymentCondition = dto.HilmaStatistics.EmploymentCondition,
+                    HowManyOpportunitiesIsEstimated = dto.HilmaStatistics.HowManyOpportunitiesIsEstimated,
+                    CodeOfConduct = dto.HilmaStatistics.CodeOfConduct,
+                    SolutionNewToBuyer = dto.HilmaStatistics.SolutionNewToBuyer,
+                    SolutionNewToMarketOrIndustry = dto.HilmaStatistics.SolutionNewToMarketOrIndustry,
+                    EndUserInvolved = dto.HilmaStatistics.EndUserInvolved
                 };
         }
 

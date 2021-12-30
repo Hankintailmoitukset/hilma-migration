@@ -51,10 +51,36 @@ namespace Hilma.Domain.Integrations.HilmaMigration
                     return ParseDefenceNotices(formElement, noticeNumber, importedNotice, noticeType, isCorrigendum);
                 }
 
-                var hilmaStatistics = new HilmaStatistics();
-                hilmaStatistics.EnergyEfficiencyConsidered = formSection.Attribute("TAKING_ACCOUNT_ENERGY_EFFICIENCY")?.Value == "YES";
-                hilmaStatistics.InnovationConsidered = formSection.Attribute("TAKING_ACCOUNT_INNOVATION")?.Value == "YES";
-                hilmaStatistics.SMEParticipationConsidered = formSection.Attribute("TAKING_ACCOUNT_SME_PARTICIPATION")?.Value == "YES";
+                HilmaStatistics hilmaStatistics = null;
+                if (formSection.HasAttributes)
+                {
+                    hilmaStatistics = new HilmaStatistics();
+                    hilmaStatistics.EnergyEfficiencyConsidered =
+                        formSection.Attribute("TAKING_ACCOUNT_ENERGY_EFFICIENCY")?.Value == "YES";
+                    hilmaStatistics.InnovationConsidered =
+                        formSection.Attribute("TAKING_ACCOUNT_INNOVATION")?.Value == "YES";
+                    hilmaStatistics.SMEParticipationConsidered =
+                        formSection.Attribute("TAKING_ACCOUNT_SME_PARTICIPATION")?.Value == "YES";
+                    hilmaStatistics.LowCarbon = formSection.Attribute("LOW_CARBON")?.Value == "YES";
+                    hilmaStatistics.CircularEconomy = formSection.Attribute("CIRCULAR_ECONOMY")?.Value == "YES";
+                    hilmaStatistics.Biodiversity = formSection.Attribute("BIO_DIVERSITY")?.Value == "YES";
+                    hilmaStatistics.SustainableFoodProduction =
+                        formSection.Attribute("SUSTAINABLE_FOOD_PRODUCTION")?.Value == "YES";
+                    hilmaStatistics.ListedGreenCriteriaUsed =
+                        formSection.Attribute("LISTED_GREEN_CRITERIA_USED")?.Value == "YES";
+                    hilmaStatistics.JustWorkingConditions =
+                        formSection.Attribute("JUST_WORKING_CONDITIONS")?.Value == "YES";
+                    hilmaStatistics.EmploymentCondition = formSection.Attribute("EMPLOYMENT_CONDITION")?.Value == "YES";
+                    hilmaStatistics.HowManyOpportunitiesIsEstimated =
+                        formSection.Attribute("HOW_MANY_OPPORTUNITIES_IS_ESTIMATED") != null
+                            ? Convert.ToInt32(formSection.Attribute("HOW_MANY_OPPORTUNITIES_IS_ESTIMATED")?.Value)
+                            : 0;
+                    hilmaStatistics.CodeOfConduct = formSection.Attribute("CODE_OF_CONDUCT")?.Value == "YES";
+                    hilmaStatistics.SolutionNewToBuyer = formSection.Attribute("SOLUTION_NEW_TO_BUYER")?.Value == "YES";
+                    hilmaStatistics.SolutionNewToMarketOrIndustry =
+                        formSection.Attribute("SOLUTION_NEW_TO_MARKET_OR_INDUSTRY")?.Value == "YES";
+                    hilmaStatistics.EndUserInvolved = formSection.Attribute("END_USER_INVOLVED")?.Value == "YES";
+                }
 
                 return ParseEuNotice(importedNotice, noticeType, formElement, noticeNumber, isCorrigendum, hilmaStatistics);
 

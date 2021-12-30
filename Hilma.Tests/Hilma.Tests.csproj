@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Notices\Form1.xml" />
+    <None Remove="Notices\Form15.xml" />
     <None Remove="Notices\Form2.xml" />
     <None Remove="Notices\Form21.xml" />
     <None Remove="Notices\Form21_2.xml" />
@@ -25,6 +26,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Notices\Form1.xml" />
+    <EmbeddedResource Include="Notices\Form15.xml" />
     <EmbeddedResource Include="Notices\Form2_nuts2021.xml" />
     <EmbeddedResource Include="Notices\Form2.xml" />
     <EmbeddedResource Include="Notices\Form21.xml" />
